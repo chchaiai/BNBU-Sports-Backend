@@ -37,6 +37,7 @@ import { ExerciseReviewsModule } from './modules/exercise-reviews/exercise-revie
 import { ScoresModule } from './modules/scores/scores.module.js';
 import { ExportsModule } from './modules/exports/exports.module.js';
 import { AuditLogsModule } from './modules/audit-logs/audit-logs.module.js';
+import { ClientCapabilitiesModule } from './modules/client-capabilities/client-capabilities.module.js';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { AuditLogsModule } from './modules/audit-logs/audit-logs.module.js';
     ScoresModule,
     ExportsModule,
     AuditLogsModule,
+    ClientCapabilitiesModule,
     MediaModule,
     HealthModule,
     SystemModeModule,

@@ -85,12 +85,12 @@ describe('authoritative OpenAPI contract', () => {
       }
     };
     visit(contract);
-    assert.equal(referenceCount, 1_341);
+    assert.equal(referenceCount, 1_628);
 
     const operations = collectOperations(contract);
-    assert.equal(operations.length, 92);
-    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 92);
-    assert.equal(Object.keys(operationPolicies).length, 92);
+    assert.equal(operations.length, 122);
+    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 122);
+    assert.equal(Object.keys(operationPolicies).length, 122);
     for (const { operationId, policy } of operations) {
       assert.equal(policy.defaultDeny, true);
       assert.equal(typeof policy.policyId, 'string');

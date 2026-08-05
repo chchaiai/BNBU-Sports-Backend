@@ -1,5 +1,7 @@
 # BNBU Sports Greenfield Stage 20B-P 接续提示词
 
+> Stage 21 更新：本提示词的 staging 目标不变，但机器合同已扩展到 OpenAPI `1.1.0-contract`。执行前必须先读 `21-client-capabilities-contract-baseline.json`、`21-client-capabilities-operation-map.md` 和 `21-client-capabilities-default-deny-report.md`；新增 30 项必须继续作为真实 default deny 验证，不能在 staging 中假启用。
+
 你现在需要执行：“Stage 20B-P — Synthetic Staging 基础设施决策落盘、部署准备与 Runtime Gate”。本阶段不是 Export、Production 或客户端业务联调；只有 staging runtime Gate 真实通过后，才允许另开任务开始 Auth 模块的 Android→Web 联调。
 
 ## 一、权威基线
@@ -10,8 +12,8 @@
 - Stage 20A 输入 HEAD：`ce133432d0aa247d29db78cc7e14a47d398bc5fc`
 - 最终客户端批准落盘 HEAD：以旧账号最终输出和 `git rev-parse HEAD` 为准；输入 HEAD 必须是其祖先
 - Monorepo 普通目录：`backend/`、`BNBU-Sports-Android-master/`、`BNBU-Sports-Web-new/`；gitlinks=0、nestedGit=0
-- OpenAPI：version `1.0.0-contract`；SHA-256 `1171cb76a485911ef44f5df9fc65f99ad5cbb9f7ab9d6a4e0d479c06eb4dad8c`
-- runtime coverage：92 operations / 82 verified / 10 exact default deny / 0 not implemented / 0 blocked
+- OpenAPI：version `1.1.0-contract`；SHA-256 `fb040b671e3f25c48279ad6b173ced5f633de1b1a1a9db0cc0f23a11e3fde4d1`
+- runtime coverage：122 operations / 82 verified / 40 exact default deny / 0 not implemented / 0 blocked
 - Migration：0001–0010；不得创建 `0011_export_core`
 - Stage 19/20A 已提交基线证据：63 Unit + 41 Integration + 40 E2E + 27 Contract + 38 Security = 209/209
 
@@ -85,7 +87,7 @@ FULL_PRODUCTION_GATE=NO
 3. Secret 只通过批准的托管机制注入，不进入 Git、image、日志或客户端。
 4. 实现/配置安全 synthetic seed/reset：环境 identity fail closed、仅合成账号、DB/bucket 精确清理、旧 Token 失效、可审计 requestId、重复运行确定。
 5. 保持既有 0001–0010，执行空库 first/repeat migration、drift 0、App/Migrator 权限分离；不创建 0011。
-6. 验证 92-operation disposition、private Media、Auth rotation/reuse/logout、Score、Audit/requestId tracing；四个 Export operation 必须继续 `SYSTEM_MODE_UNSUPPORTED`。
+6. 验证 122-operation disposition、private Media、Auth rotation/reuse/logout、Score、Audit/requestId tracing；四个 Export operation与 Stage 21 新增 30 项必须继续 `SYSTEM_MODE_UNSUPPORTED`。
 7. 为 Android/Web staging test build 准备显式单一 Base URL 与同一 OpenAPI hash；在 runtime Gate 前不改业务 UI，不开始 Auth 联调。
 8. 验证 HTTPS、CORS/cookie/CSRF、日志脱敏、restart/persistence、reset safety、Mock/旧 API 不可达与 teardown。
 9. 生成独立 runtime validation 报告；只有全部通过才把 `STAGING_RUNTIME_READINESS` 改为 YES。
@@ -101,6 +103,6 @@ FULL_PRODUCTION_GATE=NO
 
 ## 七、完成标准
 
-完整记录选定基础设施、非 Secret 配置、image/digest、HTTPS、DB/object storage/Secret 隔离、seed/reset、92-operation smoke、private Media、Auth/Score/Audit/requestId、first/repeat migration、drift、权限、日志脱敏、restart/persistence、Mock 不可达与 teardown。若任一强制项失败，`STAGING_RUNTIME_READINESS=NO`，并准确报告阻塞。
+完整记录选定基础设施、非 Secret 配置、image/digest、HTTPS、DB/object storage/Secret 隔离、seed/reset、122-operation smoke、private Media、Auth/Score/Audit/requestId、first/repeat migration、drift、权限、日志脱敏、restart/persistence、Mock 不可达与 teardown。若任一强制项失败，`STAGING_RUNTIME_READINESS=NO`，并准确报告阻塞。
 
 该提示词不授权自动选择基础设施，也不授权直接开始客户端联调。

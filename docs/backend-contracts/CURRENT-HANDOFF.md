@@ -1,5 +1,15 @@
 # BNBU Sports Greenfield Backend — Current Handoff
 
+## Stage 21 客户端缺口 operation 与 GPS 合同补齐（最新）
+
+项目负责人于 2026-08-05 批准按合同优先方案实施，并要求加入 GPS 能力、建立 Android 学生端与 Web 教师/管理端到后端文件的对应关系。当前权威 OpenAPI 为 `1.1.0-contract`，共 122 operations：82 `IMPLEMENTED_VERIFIED`、40 `IMPLEMENTED_DEFAULT_DENY`、0 `NOT_IMPLEMENTED`、0 `BLOCKED_BY_ADR`。
+
+新增 30 项已有真实路由、DTO、权限政策和测试，但在业务/隐私/保留规则批准前统一 `SYSTEM_MODE_UNSUPPORTED`，没有新增 Prisma model 或 Migration。GPS 写入绑定学生自己的 ExerciseSession；教师/管理员只能经 ExerciseRecord 范围读取粗化摘要，原始经纬度是 write-only。逐项对应见 `21-client-capabilities-operation-map.md`，验证边界见 `21-client-capabilities-default-deny-report.md`。
+
+本阶段没有改动 Android/Web 源码；客户端真实联调与 GPS 业务启用仍为 NO，Production Gate 仍为 NO。
+
+历史 `client-backend-integration-v1` 仍保持不可变，但其 92-operation 快照不包含 Stage 21。客户端不得用 v1 生成新增能力；提示见 `docs/client-handoff/STAGE21-CONTRACT-NOTICE.md`。新的版本化交接包需在本阶段形成 clean commit 后生成，本工作树未伪造 v2 包。
+
 生成日期：2026-08-05。用途：不依赖旧账号、对话或 Memory 的本地接续。根目录为 `C:\Users\23328\Desktop\new_version`；权威后端为 `backend/`；唯一人工维护 API 机器合同为 `docs/backend-contracts/openapi.yaml`。
 
 ## Stage 20A 客户端联调批准与 staging 准备（最新，取代下方待批准判断）

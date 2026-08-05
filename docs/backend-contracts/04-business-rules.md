@@ -6,6 +6,16 @@
 >
 > 裁决原则：所有最终状态、有效时长和成绩均由后端产生；客户端只负责采集、提示和非权威预估。
 
+## Stage 21 客户端能力与 GPS 规则
+
+1. 新增 30 个客户端支持 operation 均为真实路由默认拒绝；合同存在不等于业务已启用。
+2. Android GPS 写入只能使用学生本人既有 ExerciseSession；`clientObservedAt` 和坐标是设备观测，不能改变服务端权威时长、`businessDate`、Record 或 Score。
+3. GPS 原始经纬度只允许作为 write-only 输入，不得进入公共 projection、日志、AuditLog、Outbox、通知或成绩事实。
+4. 轨迹摘要必须先按 ExerciseRecord 解析学生本人、责任教师或本组织管理员范围，且三类角色只取得相同粗化投影，不得返回原始点或精确起终点。
+5. 只有本组织 ADMIN 具备未来位置政策 mutation 的角色资格；当前 route 仍默认拒绝。管理员不能据此代行教师审核。
+6. 在同意/撤回、采样、精度、保留、删除、加密、审计、异常检测和 Production Gate 全部批准前，`collectionEnabled` 不得变为有效生产事实。
+7. 通知、反馈、免测、帮助、版本、项目目录和折算规则同样不得落库或返回假成功；任何启用都必须另行闭合业务状态、权限、幂等、事务、AuditLog 和 Outbox。
+
 ## 1. 适用范围与冲突优先级
 
 本文适用于 Android、未来 iOS、未来 Web 学生端、Web 教师端、Web 管理端和后端。发生冲突时，按以下顺序裁决：

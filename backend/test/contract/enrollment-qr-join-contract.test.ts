@@ -115,6 +115,6 @@ describe('Stage 12 Enrollment and QR Join contract', () => {
         }
       }
     }
-    assert.equal(operationCount, 92);
+    assert.equal(operationCount, 122);
   });
 });
