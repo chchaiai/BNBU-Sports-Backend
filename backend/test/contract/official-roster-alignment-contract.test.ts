@@ -208,8 +208,8 @@ describe('Stage 13 Official Roster and Alignment contract', () => {
       }
     }
     assert.equal(expected.length, 13);
-    assert.equal(operationCount, 92);
-    assert.equal(Object.keys(operationPolicies).length, 92);
+    assert.equal(operationCount, 122);
+    assert.equal(Object.keys(operationPolicies).length, 122);
   });
 
   it('freezes CSV-only upload, server snapshot versioning, and typed resolution evidence', async () => {

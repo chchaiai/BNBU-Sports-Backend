@@ -83,12 +83,12 @@ describe('Stage 19 Export, Audit Read, and governance contract', () => {
     assert.equal(/model\s+Export(?:Job)?\b/u.test(schema), false);
   });
 
-  it('closes the 92-operation backend registry without upgrading Export or Production gates', () => {
+  it('keeps the expanded operation registry closed without upgrading Export or Production gates', () => {
     const coverage = JSON.parse(
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as { implemented: Record<string, unknown>; implementedDefaultDeny: string[] };
-    assert.equal(Object.keys(coverage.implemented).length, 92);
-    assert.equal(coverage.implementedDefaultDeny.length, 10);
+    assert.equal(Object.keys(coverage.implemented).length, 122);
+    assert.equal(coverage.implementedDefaultDeny.length, 40);
     for (const operationId of Object.keys(operationPolicies)) {
       assert.ok(coverage.implemented[operationId]);
     }

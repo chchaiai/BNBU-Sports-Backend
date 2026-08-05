@@ -121,7 +121,7 @@ describe('Stage 15 MediaEvidence contract', () => {
     assert.equal(object(bind.properties, 'bind properties').recordId, undefined);
   });
 
-  it('keeps 92 total operations and exactly five MediaEvidence operations', () => {
+  it('keeps 122 total operations and exactly five MediaEvidence operations', () => {
     const operations: JsonObject[] = [];
     const methods = new Set(['get', 'post', 'put', 'patch', 'delete', 'options', 'head']);
     for (const pathItem of Object.values(object(contract.paths, 'paths'))) {
@@ -131,7 +131,7 @@ describe('Stage 15 MediaEvidence contract', () => {
         if (typeof operation.operationId === 'string') operations.push(operation);
       }
     }
-    assert.equal(operations.length, 92);
+    assert.equal(operations.length, 122);
     assert.equal(
       operations.filter(
         (operation) =>

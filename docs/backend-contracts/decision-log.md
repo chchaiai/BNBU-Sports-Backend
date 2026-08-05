@@ -297,3 +297,10 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - Generated DTO/schema plus handwritten transport is accepted. Android Kotlin and Web TypeScript models, and any future Swift models, must bind to one OpenAPI commit/hash. Base URLs are explicit per environment; auth storage, error-code branching, idempotency/version handling, authoritative Session/Media/Record/Review/Score ordering, and production-inaccessible Mock behavior are frozen as recorded in the approval file.
 - Pure synthetic staging construction is approved with independent HTTPS, database, private object storage, Secrets, safe seed/reset, Android/Web test builds and requestId tracing. This is construction authorization, not runtime evidence: the provider, domain, Secret product and long-term operations remain pending, so Staging Runtime Readiness and Client Integration Execution Readiness remain NO.
 - This approval does not accept EXP-DEC-01–12, PROD-DEC-01–14, ADR-070–074 or any production parameter. It creates no Export persistence, `0011_export_core`, Production deployment, real data, Historical Data Migration or iOS project.
+### Stage 21 客户端能力与 GPS 合同边界（2026-08-05，已批准）
+
+- 项目负责人批准为 Android 学生端、Web 教师端与 Web 管理端补齐缺失的 OpenAPI operation，并明确要求加入 GPS 能力及前后端文件对应关系。
+- 本批准只允许增加合同、真实路由、输入校验、权限链、稳定默认拒绝和映射文档；不批准通知、反馈、免测、帮助内容、版本策略、运动目录、折算规则或 GPS 的生产业务参数和持久化。
+- GPS 写入必须绑定学生自己的 ExerciseSession；摘要读取必须绑定 ExerciseRecord 的学生本人、责任教师或本组织管理员；原始经纬度仅可作为 write-only 输入，不得进入教师/管理员公共 projection。
+- 全部 30 个新增 operation 在相应业务、隐私、保留和生产 Gate 关闭前固定 `x-enabled-by-default: false`，真实路由返回 `SYSTEM_MODE_UNSUPPORTED`，不得返回假成功或通过通用 404 冒充已实现。
+- 本阶段不新增 Prisma model 或 Migration。未来启用任一能力必须先接受独立业务决策，并复用 requestId、PolicyEngine、organization/resource scope、SystemMode、幂等、事务、AuditLog、Outbox 和稳定错误协议。

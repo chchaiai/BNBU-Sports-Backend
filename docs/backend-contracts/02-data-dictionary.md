@@ -7,6 +7,24 @@
 > 适用客户端：Android 学生端、未来 iOS 学生端、未来 Web 学生端、Web 教师端、Web 管理端、统一后端
 > 限制：当前工作区没有权威后端、数据库 schema 或 migration；本文冻结逻辑字段、API 映射与迁移语义，不选择数据库引擎，不生成或执行 migration。
 
+## Stage 21 客户端能力合同对象（未持久化）
+
+以下对象只冻结 API 形状，不代表已创建数据库表；业务 Gate 批准前不得据此生成 Migration。
+
+| 合同对象 | 关键字段 | 权威边界 |
+|---|---|---|
+| `Notification` / `PushDevice` | recipient、type、readAt；platform、appVersion、locale、status | 推送 token 只写不读；角色只读本人通知 |
+| `UserPreferences` | locale、pushEnabled、emailEnabled、version | 只允许本人读取和按 `expectedVersion` 修改 |
+| `HelpArticle` | category、locale、title、bodyMarkdown、publishedAt、version | 只投影已发布安全内容；当前无编辑 operation |
+| `Feedback` | category、content、status、publicReply、version | 不投影内部备注、日志、Token、联系方式或设备指纹 |
+| `ExemptionApplication` | studentId、enrollmentId、classSectionId、applicationType、reason、mediaIds、status、publicComment、version | 状态值仅为未来传输占位；审批状态机尚未批准 |
+| `AppReleasePolicy` | platform、minimumSupportedVersion、latestVersion、enforcement、effectiveAt、policyVersion | 签名、渠道、灰度与应急策略尚未批准 |
+| `SportCatalogItem` / `ActivityConversionRule` | sportType；activityType、unit、ruleVersion、status | 不得形成第二套 ScoreRule；公式项在批准前不进入合同 |
+| `LocationSample` | sampleId、observedAt、latitude、longitude、accuracy、altitude、speed | 不可信客户端观测；原始坐标全部 write-only |
+| `LocationTrack` | sessionId、status、acceptedSampleCount、policyVersion、version | 仅未来采集状态；不投影原始样本 |
+| `LocationSummary` | recordId、availability、COARSE、coarseRoutePolyline、coarseDistanceMeters、时间范围、policyVersion | 学生/责任教师/本组织管理员得到相同粗化投影 |
+| `LocationPrivacyPolicy` | organizationId、policyVersion、collectionEnabled、采样/精度/保留/粗化参数、version | 生产参数均为 nullable 未决值；当前不能开启采集 |
+
 ## 1. 使用口径
 
 1. 本文是全项目唯一字段命名基线。后续状态机、业务规则、权限矩阵和 OpenAPI 只能引用本文字段，不得另造同义字段。

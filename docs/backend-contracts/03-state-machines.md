@@ -9,6 +9,12 @@
 > 适用角色：`STUDENT`、`TEACHER`、`ADMIN`。图表中的 `SYSTEM` 是后端事务、定时任务或受信队列消费者，不是新增业务角色。
 > 重要迁移口径：本轮采用逐条 `PENDING / VALID / INVALID` 审核模型；旧“提交即有效”只能通过显式迁移记录兼容，不能继续作为新记录的隐式默认值。
 
+## Stage 21 客户端能力状态边界
+
+Stage 21 只注册 operation 和传输形状，不接受 Notification、Feedback、ExemptionApplication、LocationTrack 或位置隐私政策的业务状态机。所有新增路由在鉴权/角色/已有 Session 或 Record 资源解析后稳定拒绝，且不产生状态迁移、成功 AuditLog、业务 Outbox 或持久化事实。
+
+OpenAPI 中出现的相关状态值是未来兼容占位，并以 `x-transport-constraint: true` 标明不是已批准的数据库枚举。未来启用必须先补充状态图、合法边、终态、并发规则、撤回/删除规则和 forward-only Migration。
+
 ## 1. 状态维度分离
 
 ### 1.1 八个互不替代的状态维度

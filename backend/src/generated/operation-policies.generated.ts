@@ -1234,6 +1234,412 @@ export const operationPolicies = {
     "resourceScope": "ORGANIZATION",
     "resourceResolver": "AUDIT_LOG_FROM_PATH",
     "defaultDeny": true
+  },
+  "requestStudentSignInCode": {
+    "method": "POST",
+    "route": "/auth/student-sign-in-codes",
+    "policyId": "AUTH-STUDENT-CODE-REQUEST",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "verifyStudentSignInCode": {
+    "method": "POST",
+    "route": "/auth/student-sign-in-codes/verify",
+    "policyId": "AUTH-STUDENT-CODE-VERIFY",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "requestAccountRecovery": {
+    "method": "POST",
+    "route": "/auth/account-recovery-requests",
+    "policyId": "AUTH-ACCOUNT-RECOVERY-REQUEST",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "completeAccountRecovery": {
+    "method": "POST",
+    "route": "/auth/account-recovery-requests/complete",
+    "policyId": "AUTH-ACCOUNT-RECOVERY-COMPLETE",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "listNotifications": {
+    "method": "GET",
+    "route": "/notifications",
+    "policyId": "NOTIFICATION-LIST",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "markNotificationRead": {
+    "method": "POST",
+    "route": "/notifications/{notificationId}/read",
+    "policyId": "NOTIFICATION-MARK-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "registerPushDevice": {
+    "method": "POST",
+    "route": "/push-devices",
+    "policyId": "PUSH-DEVICE-REGISTER",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "unregisterPushDevice": {
+    "method": "DELETE",
+    "route": "/push-devices/{deviceId}",
+    "policyId": "PUSH-DEVICE-UNREGISTER",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "getCurrentUserPreferences": {
+    "method": "GET",
+    "route": "/me/preferences",
+    "policyId": "USER-PREFERENCES-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "updateCurrentUserPreferences": {
+    "method": "PATCH",
+    "route": "/me/preferences",
+    "policyId": "USER-PREFERENCES-UPDATE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "listHelpArticles": {
+    "method": "GET",
+    "route": "/help-articles",
+    "policyId": "PUBLIC-HELP-ARTICLE-LIST",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "getHelpArticle": {
+    "method": "GET",
+    "route": "/help-articles/{articleId}",
+    "policyId": "PUBLIC-HELP-ARTICLE-READ",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "listFeedback": {
+    "method": "GET",
+    "route": "/feedback",
+    "policyId": "FEEDBACK-LIST",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "createFeedback": {
+    "method": "POST",
+    "route": "/feedback",
+    "policyId": "FEEDBACK-CREATE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "getFeedback": {
+    "method": "GET",
+    "route": "/feedback/{feedbackId}",
+    "policyId": "FEEDBACK-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "listExemptionApplications": {
+    "method": "GET",
+    "route": "/exemption-applications",
+    "policyId": "EXEMPTION-APPLICATION-LIST",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "createExemptionApplication": {
+    "method": "POST",
+    "route": "/exemption-applications",
+    "policyId": "EXEMPTION-APPLICATION-CREATE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_STUDENT",
+    "defaultDeny": true
+  },
+  "getExemptionApplication": {
+    "method": "GET",
+    "route": "/exemption-applications/{applicationId}",
+    "policyId": "EXEMPTION-APPLICATION-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "updateExemptionApplication": {
+    "method": "PATCH",
+    "route": "/exemption-applications/{applicationId}",
+    "policyId": "EXEMPTION-APPLICATION-UPDATE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_STUDENT",
+    "defaultDeny": true
+  },
+  "submitExemptionApplication": {
+    "method": "POST",
+    "route": "/exemption-applications/{applicationId}/submit",
+    "policyId": "EXEMPTION-APPLICATION-SUBMIT",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_STUDENT",
+    "defaultDeny": true
+  },
+  "reviewExemptionApplication": {
+    "method": "POST",
+    "route": "/exemption-applications/{applicationId}/review",
+    "policyId": "EXEMPTION-APPLICATION-REVIEW",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "TEACHER"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "TEACHER_CLASS_SECTION",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "getAppReleasePolicy": {
+    "method": "GET",
+    "route": "/app-release-policy",
+    "policyId": "PUBLIC-APP-RELEASE-POLICY-READ",
+    "authentication": "PUBLIC",
+    "allowedRoles": [],
+    "organizationScope": "NONE",
+    "resourceScope": "NONE",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "getSportCatalog": {
+    "method": "GET",
+    "route": "/sport-catalog",
+    "policyId": "SPORT-CATALOG-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ORGANIZATION",
+    "resourceResolver": "PRINCIPAL_ORGANIZATION",
+    "defaultDeny": true
+  },
+  "getActivityConversionRules": {
+    "method": "GET",
+    "route": "/activity-conversion-rules",
+    "policyId": "ACTIVITY-CONVERSION-RULE-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ORGANIZATION",
+    "resourceResolver": "PRINCIPAL_ORGANIZATION",
+    "defaultDeny": true
+  },
+  "startExerciseLocationTrack": {
+    "method": "POST",
+    "route": "/exercise-sessions/{sessionId}/location-track",
+    "policyId": "LOCATION-TRACK-START",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "EXERCISE_SESSION_FROM_PATH",
+    "defaultDeny": true
+  },
+  "appendExerciseLocationSamples": {
+    "method": "POST",
+    "route": "/exercise-sessions/{sessionId}/location-samples",
+    "policyId": "LOCATION-SAMPLE-APPEND",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "EXERCISE_SESSION_FROM_PATH",
+    "defaultDeny": true
+  },
+  "finalizeExerciseLocationTrack": {
+    "method": "POST",
+    "route": "/exercise-sessions/{sessionId}/location-track/finalize",
+    "policyId": "LOCATION-TRACK-FINALIZE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "EXERCISE_SESSION_FROM_PATH",
+    "defaultDeny": true
+  },
+  "getExerciseRecordLocationSummary": {
+    "method": "GET",
+    "route": "/exercise-records/{recordId}/location-summary",
+    "policyId": "LOCATION-SUMMARY-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "EXERCISE_RECORD_FROM_PATH",
+    "defaultDeny": true
+  },
+  "getLocationPrivacyPolicy": {
+    "method": "GET",
+    "route": "/location-privacy-policy",
+    "policyId": "LOCATION-PRIVACY-POLICY-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ORGANIZATION",
+    "resourceResolver": "PRINCIPAL_ORGANIZATION",
+    "defaultDeny": true
+  },
+  "updateLocationPrivacyPolicy": {
+    "method": "PATCH",
+    "route": "/location-privacy-policy",
+    "policyId": "LOCATION-PRIVACY-POLICY-UPDATE",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ORGANIZATION",
+    "resourceResolver": "PRINCIPAL_ORGANIZATION",
+    "defaultDeny": true
   }
 } as const;
 
