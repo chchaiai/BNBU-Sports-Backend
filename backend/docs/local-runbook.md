@@ -1,0 +1,180 @@
+# Greenfield Foundation 本地运行手册
+
+本手册只适用于合成 local/test 数据。禁止连接旧远程 API、未知数据库、staging/production 数据库或复制真实学生数据。
+
+## 1. 前置条件
+
+- Node.js 24 与 npm 11（CI/容器锁定 24.18.0，本轮本机验证运行时为 24.13.1）；
+- Docker Engine/Desktop 与 Compose v2，用于 PostgreSQL 18.4 和 local MinIO；
+- Git checkout 位于根仓库，`backend/` 是普通目录；
+- 可选 OpenSSL，用于生成 local-only Ed25519 密钥。
+
+容器镜像已精确锁定在 `docker-compose.yml`。PostgreSQL 和 MinIO 只绑定 loopback；bucket 默认私有。MinIO root credential 只供初始化使用，App 使用独立的 `OBJECT_STORAGE_ACCESS_KEY`/`OBJECT_STORAGE_SECRET_KEY`，且仅允许 `roster-sources/*`。Roster FILE source 使用该私有对象存储；这不代表 MediaEvidence 已实现。不要把 `.env`、PEM 或真实 Secret 提交到 Git。
+
+## 2. Windows PowerShell
+
+在 `backend/` 中执行：
+
+```powershell
+Copy-Item .env.example .env
+npm ci
+```
+
+编辑 `.env`，替换每一个 `CHANGE_ME`。Token 私钥必须是 PKCS#8 PEM，公钥必须是 SPKI PEM；多行 PEM 在 `.env` 中写成带字面量 `\n` 的单行。可以在仓库之外生成 local-only 密钥：
+
+```powershell
+openssl genpkey -algorithm ED25519 -out C:\tmp\bnbu-local-ed25519-private.pem
+openssl pkey -in C:\tmp\bnbu-local-ed25519-private.pem -pubout -out C:\tmp\bnbu-local-ed25519-public.pem
+
+$bytes = New-Object byte[] 32
+$rng = [Security.Cryptography.RandomNumberGenerator]::Create()
+$rng.GetBytes($bytes)
+[Convert]::ToBase64String($bytes)
+$rng.Dispose()
+```
+
+最后一段输出可作为 local-only `IDEMPOTENCY_ENCRYPTION_KEY`。`SECURITY_HASH_KEY`、数据库、MinIO 和 seed 密码也必须使用独立的高熵 local 值。TTL 单位都是秒，并满足：
+
+```text
+ACCESS_TOKEN_TTL < REFRESH_TOKEN_IDLE_TTL <= REFRESH_TOKEN_ABSOLUTE_TTL
+IDEMPOTENCY_LEASE < IDEMPOTENCY_RETENTION
+```
+
+启动基础设施并初始化：
+
+```powershell
+docker compose --env-file .env up -d postgres minio minio-init
+docker compose --env-file .env ps
+npm run db:generate
+npm run db:migration:check
+npm run db:migrate:deploy
+npm run db:seed:local
+npm run start:dev
+```
+
+验证：
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:3000/api/v1/health/live
+Invoke-RestMethod http://127.0.0.1:3000/api/v1/health/ready
+Invoke-RestMethod http://127.0.0.1:3000/api/v1/system-mode
+```
+
+local/development 的合同浏览页为 `http://127.0.0.1:3000/api/docs`。停止服务后保留本地卷：
+
+```powershell
+docker compose --env-file .env down
+```
+
+不要使用 `down -v`，除非明确要销毁且已核对目标是可重建的合成本地数据。
+
+## 3. macOS/Linux
+
+```bash
+cp .env.example .env
+npm ci
+# 编辑 .env 并替换全部 CHANGE_ME；密钥只保存在本机安全位置
+openssl genpkey -algorithm ED25519 -out /tmp/bnbu-local-ed25519-private.pem
+openssl pkey -in /tmp/bnbu-local-ed25519-private.pem -pubout -out /tmp/bnbu-local-ed25519-public.pem
+openssl rand -base64 32
+docker compose --env-file .env up -d postgres minio minio-init
+docker compose --env-file .env ps
+npm run db:generate
+npm run db:migration:check
+npm run db:migrate:deploy
+npm run db:seed:local
+npm run start:dev
+```
+
+把 PEM 放入 `.env` 时，将真实换行编码为字面量 `\n`。不要直接复制示例占位符；配置校验会拒绝 `CHANGE_ME`。
+
+## 4. Seed
+
+`npm run db:seed:local` 只在 `APP_ENV=local` 时运行，并要求显式 `LOCAL_SEED_TEACHER_PASSWORD` 与 `LOCAL_SEED_ADMIN_PASSWORD`。它幂等创建：
+
+- 合成 BNBU Organization；
+- 一个合成 CURRENT Semester；
+- 一个合成 Teacher User/Profile；
+- 一个合成 Admin User/Profile；
+- `NORMAL` SystemPolicy；
+- 合成 Course/ClassSection，以及无 Enrollment、历史关系、ACTIVE/REMOVED/WITHDRAWN 和身份冲突学生 fixture；
+- 一个只保存 digest、无明文 escrow 的 ACTIVE CourseInvite；需要明文邀请时必须调用受认证 API 创建。
+
+全部学生身份也是明显的合成 fixture；账号使用 `.invalid` 邮箱，不包含真实联系人、真实学号或生产 Secret。seed 可重复执行且不得产生重复身份/关系，不可用于 staging/production。
+
+## 5. 测试
+
+不依赖数据库的层：
+
+```powershell
+npm run test
+npm run test:contract
+npm run test:security
+```
+
+真实数据库层要求一个名称明确包含 `test` 的独立空 PostgreSQL 18 数据库。测试会清空 Foundation、Teaching Structure、Stage 12 Enrollment/QR Join 与 Stage 13 Roster 表；绝不能复用 local/staging/production：
+
+```powershell
+$env:TEST_DATABASE_URL = 'postgresql://test_user:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+npm run test:integration
+npm run test:e2e
+Remove-Item Env:TEST_DATABASE_URL
+```
+
+macOS/Linux：
+
+```bash
+export TEST_DATABASE_URL='postgresql://test_user:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+npm run test:integration
+npm run test:e2e
+unset TEST_DATABASE_URL
+```
+
+完整静态门禁：
+
+```powershell
+npm run format:check
+npm run lint
+npm run typecheck
+npm run contract:check
+npm run runtime-coverage:check
+npm run db:validate
+npm run db:migration:check
+npm run db:schema:drift:check
+npm run generate:check
+npm run test
+npm run test:integration
+npm run test:e2e
+npm run test:contract
+npm run test:security
+npm run build
+npm audit --audit-level=high
+```
+
+## 6. Docker image
+
+构建上下文必须是根仓库，以便构建时核对唯一 OpenAPI：
+
+```powershell
+Set-Location ..
+docker build --file backend/Dockerfile --tag bnbu-sports-backend:local .
+```
+
+Dockerfile 提供 `migrator` 和非 root `runtime` stage；runtime 不复制源码、测试、`.env` 或测试密钥。应用容器与迁移步骤必须使用不同数据库凭证。2026-08-02 的实现机器没有 Docker，这是历史事实；阶段 10B、11、12、13 后续均已在 Docker Desktop 真实构建和运行。阶段 12 证据见 [`../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md`](../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md)，Stage 13 证据见 [`../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md`](../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md)。
+
+手工运行 App 镜像时，宿主机发布端口与容器内 `PORT` 是两个不同参数。例如 `-p 127.0.0.1:53000:3000` 必须同时向容器显式注入 `PORT=3000`；不要把宿主机开发端口原样作为容器监听端口。镜像 Healthcheck 使用容器内 `PORT`，宿主机烟测还必须独立验证实际发布端口。
+
+## 7. 常见错误
+
+| 症状                       | 原因与处理                                                                |
+| -------------------------- | ------------------------------------------------------------------------- |
+| 启动报 `CHANGE_ME`         | `.env` 仍有占位符；全部替换，不添加代码 fallback                          |
+| PEM 格式错误               | 私钥不是 PKCS#8、公钥不是 SPKI，或 `.env` 未用 `\n` 编码换行              |
+| Token TTL 校验失败         | 调整显式秒数，满足 access < idle <= absolute                              |
+| Prisma 找不到 URL          | migration CLI 读取 `MIGRATION_DATABASE_URL`；应用读取 `DATABASE_URL`      |
+| readiness 失败             | 先检查 PostgreSQL、migration checksum、CURRENT Semester 与 SystemPolicy   |
+| integration 拒绝数据库 URL | `TEST_DATABASE_URL` 未设置或数据库名称不含 `test`；新建隔离测试库         |
+| CORS 被拒绝                | `CORS_ALLOWLIST` 必须是逗号分隔的精确 HTTP(S) origin，不含 path           |
+| 登录持续受限               | local 单进程限流生效；不要在代码中关闭，等待窗口或重启仅限合成 local 环境 |
+| MinIO 正常但无媒体接口     | 这是预期状态；当前只准备 private local bucket，Media Gate 未打开          |
+| Docker 不可用              | 安装/启动受支持的 Docker 环境后再验收；不得用未执行的 CI 配置冒充通过     |

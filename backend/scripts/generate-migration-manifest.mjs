@@ -1,0 +1,68 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
+const backendDirectory = path.resolve(scriptDirectory, '..');
+const migrationIds = [
+  '0001_greenfield_foundation',
+  '0002_teaching_structure',
+  '0003_identity_enrollment_qr_join',
+  '0004_official_roster_alignment',
+  '0005_exercise_session',
+  '0006_media_evidence',
+  '0007_exercise_record',
+  '0008_review_core',
+  '0009_score',
+  '0010_export_audit_governance',
+];
+const outputPath = path.join(
+  backendDirectory,
+  'src',
+  'generated',
+  'migration-manifest.generated.ts',
+);
+const checkOnly = process.argv.includes('--check');
+const manifests = migrationIds.map((migrationId) => {
+  const manifestPath = path.join(
+    backendDirectory,
+    'prisma',
+    'migrations',
+    migrationId,
+    'manifest.json',
+  );
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  if (
+    manifest.migrationId !== migrationId ||
+    !/^[a-f0-9]{64}$/.test(manifest.sha256) ||
+    manifest.destructive !== false
+  ) {
+    throw new Error(`${migrationId} manifest is invalid`);
+  }
+  return manifest;
+});
+
+const generated = `// Generated from the authoritative Prisma migration manifests. Do not edit.\n\nexport const foundationMigrations = [\n${manifests
+  .map(
+    (manifest) =>
+      `  {\n    migrationId: '${manifest.migrationId}',\n    sha256: '${manifest.sha256}',\n    destructive: false,\n  },`,
+  )
+  .join(
+    '\n',
+  )}\n] as const;\n\nexport const foundationMigration = foundationMigrations[0];\nexport const teachingStructureMigration = foundationMigrations[1];\nexport const identityEnrollmentQrJoinMigration = foundationMigrations[2];\nexport const officialRosterAlignmentMigration = foundationMigrations[3];\nexport const exerciseSessionMigration = foundationMigrations[4];\nexport const mediaEvidenceMigration = foundationMigrations[5];\n`;
+
+const generatedWithExerciseRecord = `${generated}export const exerciseRecordMigration = foundationMigrations[6];\nexport const reviewCoreMigration = foundationMigrations[7];\nexport const scoreCoreMigration = foundationMigrations[8];\nexport const exportAuditGovernanceMigration = foundationMigrations[9];\n`;
+
+if (checkOnly) {
+  if (
+    !fs.existsSync(outputPath) ||
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithExerciseRecord
+  ) {
+    throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
+  }
+  process.stdout.write('Generated migration manifest: PASS\n');
+} else {
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, generatedWithExerciseRecord, 'utf8');
+  process.stdout.write('Generated migration manifest updated.\n');
+}

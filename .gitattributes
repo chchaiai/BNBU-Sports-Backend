@@ -1,0 +1,3 @@
+*.sh text eol=lf
+backend/prisma/migrations/**/*.sql text eol=lf
+backend/src/generated/prisma/** text eol=lf whitespace=-trailing-space

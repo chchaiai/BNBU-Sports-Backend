@@ -1,0 +1,15 @@
+*
+!backend/
+!backend/**
+!docs/
+!docs/backend-contracts/
+!docs/backend-contracts/openapi.yaml
+backend/node_modules/
+backend/dist/
+backend/coverage/
+backend/test/
+backend/.env
+backend/.env.*
+!backend/.env.example
+!backend/.env.test.example
+**/.git/
