@@ -5,7 +5,8 @@ export interface MediaPolicyContext {
   organizationId: string;
   ownerStudentId: string;
   ownerUserId: string;
-  sessionId: string;
+  sessionId: string | null;
+  enrollmentId: string | null;
   classSectionId: string;
   teacherUserId: string;
   uploadStatus: string;

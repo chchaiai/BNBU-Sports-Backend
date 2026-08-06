@@ -55,6 +55,8 @@ export function foundationEnvironment(databaseUrl: string, port: number): NodeJS
     QR_JOIN_SECRET_REPLAY_SECONDS: '3600',
     QR_JOIN_PUBLIC_RATE_LIMIT_WINDOW_SECONDS: '60',
     QR_JOIN_PUBLIC_RATE_LIMIT_MAX_REQUESTS: '100',
+    PUSH_TOKEN_ENCRYPTION_KEY: Buffer.alloc(32, 17).toString('base64'),
+    PUSH_TOKEN_ENCRYPTION_KEY_VERSION: '1',
     MEDIA_STORAGE_REQUIRED: 'true',
     MEDIA_STORAGE_ENDPOINT: 'http://media-storage.test:9000',
     MEDIA_STORAGE_REGION: 'us-east-1',

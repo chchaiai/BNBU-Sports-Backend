@@ -6,6 +6,7 @@ const SENSITIVE_KEYS = new Set(
     'refreshToken',
     'password',
     'verificationCode',
+    'registrationToken',
     'inviteToken',
     'joinCapability',
     'signedUrl',
@@ -25,6 +26,10 @@ const SENSITIVE_KEYS = new Set(
     'secretCiphertext',
     'resultCiphertext',
     'tokenHash',
+    'registrationTokenHash',
+    'registrationTokenCiphertext',
+    'codeDigest',
+    'accountDigest',
     'databaseUrl',
     'database_url',
     'minioSecretKey',
@@ -47,6 +52,19 @@ const SENSITIVE_KEYS = new Set(
     'security_hash_key',
     'qr_join_token_hash_key',
     'qr_join_secret_encryption_key',
+    'auth_code_digest_key',
+    'auth_result_escrow_key',
+    'push_token_encryption_key',
+    'location_data_encryption_key',
+    'location_worker_database_url',
+    'latitude',
+    'longitude',
+    'coordinates',
+    'coordinate',
+    'locationSamples',
+    'samples',
+    'coarseRoutePolyline',
+    'ciphertext',
     'fileChecksumSha256',
     'declaredChecksumSha256',
     'file_checksum_sha256',
@@ -93,9 +111,14 @@ export function redactSensitive(value: unknown, seen = new WeakSet<object>()): u
 
   const output: Record<string, unknown> = {};
   for (const [key, entry] of Object.entries(value)) {
-    output[key] = SENSITIVE_KEYS.has(key.toLowerCase())
-      ? REDACTED_VALUE
-      : redactSensitive(entry, seen);
+    const normalizedKey = key.toLowerCase();
+    const authenticationCode =
+      normalizedKey === 'code' &&
+      ('challengeId' in value || 'recoveryId' in value || 'deliveryId' in value);
+    output[key] =
+      SENSITIVE_KEYS.has(normalizedKey) || authenticationCode
+        ? REDACTED_VALUE
+        : redactSensitive(entry, seen);
   }
   return output;
 }

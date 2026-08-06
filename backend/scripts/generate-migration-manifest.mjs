@@ -15,6 +15,8 @@ const migrationIds = [
   '0008_review_core',
   '0009_score',
   '0010_export_audit_governance',
+  '0011_client_capabilities',
+  '0012_ios_auth_release_exemption',
 ];
 const outputPath = path.join(
   backendDirectory,
@@ -52,17 +54,19 @@ const generated = `// Generated from the authoritative Prisma migration manifest
   )}\n] as const;\n\nexport const foundationMigration = foundationMigrations[0];\nexport const teachingStructureMigration = foundationMigrations[1];\nexport const identityEnrollmentQrJoinMigration = foundationMigrations[2];\nexport const officialRosterAlignmentMigration = foundationMigrations[3];\nexport const exerciseSessionMigration = foundationMigrations[4];\nexport const mediaEvidenceMigration = foundationMigrations[5];\n`;
 
 const generatedWithExerciseRecord = `${generated}export const exerciseRecordMigration = foundationMigrations[6];\nexport const reviewCoreMigration = foundationMigrations[7];\nexport const scoreCoreMigration = foundationMigrations[8];\nexport const exportAuditGovernanceMigration = foundationMigrations[9];\n`;
+const generatedWithClientCapabilities = `${generatedWithExerciseRecord}export const clientCapabilitiesMigration = foundationMigrations[10];\n`;
+const generatedWithIosIntegration = `${generatedWithClientCapabilities}export const iosAuthReleaseExemptionMigration = foundationMigrations[11];\n`;
 
 if (checkOnly) {
   if (
     !fs.existsSync(outputPath) ||
-    fs.readFileSync(outputPath, 'utf8') !== generatedWithExerciseRecord
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithIosIntegration
   ) {
     throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
   }
   process.stdout.write('Generated migration manifest: PASS\n');
 } else {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, generatedWithExerciseRecord, 'utf8');
+  fs.writeFileSync(outputPath, generatedWithIosIntegration, 'utf8');
   process.stdout.write('Generated migration manifest updated.\n');
 }

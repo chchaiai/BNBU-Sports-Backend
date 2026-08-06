@@ -25,6 +25,11 @@ export interface MediaConfig {
   workerPollMs: number;
 }
 
+export interface PushConfig {
+  registrationTokenEncryptionKey: Buffer;
+  encryptionKeyVersion: number;
+}
+
 export interface RuntimeConfig {
   appEnvironment: AppEnvironment;
   appVersion: string;
@@ -58,6 +63,7 @@ export interface RuntimeConfig {
   qrJoinPublicRateLimitMaxRequests: number;
   objectStorage: ObjectStorageConfig | null;
   media: MediaConfig | null;
+  push: PushConfig | null;
 }
 
 function required(raw: Record<string, unknown>, name: string): string {
@@ -297,6 +303,24 @@ function mediaConfiguration(
   };
 }
 
+function pushConfiguration(raw: Record<string, unknown>): PushConfig | null {
+  const names = ['PUSH_TOKEN_ENCRYPTION_KEY', 'PUSH_TOKEN_ENCRYPTION_KEY_VERSION'] as const;
+  const presentCount = names.filter((name) => {
+    const value = raw[name];
+    return typeof value === 'string' && value.trim().length > 0;
+  }).length;
+  if (presentCount === 0) return null;
+  if (presentCount !== names.length) {
+    throw new Error('Push token encryption configuration must be either complete or omitted');
+  }
+  return {
+    registrationTokenEncryptionKey: base64Key(raw, 'PUSH_TOKEN_ENCRYPTION_KEY'),
+    encryptionKeyVersion: integer(raw, 'PUSH_TOKEN_ENCRYPTION_KEY_VERSION', {
+      minimum: 1,
+    }),
+  };
+}
+
 export function validateEnvironment(raw: Record<string, unknown>): Record<string, unknown> {
   const appEnvironment = required(raw, 'APP_ENV');
   if (!APP_ENVIRONMENTS.includes(appEnvironment as AppEnvironment)) {
@@ -404,6 +428,7 @@ export function validateEnvironment(raw: Record<string, unknown>): Record<string
     }),
     objectStorage: objectStorage(raw, appEnvironment as AppEnvironment),
     media: mediaConfiguration(raw, appEnvironment as AppEnvironment),
+    push: pushConfiguration(raw),
   };
 
   return { ...raw, RUNTIME_CONFIG: runtimeConfig };

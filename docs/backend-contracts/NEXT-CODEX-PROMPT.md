@@ -1,6 +1,6 @@
 # BNBU Sports Greenfield Stage 20B-P 接续提示词
 
-> Stage 21 更新：本提示词的 staging 目标不变，但机器合同已扩展到 OpenAPI `1.1.0-contract`。执行前必须先读 `21-client-capabilities-contract-baseline.json`、`21-client-capabilities-operation-map.md` 和 `21-client-capabilities-default-deny-report.md`；新增 30 项必须继续作为真实 default deny 验证，不能在 staging 中假启用。
+> Stage 21 更新：本提示词的 staging 目标不变，但机器合同已扩展到 OpenAPI `1.3.0-contract`。执行前必须先读 `21-client-capabilities-contract-baseline.json`、`21-client-capabilities-operation-map.md`、`21-client-capabilities-local-integration-report.md` 和 `21-client-capabilities-default-deny-report.md`；22 项仅本地集成不得冒充 Staging/生产开放，其余 8 项必须继续作为真实 default deny 验证。
 
 你现在需要执行：“Stage 20B-P — Synthetic Staging 基础设施决策落盘、部署准备与 Runtime Gate”。本阶段不是 Export、Production 或客户端业务联调；只有 staging runtime Gate 真实通过后，才允许另开任务开始 Auth 模块的 Android→Web 联调。
 
@@ -12,9 +12,9 @@
 - Stage 20A 输入 HEAD：`ce133432d0aa247d29db78cc7e14a47d398bc5fc`
 - 最终客户端批准落盘 HEAD：以旧账号最终输出和 `git rev-parse HEAD` 为准；输入 HEAD 必须是其祖先
 - Monorepo 普通目录：`backend/`、`BNBU-Sports-Android-master/`、`BNBU-Sports-Web-new/`；gitlinks=0、nestedGit=0
-- OpenAPI：version `1.1.0-contract`；SHA-256 `fb040b671e3f25c48279ad6b173ced5f633de1b1a1a9db0cc0f23a11e3fde4d1`
-- runtime coverage：122 operations / 82 verified / 40 exact default deny / 0 not implemented / 0 blocked
-- Migration：0001–0010；不得创建 `0011_export_core`
+- OpenAPI：version `1.3.0-contract`；当前工作树 SHA-256：`914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9`
+- runtime coverage：122 operations / 104 verified / 18 exact default deny / 0 not implemented / 0 blocked
+- Migration：0001–0012，其中 0011 为 `client_capabilities`，0012 为 `ios_auth_release_exemption`；不得创建或冒充 `0011_export_core`
 - Stage 19/20A 已提交基线证据：63 Unit + 41 Integration + 40 E2E + 27 Contract + 38 Security = 209/209
 
 ## 二、先读和 Git Gate
@@ -47,7 +47,7 @@ npm --prefix backend run repo-layout:check
 Get-FileHash -Algorithm SHA256 docs/backend-contracts/openapi.yaml
 ```
 
-必须工作树 clean、祖先检查 exit 0、OpenAPI hash 一致、layout `clients=2/gitlinks=0/nestedGit=0`、无进行中的 merge/rebase/cherry-pick/revert、0001–0010 不变且不存在 0011。否则停止，不 stash/reset/restore/clean。
+必须工作树 clean、祖先检查 exit 0、OpenAPI hash 一致、layout `clients=2/gitlinks=0/nestedGit=0`、无进行中的 merge/rebase/cherry-pick/revert、0001–0010 与已接受的 `0011_client_capabilities` checksum 不变且不存在未登记 Migration。否则停止，不 stash/reset/restore/clean。
 
 ## 三、已经批准的事实
 
@@ -86,8 +86,8 @@ FULL_PRODUCTION_GATE=NO
 2. 建立与 local/production 隔离的 HTTPS synthetic staging；独立 PostgreSQL、private object storage、Secret 与 issuer/audience/CORS/cookie scope。
 3. Secret 只通过批准的托管机制注入，不进入 Git、image、日志或客户端。
 4. 实现/配置安全 synthetic seed/reset：环境 identity fail closed、仅合成账号、DB/bucket 精确清理、旧 Token 失效、可审计 requestId、重复运行确定。
-5. 保持既有 0001–0010，执行空库 first/repeat migration、drift 0、App/Migrator 权限分离；不创建 0011。
-6. 验证 122-operation disposition、private Media、Auth rotation/reuse/logout、Score、Audit/requestId tracing；四个 Export operation与 Stage 21 新增 30 项必须继续 `SYSTEM_MODE_UNSUPPORTED`。
+5. 保持既有 0001–0011，执行空库 first/repeat migration、drift 0、App/Migrator 权限分离；不修改完成的 Migration。
+6. 验证 122-operation disposition、private Media、Auth rotation/reuse/logout、Score、Audit/requestId tracing；四个 Export operation及 Stage 21 剩余 18 项必须继续 `SYSTEM_MODE_UNSUPPORTED`。12 项本地实现只有在独立 Staging 部署和验收通过后才能提升环境结论。
 7. 为 Android/Web staging test build 准备显式单一 Base URL 与同一 OpenAPI hash；在 runtime Gate 前不改业务 UI，不开始 Auth 联调。
 8. 验证 HTTPS、CORS/cookie/CSRF、日志脱敏、restart/persistence、reset safety、Mock/旧 API 不可达与 teardown。
 9. 生成独立 runtime validation 报告；只有全部通过才把 `STAGING_RUNTIME_READINESS` 改为 YES。

@@ -401,6 +401,7 @@ export type ExerciseRecordWhereInput = {
   reviews?: Prisma.ReviewRecordListRelationFilter
   scoreContributions?: Prisma.ScoreContributionListRelationFilter
   dailySlot?: Prisma.XOR<Prisma.ExerciseRecordDailySlotNullableScalarRelationFilter, Prisma.ExerciseRecordDailySlotWhereInput> | null
+  locationSummary?: Prisma.XOR<Prisma.LocationSummaryNullableScalarRelationFilter, Prisma.LocationSummaryWhereInput> | null
 }
 
 export type ExerciseRecordOrderByWithRelationInput = {
@@ -442,6 +443,7 @@ export type ExerciseRecordOrderByWithRelationInput = {
   reviews?: Prisma.ReviewRecordOrderByRelationAggregateInput
   scoreContributions?: Prisma.ScoreContributionOrderByRelationAggregateInput
   dailySlot?: Prisma.ExerciseRecordDailySlotOrderByWithRelationInput
+  locationSummary?: Prisma.LocationSummaryOrderByWithRelationInput
 }
 
 export type ExerciseRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -490,6 +492,7 @@ export type ExerciseRecordWhereUniqueInput = Prisma.AtLeast<{
   reviews?: Prisma.ReviewRecordListRelationFilter
   scoreContributions?: Prisma.ScoreContributionListRelationFilter
   dailySlot?: Prisma.XOR<Prisma.ExerciseRecordDailySlotNullableScalarRelationFilter, Prisma.ExerciseRecordDailySlotWhereInput> | null
+  locationSummary?: Prisma.XOR<Prisma.LocationSummaryNullableScalarRelationFilter, Prisma.LocationSummaryWhereInput> | null
 }, "id" | "sessionId" | "id_organizationId" | "id_sessionId_studentId_organizationId" | "id_enrollmentId_organizationId_businessDate" | "sessionId_enrollmentId_semesterId_classSectionId_studentId_organizationId">
 
 export type ExerciseRecordOrderByWithAggregationInput = {
@@ -587,6 +590,7 @@ export type ExerciseRecordCreateInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateInput = {
@@ -620,6 +624,7 @@ export type ExerciseRecordUncheckedCreateInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUpdateInput = {
@@ -653,6 +658,7 @@ export type ExerciseRecordUpdateInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateInput = {
@@ -686,6 +692,7 @@ export type ExerciseRecordUncheckedUpdateInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateManyInput = {
@@ -1306,6 +1313,22 @@ export type ExerciseRecordUpdateOneRequiredWithoutScoreContributionsNestedInput 
   update?: Prisma.XOR<Prisma.XOR<Prisma.ExerciseRecordUpdateToOneWithWhereWithoutScoreContributionsInput, Prisma.ExerciseRecordUpdateWithoutScoreContributionsInput>, Prisma.ExerciseRecordUncheckedUpdateWithoutScoreContributionsInput>
 }
 
+export type ExerciseRecordCreateNestedOneWithoutLocationSummaryInput = {
+  create?: Prisma.XOR<Prisma.ExerciseRecordCreateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedCreateWithoutLocationSummaryInput>
+  connectOrCreate?: Prisma.ExerciseRecordCreateOrConnectWithoutLocationSummaryInput
+  connect?: Prisma.ExerciseRecordWhereUniqueInput
+}
+
+export type ExerciseRecordUpdateOneWithoutLocationSummaryNestedInput = {
+  create?: Prisma.XOR<Prisma.ExerciseRecordCreateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedCreateWithoutLocationSummaryInput>
+  connectOrCreate?: Prisma.ExerciseRecordCreateOrConnectWithoutLocationSummaryInput
+  upsert?: Prisma.ExerciseRecordUpsertWithoutLocationSummaryInput
+  disconnect?: Prisma.ExerciseRecordWhereInput | boolean
+  delete?: Prisma.ExerciseRecordWhereInput | boolean
+  connect?: Prisma.ExerciseRecordWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ExerciseRecordUpdateToOneWithWhereWithoutLocationSummaryInput, Prisma.ExerciseRecordUpdateWithoutLocationSummaryInput>, Prisma.ExerciseRecordUncheckedUpdateWithoutLocationSummaryInput>
+}
+
 export type ExerciseRecordCreateWithoutOrganizationInput = {
   id: string
   businessDate: Date | string
@@ -1336,6 +1359,7 @@ export type ExerciseRecordCreateWithoutOrganizationInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutOrganizationInput = {
@@ -1368,6 +1392,7 @@ export type ExerciseRecordUncheckedCreateWithoutOrganizationInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutOrganizationInput = {
@@ -1457,6 +1482,7 @@ export type ExerciseRecordCreateWithoutStudentInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutStudentInput = {
@@ -1488,6 +1514,7 @@ export type ExerciseRecordUncheckedCreateWithoutStudentInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutStudentInput = {
@@ -1546,6 +1573,7 @@ export type ExerciseRecordCreateWithoutTeacherInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutTeacherInput = {
@@ -1577,6 +1605,7 @@ export type ExerciseRecordUncheckedCreateWithoutTeacherInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutTeacherInput = {
@@ -1635,6 +1664,7 @@ export type ExerciseRecordCreateWithoutSemesterInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutSemesterInput = {
@@ -1666,6 +1696,7 @@ export type ExerciseRecordUncheckedCreateWithoutSemesterInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutSemesterInput = {
@@ -1724,6 +1755,7 @@ export type ExerciseRecordCreateWithoutCourseInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutCourseInput = {
@@ -1755,6 +1787,7 @@ export type ExerciseRecordUncheckedCreateWithoutCourseInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutCourseInput = {
@@ -1813,6 +1846,7 @@ export type ExerciseRecordCreateWithoutClassSectionInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutClassSectionInput = {
@@ -1841,6 +1875,7 @@ export type ExerciseRecordUncheckedCreateWithoutClassSectionInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutClassSectionInput = {
@@ -1899,6 +1934,7 @@ export type ExerciseRecordCreateWithoutEnrollmentInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutEnrollmentInput = {
@@ -1927,6 +1963,7 @@ export type ExerciseRecordUncheckedCreateWithoutEnrollmentInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutEnrollmentInput = {
@@ -1985,6 +2022,7 @@ export type ExerciseRecordCreateWithoutSessionInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutSessionInput = {
@@ -2012,6 +2050,7 @@ export type ExerciseRecordUncheckedCreateWithoutSessionInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutSessionInput = {
@@ -2060,6 +2099,7 @@ export type ExerciseRecordUpdateWithoutSessionInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutSessionInput = {
@@ -2087,6 +2127,7 @@ export type ExerciseRecordUncheckedUpdateWithoutSessionInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateWithoutMediaInput = {
@@ -2119,6 +2160,7 @@ export type ExerciseRecordCreateWithoutMediaInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutMediaInput = {
@@ -2151,6 +2193,7 @@ export type ExerciseRecordUncheckedCreateWithoutMediaInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutMediaInput = {
@@ -2199,6 +2242,7 @@ export type ExerciseRecordUpdateWithoutMediaInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutMediaInput = {
@@ -2231,6 +2275,7 @@ export type ExerciseRecordUncheckedUpdateWithoutMediaInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateWithoutDailySlotInput = {
@@ -2263,6 +2308,7 @@ export type ExerciseRecordCreateWithoutDailySlotInput = {
   events?: Prisma.ExerciseRecordEventCreateNestedManyWithoutRecordInput
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutDailySlotInput = {
@@ -2295,6 +2341,7 @@ export type ExerciseRecordUncheckedCreateWithoutDailySlotInput = {
   events?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutRecordInput
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutDailySlotInput = {
@@ -2343,6 +2390,7 @@ export type ExerciseRecordUpdateWithoutDailySlotInput = {
   events?: Prisma.ExerciseRecordEventUpdateManyWithoutRecordNestedInput
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutDailySlotInput = {
@@ -2375,6 +2423,7 @@ export type ExerciseRecordUncheckedUpdateWithoutDailySlotInput = {
   events?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutRecordNestedInput
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateWithoutEventsInput = {
@@ -2407,6 +2456,7 @@ export type ExerciseRecordCreateWithoutEventsInput = {
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutEventsInput = {
@@ -2439,6 +2489,7 @@ export type ExerciseRecordUncheckedCreateWithoutEventsInput = {
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutEventsInput = {
@@ -2487,6 +2538,7 @@ export type ExerciseRecordUpdateWithoutEventsInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutEventsInput = {
@@ -2519,6 +2571,7 @@ export type ExerciseRecordUncheckedUpdateWithoutEventsInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateWithoutReviewsInput = {
@@ -2551,6 +2604,7 @@ export type ExerciseRecordCreateWithoutReviewsInput = {
   events?: Prisma.ExerciseRecordEventCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutReviewsInput = {
@@ -2583,6 +2637,7 @@ export type ExerciseRecordUncheckedCreateWithoutReviewsInput = {
   events?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutRecordInput
   scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutReviewsInput = {
@@ -2631,6 +2686,7 @@ export type ExerciseRecordUpdateWithoutReviewsInput = {
   events?: Prisma.ExerciseRecordEventUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutReviewsInput = {
@@ -2663,6 +2719,7 @@ export type ExerciseRecordUncheckedUpdateWithoutReviewsInput = {
   events?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordCreateWithoutScoreContributionsInput = {
@@ -2695,6 +2752,7 @@ export type ExerciseRecordCreateWithoutScoreContributionsInput = {
   events?: Prisma.ExerciseRecordEventCreateNestedManyWithoutRecordInput
   reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordUncheckedCreateWithoutScoreContributionsInput = {
@@ -2727,6 +2785,7 @@ export type ExerciseRecordUncheckedCreateWithoutScoreContributionsInput = {
   events?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutRecordInput
   reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+  locationSummary?: Prisma.LocationSummaryUncheckedCreateNestedOneWithoutRecordInput
 }
 
 export type ExerciseRecordCreateOrConnectWithoutScoreContributionsInput = {
@@ -2775,6 +2834,7 @@ export type ExerciseRecordUpdateWithoutScoreContributionsInput = {
   events?: Prisma.ExerciseRecordEventUpdateManyWithoutRecordNestedInput
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutScoreContributionsInput = {
@@ -2806,6 +2866,155 @@ export type ExerciseRecordUncheckedUpdateWithoutScoreContributionsInput = {
   media?: Prisma.ExerciseRecordMediaUncheckedUpdateManyWithoutRecordNestedInput
   events?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutRecordNestedInput
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
+  dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
+}
+
+export type ExerciseRecordCreateWithoutLocationSummaryInput = {
+  id: string
+  businessDate: Date | string
+  creditType: string
+  sportType: string
+  sportName?: string | null
+  description: string
+  studentRemark?: string | null
+  actualDurationSeconds: bigint | number
+  pausedDurationSeconds: bigint | number
+  creditedDurationSeconds: bigint | number
+  status: string
+  submittedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  clientRequestId: string
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutExerciseRecordsInput
+  semester: Prisma.SemesterCreateNestedOneWithoutExerciseRecordsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutExerciseRecordsInput
+  enrollment: Prisma.EnrollmentCreateNestedOneWithoutExerciseRecordsInput
+  classSection: Prisma.ClassSectionCreateNestedOneWithoutExerciseRecordsInput
+  course: Prisma.CourseCreateNestedOneWithoutExerciseRecordsInput
+  teacher: Prisma.TeacherProfileCreateNestedOneWithoutExerciseRecordsInput
+  session: Prisma.ExerciseSessionCreateNestedOneWithoutExerciseRecordInput
+  media?: Prisma.ExerciseRecordMediaCreateNestedManyWithoutRecordInput
+  events?: Prisma.ExerciseRecordEventCreateNestedManyWithoutRecordInput
+  reviews?: Prisma.ReviewRecordCreateNestedManyWithoutRecordInput
+  scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutRecordInput
+  dailySlot?: Prisma.ExerciseRecordDailySlotCreateNestedOneWithoutRecordInput
+}
+
+export type ExerciseRecordUncheckedCreateWithoutLocationSummaryInput = {
+  id: string
+  organizationId: string
+  semesterId: string
+  studentId: string
+  enrollmentId: string
+  classSectionId: string
+  courseId: string
+  teacherId: string
+  sessionId: string
+  businessDate: Date | string
+  creditType: string
+  sportType: string
+  sportName?: string | null
+  description: string
+  studentRemark?: string | null
+  actualDurationSeconds: bigint | number
+  pausedDurationSeconds: bigint | number
+  creditedDurationSeconds: bigint | number
+  status: string
+  submittedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  clientRequestId: string
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  media?: Prisma.ExerciseRecordMediaUncheckedCreateNestedManyWithoutRecordInput
+  events?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutRecordInput
+  reviews?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutRecordInput
+  scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutRecordInput
+  dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedOneWithoutRecordInput
+}
+
+export type ExerciseRecordCreateOrConnectWithoutLocationSummaryInput = {
+  where: Prisma.ExerciseRecordWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExerciseRecordCreateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedCreateWithoutLocationSummaryInput>
+}
+
+export type ExerciseRecordUpsertWithoutLocationSummaryInput = {
+  update: Prisma.XOR<Prisma.ExerciseRecordUpdateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedUpdateWithoutLocationSummaryInput>
+  create: Prisma.XOR<Prisma.ExerciseRecordCreateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedCreateWithoutLocationSummaryInput>
+  where?: Prisma.ExerciseRecordWhereInput
+}
+
+export type ExerciseRecordUpdateToOneWithWhereWithoutLocationSummaryInput = {
+  where?: Prisma.ExerciseRecordWhereInput
+  data: Prisma.XOR<Prisma.ExerciseRecordUpdateWithoutLocationSummaryInput, Prisma.ExerciseRecordUncheckedUpdateWithoutLocationSummaryInput>
+}
+
+export type ExerciseRecordUpdateWithoutLocationSummaryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditType?: Prisma.StringFieldUpdateOperationsInput | string
+  sportType?: Prisma.StringFieldUpdateOperationsInput | string
+  sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  studentRemark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientRequestId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  semester?: Prisma.SemesterUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  classSection?: Prisma.ClassSectionUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  teacher?: Prisma.TeacherProfileUpdateOneRequiredWithoutExerciseRecordsNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutExerciseRecordNestedInput
+  media?: Prisma.ExerciseRecordMediaUpdateManyWithoutRecordNestedInput
+  events?: Prisma.ExerciseRecordEventUpdateManyWithoutRecordNestedInput
+  reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
+  scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
+  dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+}
+
+export type ExerciseRecordUncheckedUpdateWithoutLocationSummaryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  semesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
+  teacherId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditType?: Prisma.StringFieldUpdateOperationsInput | string
+  sportType?: Prisma.StringFieldUpdateOperationsInput | string
+  sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  studentRemark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientRequestId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  media?: Prisma.ExerciseRecordMediaUncheckedUpdateManyWithoutRecordNestedInput
+  events?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutRecordNestedInput
+  reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
+  scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
 }
 
@@ -2866,6 +3075,7 @@ export type ExerciseRecordUpdateWithoutOrganizationInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutOrganizationInput = {
@@ -2898,6 +3108,7 @@ export type ExerciseRecordUncheckedUpdateWithoutOrganizationInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutOrganizationInput = {
@@ -2983,6 +3194,7 @@ export type ExerciseRecordUpdateWithoutStudentInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutStudentInput = {
@@ -3014,6 +3226,7 @@ export type ExerciseRecordUncheckedUpdateWithoutStudentInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutStudentInput = {
@@ -3098,6 +3311,7 @@ export type ExerciseRecordUpdateWithoutTeacherInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutTeacherInput = {
@@ -3129,6 +3343,7 @@ export type ExerciseRecordUncheckedUpdateWithoutTeacherInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutTeacherInput = {
@@ -3213,6 +3428,7 @@ export type ExerciseRecordUpdateWithoutSemesterInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutSemesterInput = {
@@ -3244,6 +3460,7 @@ export type ExerciseRecordUncheckedUpdateWithoutSemesterInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutSemesterInput = {
@@ -3328,6 +3545,7 @@ export type ExerciseRecordUpdateWithoutCourseInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutCourseInput = {
@@ -3359,6 +3577,7 @@ export type ExerciseRecordUncheckedUpdateWithoutCourseInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutCourseInput = {
@@ -3440,6 +3659,7 @@ export type ExerciseRecordUpdateWithoutClassSectionInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutClassSectionInput = {
@@ -3468,6 +3688,7 @@ export type ExerciseRecordUncheckedUpdateWithoutClassSectionInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutClassSectionInput = {
@@ -3546,6 +3767,7 @@ export type ExerciseRecordUpdateWithoutEnrollmentInput = {
   reviews?: Prisma.ReviewRecordUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateWithoutEnrollmentInput = {
@@ -3574,6 +3796,7 @@ export type ExerciseRecordUncheckedUpdateWithoutEnrollmentInput = {
   reviews?: Prisma.ReviewRecordUncheckedUpdateManyWithoutRecordNestedInput
   scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutRecordNestedInput
   dailySlot?: Prisma.ExerciseRecordDailySlotUncheckedUpdateOneWithoutRecordNestedInput
+  locationSummary?: Prisma.LocationSummaryUncheckedUpdateOneWithoutRecordNestedInput
 }
 
 export type ExerciseRecordUncheckedUpdateManyWithoutEnrollmentInput = {
@@ -3696,6 +3919,7 @@ export type ExerciseRecordSelect<ExtArgs extends runtime.Types.Extensions.Intern
   reviews?: boolean | Prisma.ExerciseRecord$reviewsArgs<ExtArgs>
   scoreContributions?: boolean | Prisma.ExerciseRecord$scoreContributionsArgs<ExtArgs>
   dailySlot?: boolean | Prisma.ExerciseRecord$dailySlotArgs<ExtArgs>
+  locationSummary?: boolean | Prisma.ExerciseRecord$locationSummaryArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseRecordCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exerciseRecord"]>
 
@@ -3814,6 +4038,7 @@ export type ExerciseRecordInclude<ExtArgs extends runtime.Types.Extensions.Inter
   reviews?: boolean | Prisma.ExerciseRecord$reviewsArgs<ExtArgs>
   scoreContributions?: boolean | Prisma.ExerciseRecord$scoreContributionsArgs<ExtArgs>
   dailySlot?: boolean | Prisma.ExerciseRecord$dailySlotArgs<ExtArgs>
+  locationSummary?: boolean | Prisma.ExerciseRecord$locationSummaryArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseRecordCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ExerciseRecordIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3853,6 +4078,7 @@ export type $ExerciseRecordPayload<ExtArgs extends runtime.Types.Extensions.Inte
     reviews: Prisma.$ReviewRecordPayload<ExtArgs>[]
     scoreContributions: Prisma.$ScoreContributionPayload<ExtArgs>[]
     dailySlot: Prisma.$ExerciseRecordDailySlotPayload<ExtArgs> | null
+    locationSummary: Prisma.$LocationSummaryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4287,6 +4513,7 @@ export interface Prisma__ExerciseRecordClient<T, Null = never, ExtArgs extends r
   reviews<T extends Prisma.ExerciseRecord$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseRecord$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scoreContributions<T extends Prisma.ExerciseRecord$scoreContributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseRecord$scoreContributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScoreContributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dailySlot<T extends Prisma.ExerciseRecord$dailySlotArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseRecord$dailySlotArgs<ExtArgs>>): Prisma.Prisma__ExerciseRecordDailySlotClient<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordDailySlotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  locationSummary<T extends Prisma.ExerciseRecord$locationSummaryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseRecord$locationSummaryArgs<ExtArgs>>): Prisma.Prisma__LocationSummaryClient<runtime.Types.Result.GetResult<Prisma.$LocationSummaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4854,6 +5081,25 @@ export type ExerciseRecord$dailySlotArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.ExerciseRecordDailySlotInclude<ExtArgs> | null
   where?: Prisma.ExerciseRecordDailySlotWhereInput
+}
+
+/**
+ * ExerciseRecord.locationSummary
+ */
+export type ExerciseRecord$locationSummaryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationSummary
+   */
+  select?: Prisma.LocationSummarySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationSummary
+   */
+  omit?: Prisma.LocationSummaryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationSummaryInclude<ExtArgs> | null
+  where?: Prisma.LocationSummaryWhereInput
 }
 
 /**

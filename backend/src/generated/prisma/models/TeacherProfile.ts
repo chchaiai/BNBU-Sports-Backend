@@ -285,6 +285,7 @@ export type TeacherProfileWhereInput = {
   classSections?: Prisma.ClassSectionListRelationFilter
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   reviewRecords?: Prisma.ReviewRecordListRelationFilter
+  exemptionReviews?: Prisma.ExemptionReviewRecordListRelationFilter
 }
 
 export type TeacherProfileOrderByWithRelationInput = {
@@ -306,6 +307,7 @@ export type TeacherProfileOrderByWithRelationInput = {
   classSections?: Prisma.ClassSectionOrderByRelationAggregateInput
   exerciseRecords?: Prisma.ExerciseRecordOrderByRelationAggregateInput
   reviewRecords?: Prisma.ReviewRecordOrderByRelationAggregateInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordOrderByRelationAggregateInput
 }
 
 export type TeacherProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -333,6 +335,7 @@ export type TeacherProfileWhereUniqueInput = Prisma.AtLeast<{
   classSections?: Prisma.ClassSectionListRelationFilter
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   reviewRecords?: Prisma.ReviewRecordListRelationFilter
+  exemptionReviews?: Prisma.ExemptionReviewRecordListRelationFilter
 }, "id" | "userId" | "id_organizationId" | "organizationId_employeeNumber" | "userId_organizationId">
 
 export type TeacherProfileOrderByWithAggregationInput = {
@@ -392,6 +395,7 @@ export type TeacherProfileCreateInput = {
   classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateInput = {
@@ -411,6 +415,7 @@ export type TeacherProfileUncheckedCreateInput = {
   classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUpdateInput = {
@@ -430,6 +435,7 @@ export type TeacherProfileUpdateInput = {
   classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateInput = {
@@ -449,6 +455,7 @@ export type TeacherProfileUncheckedUpdateInput = {
   classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileCreateManyInput = {
@@ -706,6 +713,20 @@ export type TeacherProfileUpdateOneWithoutReviewRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeacherProfileUpdateToOneWithWhereWithoutReviewRecordsInput, Prisma.TeacherProfileUpdateWithoutReviewRecordsInput>, Prisma.TeacherProfileUncheckedUpdateWithoutReviewRecordsInput>
 }
 
+export type TeacherProfileCreateNestedOneWithoutExemptionReviewsInput = {
+  create?: Prisma.XOR<Prisma.TeacherProfileCreateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedCreateWithoutExemptionReviewsInput>
+  connectOrCreate?: Prisma.TeacherProfileCreateOrConnectWithoutExemptionReviewsInput
+  connect?: Prisma.TeacherProfileWhereUniqueInput
+}
+
+export type TeacherProfileUpdateOneRequiredWithoutExemptionReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.TeacherProfileCreateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedCreateWithoutExemptionReviewsInput>
+  connectOrCreate?: Prisma.TeacherProfileCreateOrConnectWithoutExemptionReviewsInput
+  upsert?: Prisma.TeacherProfileUpsertWithoutExemptionReviewsInput
+  connect?: Prisma.TeacherProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeacherProfileUpdateToOneWithWhereWithoutExemptionReviewsInput, Prisma.TeacherProfileUpdateWithoutExemptionReviewsInput>, Prisma.TeacherProfileUncheckedUpdateWithoutExemptionReviewsInput>
+}
+
 export type TeacherProfileCreateWithoutOrganizationInput = {
   id: string
   employeeNumber: string
@@ -722,6 +743,7 @@ export type TeacherProfileCreateWithoutOrganizationInput = {
   classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateWithoutOrganizationInput = {
@@ -740,6 +762,7 @@ export type TeacherProfileUncheckedCreateWithoutOrganizationInput = {
   classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileCreateOrConnectWithoutOrganizationInput = {
@@ -803,6 +826,7 @@ export type TeacherProfileCreateWithoutUserInput = {
   classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateWithoutUserInput = {
@@ -820,6 +844,7 @@ export type TeacherProfileUncheckedCreateWithoutUserInput = {
   classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileCreateOrConnectWithoutUserInput = {
@@ -854,6 +879,7 @@ export type TeacherProfileUpdateWithoutUserInput = {
   classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateWithoutUserInput = {
@@ -871,6 +897,7 @@ export type TeacherProfileUncheckedUpdateWithoutUserInput = {
   classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileCreateWithoutClassSectionsInput = {
@@ -889,6 +916,7 @@ export type TeacherProfileCreateWithoutClassSectionsInput = {
   user: Prisma.UserCreateNestedOneWithoutTeacherProfileInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateWithoutClassSectionsInput = {
@@ -907,6 +935,7 @@ export type TeacherProfileUncheckedCreateWithoutClassSectionsInput = {
   deletedAt?: Date | string | null
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileCreateOrConnectWithoutClassSectionsInput = {
@@ -941,6 +970,7 @@ export type TeacherProfileUpdateWithoutClassSectionsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherProfileNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateWithoutClassSectionsInput = {
@@ -959,6 +989,7 @@ export type TeacherProfileUncheckedUpdateWithoutClassSectionsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileCreateWithoutExerciseRecordsInput = {
@@ -977,6 +1008,7 @@ export type TeacherProfileCreateWithoutExerciseRecordsInput = {
   user: Prisma.UserCreateNestedOneWithoutTeacherProfileInput
   classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateWithoutExerciseRecordsInput = {
@@ -995,6 +1027,7 @@ export type TeacherProfileUncheckedCreateWithoutExerciseRecordsInput = {
   deletedAt?: Date | string | null
   classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
   reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileCreateOrConnectWithoutExerciseRecordsInput = {
@@ -1029,6 +1062,7 @@ export type TeacherProfileUpdateWithoutExerciseRecordsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherProfileNestedInput
   classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateWithoutExerciseRecordsInput = {
@@ -1047,6 +1081,7 @@ export type TeacherProfileUncheckedUpdateWithoutExerciseRecordsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileCreateWithoutReviewRecordsInput = {
@@ -1065,6 +1100,7 @@ export type TeacherProfileCreateWithoutReviewRecordsInput = {
   user: Prisma.UserCreateNestedOneWithoutTeacherProfileInput
   classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileUncheckedCreateWithoutReviewRecordsInput = {
@@ -1083,6 +1119,7 @@ export type TeacherProfileUncheckedCreateWithoutReviewRecordsInput = {
   deletedAt?: Date | string | null
   classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type TeacherProfileCreateOrConnectWithoutReviewRecordsInput = {
@@ -1117,6 +1154,7 @@ export type TeacherProfileUpdateWithoutReviewRecordsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutTeacherProfileNestedInput
   classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateWithoutReviewRecordsInput = {
@@ -1135,6 +1173,99 @@ export type TeacherProfileUncheckedUpdateWithoutReviewRecordsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+}
+
+export type TeacherProfileCreateWithoutExemptionReviewsInput = {
+  id: string
+  employeeNumber: string
+  fullName: string
+  collegeName?: string | null
+  departmentName?: string | null
+  title?: string | null
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutTeacherProfilesInput
+  user: Prisma.UserCreateNestedOneWithoutTeacherProfileInput
+  classSections?: Prisma.ClassSectionCreateNestedManyWithoutTeacherInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutTeacherInput
+  reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutTeacherInput
+}
+
+export type TeacherProfileUncheckedCreateWithoutExemptionReviewsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  employeeNumber: string
+  fullName: string
+  collegeName?: string | null
+  departmentName?: string | null
+  title?: string | null
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutTeacherInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutTeacherInput
+  reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type TeacherProfileCreateOrConnectWithoutExemptionReviewsInput = {
+  where: Prisma.TeacherProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeacherProfileCreateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedCreateWithoutExemptionReviewsInput>
+}
+
+export type TeacherProfileUpsertWithoutExemptionReviewsInput = {
+  update: Prisma.XOR<Prisma.TeacherProfileUpdateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedUpdateWithoutExemptionReviewsInput>
+  create: Prisma.XOR<Prisma.TeacherProfileCreateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedCreateWithoutExemptionReviewsInput>
+  where?: Prisma.TeacherProfileWhereInput
+}
+
+export type TeacherProfileUpdateToOneWithWhereWithoutExemptionReviewsInput = {
+  where?: Prisma.TeacherProfileWhereInput
+  data: Prisma.XOR<Prisma.TeacherProfileUpdateWithoutExemptionReviewsInput, Prisma.TeacherProfileUncheckedUpdateWithoutExemptionReviewsInput>
+}
+
+export type TeacherProfileUpdateWithoutExemptionReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeacherProfilesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTeacherProfileNestedInput
+  classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
+  reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+}
+
+export type TeacherProfileUncheckedUpdateWithoutExemptionReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  employeeNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileCreateManyOrganizationInput = {
@@ -1168,6 +1299,7 @@ export type TeacherProfileUpdateWithoutOrganizationInput = {
   classSections?: Prisma.ClassSectionUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateWithoutOrganizationInput = {
@@ -1186,6 +1318,7 @@ export type TeacherProfileUncheckedUpdateWithoutOrganizationInput = {
   classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutTeacherNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutTeacherNestedInput
   reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
+  exemptionReviews?: Prisma.ExemptionReviewRecordUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type TeacherProfileUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1212,12 +1345,14 @@ export type TeacherProfileCountOutputType = {
   classSections: number
   exerciseRecords: number
   reviewRecords: number
+  exemptionReviews: number
 }
 
 export type TeacherProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   classSections?: boolean | TeacherProfileCountOutputTypeCountClassSectionsArgs
   exerciseRecords?: boolean | TeacherProfileCountOutputTypeCountExerciseRecordsArgs
   reviewRecords?: boolean | TeacherProfileCountOutputTypeCountReviewRecordsArgs
+  exemptionReviews?: boolean | TeacherProfileCountOutputTypeCountExemptionReviewsArgs
 }
 
 /**
@@ -1251,6 +1386,13 @@ export type TeacherProfileCountOutputTypeCountReviewRecordsArgs<ExtArgs extends 
   where?: Prisma.ReviewRecordWhereInput
 }
 
+/**
+ * TeacherProfileCountOutputType without action
+ */
+export type TeacherProfileCountOutputTypeCountExemptionReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionReviewRecordWhereInput
+}
+
 
 export type TeacherProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1271,6 +1413,7 @@ export type TeacherProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   classSections?: boolean | Prisma.TeacherProfile$classSectionsArgs<ExtArgs>
   exerciseRecords?: boolean | Prisma.TeacherProfile$exerciseRecordsArgs<ExtArgs>
   reviewRecords?: boolean | Prisma.TeacherProfile$reviewRecordsArgs<ExtArgs>
+  exemptionReviews?: boolean | Prisma.TeacherProfile$exemptionReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.TeacherProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teacherProfile"]>
 
@@ -1333,6 +1476,7 @@ export type TeacherProfileInclude<ExtArgs extends runtime.Types.Extensions.Inter
   classSections?: boolean | Prisma.TeacherProfile$classSectionsArgs<ExtArgs>
   exerciseRecords?: boolean | Prisma.TeacherProfile$exerciseRecordsArgs<ExtArgs>
   reviewRecords?: boolean | Prisma.TeacherProfile$reviewRecordsArgs<ExtArgs>
+  exemptionReviews?: boolean | Prisma.TeacherProfile$exemptionReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.TeacherProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TeacherProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1352,6 +1496,7 @@ export type $TeacherProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
     classSections: Prisma.$ClassSectionPayload<ExtArgs>[]
     exerciseRecords: Prisma.$ExerciseRecordPayload<ExtArgs>[]
     reviewRecords: Prisma.$ReviewRecordPayload<ExtArgs>[]
+    exemptionReviews: Prisma.$ExemptionReviewRecordPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1766,6 +1911,7 @@ export interface Prisma__TeacherProfileClient<T, Null = never, ExtArgs extends r
   classSections<T extends Prisma.TeacherProfile$classSectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherProfile$classSectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseRecords<T extends Prisma.TeacherProfile$exerciseRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherProfile$exerciseRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviewRecords<T extends Prisma.TeacherProfile$reviewRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherProfile$reviewRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exemptionReviews<T extends Prisma.TeacherProfile$exemptionReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeacherProfile$exemptionReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionReviewRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2278,6 +2424,30 @@ export type TeacherProfile$reviewRecordsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.ReviewRecordScalarFieldEnum | Prisma.ReviewRecordScalarFieldEnum[]
+}
+
+/**
+ * TeacherProfile.exemptionReviews
+ */
+export type TeacherProfile$exemptionReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionReviewRecord
+   */
+  select?: Prisma.ExemptionReviewRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionReviewRecord
+   */
+  omit?: Prisma.ExemptionReviewRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionReviewRecordInclude<ExtArgs> | null
+  where?: Prisma.ExemptionReviewRecordWhereInput
+  orderBy?: Prisma.ExemptionReviewRecordOrderByWithRelationInput | Prisma.ExemptionReviewRecordOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionReviewRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionReviewRecordScalarFieldEnum | Prisma.ExemptionReviewRecordScalarFieldEnum[]
 }
 
 /**

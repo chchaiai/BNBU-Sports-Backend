@@ -317,6 +317,9 @@ export type EnrollmentWhereInput = {
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotListRelationFilter
   studentScore?: Prisma.XOR<Prisma.StudentScoreNullableScalarRelationFilter, Prisma.StudentScoreWhereInput> | null
+  exemptionApplications?: Prisma.ExemptionApplicationListRelationFilter
+  exemptionMediaEvidence?: Prisma.MediaEvidenceListRelationFilter
+  locationTracks?: Prisma.LocationTrackListRelationFilter
 }
 
 export type EnrollmentOrderByWithRelationInput = {
@@ -349,11 +352,15 @@ export type EnrollmentOrderByWithRelationInput = {
   exerciseRecords?: Prisma.ExerciseRecordOrderByRelationAggregateInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotOrderByRelationAggregateInput
   studentScore?: Prisma.StudentScoreOrderByWithRelationInput
+  exemptionApplications?: Prisma.ExemptionApplicationOrderByRelationAggregateInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceOrderByRelationAggregateInput
+  locationTracks?: Prisma.LocationTrackOrderByRelationAggregateInput
 }
 
 export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   id_organizationId?: Prisma.EnrollmentIdOrganizationIdCompoundUniqueInput
+  id_studentId_organizationId?: Prisma.EnrollmentIdStudentIdOrganizationIdCompoundUniqueInput
   id_semesterId_classSectionId_studentId_organizationId?: Prisma.EnrollmentIdSemesterIdClassSectionIdStudentIdOrganizationIdCompoundUniqueInput
   classSectionId_studentId?: Prisma.EnrollmentClassSectionIdStudentIdCompoundUniqueInput
   AND?: Prisma.EnrollmentWhereInput | Prisma.EnrollmentWhereInput[]
@@ -387,7 +394,10 @@ export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotListRelationFilter
   studentScore?: Prisma.XOR<Prisma.StudentScoreNullableScalarRelationFilter, Prisma.StudentScoreWhereInput> | null
-}, "id" | "id_organizationId" | "id_semesterId_classSectionId_studentId_organizationId" | "classSectionId_studentId">
+  exemptionApplications?: Prisma.ExemptionApplicationListRelationFilter
+  exemptionMediaEvidence?: Prisma.MediaEvidenceListRelationFilter
+  locationTracks?: Prisma.LocationTrackListRelationFilter
+}, "id" | "id_organizationId" | "id_studentId_organizationId" | "id_semesterId_classSectionId_studentId_organizationId" | "classSectionId_studentId">
 
 export type EnrollmentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -459,6 +469,9 @@ export type EnrollmentCreateInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateInput = {
@@ -485,6 +498,9 @@ export type EnrollmentUncheckedCreateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUpdateInput = {
@@ -511,6 +527,9 @@ export type EnrollmentUpdateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateInput = {
@@ -537,6 +556,9 @@ export type EnrollmentUncheckedUpdateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateManyInput = {
@@ -602,6 +624,12 @@ export type EnrollmentOrderByRelationAggregateInput = {
 
 export type EnrollmentIdOrganizationIdCompoundUniqueInput = {
   id: string
+  organizationId: string
+}
+
+export type EnrollmentIdStudentIdOrganizationIdCompoundUniqueInput = {
+  id: string
+  studentId: string
   organizationId: string
 }
 
@@ -973,6 +1001,22 @@ export type EnrollmentUpdateOneRequiredWithoutExerciseSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EnrollmentUpdateToOneWithWhereWithoutExerciseSessionsInput, Prisma.EnrollmentUpdateWithoutExerciseSessionsInput>, Prisma.EnrollmentUncheckedUpdateWithoutExerciseSessionsInput>
 }
 
+export type EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionMediaEvidenceInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutExemptionMediaEvidenceInput
+  connect?: Prisma.EnrollmentWhereUniqueInput
+}
+
+export type EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionMediaEvidenceInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutExemptionMediaEvidenceInput
+  upsert?: Prisma.EnrollmentUpsertWithoutExemptionMediaEvidenceInput
+  disconnect?: Prisma.EnrollmentWhereInput | boolean
+  delete?: Prisma.EnrollmentWhereInput | boolean
+  connect?: Prisma.EnrollmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EnrollmentUpdateToOneWithWhereWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUpdateWithoutExemptionMediaEvidenceInput>, Prisma.EnrollmentUncheckedUpdateWithoutExemptionMediaEvidenceInput>
+}
+
 export type EnrollmentCreateNestedOneWithoutExerciseRecordsInput = {
   create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutExerciseRecordsInput, Prisma.EnrollmentUncheckedCreateWithoutExerciseRecordsInput>
   connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutExerciseRecordsInput
@@ -1045,6 +1089,34 @@ export type EnrollmentUpdateOneRequiredWithoutStudentScoreNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EnrollmentUpdateToOneWithWhereWithoutStudentScoreInput, Prisma.EnrollmentUpdateWithoutStudentScoreInput>, Prisma.EnrollmentUncheckedUpdateWithoutStudentScoreInput>
 }
 
+export type EnrollmentCreateNestedOneWithoutExemptionApplicationsInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionApplicationsInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutExemptionApplicationsInput
+  connect?: Prisma.EnrollmentWhereUniqueInput
+}
+
+export type EnrollmentUpdateOneRequiredWithoutExemptionApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionApplicationsInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutExemptionApplicationsInput
+  upsert?: Prisma.EnrollmentUpsertWithoutExemptionApplicationsInput
+  connect?: Prisma.EnrollmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EnrollmentUpdateToOneWithWhereWithoutExemptionApplicationsInput, Prisma.EnrollmentUpdateWithoutExemptionApplicationsInput>, Prisma.EnrollmentUncheckedUpdateWithoutExemptionApplicationsInput>
+}
+
+export type EnrollmentCreateNestedOneWithoutLocationTracksInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedCreateWithoutLocationTracksInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutLocationTracksInput
+  connect?: Prisma.EnrollmentWhereUniqueInput
+}
+
+export type EnrollmentUpdateOneRequiredWithoutLocationTracksNestedInput = {
+  create?: Prisma.XOR<Prisma.EnrollmentCreateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedCreateWithoutLocationTracksInput>
+  connectOrCreate?: Prisma.EnrollmentCreateOrConnectWithoutLocationTracksInput
+  upsert?: Prisma.EnrollmentUpsertWithoutLocationTracksInput
+  connect?: Prisma.EnrollmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EnrollmentUpdateToOneWithWhereWithoutLocationTracksInput, Prisma.EnrollmentUpdateWithoutLocationTracksInput>, Prisma.EnrollmentUncheckedUpdateWithoutLocationTracksInput>
+}
+
 export type EnrollmentCreateWithoutOrganizationInput = {
   id: string
   source: string
@@ -1068,6 +1140,9 @@ export type EnrollmentCreateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutOrganizationInput = {
@@ -1093,6 +1168,9 @@ export type EnrollmentUncheckedCreateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutOrganizationInput = {
@@ -1166,6 +1244,9 @@ export type EnrollmentCreateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutCreatedByUserInput = {
@@ -1190,6 +1271,9 @@ export type EnrollmentUncheckedCreateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutCreatedByUserInput = {
@@ -1225,6 +1309,9 @@ export type EnrollmentCreateWithoutUpdatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutUpdatedByUserInput = {
@@ -1249,6 +1336,9 @@ export type EnrollmentUncheckedCreateWithoutUpdatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutUpdatedByUserInput = {
@@ -1316,6 +1406,9 @@ export type EnrollmentCreateWithoutStudentInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutStudentInput = {
@@ -1340,6 +1433,9 @@ export type EnrollmentUncheckedCreateWithoutStudentInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutStudentInput = {
@@ -1391,6 +1487,9 @@ export type EnrollmentCreateWithoutSemesterInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutSemesterInput = {
@@ -1415,6 +1514,9 @@ export type EnrollmentUncheckedCreateWithoutSemesterInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutSemesterInput = {
@@ -1466,6 +1568,9 @@ export type EnrollmentCreateWithoutClassSectionInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutClassSectionInput = {
@@ -1489,6 +1594,9 @@ export type EnrollmentUncheckedCreateWithoutClassSectionInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutClassSectionInput = {
@@ -1540,6 +1648,9 @@ export type EnrollmentCreateWithoutStatusEventsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutStatusEventsInput = {
@@ -1565,6 +1676,9 @@ export type EnrollmentUncheckedCreateWithoutStatusEventsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutStatusEventsInput = {
@@ -1606,6 +1720,9 @@ export type EnrollmentUpdateWithoutStatusEventsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutStatusEventsInput = {
@@ -1631,6 +1748,9 @@ export type EnrollmentUncheckedUpdateWithoutStatusEventsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutExerciseSessionsInput = {
@@ -1656,6 +1776,9 @@ export type EnrollmentCreateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutExerciseSessionsInput = {
@@ -1681,6 +1804,9 @@ export type EnrollmentUncheckedCreateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutExerciseSessionsInput = {
@@ -1722,6 +1848,9 @@ export type EnrollmentUpdateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutExerciseSessionsInput = {
@@ -1747,6 +1876,137 @@ export type EnrollmentUncheckedUpdateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
+}
+
+export type EnrollmentCreateWithoutExemptionMediaEvidenceInput = {
+  id: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutEnrollmentsInput
+  semester: Prisma.SemesterCreateNestedOneWithoutEnrollmentsInput
+  classSection: Prisma.ClassSectionCreateNestedOneWithoutEnrollmentsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutEnrollmentsInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedEnrollmentsInput
+  updatedByUser: Prisma.UserCreateNestedOneWithoutUpdatedEnrollmentsInput
+  statusEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
+}
+
+export type EnrollmentUncheckedCreateWithoutExemptionMediaEvidenceInput = {
+  id: string
+  organizationId: string
+  semesterId: string
+  classSectionId: string
+  studentId: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdBy: string
+  updatedBy: string
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
+}
+
+export type EnrollmentCreateOrConnectWithoutExemptionMediaEvidenceInput = {
+  where: Prisma.EnrollmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionMediaEvidenceInput>
+}
+
+export type EnrollmentUpsertWithoutExemptionMediaEvidenceInput = {
+  update: Prisma.XOR<Prisma.EnrollmentUpdateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedUpdateWithoutExemptionMediaEvidenceInput>
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionMediaEvidenceInput>
+  where?: Prisma.EnrollmentWhereInput
+}
+
+export type EnrollmentUpdateToOneWithWhereWithoutExemptionMediaEvidenceInput = {
+  where?: Prisma.EnrollmentWhereInput
+  data: Prisma.XOR<Prisma.EnrollmentUpdateWithoutExemptionMediaEvidenceInput, Prisma.EnrollmentUncheckedUpdateWithoutExemptionMediaEvidenceInput>
+}
+
+export type EnrollmentUpdateWithoutExemptionMediaEvidenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEnrollmentsNestedInput
+  semester?: Prisma.SemesterUpdateOneRequiredWithoutEnrollmentsNestedInput
+  classSection?: Prisma.ClassSectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutEnrollmentsNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedEnrollmentsNestedInput
+  updatedByUser?: Prisma.UserUpdateOneRequiredWithoutUpdatedEnrollmentsNestedInput
+  statusEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
+}
+
+export type EnrollmentUncheckedUpdateWithoutExemptionMediaEvidenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  semesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutExerciseRecordsInput = {
@@ -1772,6 +2032,9 @@ export type EnrollmentCreateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutExerciseRecordsInput = {
@@ -1797,6 +2060,9 @@ export type EnrollmentUncheckedCreateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutExerciseRecordsInput = {
@@ -1838,6 +2104,9 @@ export type EnrollmentUpdateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutExerciseRecordsInput = {
@@ -1863,6 +2132,9 @@ export type EnrollmentUncheckedUpdateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutExerciseRecordDailySlotsInput = {
@@ -1888,6 +2160,9 @@ export type EnrollmentCreateWithoutExerciseRecordDailySlotsInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutExerciseRecordDailySlotsInput = {
@@ -1913,6 +2188,9 @@ export type EnrollmentUncheckedCreateWithoutExerciseRecordDailySlotsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutExerciseRecordDailySlotsInput = {
@@ -1954,6 +2232,9 @@ export type EnrollmentUpdateWithoutExerciseRecordDailySlotsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutExerciseRecordDailySlotsInput = {
@@ -1979,6 +2260,9 @@ export type EnrollmentUncheckedUpdateWithoutExerciseRecordDailySlotsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutJoinCapabilitiesInput = {
@@ -2004,6 +2288,9 @@ export type EnrollmentCreateWithoutJoinCapabilitiesInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutJoinCapabilitiesInput = {
@@ -2029,6 +2316,9 @@ export type EnrollmentUncheckedCreateWithoutJoinCapabilitiesInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutJoinCapabilitiesInput = {
@@ -2070,6 +2360,9 @@ export type EnrollmentUpdateWithoutJoinCapabilitiesInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutJoinCapabilitiesInput = {
@@ -2095,6 +2388,9 @@ export type EnrollmentUncheckedUpdateWithoutJoinCapabilitiesInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -2120,6 +2416,9 @@ export type EnrollmentCreateWithoutRosterAlignmentPlatformEntriesInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -2145,6 +2444,9 @@ export type EnrollmentUncheckedCreateWithoutRosterAlignmentPlatformEntriesInput 
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
   studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutRosterAlignmentPlatformEntriesInput = {
@@ -2186,6 +2488,9 @@ export type EnrollmentUpdateWithoutRosterAlignmentPlatformEntriesInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -2211,6 +2516,9 @@ export type EnrollmentUncheckedUpdateWithoutRosterAlignmentPlatformEntriesInput 
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentCreateWithoutStudentScoreInput = {
@@ -2236,6 +2544,9 @@ export type EnrollmentCreateWithoutStudentScoreInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentUncheckedCreateWithoutStudentScoreInput = {
@@ -2261,6 +2572,9 @@ export type EnrollmentUncheckedCreateWithoutStudentScoreInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
 }
 
 export type EnrollmentCreateOrConnectWithoutStudentScoreInput = {
@@ -2302,6 +2616,9 @@ export type EnrollmentUpdateWithoutStudentScoreInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutStudentScoreInput = {
@@ -2327,6 +2644,265 @@ export type EnrollmentUncheckedUpdateWithoutStudentScoreInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
+}
+
+export type EnrollmentCreateWithoutExemptionApplicationsInput = {
+  id: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutEnrollmentsInput
+  semester: Prisma.SemesterCreateNestedOneWithoutEnrollmentsInput
+  classSection: Prisma.ClassSectionCreateNestedOneWithoutEnrollmentsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutEnrollmentsInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedEnrollmentsInput
+  updatedByUser: Prisma.UserCreateNestedOneWithoutUpdatedEnrollmentsInput
+  statusEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutEnrollmentInput
+}
+
+export type EnrollmentUncheckedCreateWithoutExemptionApplicationsInput = {
+  id: string
+  organizationId: string
+  semesterId: string
+  classSectionId: string
+  studentId: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdBy: string
+  updatedBy: string
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutEnrollmentInput
+}
+
+export type EnrollmentCreateOrConnectWithoutExemptionApplicationsInput = {
+  where: Prisma.EnrollmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionApplicationsInput>
+}
+
+export type EnrollmentUpsertWithoutExemptionApplicationsInput = {
+  update: Prisma.XOR<Prisma.EnrollmentUpdateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedUpdateWithoutExemptionApplicationsInput>
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedCreateWithoutExemptionApplicationsInput>
+  where?: Prisma.EnrollmentWhereInput
+}
+
+export type EnrollmentUpdateToOneWithWhereWithoutExemptionApplicationsInput = {
+  where?: Prisma.EnrollmentWhereInput
+  data: Prisma.XOR<Prisma.EnrollmentUpdateWithoutExemptionApplicationsInput, Prisma.EnrollmentUncheckedUpdateWithoutExemptionApplicationsInput>
+}
+
+export type EnrollmentUpdateWithoutExemptionApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEnrollmentsNestedInput
+  semester?: Prisma.SemesterUpdateOneRequiredWithoutEnrollmentsNestedInput
+  classSection?: Prisma.ClassSectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutEnrollmentsNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedEnrollmentsNestedInput
+  updatedByUser?: Prisma.UserUpdateOneRequiredWithoutUpdatedEnrollmentsNestedInput
+  statusEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
+}
+
+export type EnrollmentUncheckedUpdateWithoutExemptionApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  semesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
+}
+
+export type EnrollmentCreateWithoutLocationTracksInput = {
+  id: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutEnrollmentsInput
+  semester: Prisma.SemesterCreateNestedOneWithoutEnrollmentsInput
+  classSection: Prisma.ClassSectionCreateNestedOneWithoutEnrollmentsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutEnrollmentsInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedEnrollmentsInput
+  updatedByUser: Prisma.UserCreateNestedOneWithoutUpdatedEnrollmentsInput
+  statusEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput
+}
+
+export type EnrollmentUncheckedCreateWithoutLocationTracksInput = {
+  id: string
+  organizationId: string
+  semesterId: string
+  classSectionId: string
+  studentId: string
+  source: string
+  sourceReferenceId?: string | null
+  status: string
+  joinedAt: Date | string
+  endedAt?: Date | string | null
+  endReason?: string | null
+  createdBy: string
+  updatedBy: string
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutEnrollmentInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutEnrollmentInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutEnrollmentInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutEnrollmentInput
+  studentScore?: Prisma.StudentScoreUncheckedCreateNestedOneWithoutEnrollmentInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutEnrollmentInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput
+}
+
+export type EnrollmentCreateOrConnectWithoutLocationTracksInput = {
+  where: Prisma.EnrollmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedCreateWithoutLocationTracksInput>
+}
+
+export type EnrollmentUpsertWithoutLocationTracksInput = {
+  update: Prisma.XOR<Prisma.EnrollmentUpdateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedUpdateWithoutLocationTracksInput>
+  create: Prisma.XOR<Prisma.EnrollmentCreateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedCreateWithoutLocationTracksInput>
+  where?: Prisma.EnrollmentWhereInput
+}
+
+export type EnrollmentUpdateToOneWithWhereWithoutLocationTracksInput = {
+  where?: Prisma.EnrollmentWhereInput
+  data: Prisma.XOR<Prisma.EnrollmentUpdateWithoutLocationTracksInput, Prisma.EnrollmentUncheckedUpdateWithoutLocationTracksInput>
+}
+
+export type EnrollmentUpdateWithoutLocationTracksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutEnrollmentsNestedInput
+  semester?: Prisma.SemesterUpdateOneRequiredWithoutEnrollmentsNestedInput
+  classSection?: Prisma.ClassSectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutEnrollmentsNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedEnrollmentsNestedInput
+  updatedByUser?: Prisma.UserUpdateOneRequiredWithoutUpdatedEnrollmentsNestedInput
+  statusEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+}
+
+export type EnrollmentUncheckedUpdateWithoutLocationTracksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  semesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceReferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  statusEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutEnrollmentNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutEnrollmentNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
+  studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
 }
 
 export type EnrollmentCreateManyOrganizationInput = {
@@ -2370,6 +2946,9 @@ export type EnrollmentUpdateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutOrganizationInput = {
@@ -2395,6 +2974,9 @@ export type EnrollmentUncheckedUpdateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutOrganizationInput = {
@@ -2472,6 +3054,9 @@ export type EnrollmentUpdateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutCreatedByUserInput = {
@@ -2496,6 +3081,9 @@ export type EnrollmentUncheckedUpdateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -2538,6 +3126,9 @@ export type EnrollmentUpdateWithoutUpdatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutUpdatedByUserInput = {
@@ -2562,6 +3153,9 @@ export type EnrollmentUncheckedUpdateWithoutUpdatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutUpdatedByUserInput = {
@@ -2621,6 +3215,9 @@ export type EnrollmentUpdateWithoutStudentInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutStudentInput = {
@@ -2645,6 +3242,9 @@ export type EnrollmentUncheckedUpdateWithoutStudentInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutStudentInput = {
@@ -2704,6 +3304,9 @@ export type EnrollmentUpdateWithoutSemesterInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutSemesterInput = {
@@ -2728,6 +3331,9 @@ export type EnrollmentUncheckedUpdateWithoutSemesterInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutSemesterInput = {
@@ -2786,6 +3392,9 @@ export type EnrollmentUpdateWithoutClassSectionInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateWithoutClassSectionInput = {
@@ -2809,6 +3418,9 @@ export type EnrollmentUncheckedUpdateWithoutClassSectionInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutEnrollmentNestedInput
   exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutEnrollmentNestedInput
   studentScore?: Prisma.StudentScoreUncheckedUpdateOneWithoutEnrollmentNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentNestedInput
+  exemptionMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutEnrollmentNestedInput
 }
 
 export type EnrollmentUncheckedUpdateManyWithoutClassSectionInput = {
@@ -2839,6 +3451,9 @@ export type EnrollmentCountOutputType = {
   exerciseSessions: number
   exerciseRecords: number
   exerciseRecordDailySlots: number
+  exemptionApplications: number
+  exemptionMediaEvidence: number
+  locationTracks: number
 }
 
 export type EnrollmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2848,6 +3463,9 @@ export type EnrollmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extens
   exerciseSessions?: boolean | EnrollmentCountOutputTypeCountExerciseSessionsArgs
   exerciseRecords?: boolean | EnrollmentCountOutputTypeCountExerciseRecordsArgs
   exerciseRecordDailySlots?: boolean | EnrollmentCountOutputTypeCountExerciseRecordDailySlotsArgs
+  exemptionApplications?: boolean | EnrollmentCountOutputTypeCountExemptionApplicationsArgs
+  exemptionMediaEvidence?: boolean | EnrollmentCountOutputTypeCountExemptionMediaEvidenceArgs
+  locationTracks?: boolean | EnrollmentCountOutputTypeCountLocationTracksArgs
 }
 
 /**
@@ -2902,6 +3520,27 @@ export type EnrollmentCountOutputTypeCountExerciseRecordDailySlotsArgs<ExtArgs e
   where?: Prisma.ExerciseRecordDailySlotWhereInput
 }
 
+/**
+ * EnrollmentCountOutputType without action
+ */
+export type EnrollmentCountOutputTypeCountExemptionApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionApplicationWhereInput
+}
+
+/**
+ * EnrollmentCountOutputType without action
+ */
+export type EnrollmentCountOutputTypeCountExemptionMediaEvidenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MediaEvidenceWhereInput
+}
+
+/**
+ * EnrollmentCountOutputType without action
+ */
+export type EnrollmentCountOutputTypeCountLocationTracksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationTrackWhereInput
+}
+
 
 export type EnrollmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2933,6 +3572,9 @@ export type EnrollmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   exerciseRecords?: boolean | Prisma.Enrollment$exerciseRecordsArgs<ExtArgs>
   exerciseRecordDailySlots?: boolean | Prisma.Enrollment$exerciseRecordDailySlotsArgs<ExtArgs>
   studentScore?: boolean | Prisma.Enrollment$studentScoreArgs<ExtArgs>
+  exemptionApplications?: boolean | Prisma.Enrollment$exemptionApplicationsArgs<ExtArgs>
+  exemptionMediaEvidence?: boolean | Prisma.Enrollment$exemptionMediaEvidenceArgs<ExtArgs>
+  locationTracks?: boolean | Prisma.Enrollment$locationTracksArgs<ExtArgs>
   _count?: boolean | Prisma.EnrollmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["enrollment"]>
 
@@ -3020,6 +3662,9 @@ export type EnrollmentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   exerciseRecords?: boolean | Prisma.Enrollment$exerciseRecordsArgs<ExtArgs>
   exerciseRecordDailySlots?: boolean | Prisma.Enrollment$exerciseRecordDailySlotsArgs<ExtArgs>
   studentScore?: boolean | Prisma.Enrollment$studentScoreArgs<ExtArgs>
+  exemptionApplications?: boolean | Prisma.Enrollment$exemptionApplicationsArgs<ExtArgs>
+  exemptionMediaEvidence?: boolean | Prisma.Enrollment$exemptionMediaEvidenceArgs<ExtArgs>
+  locationTracks?: boolean | Prisma.Enrollment$locationTracksArgs<ExtArgs>
   _count?: boolean | Prisma.EnrollmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EnrollmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3055,6 +3700,9 @@ export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     exerciseRecords: Prisma.$ExerciseRecordPayload<ExtArgs>[]
     exerciseRecordDailySlots: Prisma.$ExerciseRecordDailySlotPayload<ExtArgs>[]
     studentScore: Prisma.$StudentScorePayload<ExtArgs> | null
+    exemptionApplications: Prisma.$ExemptionApplicationPayload<ExtArgs>[]
+    exemptionMediaEvidence: Prisma.$MediaEvidencePayload<ExtArgs>[]
+    locationTracks: Prisma.$LocationTrackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3480,6 +4128,9 @@ export interface Prisma__EnrollmentClient<T, Null = never, ExtArgs extends runti
   exerciseRecords<T extends Prisma.Enrollment$exerciseRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$exerciseRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseRecordDailySlots<T extends Prisma.Enrollment$exerciseRecordDailySlotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$exerciseRecordDailySlotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordDailySlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentScore<T extends Prisma.Enrollment$studentScoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$studentScoreArgs<ExtArgs>>): Prisma.Prisma__StudentScoreClient<runtime.Types.Result.GetResult<Prisma.$StudentScorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  exemptionApplications<T extends Prisma.Enrollment$exemptionApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$exemptionApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exemptionMediaEvidence<T extends Prisma.Enrollment$exemptionMediaEvidenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$exemptionMediaEvidenceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaEvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationTracks<T extends Prisma.Enrollment$locationTracksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$locationTracksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4086,6 +4737,78 @@ export type Enrollment$studentScoreArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.StudentScoreInclude<ExtArgs> | null
   where?: Prisma.StudentScoreWhereInput
+}
+
+/**
+ * Enrollment.exemptionApplications
+ */
+export type Enrollment$exemptionApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionApplication
+   */
+  select?: Prisma.ExemptionApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionApplication
+   */
+  omit?: Prisma.ExemptionApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionApplicationInclude<ExtArgs> | null
+  where?: Prisma.ExemptionApplicationWhereInput
+  orderBy?: Prisma.ExemptionApplicationOrderByWithRelationInput | Prisma.ExemptionApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionApplicationScalarFieldEnum | Prisma.ExemptionApplicationScalarFieldEnum[]
+}
+
+/**
+ * Enrollment.exemptionMediaEvidence
+ */
+export type Enrollment$exemptionMediaEvidenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MediaEvidence
+   */
+  select?: Prisma.MediaEvidenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MediaEvidence
+   */
+  omit?: Prisma.MediaEvidenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MediaEvidenceInclude<ExtArgs> | null
+  where?: Prisma.MediaEvidenceWhereInput
+  orderBy?: Prisma.MediaEvidenceOrderByWithRelationInput | Prisma.MediaEvidenceOrderByWithRelationInput[]
+  cursor?: Prisma.MediaEvidenceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MediaEvidenceScalarFieldEnum | Prisma.MediaEvidenceScalarFieldEnum[]
+}
+
+/**
+ * Enrollment.locationTracks
+ */
+export type Enrollment$locationTracksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationTrack
+   */
+  select?: Prisma.LocationTrackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationTrack
+   */
+  omit?: Prisma.LocationTrackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationTrackInclude<ExtArgs> | null
+  where?: Prisma.LocationTrackWhereInput
+  orderBy?: Prisma.LocationTrackOrderByWithRelationInput | Prisma.LocationTrackOrderByWithRelationInput[]
+  cursor?: Prisma.LocationTrackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationTrackScalarFieldEnum | Prisma.LocationTrackScalarFieldEnum[]
 }
 
 /**

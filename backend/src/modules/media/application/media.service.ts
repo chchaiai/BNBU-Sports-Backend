@@ -46,12 +46,30 @@ interface InitiationStage {
   capabilityExpiresAt: Date;
 }
 
+type ResolvedInitiationTarget =
+  | {
+      kind: 'TARGET';
+      studentId: string;
+      sessionId: string | null;
+      enrollmentId: string | null;
+    }
+  | { kind: 'FAILURE'; failure: IdempotentFailure };
+
 type AuthorizedMedia = Prisma.MediaEvidenceGetPayload<{
   include: {
     ownerStudent: { select: { userId: true } };
     recordAssociation: { select: { recordId: true } };
     session: {
       include: { classSection: { include: { teacher: { select: { userId: true } } } } };
+    };
+    exemptionAssociations: {
+      include: {
+        application: {
+          include: {
+            classSection: { include: { teacher: { select: { userId: true } } } };
+          };
+        };
+      };
     };
   };
 }>;
@@ -105,7 +123,7 @@ export class MediaService {
           principalId: principal.userId,
           authSessionId: principal.sessionId,
           operationId: 'initiateMediaUpload',
-          scope: `session:${input.sessionId}`,
+          scope: this.targetScope(input),
           key: context.idempotencyKey,
           request: input,
           requestId: context.requestId,
@@ -312,6 +330,8 @@ export class MediaService {
         outcome: 'SUCCEEDED',
         safeMetadata: {
           sessionId: updated.sessionId,
+          enrollmentId: updated.enrollmentId,
+          businessPurpose: updated.businessPurpose,
           mediaType: updated.mediaType,
           previousStatus: 'PENDING_UPLOAD',
           nextStatus: 'UPLOADED',
@@ -360,7 +380,11 @@ export class MediaService {
         if (media?.ownerStudent.userId !== principal.userId) {
           return this.idempotency.failure(new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404));
         }
-        if (media.sessionId !== input.sessionId) {
+        if (
+          media.businessPurpose !== 'EXERCISE_RECORD' ||
+          media.sessionId !== input.sessionId ||
+          media.session === null
+        ) {
           return this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422));
         }
         if (media.version !== input.expectedVersion) {
@@ -404,6 +428,8 @@ export class MediaService {
           outcome: 'SUCCEEDED',
           safeMetadata: {
             sessionId: updated.sessionId,
+            enrollmentId: updated.enrollmentId,
+            businessPurpose: updated.businessPurpose,
             mediaType: updated.mediaType,
             previousStatus: 'UPLOADED',
             nextStatus: 'BOUND',
@@ -431,10 +457,17 @@ export class MediaService {
     const isOwner = principal.role === 'STUDENT' && media.ownerStudent.userId === principal.userId;
     const isResponsibleReviewTeacher =
       principal.role === 'TEACHER' &&
-      media.session.classSection.teacher.userId === principal.userId &&
+      media.session?.classSection.teacher.userId === principal.userId &&
       media.recordAssociation !== null;
+    const isResponsibleExemptionTeacher =
+      principal.role === 'TEACHER' &&
+      media.exemptionAssociations.some(
+        ({ application }) =>
+          application.classSection.teacher.userId === principal.userId &&
+          application.status !== 'DRAFT',
+      );
     if (
-      (!isOwner && !isResponsibleReviewTeacher) ||
+      (!isOwner && !isResponsibleReviewTeacher && !isResponsibleExemptionTeacher) ||
       media.uploadStatus !== 'AVAILABLE' ||
       media.verifiedMimeType === null
     ) {
@@ -470,6 +503,8 @@ export class MediaService {
           outcome: 'SUCCEEDED',
           safeMetadata: {
             sessionId: media.sessionId,
+            enrollmentId: media.enrollmentId,
+            businessPurpose: media.businessPurpose,
             mediaType: media.mediaType,
             purpose: input.purpose,
           },
@@ -494,43 +529,39 @@ export class MediaService {
     requestId: string,
     config: MediaConfig,
   ): Promise<IdempotentStage<InitiationStage> | IdempotentFailure> {
-    const session = await transaction.exerciseSession.findFirst({
-      where: { id: input.sessionId, organizationId: principal.organizationId },
-      include: {
-        student: { select: { userId: true } },
-        enrollment: { select: { status: true } },
-      },
-    });
-    if (session?.student.userId !== principal.userId) {
-      return this.idempotency.failure(new ApplicationError('SESSION_NOT_FOUND', 404));
-    }
-    if (
-      !['IN_PROGRESS', 'PAUSED', 'COMPLETED'].includes(session.status) ||
-      session.enrollment.status !== 'ACTIVE'
-    ) {
-      return this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 409));
-    }
+    const target = await this.resolveInitiationTarget(transaction, principal, input);
+    if (target.kind === 'FAILURE') return target.failure;
     const activeCount = await transaction.mediaEvidence.count({
       where: {
-        sessionId: session.id,
-        mediaType: input.mediaType,
+        ...(target.sessionId === null
+          ? {
+              enrollmentId: target.enrollmentId,
+              businessPurpose: 'EXEMPTION_APPLICATION',
+            }
+          : {
+              sessionId: target.sessionId,
+              businessPurpose: 'EXERCISE_RECORD',
+              mediaType: input.mediaType,
+            }),
         uploadStatus: { in: ['PENDING_UPLOAD', 'UPLOADED', 'BOUND', 'PROCESSING', 'AVAILABLE'] },
       },
     });
-    if (activeCount >= (input.mediaType === 'IMAGE' ? 6 : 1)) {
+    const allowedCount = target.sessionId === null ? 20 : input.mediaType === 'IMAGE' ? 6 : 1;
+    if (activeCount >= allowedCount) {
       return this.idempotency.failure(new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 409));
     }
     const now = this.clock.now();
     const mediaId = this.idGenerator.next();
     const uploadSessionId = this.idGenerator.next();
     const capabilityExpiresAt = new Date(now.getTime() + config.uploadUrlTtlSeconds * 1000);
-    const storageKey = `media/${principal.organizationId}/${mediaId}/${input.mediaType.toLowerCase()}`;
+    const storageKey = `media/${principal.organizationId}/${input.businessPurpose.toLowerCase()}/${mediaId}/${input.mediaType.toLowerCase()}`;
     const media = await transaction.mediaEvidence.create({
       data: {
         id: mediaId,
         organizationId: principal.organizationId,
-        ownerStudentId: session.studentId,
-        sessionId: session.id,
+        ownerStudentId: target.studentId,
+        sessionId: target.sessionId,
+        enrollmentId: target.enrollmentId,
         initiatedByUserId: principal.userId,
         businessPurpose: input.businessPurpose,
         mediaType: input.mediaType,
@@ -575,6 +606,8 @@ export class MediaService {
       outcome: 'SUCCEEDED',
       safeMetadata: {
         sessionId: media.sessionId,
+        enrollmentId: media.enrollmentId,
+        businessPurpose: media.businessPurpose,
         mediaType: media.mediaType,
         nextStatus: 'PENDING_UPLOAD',
       },
@@ -640,6 +673,8 @@ export class MediaService {
         reasonCode: error.code,
         safeMetadata: {
           sessionId: updated.sessionId,
+          enrollmentId: updated.enrollmentId,
+          businessPurpose: updated.businessPurpose,
           mediaType: updated.mediaType,
           previousStatus: 'PENDING_UPLOAD',
           nextStatus: 'FAILED',
@@ -651,6 +686,91 @@ export class MediaService {
         authSessionId: principal.sessionId,
       });
     });
+  }
+
+  private targetScope(input: InitiateMediaUploadRequestDto): string {
+    if (
+      input.businessPurpose === 'EXERCISE_RECORD' &&
+      input.captureSource === 'IN_APP_CAMERA' &&
+      input.sessionId !== undefined &&
+      input.enrollmentId === undefined
+    ) {
+      return `session:${input.sessionId}`;
+    }
+    if (
+      input.businessPurpose === 'EXEMPTION_APPLICATION' &&
+      (input.captureSource === 'IN_APP_CAMERA' || input.captureSource === 'FILE_PICKER') &&
+      input.enrollmentId !== undefined &&
+      input.sessionId === undefined
+    ) {
+      return `enrollment:${input.enrollmentId}`;
+    }
+    throw new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422);
+  }
+
+  private async resolveInitiationTarget(
+    transaction: Prisma.TransactionClient,
+    principal: AuthenticatedPrincipal,
+    input: InitiateMediaUploadRequestDto,
+  ): Promise<ResolvedInitiationTarget> {
+    this.targetScope(input);
+    if (input.businessPurpose === 'EXERCISE_RECORD') {
+      const sessionId = input.sessionId;
+      if (sessionId === undefined) throw new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422);
+      const session = await transaction.exerciseSession.findFirst({
+        where: { id: sessionId, organizationId: principal.organizationId },
+        include: {
+          student: { select: { userId: true } },
+          enrollment: { select: { status: true } },
+        },
+      });
+      if (session?.student.userId !== principal.userId) {
+        return {
+          kind: 'FAILURE',
+          failure: this.idempotency.failure(new ApplicationError('SESSION_NOT_FOUND', 404)),
+        };
+      }
+      if (
+        !['IN_PROGRESS', 'PAUSED', 'COMPLETED'].includes(session.status) ||
+        session.enrollment.status !== 'ACTIVE'
+      ) {
+        return {
+          kind: 'FAILURE',
+          failure: this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 409)),
+        };
+      }
+      return {
+        kind: 'TARGET',
+        studentId: session.studentId,
+        sessionId: session.id,
+        enrollmentId: null,
+      };
+    }
+
+    const enrollmentId = input.enrollmentId;
+    if (enrollmentId === undefined) throw new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422);
+    const enrollment = await transaction.enrollment.findFirst({
+      where: { id: enrollmentId, organizationId: principal.organizationId },
+      include: { student: { select: { userId: true } } },
+    });
+    if (enrollment?.student.userId !== principal.userId) {
+      return {
+        kind: 'FAILURE',
+        failure: this.idempotency.failure(new ApplicationError('ENROLLMENT_NOT_FOUND', 404)),
+      };
+    }
+    if (enrollment.status !== 'ACTIVE') {
+      return {
+        kind: 'FAILURE',
+        failure: this.idempotency.failure(new ApplicationError('ENROLLMENT_NOT_ACTIVE', 409)),
+      };
+    }
+    return {
+      kind: 'TARGET',
+      studentId: enrollment.studentId,
+      sessionId: null,
+      enrollmentId: enrollment.id,
+    };
   }
 
   private async loadAuthorizedMedia(
@@ -665,13 +785,27 @@ export class MediaService {
         session: {
           include: { classSection: { include: { teacher: { select: { userId: true } } } } },
         },
+        exemptionAssociations: {
+          include: {
+            application: {
+              include: {
+                classSection: { include: { teacher: { select: { userId: true } } } },
+              },
+            },
+          },
+        },
       },
     });
     if (media === null) throw new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404);
     const isOwner = principal.role === 'STUDENT' && media.ownerStudent.userId === principal.userId;
     const isTeacher =
       principal.role === 'TEACHER' &&
-      media.session.classSection.teacher.userId === principal.userId;
+      (media.session?.classSection.teacher.userId === principal.userId ||
+        media.exemptionAssociations.some(
+          ({ application }) =>
+            application.classSection.teacher.userId === principal.userId &&
+            application.status !== 'DRAFT',
+        ));
     if (!isOwner && !isTeacher) throw new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404);
     return media;
   }
@@ -767,6 +901,8 @@ export class MediaService {
       payload: {
         mediaId: media.id,
         sessionId: media.sessionId,
+        enrollmentId: media.enrollmentId,
+        businessPurpose: media.businessPurpose,
         mediaType: media.mediaType,
         uploadStatus: media.uploadStatus,
       },

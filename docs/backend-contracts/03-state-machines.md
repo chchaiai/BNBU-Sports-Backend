@@ -11,9 +11,17 @@
 
 ## Stage 21 客户端能力状态边界
 
-Stage 21 只注册 operation 和传输形状，不接受 Notification、Feedback、ExemptionApplication、LocationTrack 或位置隐私政策的业务状态机。所有新增路由在鉴权/角色/已有 Session 或 Record 资源解析后稳定拒绝，且不产生状态迁移、成功 AuditLog、业务 Outbox 或持久化事实。
+Stage 21 的 2026-08-05 “30 项全部 default deny、零持久化”结论已由 ADR-097/098 取代。当前 22 个 operation 进入**仅本地集成**：原 12 项通知、推送、偏好、帮助、反馈与版本政策，以及验证码/找回 4 项和免测 6 项。其本地状态边界如下：
 
-OpenAPI 中出现的相关状态值是未来兼容占位，并以 `x-transport-constraint: true` 标明不是已批准的数据库枚举。未来启用必须先补充状态图、合法边、终态、并发规则、撤回/删除规则和 forward-only Migration。
+- `Notification` 只允许本人把 `readAt: null` 推进为非空；重复标记已读保持幂等，事件、AuditLog 和 Outbox 与聚合版本在同一事务内追加。当前没有业务通知生产者。
+- `PushDevice` 只允许本人注册/刷新为 `ACTIVE` 或显式注销为 `REVOKED`；注销清除 token 密文并保留不可逆撤销证据。当前没有 APNs/FCM 发送适配器，也没有自动随会话撤销的生产闭环。
+- `UserPreference` 只允许本人创建默认投影或按 `expectedVersion` 更新，并追加变更字段事件。
+- `Feedback` 当前只从“无”创建为 `OPEN` 并提供角色范围读取；没有处理、公开回复、关闭或重开 mutation，因此不得把后续状态值当成可执行状态机。
+- `HelpArticle` 与 `AppReleasePolicy` 只读已持久化且当前生效的事实；本合同没有发布/编辑 mutation。iOS 只按数字 buildNumber 计算强制性，营销版本文本不参与比较。
+- 验证码/找回 challenge 为 `PENDING_DELIVERY -> ACTIVE -> CONSUMED/LOCKED/EXPIRED/DELIVERY_FAILED`；成功验证码只能消费一次。STUDENT 只建立 OTP AuthSession，找回仅 TEACHER/ADMIN。
+- 免测申请为 `DRAFT -> SUBMITTED -> APPROVED/REJECTED/SUPPLEMENT_REQUIRED`，补充后可重新提交。只有本人可写，只有责任教师可审核，ADMIN 只读；审核不直接修改成绩。
+
+其余 8 个新增 operation 继续 stable default deny：运动目录/折算 2、GPS/位置 6。拒绝路径不产生成功 AuditLog、业务 Outbox 或状态迁移。GPS 已有持久化和应用层基础，但 HTTP 路由仍由 default-deny service 处理，采样、精度、保留、删除、同意撤回与生产密钥参数均未批准。
 
 ## 1. 状态维度分离
 

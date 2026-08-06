@@ -276,6 +276,7 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | `SessionEndReason` | `USER_CANCELLED` | 学生取消会话 | 不适用 | `enum.sessionEndReason.userCancelled` | 否 |
 | `SessionEndReason` | `SESSION_EXPIRED` | 后端恢复/超时策略使会话过期 | 不适用 | `enum.sessionEndReason.sessionExpired` | 否 |
 | `MediaBusinessPurpose` | `EXERCISE_RECORD` | 体育打卡凭证 | 不适用 | `enum.mediaBusinessPurpose.exerciseRecord` | 否 |
+| `MediaBusinessPurpose` | `EXEMPTION_APPLICATION` | 免测申请私有材料 | 不适用 | `enum.mediaBusinessPurpose.exemptionApplication` | 否 |
 | `ReviewReasonCode` | `INSUFFICIENT_EVIDENCE` | 凭证不足以支持有效裁决 | 不适用 | `enum.reviewReasonCode.insufficientEvidence` | 否 |
 | `ReviewReasonCode` | `INVALID_MEDIA` | 媒体无效、损坏或不符合凭证要求 | 不适用 | `enum.reviewReasonCode.invalidMedia` | 否 |
 | `ReviewReasonCode` | `DURATION_INCONSISTENT` | 凭证与服务端时长事实不一致 | 不适用 | `enum.reviewReasonCode.durationInconsistent` | 否 |
@@ -545,6 +546,10 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | `MEDIA_TRANSITION_NOT_ALLOWED` | 409 | 媒体状态不允许该动作 | 请求边不在 MediaUploadStatus 状态机中 | 是，刷新后 | 拉取最新媒体状态及可用动作 | `error.media.transitionNotAllowed` |
 | `MEDIA_FAILURE_NOT_RETRYABLE` | 409 | 当前失败媒体不能原地重试 | 失败类型要求创建新的 MediaEvidence/上传会话 | 否；新建上传 | 丢弃旧上传任务，保留错误摘要 | `error.media.failureNotRetryable` |
 | `MEDIA_RETENTION_HOLD` | 409 | 留存策略阻止删除媒体 | 审计、申诉或法定留存期尚未结束 | 否，留存期结束后 | 隐藏删除；显示可公开的留存原因 | `error.media.retentionHold` |
+| `EXEMPTION_APPLICATION_NOT_FOUND` | 404 | 免测申请不存在 | 申请不存在或不在当前角色可见范围 | 否 | 刷新申请列表 | `error.exemption.notFound` |
+| `EXEMPTION_APPLICATION_TRANSITION_NOT_ALLOWED` | 409 | 免测申请状态不可转换 | 当前状态不允许修改、提交或审核 | 是，刷新后按新状态处理 | 刷新详情并更新可用操作 | `error.exemption.transitionNotAllowed` |
+| `EXEMPTION_APPLICATION_MEDIA_INVALID` | 422 | 免测申请材料不可用 | 媒体用途、学生、Enrollment、状态或组织范围不匹配 | 是，重新上传或选择合法材料 | 保留草稿并提示重新选择材料 | `error.exemption.mediaInvalid` |
+| `PERMISSION_EXEMPTION_REVIEW_SCOPE_DENIED` | 403 | 无权审核该免测申请 | 当前教师不是申请所属 ClassSection 的唯一责任教师 | 否 | 返回本人负责教学班列表 | `error.permission.exemptionReviewScopeDenied` |
 
 ### 8.9 REVIEW
 
@@ -745,7 +750,7 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | 学生自助退出/重入 | `ENROLLMENT_WITHDRAWAL_DISABLED` / `ENROLLMENT_REJOIN_DISABLED` | ADR-054 |
 | 忽略名单异常 | `ROSTER_IGNORE_NOT_ALLOWED` | ADR-057 |
 | 撤回已提交 ExerciseRecord | `EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED` | ADR-020 |
-| 申请非 EXERCISE_RECORD 媒体 | `MEDIA_PURPOSE_MISMATCH` | V1 MediaBusinessPurpose 闭集 |
+| 申请未获批的媒体用途 | `MEDIA_PURPOSE_MISMATCH` | MediaBusinessPurpose 闭集只允许 EXERCISE_RECORD 与 EXEMPTION_APPLICATION |
 | ADMIN 读取原始媒体或代教师审核 | `MEDIA_ACCESS_DENIED` / `PERMISSION_REVIEW_SCOPE_DENIED` | V1 角色边界 |
 | GPS、位置轨迹或全量物理清理 | `SYSTEM_MODE_UNSUPPORTED` / `AUDIT_RETENTION_POLICY_REQUIRED` | 隐私、数据生命周期与 Production Gate |
 | 人工过期 Session | `SESSION_EXPIRATION_NOT_ALLOWED` | ADR-021 及相应状态守卫 |

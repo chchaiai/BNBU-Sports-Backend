@@ -1,5 +1,19 @@
 # PostgreSQL Greenfield 数据库基线
 
+## Stage 21 Client Capabilities Migration、RBAC 与 Docker 口径
+
+`0011_client_capabilities` SHA-256 为 `78acf3c51ef2c3be25c7b9c534f487c65653bec7486535ccb889df12eeb56da6`。它新增 27 张客户端能力与位置证据表；Migration 静态口径为 67 个 foreign key、38 个 explicit unique index、86 个 CHECK addition、71 个 explicit index。0001–0010 保持不可变，变更仅通过 forward-only 0011 落盘。
+
+2026-08-06 在 Docker Desktop 4.85.0、Engine 29.6.2、Compose 5.3.1 上使用全新 PostgreSQL 18.4 volume 顺序部署 0001–0011；重复 deploy 无 pending，schema drift 为 `No difference detected`。首次验证暴露旧 Compose 把 migrator 当作 PostgreSQL bootstrap 超级用户、且 App 对 `_prisma_migrations` 具有过宽 DML 权限；修复后在另一个全新 project/volumes 从零完成最终复验。
+
+- bootstrap、migrator、app 为三个不同身份；migrator/app 均为 `NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT`。
+- migrator 只对当前数据库拥有 migration 所需的 `CONNECT/CREATE` 与 public schema `USAGE/CREATE`；App 只拥有数据库 `CONNECT` 与 public schema `USAGE`。
+- App 拥有 0 个 relation，对 73/73 张业务表具有完整 DML；对 `_prisma_migrations` 仅 `SELECT`，无 insert/update/delete。实际 App `CREATE TABLE` 与 migration 历史更新探针均被拒绝且无残留。
+- Runtime 以 UID 10001 运行；12 个本地客户端 operation 的 33 项 HTTP smoke、PostgreSQL/App restart、readiness 恢复、持久化签名、MinIO private bucket 与对象重启持久性均通过。
+- 日志、环境与 image history 的 exact-secret 扫描为零泄漏；精确 teardown 后本次 project 的容器、网络、卷、镜像与临时验证文件均为 0。
+
+该证据只覆盖隔离的本地 Synthetic Staging 和合成 fixture，不表示远程 Staging、生产备份恢复、iOS 真机闭环或 Production Gate 已完成。完整 Stage 21 边界见 [`../../docs/backend-contracts/21-client-capabilities-local-integration-report.md`](../../docs/backend-contracts/21-client-capabilities-local-integration-report.md)。
+
 ## Stage 19 Audit Read governance Migration
 
 `0010_export_audit_governance` SHA-256 为 `42aea4159d943b1c1c541ef8558c123d0e88d8e5aed06fd462aeabc1f98fe3df`。它不新增表、FK、unique/index 或 trigger，只 forward-replace 一条 `audit_logs_action_type_check`，加入 `AUDIT_LOG_READ`；既有 AuditLog append-only trigger 保持有效。由于 Export 合同决策未闭合，数据库中没有任何 `export%` 表。

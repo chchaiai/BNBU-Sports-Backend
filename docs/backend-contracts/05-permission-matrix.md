@@ -28,6 +28,20 @@ V1 基数已冻结：一个 User 只有一个基础 role 并只关联一种对�
 
 `ADMIN` 是组织管理员，不等于无限制 root。若未来确需跨组织或紧急代行，必须另建有期限、范围、批准人与撤销记录的授权资源；不能扩张 `ADMIN` 固有权限。
 
+## Stage 21 本地集成权限边界
+
+下表描述运行状态，不替代第 11 节由 OpenAPI 生成的逐 operation 权限登记。2026-08-05 的“30 项全部 default deny”已由 ADR-097 取代，但权限链仍必须在业务执行之前完成。
+
+| 能力族 | 当前运行状态 | 数据范围与附加条件 |
+|---|---|---|
+| 通知列表/已读 | 仅本地集成 | `STUDENT/TEACHER/ADMIN` 均只读本人 recipient；标记已读要求本人、同组织、幂等与事务证据 |
+| 推送设备注册/注销 | 仅本地集成 | 三角色均只操作本人当前认证会话登记的设备；token 不投影，注销清除密文；无 APNs/FCM 投递能力 |
+| 本人偏好读写 | 仅本地集成 | 三角色均只读写本人、同组织偏好；更新要求 `expectedVersion` |
+| 帮助文章读取 | 仅本地集成、公开读取 | 只返回已发布、已到发布时间且通过安全内容约束的文章；无发布/编辑权限 |
+| 反馈创建/读取 | 仅本地集成 | `STUDENT/TEACHER` 创建并只读本人；`ADMIN` 只读本组织；无处理、回复或跨组织权限 |
+| App 版本政策读取 | 仅本地集成、公开读取 | 只按 `ANDROID/IOS/WEB` 读取当前生效持久化政策；无有效政策返回 503；无管理端发布权限 |
+| 验证码/找回、免测、运动目录/折算、GPS | 验证码/找回 4 与免测 6 已本地实现；运动目录/折算 2 与 GPS 6 继续 default deny | STUDENT 仅 OTP；找回仅 TEACHER/ADMIN；免测仅本人写、责任教师审、ADMIN 组织内只读；GPS 原始坐标无任何角色可读 |
+
 ## 3. 权限矩阵
 
 符号：`允许` 表示角色能力仍须满足“资源范围/附加条件”；`禁止` 表示后端无对应权限；`禁止（ADR 前）` 表示接口可声明运输合同，但在所列决策被接受前不得开放执行权限。
@@ -89,7 +103,7 @@ V1 基数已冻结：一个 User 只有一个基础 role 并只关联一种对�
 | SESSION-START | 开始运动 | 允许 | 禁止 | 禁止 | 本人 ACTIVE Enrollment | 时间窗、账户/系统模式、无其他活动 session | 是 |
 | SESSION-PAUSE | 暂停/继续运动 | 允许 | 禁止 | 禁止 | 本人 session | 合法状态转换、version 匹配 | 否（事件留业务历史） |
 | RECORD-DRAFT | 创建/更新打卡草稿 | 允许 | 禁止 | 禁止 | 本人 session/record | 白名单字段；不能指定他人身份 | 否 |
-| MEDIA-UPLOAD | 申请/确认媒体上传 | 允许 | 禁止 | 禁止 | 本人 MediaEvidence | V1 purpose 仅 EXERCISE_RECORD；稳定 mediaId、capture source、MIME、签名、数量/大小校验 | 是（安全摘要） |
+| MEDIA-UPLOAD | 申请/确认媒体上传 | 允许 | 禁止 | 禁止 | 本人 MediaEvidence | EXERCISE_RECORD 绑定本人 Session 且只允许相机；EXEMPTION_APPLICATION 绑定本人 ACTIVE Enrollment 且允许相机/文件选择器；均为私有对象 | 是（安全摘要） |
 | RECORD-SUBMIT | 提交打卡 | 允许 | 禁止 | 禁止 | 本人 record + enrollment | session COMPLETED、媒体全部 AVAILABLE 且满足 1..6 图/0..1 视频与来源规则、每日唯一、幂等 | 是 |
 | RECORD-WITHDRAW | 撤回打卡 | 禁止（ADR-020 前） | 禁止 | 禁止 | 本人 record | 撤回窗口未确认；当前统一返回 `EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED` | 是 |
 | RECORD-SELF-READ | 查看本人打卡 | 允许 | 禁止 | 禁止 | 本人 | 不返回内部备注/存储键 | 否 |

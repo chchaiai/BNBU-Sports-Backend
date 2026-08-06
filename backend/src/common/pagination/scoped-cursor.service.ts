@@ -17,7 +17,10 @@ export interface CursorBinding {
     | 'EXERCISE_RECORD'
     | 'REVIEW_RECORD'
     | 'STUDENT_PROFILE'
-    | 'AUDIT_LOG';
+    | 'AUDIT_LOG'
+    | 'NOTIFICATION'
+    | 'FEEDBACK'
+    | 'EXEMPTION_APPLICATION';
   organizationId: string;
   principalId: string;
   role: string;
@@ -78,7 +81,7 @@ export class ScopedCursorService {
         typeof payload.position.value !== 'string' ||
         typeof payload.position.id !== 'string' ||
         payload.position.value.length > 200 ||
-        !/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
           payload.position.id,
         )
       ) {

@@ -28,13 +28,18 @@ export class PrismaMediaPolicyResolver extends MediaPolicyResolver {
             classSection: { include: { teacher: { select: { userId: true } } } },
           },
         },
+        exemptionEnrollment: {
+          include: {
+            classSection: { include: { teacher: { select: { userId: true } } } },
+          },
+        },
       },
     });
     if (media === null) throw new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404);
     const owner = principal.role === 'STUDENT' && media.ownerStudent.userId === principal.userId;
-    const teacher =
-      principal.role === 'TEACHER' &&
-      media.session.classSection.teacher.userId === principal.userId;
+    const target = media.session?.classSection ?? media.exemptionEnrollment?.classSection;
+    if (target === undefined) throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
+    const teacher = principal.role === 'TEACHER' && target.teacher.userId === principal.userId;
     if (!owner && !teacher) throw new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404);
     return {
       mediaId: media.id,
@@ -42,8 +47,9 @@ export class PrismaMediaPolicyResolver extends MediaPolicyResolver {
       ownerStudentId: media.ownerStudentId,
       ownerUserId: media.ownerStudent.userId,
       sessionId: media.sessionId,
-      classSectionId: media.session.classSectionId,
-      teacherUserId: media.session.classSection.teacher.userId,
+      enrollmentId: media.enrollmentId,
+      classSectionId: target.id,
+      teacherUserId: target.teacher.userId,
       uploadStatus: media.uploadStatus,
     };
   }
@@ -63,6 +69,11 @@ export class PrismaMediaPolicyResolver extends MediaPolicyResolver {
                 classSection: { include: { teacher: { select: { userId: true } } } },
               },
             },
+            exemptionEnrollment: {
+              include: {
+                classSection: { include: { teacher: { select: { userId: true } } } },
+              },
+            },
           },
         },
       },
@@ -74,14 +85,18 @@ export class PrismaMediaPolicyResolver extends MediaPolicyResolver {
     ) {
       throw new ApplicationError('MEDIA_OBJECT_NOT_FOUND', 404);
     }
+    const target =
+      upload.media.session?.classSection ?? upload.media.exemptionEnrollment?.classSection;
+    if (target === undefined) throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
     return {
       mediaId: upload.media.id,
       organizationId: upload.organizationId,
       ownerStudentId: upload.media.ownerStudentId,
       ownerUserId: upload.media.ownerStudent.userId,
       sessionId: upload.media.sessionId,
-      classSectionId: upload.media.session.classSectionId,
-      teacherUserId: upload.media.session.classSection.teacher.userId,
+      enrollmentId: upload.media.enrollmentId,
+      classSectionId: target.id,
+      teacherUserId: target.teacher.userId,
       uploadStatus: upload.media.uploadStatus,
       uploadSessionId: upload.id,
       uploadSessionStatus: upload.status,

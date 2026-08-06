@@ -9,14 +9,22 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 
 export class InitiateMediaUploadRequestDto {
+  @ValidateIf((input: InitiateMediaUploadRequestDto) => input.businessPurpose === 'EXERCISE_RECORD')
   @IsUUID('7')
-  sessionId!: string;
+  sessionId?: string;
 
-  @IsIn(['EXERCISE_RECORD'])
-  businessPurpose!: 'EXERCISE_RECORD';
+  @ValidateIf(
+    (input: InitiateMediaUploadRequestDto) => input.businessPurpose === 'EXEMPTION_APPLICATION',
+  )
+  @IsUUID('7')
+  enrollmentId?: string;
+
+  @IsIn(['EXERCISE_RECORD', 'EXEMPTION_APPLICATION'])
+  businessPurpose!: 'EXERCISE_RECORD' | 'EXEMPTION_APPLICATION';
 
   @IsIn(['IMAGE', 'VIDEO'])
   mediaType!: 'IMAGE' | 'VIDEO';
@@ -31,8 +39,8 @@ export class InitiateMediaUploadRequestDto {
   @Min(1)
   fileSizeBytes!: number;
 
-  @IsIn(['IN_APP_CAMERA'])
-  captureSource!: 'IN_APP_CAMERA';
+  @IsIn(['IN_APP_CAMERA', 'FILE_PICKER'])
+  captureSource!: 'IN_APP_CAMERA' | 'FILE_PICKER';
 
   @IsOptional()
   @Matches(/^[0-9a-f]{64}$/)

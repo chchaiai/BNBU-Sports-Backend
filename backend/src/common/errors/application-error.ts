@@ -8,6 +8,7 @@ const ERROR_MESSAGES = {
   AUTH_SESSION_REVOKED: 'The authentication session is no longer active.',
   AUTH_ACCOUNT_DISABLED: 'The account is disabled.',
   AUTH_RATE_LIMITED: 'Too many authentication attempts.',
+  AUTH_VERIFICATION_CODE_INVALID: 'The authentication verification code is invalid.',
   USER_NOT_FOUND: 'The user or profile was not found.',
   USER_PROFILE_INVALID: 'The student profile data is invalid.',
   USER_IDENTITY_CONFLICT: 'The student identity conflicts with an existing account.',
@@ -96,6 +97,13 @@ const ERROR_MESSAGES = {
   MEDIA_TRANSITION_NOT_ALLOWED: 'The media transition is not allowed.',
   MEDIA_FAILURE_NOT_RETRYABLE: 'The failed media cannot be retried.',
   MEDIA_RETENTION_HOLD: 'The media is protected by a retention hold.',
+  EXEMPTION_APPLICATION_NOT_FOUND: 'The exemption application was not found.',
+  EXEMPTION_APPLICATION_TRANSITION_NOT_ALLOWED:
+    'The exemption application transition is not allowed.',
+  EXEMPTION_APPLICATION_MEDIA_INVALID:
+    'The exemption application media is not eligible for this application.',
+  PERMISSION_EXEMPTION_REVIEW_SCOPE_DENIED:
+    'The exemption application is outside the responsible teacher scope.',
   REVIEW_NOT_FOUND: 'The review record was not found.',
   REVIEW_ALREADY_INITIALIZED: 'The initial review already exists.',
   REVIEW_ALREADY_STARTED: 'The review has already started.',

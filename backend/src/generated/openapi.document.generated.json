@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "BNBU Sports Unified API",
-    "version": "1.1.0-contract",
+    "version": "1.3.0-contract",
     "summary": "Unified contract for the sports check-in platform",
-    "description": "Stage 21 contract. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Client support and GPS capabilities added in\nStage 21 are real routed default denials until their business, privacy, and\nretention gates are approved.\n"
+    "description": "Stage 21B contract. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Of the 30 client-support operations added in\nStage 21, authentication, exemption, release-policy, notification,\npush-device, preference, help, and feedback capabilities are approved for\nreal local implementation, while unresolved capabilities remain explicit\nrouted denials. GPS has persistence and\napplication-layer foundations, but all six location HTTP operations remain\ndenied. None of these statements proves Staging, iOS-binary, push-delivery,\nGPS-production, or Production-Gate readiness.\n"
   },
   "servers": [
     {
@@ -20,7 +20,7 @@
   "x-authorization-invariants": {
     "teacherScope": "ClassSection.teacherId must equal principal.teacherId; no assignment or inferred multi-teacher relation exists.",
     "rawAuditLogRead": "ADMIN within the same organization only; TEACHER is denied.",
-    "defaultDeny": "Student enrollment withdrawal, submitted-record withdrawal, roster ignore, archived-score correction, Export, client support, exemption, and GPS/location capabilities are explicit routed denials. Student Course/ClassSection projection remains denied until an ACTIVE Enrollment can be resolved."
+    "defaultDeny": "Student enrollment withdrawal, submitted-record withdrawal, roster ignore, archived-score correction, Export, four client authentication/recovery operations, six exemption operations, sport catalog, activity conversion, and six GPS/location operations are explicit routed denials. Twelve Stage 21 client-support operations are local-integration implementations only and are not Staging or production enablement. Student Course/ClassSection projection remains denied until an ACTIVE Enrollment can be resolved."
   },
   "tags": [
     {
@@ -117,7 +117,7 @@
     },
     {
       "name": "Client Capabilities",
-      "description": "Contract-first client support capabilities that remain stable default-deny until their business gates are approved."
+      "description": "Contract-first client support capabilities; 12 operations are local-integration implementations and 18 remain stable default-deny. This is not Staging or production enablement."
     },
     {
       "name": "Notifications",
@@ -5456,12 +5456,9 @@
           "resourceResolver": "NONE",
           "defaultDeny": true
         },
-        "summary": "Request a student sign-in challenge through an approved contact channel",
-        "description": "Stable default-deny. No OTP provider, student recovery identity proof, rate policy, or delivery retention is approved.",
+        "summary": "Request an organization-scoped student sign-in challenge",
+        "description": "Creates a single-use, rate-limited challenge and returns an enumeration-safe challenge identifier. Delivery is available only through an explicitly configured provider; production has no universal code.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "STUDENT_REAUTHENTICATION_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5482,7 +5479,10 @@
         },
         "responses": {
           "202": {
-            "$ref": "#/components/responses/EmptySuccess"
+            "$ref": "#/components/responses/StudentSignInCodeAcceptedSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
@@ -5512,12 +5512,9 @@
           "resourceResolver": "NONE",
           "defaultDeny": true
         },
-        "summary": "Verify a student sign-in challenge and establish an authenticated session",
-        "description": "Stable default-deny. A successful Session contract is reserved but no verification fact is accepted or persisted.",
+        "summary": "Verify a student sign-in challenge and establish an AuthSession",
+        "description": "Consumes a valid single-use challenge and reuses the existing JWT, refresh-token rotation, session revocation, AuditLog, and Outbox boundary. Students do not receive or create passwords.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "STUDENT_REAUTHENTICATION_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5571,12 +5568,9 @@
           "resourceResolver": "NONE",
           "defaultDeny": true
         },
-        "summary": "Request an account recovery challenge without disclosing account existence",
-        "description": "Stable default-deny. Responses must remain enumeration-safe when this capability is later approved.",
+        "summary": "Request a TEACHER or ADMIN password-recovery challenge",
+        "description": "Creates an organization-scoped, enumeration-safe recovery challenge for TEACHER or ADMIN only. STUDENT password recovery is not supported because students authenticate with OTP.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "ACCOUNT_RECOVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5597,7 +5591,10 @@
         },
         "responses": {
           "202": {
-            "$ref": "#/components/responses/EmptySuccess"
+            "$ref": "#/components/responses/AccountRecoveryAcceptedSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
@@ -5627,12 +5624,9 @@
           "resourceResolver": "NONE",
           "defaultDeny": true
         },
-        "summary": "Complete an approved account recovery challenge",
-        "description": "Stable default-deny. No credential, token version, or AuthSession is changed.",
+        "summary": "Complete a TEACHER or ADMIN password-recovery challenge",
+        "description": "Consumes one challenge, replaces the password hash, increments tokenVersion, and revokes existing sessions and refresh tokens. STUDENT recovery identifiers are always rejected.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "ACCOUNT_RECOVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5691,10 +5685,7 @@
           "defaultDeny": true
         },
         "summary": "List the authenticated user's notification inbox",
-        "description": "Stable default-deny. No Notification persistence, delivery, or retention model exists.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "NOTIFICATION_DELIVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Returns the authenticated user's persisted notification inbox with a principal-bound cursor. Notification producers and outbound delivery remain separately governed.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Cursor"
@@ -5720,6 +5711,9 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
@@ -5748,10 +5742,7 @@
           "defaultDeny": true
         },
         "summary": "Mark one owned notification as read",
-        "description": "Stable default-deny with no Notification or AuditLog mutation.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "NOTIFICATION_DELIVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Idempotently marks one owned notification as read and appends domain history, AuditLog, and Outbox evidence.",
         "parameters": [
           {
             "name": "notificationId",
@@ -5777,6 +5768,12 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
@@ -5805,10 +5802,7 @@
           "defaultDeny": true
         },
         "summary": "Register a push-delivery token for the current authenticated session",
-        "description": "Stable default-deny. No FCM/APNs provider, token retention, rotation, or consent policy is approved.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "PUSH_DELIVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Registers or refreshes a token for the current authenticated session. Token plaintext is encrypted at rest and never projected; APNs/FCM delivery activation remains separately governed.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5833,6 +5827,9 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
@@ -5864,10 +5861,7 @@
           "defaultDeny": true
         },
         "summary": "Unregister an owned push-delivery token",
-        "description": "Stable default-deny with no device-token mutation.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "PUSH_DELIVERY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Idempotently revokes one owned push token without returning stored token material.",
         "parameters": [
           {
             "name": "deviceId",
@@ -5893,6 +5887,12 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
@@ -5921,10 +5921,7 @@
           "defaultDeny": true
         },
         "summary": "Get synchronized user interface and communication preferences",
-        "description": "Stable default-deny. Local client language remains separate from any future server preference.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "USER_PREFERENCE_SYNC_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Returns persisted synchronized preferences or organization-locale defaults when the user has not stored preferences yet.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5962,10 +5959,7 @@
           "defaultDeny": true
         },
         "summary": "Update synchronized user preferences with optimistic concurrency",
-        "description": "Stable default-deny. No preference, version, AuditLog, or Outbox mutation occurs.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "USER_PREFERENCE_SYNC_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Idempotently updates synchronized preferences with expectedVersion and durable mutation evidence.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -5994,6 +5988,9 @@
           "409": {
             "$ref": "#/components/responses/Conflict"
           },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
           }
@@ -6016,11 +6013,8 @@
           "defaultDeny": true
         },
         "summary": "List approved localized help content",
-        "description": "Stable default-deny. Static client help remains independent until editorial ownership and publishing are approved.",
+        "description": "Lists only persisted PUBLISHED help content for the selected locale. Content publication remains an administrative process outside this client API.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "HELP_CONTENT_GOVERNANCE_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "name": "locale",
@@ -6078,11 +6072,8 @@
           "defaultDeny": true
         },
         "summary": "Get one approved localized help article",
-        "description": "Stable default-deny with no content publication model.",
+        "description": "Returns one persisted PUBLISHED help article and never exposes draft or withdrawn content.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "HELP_CONTENT_GOVERNANCE_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "name": "articleId",
@@ -6102,6 +6093,9 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
@@ -6129,10 +6123,7 @@
           "defaultDeny": true
         },
         "summary": "List own feedback or organization governance feedback according to role",
-        "description": "Stable default-deny. ADMIN does not gain access to arbitrary client diagnostics or secrets.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "FEEDBACK_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Lists the caller's persisted feedback; ADMIN is organization-scoped. Client diagnostics, secrets, and internal notes are never projected.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Cursor"
@@ -6160,6 +6151,9 @@
           "401": {
             "$ref": "#/components/responses/Unauthorized"
           },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
           }
@@ -6184,10 +6178,7 @@
           "defaultDeny": true
         },
         "summary": "Create a privacy-bounded feedback item",
-        "description": "Stable default-deny. No ticket, attachment, client log, or external support-system side effect is created.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "FEEDBACK_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Creates a privacy-bounded feedback item with domain history, AuditLog, and Outbox evidence. It does not upload logs or create an external support ticket.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -6212,6 +6203,9 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
@@ -6242,10 +6236,7 @@
           "defaultDeny": true
         },
         "summary": "Get role-scoped feedback detail",
-        "description": "Stable default-deny. Future implementation must resolve owner or organization scope before returning content.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "FEEDBACK_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Returns feedback only to its creator or an ADMIN in the same organization.",
         "parameters": [
           {
             "name": "feedbackId",
@@ -6268,6 +6259,9 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
@@ -6296,10 +6290,7 @@
           "defaultDeny": true
         },
         "summary": "List own, responsible-class, or organization-governance exemption applications",
-        "description": "Stable default-deny. Role-specific resource resolution and retention are not yet approved.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "STUDENT reads own applications, TEACHER reads applications for personally assigned ClassSections, and ADMIN receives organization-governance projections. All roles receive the same public application projection.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Cursor"
@@ -6358,10 +6349,7 @@
           "defaultDeny": true
         },
         "summary": "Create a student-owned exemption application draft",
-        "description": "Stable default-deny. No application, attachment association, or status event is persisted.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Creates a DRAFT owned by the authenticated student and atomically associates eligible private EXEMPTION_APPLICATION media from the same active Enrollment.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -6417,10 +6405,7 @@
           "defaultDeny": true
         },
         "summary": "Get one role-scoped exemption application",
-        "description": "Stable default-deny. Future implementation must resolve student ownership, responsible teacher, or organization governance before projection.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Resolves student ownership, responsible-teacher ClassSection scope, or ADMIN organization scope before returning the public projection. internalNote is never projected.",
         "parameters": [
           {
             "name": "applicationId",
@@ -6467,10 +6452,7 @@
           "defaultDeny": true
         },
         "summary": "Update an owned draft or supplement-requested application",
-        "description": "Stable default-deny with no application or media-association mutation.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Updates only an owned DRAFT or SUPPLEMENT_REQUIRED application using expectedVersion and atomically replaces eligible private attachment associations.",
         "parameters": [
           {
             "name": "applicationId",
@@ -6532,10 +6514,7 @@
           "defaultDeny": true
         },
         "summary": "Submit an owned exemption application for responsible-teacher review",
-        "description": "Stable default-deny. No state transition, notification, score, or Enrollment side effect occurs.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Moves an owned DRAFT or SUPPLEMENT_REQUIRED application to SUBMITTED for the one responsible ClassSection teacher. Submission does not directly change Score facts.",
         "parameters": [
           {
             "name": "applicationId",
@@ -6597,10 +6576,7 @@
           "defaultDeny": true
         },
         "summary": "Append a responsible-teacher exemption decision",
-        "description": "Stable default-deny. ADMIN does not substitute for the responsible teacher and no score adjustment is created.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "EXEMPTION_WORKFLOW_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "description": "Appends an immutable decision by the personally responsible ClassSection teacher. ADMIN never substitutes for the teacher; internalNote is write-only and no score adjustment is created.",
         "parameters": [
           {
             "name": "applicationId",
@@ -6661,12 +6637,9 @@
           "resourceResolver": "NONE",
           "defaultDeny": true
         },
-        "summary": "Get a signed and platform-specific minimum-version policy",
-        "description": "Stable default-deny. No release channel, signature, rollout, or emergency override is approved.",
+        "summary": "Get a platform-specific persisted minimum-version policy",
+        "description": "Returns the currently effective persisted policy. For IOS, enforcement is derived from numeric currentBuildNumber against minimum/latest build thresholds; marketing version strings are display-only. Policy publication, signing, rollout, and production values remain separately governed.",
         "security": [],
-        "x-enabled-by-default": false,
-        "x-business-blocker": "APP_RELEASE_POLICY_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
         "parameters": [
           {
             "name": "platform",
@@ -6676,7 +6649,8 @@
               "type": "string",
               "enum": [
                 "ANDROID",
-                "WEB"
+                "WEB",
+                "IOS"
               ],
               "x-transport-constraint": true
             }
@@ -6688,7 +6662,19 @@
             "schema": {
               "type": "string",
               "maxLength": 64
-            }
+            },
+            "description": "Optional marketing version for display/diagnostics only; it is never used for iOS enforcement."
+          },
+          {
+            "name": "currentBuildNumber",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "description": "Required when platform=IOS. Numeric iOS CFBundleVersion used for authoritative update comparison."
           },
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -7413,6 +7399,36 @@
           }
         }
       },
+      "StudentSignInCodeAcceptedSuccess": {
+        "description": "Enumeration-safe student sign-in challenge acceptance",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StudentSignInCodeAcceptedEnvelope"
+            }
+          }
+        }
+      },
+      "AccountRecoveryAcceptedSuccess": {
+        "description": "Enumeration-safe account-recovery challenge acceptance",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountRecoveryAcceptedEnvelope"
+            }
+          }
+        }
+      },
       "HealthSuccess": {
         "description": "Foundation health status",
         "headers": {
@@ -7987,6 +8003,11 @@
       },
       "NotificationSuccess": {
         "description": "Notification projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -7997,6 +8018,11 @@
       },
       "NotificationListSuccess": {
         "description": "Paged role-owned notifications",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8007,6 +8033,11 @@
       },
       "PushDeviceSuccess": {
         "description": "Owned push-device registration projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8017,6 +8048,11 @@
       },
       "UserPreferencesSuccess": {
         "description": "Synchronized user-preference projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8027,6 +8063,11 @@
       },
       "HelpArticleSuccess": {
         "description": "Published localized help article",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8037,6 +8078,11 @@
       },
       "HelpArticleListSuccess": {
         "description": "Published localized help articles",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8047,6 +8093,11 @@
       },
       "FeedbackSuccess": {
         "description": "Role-safe feedback projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8057,6 +8108,11 @@
       },
       "FeedbackListSuccess": {
         "description": "Paged role-safe feedback projections",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8067,6 +8123,11 @@
       },
       "ExemptionApplicationSuccess": {
         "description": "Role-safe exemption application projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8077,6 +8138,11 @@
       },
       "ExemptionApplicationListSuccess": {
         "description": "Paged role-safe exemption application projections",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8087,6 +8153,11 @@
       },
       "AppReleasePolicySuccess": {
         "description": "Platform-specific release policy",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8097,6 +8168,11 @@
       },
       "SportCatalogSuccess": {
         "description": "Organization sport catalog",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8107,6 +8183,11 @@
       },
       "ActivityConversionRuleListSuccess": {
         "description": "Versioned activity conversion rules",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8117,6 +8198,11 @@
       },
       "LocationTrackSuccess": {
         "description": "Owned location-track intake state without raw sample projection",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8127,6 +8213,11 @@
       },
       "LocationSummarySuccess": {
         "description": "Coarse role-safe ExerciseRecord location summary",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8137,6 +8228,11 @@
       },
       "LocationPrivacyPolicySuccess": {
         "description": "Organization location privacy policy",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
         "content": {
           "application/json": {
             "schema": {
@@ -8712,7 +8808,8 @@
       "MediaBusinessPurpose": {
         "type": "string",
         "enum": [
-          "EXERCISE_RECORD"
+          "EXERCISE_RECORD",
+          "EXEMPTION_APPLICATION"
         ]
       },
       "CreditType": {
@@ -8957,6 +9054,10 @@
           "MEDIA_TRANSITION_NOT_ALLOWED",
           "MEDIA_FAILURE_NOT_RETRYABLE",
           "MEDIA_RETENTION_HOLD",
+          "EXEMPTION_APPLICATION_NOT_FOUND",
+          "EXEMPTION_APPLICATION_TRANSITION_NOT_ALLOWED",
+          "EXEMPTION_APPLICATION_MEDIA_INVALID",
+          "PERMISSION_EXEMPTION_REVIEW_SCOPE_DENIED",
           "REVIEW_NOT_FOUND",
           "REVIEW_ALREADY_INITIALIZED",
           "REVIEW_ALREADY_STARTED",
@@ -10713,6 +10814,16 @@
               }
             ]
           },
+          "enrollmentId": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OpaqueId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "recordId": {
             "oneOf": [
               {
@@ -10756,7 +10867,8 @@
             "description": "Null until the private object is read and validated by the server."
           },
           "captureSource": {
-            "$ref": "#/components/schemas/CaptureSource"
+            "$ref": "#/components/schemas/CaptureSource",
+            "description": "EXERCISE_RECORD requires IN_APP_CAMERA. EXEMPTION_APPLICATION permits IN_APP_CAMERA or FILE_PICKER; SYSTEM_IMPORT is not accepted by this student endpoint."
           },
           "uploadStatus": {
             "$ref": "#/components/schemas/MediaUploadStatus"
@@ -10822,6 +10934,7 @@
           "organizationId",
           "ownerStudentId",
           "sessionId",
+          "enrollmentId",
           "recordId",
           "businessPurpose",
           "mediaType",
@@ -11539,7 +11652,24 @@
         ],
         "properties": {
           "sessionId": {
-            "$ref": "#/components/schemas/OpaqueId"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OpaqueId"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "enrollmentId": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OpaqueId"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "accessToken": {
             "type": "string",
@@ -12691,7 +12821,6 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "sessionId",
           "businessPurpose",
           "mediaType",
           "mimeType",
@@ -12700,6 +12829,9 @@
         ],
         "properties": {
           "sessionId": {
+            "$ref": "#/components/schemas/OpaqueId"
+          },
+          "enrollmentId": {
             "$ref": "#/components/schemas/OpaqueId"
           },
           "businessPurpose": {
@@ -12718,7 +12850,8 @@
             "minimum": 1
           },
           "captureSource": {
-            "$ref": "#/components/schemas/CaptureSource"
+            "$ref": "#/components/schemas/CaptureSource",
+            "description": "EXERCISE_RECORD requires IN_APP_CAMERA. EXEMPTION_APPLICATION permits IN_APP_CAMERA or FILE_PICKER; SYSTEM_IMPORT is not accepted by this student endpoint."
           },
           "declaredContentSha256": {
             "oneOf": [
@@ -12739,7 +12872,52 @@
             "minimum": 1,
             "description": "Required and positive for VIDEO; omit or null for IMAGE. Runtime validation enforces the media-type condition."
           }
-        }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "businessPurpose": {
+                "const": "EXERCISE_RECORD"
+              },
+              "sessionId": {
+                "$ref": "#/components/schemas/OpaqueId"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "not": {
+              "properties": {
+                "enrollmentId": {}
+              },
+              "required": [
+                "enrollmentId"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "businessPurpose": {
+                "const": "EXEMPTION_APPLICATION"
+              },
+              "enrollmentId": {
+                "$ref": "#/components/schemas/OpaqueId"
+              }
+            },
+            "required": [
+              "enrollmentId"
+            ],
+            "not": {
+              "properties": {
+                "sessionId": {}
+              },
+              "required": [
+                "sessionId"
+              ]
+            }
+          }
+        ],
+        "description": "EXERCISE_RECORD media is scoped to an owned ExerciseSession. EXEMPTION_APPLICATION media is scoped to an owned active Enrollment before atomic association with an application draft."
       },
       "ConfirmMediaUploadRequest": {
         "type": "object",
@@ -14031,11 +14209,16 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "organizationCode",
           "account",
           "channel",
           "locale"
         ],
         "properties": {
+          "organizationCode": {
+            "type": "string",
+            "pattern": "^[A-Z0-9][A-Z0-9_-]{1,31}$"
+          },
           "account": {
             "type": "string",
             "minLength": 1,
@@ -14059,7 +14242,25 @@
             "x-transport-constraint": true
           }
         },
-        "description": "Contract-only input. The response must never reveal whether an account exists."
+        "description": "Organization-scoped input. The response never reveals whether a STUDENT account exists."
+      },
+      "StudentSignInCodeAccepted": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "challengeId",
+          "expiresAt"
+        ],
+        "properties": {
+          "challengeId": {
+            "$ref": "#/components/schemas/OpaqueId"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Enumeration-safe acceptance projection; it contains no account, contact, or delivery-provider data."
       },
       "StudentSignInCodeVerificationRequest": {
         "type": "object",
@@ -14090,10 +14291,17 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "organizationCode",
           "account",
-          "requestedRole"
+          "requestedRole",
+          "channel",
+          "locale"
         ],
         "properties": {
+          "organizationCode": {
+            "type": "string",
+            "pattern": "^[A-Z0-9][A-Z0-9_-]{1,31}$"
+          },
           "account": {
             "type": "string",
             "minLength": 1,
@@ -14101,10 +14309,49 @@
             "writeOnly": true
           },
           "requestedRole": {
-            "$ref": "#/components/schemas/UserRole"
+            "type": "string",
+            "enum": [
+              "TEACHER",
+              "ADMIN"
+            ],
+            "x-transport-constraint": true
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "EMAIL",
+              "PHONE"
+            ],
+            "x-transport-constraint": true
+          },
+          "locale": {
+            "type": "string",
+            "enum": [
+              "zh-CN",
+              "en"
+            ],
+            "x-transport-constraint": true
           }
         },
-        "description": "Contract-only enumeration-safe recovery request."
+        "description": "Enumeration-safe recovery request for pre-provisioned TEACHER or ADMIN accounts only."
+      },
+      "AccountRecoveryAccepted": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "recoveryId",
+          "expiresAt"
+        ],
+        "properties": {
+          "recoveryId": {
+            "$ref": "#/components/schemas/OpaqueId"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Enumeration-safe acceptance projection; it contains no account, contact, or delivery-provider data."
       },
       "AccountRecoveryCompletionRequest": {
         "type": "object",
@@ -14211,7 +14458,8 @@
             "type": "string",
             "enum": [
               "ANDROID",
-              "WEB"
+              "WEB",
+              "IOS"
             ],
             "x-transport-constraint": true
           },
@@ -14256,7 +14504,8 @@
             "type": "string",
             "enum": [
               "ANDROID",
-              "WEB"
+              "WEB",
+              "IOS"
             ],
             "x-transport-constraint": true
           },
@@ -14494,7 +14743,8 @@
                 "type": "string",
                 "enum": [
                   "ANDROID",
-                  "WEB"
+                  "WEB",
+                  "IOS"
                 ],
                 "x-transport-constraint": true
               },
@@ -14718,6 +14968,8 @@
           "platform",
           "minimumSupportedVersion",
           "latestVersion",
+          "minimumSupportedBuildNumber",
+          "latestBuildNumber",
           "enforcement",
           "message",
           "downloadUrl",
@@ -14730,7 +14982,8 @@
             "type": "string",
             "enum": [
               "ANDROID",
-              "WEB"
+              "WEB",
+              "IOS"
             ],
             "x-transport-constraint": true
           },
@@ -14743,6 +14996,24 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 64
+          },
+          "minimumSupportedBuildNumber": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 2147483647,
+            "description": "Required for IOS and compared numerically. Null for platforms without an approved numeric build policy."
+          },
+          "latestBuildNumber": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 2147483647,
+            "description": "Required for IOS and compared numerically. Marketing version text is not used as a substitute."
           },
           "enforcement": {
             "type": "string",
@@ -14783,7 +15054,8 @@
             "minLength": 1,
             "maxLength": 64
           }
-        }
+        },
+        "description": "For IOS, enforcement is REQUIRED below minimumSupportedBuildNumber, RECOMMENDED below latestBuildNumber, and NONE otherwise."
       },
       "SportCatalogItem": {
         "type": "object",
@@ -15331,6 +15603,38 @@
           },
           "meta": {
             "$ref": "#/components/schemas/PagedMeta"
+          }
+        }
+      },
+      "StudentSignInCodeAcceptedEnvelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/StudentSignInCodeAccepted"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/SuccessMeta"
+          }
+        }
+      },
+      "AccountRecoveryAcceptedEnvelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AccountRecoveryAccepted"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/SuccessMeta"
           }
         }
       },
