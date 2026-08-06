@@ -85,7 +85,7 @@ describe('authoritative OpenAPI contract', () => {
       }
     };
     visit(contract);
-    assert.equal(referenceCount, 1_628);
+    assert.equal(referenceCount, 1_671);
 
     const operations = collectOperations(contract);
     assert.equal(operations.length, 122);

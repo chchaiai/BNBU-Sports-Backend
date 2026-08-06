@@ -104,6 +104,8 @@
 | ADR-094  | V1 学生身份按组织内规范化 studentNumber 唯一创建或严格复用；Enrollment 永久保留同班关系并只由教师显式恢复                                                                                                                    | QR Join、手工成员管理、同学期唯一和学生投影需要同一可执行生命周期，且不能靠前端或模糊姓名匹配                                                                              | User/StudentProfile、Enrollment、Course/ClassSection projection、Auth  | 是                   | QR Join 要求 `isEnrollmentOpen=true` 并原子建立身份/Enrollment/Session；教师手工添加既有 StudentProfile 不受公开加入开关影响，但要求本人可写教学班和 reason；同班新请求不新建 Session，REMOVED/WITHDRAWN 只能教师 restore；ADR-054 未接受前学生 withdraw/rejoin 继续 default deny                                                                                | ACCEPTED   |
 | ADR-095  | V1 Official Roster 只接收 UTF-8 CSV；导入行永久不可变，平台匹配只属于不可变 Alignment Run/Result；Teacher 本人班可写，Admin 本组织只读                                                                                       | Stage 13 需要在不猜测文件格式、不污染 Enrollment/Profile 且可复现历史的前提下闭合 FILE Import、current/rollback、六类对齐和处置合同                                        | RosterImport/Entry、Alignment Run/Snapshot/Result、Resolution、OpenAPI | 是                   | `.csv` + `text/csv` + UTF-8（允许单个 BOM）联合校验；XLSX/XLS/ODS/ZIP/PDF/图片等拒绝；统计满足 total=valid+invalid+duplicated，仅 VALID 行参与对齐且至少一行 VALID 才可发布；新增 current 读取和 rollback operation；Run=`RUNNING/COMPLETED/FAILED`；处置动作=`CONFIRM/RESOLVE/REOPEN`；证据仅限已登记的同组织真实资源。ADR-045、ADR-057 与 ADR-070–074 状态不变 | ACCEPTED   |
 | ADR-096  | StudentProfile 字段级所有权：哪些非权威字段允许学生自助修改、哪些权威字段只允许 ADMIN/学校同步维护，以及是否需要二次验证                                                                                                     | 当前 Domain 禁止教师修改并区分非权威/权威资料，但 OpenAPI 的单一 UpdateStudentRequest 尚未冻结字段级角色矩阵                                                               | StudentProfile、OpenAPI、授权、AuditLog                                | 是                   | 正式批准前 `updateStudent` 保留真实路由并稳定返回 `SYSTEM_MODE_UNSUPPORTED`；不修改 Profile/version，不写成功 AuditLog/Outbox；Teacher 不因当前运输角色声明获得写权限                                                                                                                                                                                            | PROPOSED   |
+| ADR-097  | Stage 21 将 12 个客户端能力 operation 提升为仅本地集成，并为其余能力建立结构基础；不提升 Staging、iOS 或 Production Gate                                                                                                     | 2026-08-05 的 30 项统一 default deny 已不能描述当前实现；又必须防止把本地 PostgreSQL 证据误报为推送、GPS 或生产已开放                                                       | Notification、PushDevice、UserPreference、Help、Feedback、AppReleasePolicy、Auth/Exemption/Sport/GPS 结构、OpenAPI、Migration、runtime coverage | 是 | 12 个 operation 记为 `IMPLEMENTED_VERIFIED` 且仅作本地集成；18 个继续 `IMPLEMENTED_DEFAULT_DENY`；GPS 仅持久化/应用层基础且 6 个 HTTP operation 关闭；无 APNs/FCM、Staging、iOS 二进制或生产 GPS 完成声明 | ACCEPTED   |
+| ADR-098  | iOS 认证、版本与免测附件规则：请求显式携带 `organizationCode`；学生仅 OTP 登录，密码找回仅 TEACHER/ADMIN；iOS 强制升级只比较数字 `buildNumber`；免测附件使用私有 `EXEMPTION_APPLICATION` 媒体用途 | 负责人已于 2026-08-06 明确三项客户端阻塞决策；必须避免跨组织账号歧义、营销版本字符串误判、学生密码流和免测附件复用运动记录媒体语义 | Auth challenge/recovery、AuthSession、AppReleasePolicy、MediaEvidence、ExemptionApplication、OpenAPI、0012 migration | 是 | 认证/找回 4、免测 6 与版本读取 1 个 operation 进入本地真实实现；学生无密码找回；版本文本仅展示；运动媒体仍只允许相机，免测媒体允许相机或文件选择器；无短信/邮件生产 provider、Staging 或生产开放声明 | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -304,3 +306,21 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - GPS 写入必须绑定学生自己的 ExerciseSession；摘要读取必须绑定 ExerciseRecord 的学生本人、责任教师或本组织管理员；原始经纬度仅可作为 write-only 输入，不得进入教师/管理员公共 projection。
 - 全部 30 个新增 operation 在相应业务、隐私、保留和生产 Gate 关闭前固定 `x-enabled-by-default: false`，真实路由返回 `SYSTEM_MODE_UNSUPPORTED`，不得返回假成功或通过通用 404 冒充已实现。
 - 本阶段不新增 Prisma model 或 Migration。未来启用任一能力必须先接受独立业务决策，并复用 requestId、PolicyEngine、organization/resource scope、SystemMode、幂等、事务、AuditLog、Outbox 和稳定错误协议。
+
+### ADR-097：Stage 21 仅本地集成边界（2026-08-06，ACCEPTED）
+
+- ADR-097 仅取代上方 2026-08-05 Stage 21 说明中的“30 项全部 default deny、不得持久化、不新增 Migration”处置；该说明继续作为合同初次登记时的历史快照，不得再用于描述当前工作树。
+- OpenAPI 仍为 122 operations。12 个 operation 进入 `Stage 21 Local Integration`：`listNotifications`、`markNotificationRead`、`registerPushDevice`、`unregisterPushDevice`、`getCurrentUserPreferences`、`updateCurrentUserPreferences`、`listHelpArticles`、`getHelpArticle`、`createFeedback`、`listFeedback`、`getFeedback`、`getAppReleasePolicy`。
+- 其余 18 个新增 operation 保持真实 default deny：验证码/账号找回 4、免测 6、运动目录/折算 2、GPS/位置 6。它们的 schema/表或领域基础存在，不等于 HTTP 业务可执行；拒绝路径不得产生成功 AuditLog、业务 Outbox 或业务状态迁移。
+- `0011_client_capabilities` 是新增 forward-only Migration。通知已读、设备注册/注销、偏好更新、反馈创建复用认证、组织/本人范围、幂等、事务、事件历史、AuditLog 与 Outbox；帮助与 App 版本策略为受约束只读投影。
+- GPS 已建立政策、同意、轨迹、样本秘密、粗化摘要和保留证据所需的持久化/应用层基础，但 6 个位置 HTTP operation 继续关闭。ADR-029 及采样、精度、原始/粗化保留、撤回、删除、密钥与可见范围参数没有因 ADR-097 自动获批。
+
+### ADR-098：iOS 认证、数字构建号与免测私有附件（2026-08-06，ACCEPTED）
+
+- 本 ADR 取代 ADR-097 中验证码/账号找回 4 项与免测 6 项继续 default deny 的处置；运动目录/折算 2 项与 GPS/位置 6 项仍保持 default deny。
+- 验证码与找回请求必须携带 `organizationCode`。成功受理只返回不可枚举账号存在性的 `challengeId` 或 `recoveryId` 及到期时间；验证码只保存带上下文的摘要，不进入日志、AuditLog 或 Outbox。
+- STUDENT 仅通过 OTP 建立现有 AuthSession/JWT/refresh-token 会话，不创建或找回密码。账号密码找回只允许请求中显式选择 TEACHER 或 ADMIN；完成后增加 `tokenVersion` 并撤销旧会话和刷新令牌。
+- iOS 升级强制性以正整数 `currentBuildNumber`、`minimumSupportedBuildNumber`、`latestBuildNumber` 数值比较为唯一依据；营销版本字符串只展示，不参与 REQUIRED/RECOMMENDED/NONE 判断。
+- `MediaEvidence.businessPurpose` 增加 `EXEMPTION_APPLICATION`。该用途必须绑定本人 ACTIVE Enrollment、存入私有对象路径，并只能关联同一学生/组织/Enrollment 的免测申请；公共投影不返回 storageKey、签名 URL 或 `internalNote`。
+- 本地/test 可使用受限的验证码投递适配器。非 test 环境未配置真实短信/邮件 provider 时必须返回 503，禁止通用验证码。本 ADR 不授权 Staging/Production 部署。
+- 本决策不批准通知业务生产者、APNs/FCM provider 或投递 worker，不证明 Staging HTTPS、iOS 二进制真实 API 闭环或 Production Gate，不允许生产 GPS。后续隔离的本地 Docker Synthetic Staging 运行证据已记录在 `21-client-capabilities-local-integration-report.md`，但它不改变上述外部门禁；帮助/版本政策也没有管理端发布流程或已批准生产内容。

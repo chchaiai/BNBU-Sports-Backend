@@ -95,6 +95,33 @@ export const ModelName = {
   ScoreAdjustmentApprovalEvent: 'ScoreAdjustmentApprovalEvent',
   ScorePublicationEvent: 'ScorePublicationEvent',
   ScoreRecalculationAttempt: 'ScoreRecalculationAttempt',
+  StudentSignInChallenge: 'StudentSignInChallenge',
+  AccountRecoveryChallenge: 'AccountRecoveryChallenge',
+  AuthRateLimitFact: 'AuthRateLimitFact',
+  AppReleasePolicy: 'AppReleasePolicy',
+  Notification: 'Notification',
+  NotificationEvent: 'NotificationEvent',
+  PushDevice: 'PushDevice',
+  PushDeviceEvent: 'PushDeviceEvent',
+  UserPreference: 'UserPreference',
+  UserPreferenceEvent: 'UserPreferenceEvent',
+  HelpArticle: 'HelpArticle',
+  Feedback: 'Feedback',
+  FeedbackEvent: 'FeedbackEvent',
+  ExemptionApplication: 'ExemptionApplication',
+  ExemptionApplicationEvent: 'ExemptionApplicationEvent',
+  ExemptionReviewRecord: 'ExemptionReviewRecord',
+  ExemptionApplicationMedia: 'ExemptionApplicationMedia',
+  SportCatalogItem: 'SportCatalogItem',
+  LocationPrivacyPolicy: 'LocationPrivacyPolicy',
+  LocationConsent: 'LocationConsent',
+  LocationConsentEvent: 'LocationConsentEvent',
+  LocationTrack: 'LocationTrack',
+  LocationTrackEvent: 'LocationTrackEvent',
+  LocationSample: 'LocationSample',
+  LocationSampleSecret: 'LocationSampleSecret',
+  LocationSummary: 'LocationSummary',
+  LocationRetentionEvent: 'LocationRetentionEvent',
   AuditLog: 'AuditLog',
   OutboxEvent: 'OutboxEvent'
 } as const
@@ -470,6 +497,7 @@ export const MediaEvidenceScalarFieldEnum = {
   organizationId: 'organizationId',
   ownerStudentId: 'ownerStudentId',
   sessionId: 'sessionId',
+  enrollmentId: 'enrollmentId',
   initiatedByUserId: 'initiatedByUserId',
   businessPurpose: 'businessPurpose',
   mediaType: 'mediaType',
@@ -1008,6 +1036,489 @@ export const ScoreRecalculationAttemptScalarFieldEnum = {
 } as const
 
 export type ScoreRecalculationAttemptScalarFieldEnum = (typeof ScoreRecalculationAttemptScalarFieldEnum)[keyof typeof ScoreRecalculationAttemptScalarFieldEnum]
+
+
+export const StudentSignInChallengeScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  channel: 'channel',
+  locale: 'locale',
+  accountDigest: 'accountDigest',
+  sourceIpDigest: 'sourceIpDigest',
+  codeDigest: 'codeDigest',
+  codeKeyVersion: 'codeKeyVersion',
+  status: 'status',
+  failedAttempts: 'failedAttempts',
+  maxAttempts: 'maxAttempts',
+  requestedAt: 'requestedAt',
+  deliveredAt: 'deliveredAt',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  authSessionId: 'authSessionId',
+  resultCiphertext: 'resultCiphertext',
+  resultKeyVersion: 'resultKeyVersion',
+  resultReplayExpiresAt: 'resultReplayExpiresAt',
+  requestId: 'requestId',
+  version: 'version'
+} as const
+
+export type StudentSignInChallengeScalarFieldEnum = (typeof StudentSignInChallengeScalarFieldEnum)[keyof typeof StudentSignInChallengeScalarFieldEnum]
+
+
+export const AccountRecoveryChallengeScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  requestedRole: 'requestedRole',
+  channel: 'channel',
+  locale: 'locale',
+  accountDigest: 'accountDigest',
+  sourceIpDigest: 'sourceIpDigest',
+  codeDigest: 'codeDigest',
+  codeKeyVersion: 'codeKeyVersion',
+  status: 'status',
+  failedAttempts: 'failedAttempts',
+  maxAttempts: 'maxAttempts',
+  requestedAt: 'requestedAt',
+  deliveredAt: 'deliveredAt',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  requestId: 'requestId',
+  version: 'version'
+} as const
+
+export type AccountRecoveryChallengeScalarFieldEnum = (typeof AccountRecoveryChallengeScalarFieldEnum)[keyof typeof AccountRecoveryChallengeScalarFieldEnum]
+
+
+export const AuthRateLimitFactScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  purpose: 'purpose',
+  scopeType: 'scopeType',
+  scopeDigest: 'scopeDigest',
+  occurredAt: 'occurredAt'
+} as const
+
+export type AuthRateLimitFactScalarFieldEnum = (typeof AuthRateLimitFactScalarFieldEnum)[keyof typeof AuthRateLimitFactScalarFieldEnum]
+
+
+export const AppReleasePolicyScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  minimumSupportedVersion: 'minimumSupportedVersion',
+  latestVersion: 'latestVersion',
+  minimumSupportedBuildNumber: 'minimumSupportedBuildNumber',
+  latestBuildNumber: 'latestBuildNumber',
+  enforcement: 'enforcement',
+  message: 'message',
+  downloadUrl: 'downloadUrl',
+  effectiveAt: 'effectiveAt',
+  expiresAt: 'expiresAt',
+  policyVersion: 'policyVersion',
+  createdAt: 'createdAt'
+} as const
+
+export type AppReleasePolicyScalarFieldEnum = (typeof AppReleasePolicyScalarFieldEnum)[keyof typeof AppReleasePolicyScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  recipientUserId: 'recipientUserId',
+  notificationType: 'notificationType',
+  title: 'title',
+  body: 'body',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  version: 'version'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const NotificationEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  notificationId: 'notificationId',
+  eventType: 'eventType',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  occurredAt: 'occurredAt'
+} as const
+
+export type NotificationEventScalarFieldEnum = (typeof NotificationEventScalarFieldEnum)[keyof typeof NotificationEventScalarFieldEnum]
+
+
+export const PushDeviceScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  authSessionId: 'authSessionId',
+  platform: 'platform',
+  appVersion: 'appVersion',
+  locale: 'locale',
+  status: 'status',
+  registrationTokenHash: 'registrationTokenHash',
+  registrationTokenCiphertext: 'registrationTokenCiphertext',
+  encryptionKeyVersion: 'encryptionKeyVersion',
+  registeredAt: 'registeredAt',
+  updatedAt: 'updatedAt',
+  revokedAt: 'revokedAt',
+  version: 'version'
+} as const
+
+export type PushDeviceScalarFieldEnum = (typeof PushDeviceScalarFieldEnum)[keyof typeof PushDeviceScalarFieldEnum]
+
+
+export const PushDeviceEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  pushDeviceId: 'pushDeviceId',
+  eventType: 'eventType',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  occurredAt: 'occurredAt'
+} as const
+
+export type PushDeviceEventScalarFieldEnum = (typeof PushDeviceEventScalarFieldEnum)[keyof typeof PushDeviceEventScalarFieldEnum]
+
+
+export const UserPreferenceScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  locale: 'locale',
+  pushEnabled: 'pushEnabled',
+  emailEnabled: 'emailEnabled',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
+
+
+export const UserPreferenceEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userPreferenceId: 'userPreferenceId',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  changedFields: 'changedFields',
+  occurredAt: 'occurredAt'
+} as const
+
+export type UserPreferenceEventScalarFieldEnum = (typeof UserPreferenceEventScalarFieldEnum)[keyof typeof UserPreferenceEventScalarFieldEnum]
+
+
+export const HelpArticleScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  locale: 'locale',
+  title: 'title',
+  bodyMarkdown: 'bodyMarkdown',
+  status: 'status',
+  publishedAt: 'publishedAt',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HelpArticleScalarFieldEnum = (typeof HelpArticleScalarFieldEnum)[keyof typeof HelpArticleScalarFieldEnum]
+
+
+export const FeedbackScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId',
+  category: 'category',
+  content: 'content',
+  status: 'status',
+  publicReply: 'publicReply',
+  clientPlatform: 'clientPlatform',
+  clientAppVersion: 'clientAppVersion',
+  clientOsVersion: 'clientOsVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  version: 'version'
+} as const
+
+export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+export const FeedbackEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  feedbackId: 'feedbackId',
+  eventType: 'eventType',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  occurredAt: 'occurredAt'
+} as const
+
+export type FeedbackEventScalarFieldEnum = (typeof FeedbackEventScalarFieldEnum)[keyof typeof FeedbackEventScalarFieldEnum]
+
+
+export const ExemptionApplicationScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  semesterId: 'semesterId',
+  studentId: 'studentId',
+  enrollmentId: 'enrollmentId',
+  classSectionId: 'classSectionId',
+  applicationType: 'applicationType',
+  reason: 'reason',
+  status: 'status',
+  publicComment: 'publicComment',
+  submittedAt: 'submittedAt',
+  decidedAt: 'decidedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  version: 'version'
+} as const
+
+export type ExemptionApplicationScalarFieldEnum = (typeof ExemptionApplicationScalarFieldEnum)[keyof typeof ExemptionApplicationScalarFieldEnum]
+
+
+export const ExemptionApplicationEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  applicationId: 'applicationId',
+  eventType: 'eventType',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  occurredAt: 'occurredAt'
+} as const
+
+export type ExemptionApplicationEventScalarFieldEnum = (typeof ExemptionApplicationEventScalarFieldEnum)[keyof typeof ExemptionApplicationEventScalarFieldEnum]
+
+
+export const ExemptionReviewRecordScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  applicationId: 'applicationId',
+  reviewVersion: 'reviewVersion',
+  previousReviewId: 'previousReviewId',
+  teacherId: 'teacherId',
+  decision: 'decision',
+  publicComment: 'publicComment',
+  internalNote: 'internalNote',
+  requestId: 'requestId',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type ExemptionReviewRecordScalarFieldEnum = (typeof ExemptionReviewRecordScalarFieldEnum)[keyof typeof ExemptionReviewRecordScalarFieldEnum]
+
+
+export const ExemptionApplicationMediaScalarFieldEnum = {
+  organizationId: 'organizationId',
+  applicationId: 'applicationId',
+  mediaId: 'mediaId',
+  position: 'position',
+  createdAt: 'createdAt'
+} as const
+
+export type ExemptionApplicationMediaScalarFieldEnum = (typeof ExemptionApplicationMediaScalarFieldEnum)[keyof typeof ExemptionApplicationMediaScalarFieldEnum]
+
+
+export const SportCatalogItemScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  sportType: 'sportType',
+  displayNameKey: 'displayNameKey',
+  active: 'active',
+  requiresSportName: 'requiresSportName',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SportCatalogItemScalarFieldEnum = (typeof SportCatalogItemScalarFieldEnum)[keyof typeof SportCatalogItemScalarFieldEnum]
+
+
+export const LocationPrivacyPolicyScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  policyVersion: 'policyVersion',
+  purposeCode: 'purposeCode',
+  collectionEnabled: 'collectionEnabled',
+  sampleIntervalSeconds: 'sampleIntervalSeconds',
+  maximumAccuracyMeters: 'maximumAccuracyMeters',
+  rawRetentionDays: 'rawRetentionDays',
+  coarseRetentionDays: 'coarseRetentionDays',
+  coarseProjectionMeters: 'coarseProjectionMeters',
+  backgroundCollectionEnabled: 'backgroundCollectionEnabled',
+  revocationDisposition: 'revocationDisposition',
+  effectiveAt: 'effectiveAt',
+  version: 'version',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type LocationPrivacyPolicyScalarFieldEnum = (typeof LocationPrivacyPolicyScalarFieldEnum)[keyof typeof LocationPrivacyPolicyScalarFieldEnum]
+
+
+export const LocationConsentScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  studentId: 'studentId',
+  purposeCode: 'purposeCode',
+  status: 'status',
+  policyId: 'policyId',
+  policyVersion: 'policyVersion',
+  consentedAt: 'consentedAt',
+  revokedAt: 'revokedAt',
+  version: 'version'
+} as const
+
+export type LocationConsentScalarFieldEnum = (typeof LocationConsentScalarFieldEnum)[keyof typeof LocationConsentScalarFieldEnum]
+
+
+export const LocationConsentEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  consentId: 'consentId',
+  eventType: 'eventType',
+  policyVersion: 'policyVersion',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  occurredAt: 'occurredAt'
+} as const
+
+export type LocationConsentEventScalarFieldEnum = (typeof LocationConsentEventScalarFieldEnum)[keyof typeof LocationConsentEventScalarFieldEnum]
+
+
+export const LocationTrackScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  sessionId: 'sessionId',
+  studentId: 'studentId',
+  enrollmentId: 'enrollmentId',
+  classSectionId: 'classSectionId',
+  semesterId: 'semesterId',
+  policyId: 'policyId',
+  policyVersion: 'policyVersion',
+  consentId: 'consentId',
+  status: 'status',
+  acceptedSampleCount: 'acceptedSampleCount',
+  rejectedSampleCount: 'rejectedSampleCount',
+  startedAt: 'startedAt',
+  lastObservedAt: 'lastObservedAt',
+  finalizedAt: 'finalizedAt',
+  interruptedAt: 'interruptedAt',
+  deletedAt: 'deletedAt',
+  reasonCode: 'reasonCode',
+  rawExpiresAt: 'rawExpiresAt',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationTrackScalarFieldEnum = (typeof LocationTrackScalarFieldEnum)[keyof typeof LocationTrackScalarFieldEnum]
+
+
+export const LocationTrackEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  trackId: 'trackId',
+  eventType: 'eventType',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  actorUserId: 'actorUserId',
+  authSessionId: 'authSessionId',
+  requestId: 'requestId',
+  idempotencyKeyReference: 'idempotencyKeyReference',
+  eventVersion: 'eventVersion',
+  acceptedSampleCount: 'acceptedSampleCount',
+  rejectedSampleCount: 'rejectedSampleCount',
+  reasonCode: 'reasonCode',
+  occurredAt: 'occurredAt'
+} as const
+
+export type LocationTrackEventScalarFieldEnum = (typeof LocationTrackEventScalarFieldEnum)[keyof typeof LocationTrackEventScalarFieldEnum]
+
+
+export const LocationSampleScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  trackId: 'trackId',
+  sampleId: 'sampleId',
+  observedAt: 'observedAt',
+  accuracyMeters: 'accuracyMeters',
+  payloadFingerprint: 'payloadFingerprint',
+  acceptedAt: 'acceptedAt',
+  rawExpiresAt: 'rawExpiresAt'
+} as const
+
+export type LocationSampleScalarFieldEnum = (typeof LocationSampleScalarFieldEnum)[keyof typeof LocationSampleScalarFieldEnum]
+
+
+export const LocationSampleSecretScalarFieldEnum = {
+  sampleRowId: 'sampleRowId',
+  ciphertext: 'ciphertext',
+  keyVersion: 'keyVersion',
+  createdAt: 'createdAt'
+} as const
+
+export type LocationSampleSecretScalarFieldEnum = (typeof LocationSampleSecretScalarFieldEnum)[keyof typeof LocationSampleSecretScalarFieldEnum]
+
+
+export const LocationSummaryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  trackId: 'trackId',
+  recordId: 'recordId',
+  availability: 'availability',
+  coarseRoutePolyline: 'coarseRoutePolyline',
+  coarseDistanceMeters: 'coarseDistanceMeters',
+  observedStartAt: 'observedStartAt',
+  observedEndAt: 'observedEndAt',
+  expiresAt: 'expiresAt',
+  policyVersion: 'policyVersion',
+  qualityFlags: 'qualityFlags',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationSummaryScalarFieldEnum = (typeof LocationSummaryScalarFieldEnum)[keyof typeof LocationSummaryScalarFieldEnum]
+
+
+export const LocationRetentionEventScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  trackId: 'trackId',
+  dataClass: 'dataClass',
+  deletedRowCount: 'deletedRowCount',
+  policyVersion: 'policyVersion',
+  requestId: 'requestId',
+  deletedAt: 'deletedAt'
+} as const
+
+export type LocationRetentionEventScalarFieldEnum = (typeof LocationRetentionEventScalarFieldEnum)[keyof typeof LocationRetentionEventScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {

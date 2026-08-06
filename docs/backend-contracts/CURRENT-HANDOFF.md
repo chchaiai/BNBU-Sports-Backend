@@ -1,16 +1,24 @@
 # BNBU Sports Greenfield Backend — Current Handoff
 
-## Stage 21 客户端缺口 operation 与 GPS 合同补齐（最新）
+## Stage 21 客户端能力本地集成（最新）
 
-项目负责人于 2026-08-05 批准按合同优先方案实施，并要求加入 GPS 能力、建立 Android 学生端与 Web 教师/管理端到后端文件的对应关系。当前权威 OpenAPI 为 `1.1.0-contract`，共 122 operations：82 `IMPLEMENTED_VERIFIED`、40 `IMPLEMENTED_DEFAULT_DENY`、0 `NOT_IMPLEMENTED`、0 `BLOCKED_BY_ADR`。
+截至 2026-08-06，权威 OpenAPI 为 `1.3.0-contract`，为 122 operations / 275 schemas；当前工作树 SHA-256 为 `914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9`。当前 runtime coverage 为 104 `IMPLEMENTED_VERIFIED`、18 `IMPLEMENTED_DEFAULT_DENY`、0 `NOT_IMPLEMENTED`、0 `BLOCKED_BY_ADR`。
 
-新增 30 项已有真实路由、DTO、权限政策和测试，但在业务/隐私/保留规则批准前统一 `SYSTEM_MODE_UNSUPPORTED`，没有新增 Prisma model 或 Migration。GPS 写入绑定学生自己的 ExerciseSession；教师/管理员只能经 ExerciseRecord 范围读取粗化摘要，原始经纬度是 write-only。逐项对应见 `21-client-capabilities-operation-map.md`，验证边界见 `21-client-capabilities-default-deny-report.md`。
+Stage 21 新增的 30 项中，22 项已按 ADR-097 与 ADR-098 进入**仅本地集成**：App 版本政策 1、通知 2、推送设备注册/注销 2、本人偏好 2、帮助读取 2、反馈 3、学生 OTP 登录 2、教师/管理员账号找回 2、免测申请 6。它们使用 `0011_client_capabilities`、forward-only `0012_ios_auth_release_exemption`、真实 PostgreSQL repository 及相应权限/幂等/事务证据；这不是 Staging 或生产开放声明。验证码真实短信/邮件 provider、通知业务生产者、APNs/FCM provider/worker、帮助与版本政策发布管理流程均未完成。
 
-本阶段没有改动 Android/Web 源码；客户端真实联调与 GPS 业务启用仍为 NO，Production Gate 仍为 NO。
+ADR-097 阶段的本地 Docker Synthetic Staging 基线已在 Docker Desktop 4.85.0、Engine 29.6.2、Compose 5.3.1 上完成：全新 volumes 顺序部署 0001–0011、重复 deploy、drift 0、三身份数据库 RBAC、UID 10001 runtime、12-operation/33-assertion HTTP smoke、PostgreSQL/App/MinIO restart 与持久性、private buckets、secret 扫描和精确 teardown 均通过。验证中先发现并修复了旧 Compose 将 migrator 作为 bootstrap 超级用户以及 App 对 migration 历史权限过宽的问题；最终 migrator/app 均为非 superuser、非 createdb、非 createrole、`NOINHERIT`，App 对 `_prisma_migrations` 仅可读。runtime digest 为 `sha256:18eb6e838d59773dc78cefdd45c6cd7badfc3c5ab5b3613e375d8a69efdd77df`，migrator digest 为 `sha256:78757a314bcac42c9e19cc1fb57f55cd854e26041bca870ea44382f9a8c34073`。
 
-历史 `client-backend-integration-v1` 仍保持不可变，但其 92-operation 快照不包含 Stage 21。客户端不得用 v1 生成新增能力；提示见 `docs/client-handoff/STAGE21-CONTRACT-NOTICE.md`。新的版本化交接包需在本阶段形成 clean commit 后生成，本工作树未伪造 v2 包。
+ADR-098 的本轮增量验证在隔离 Docker PostgreSQL 18 测试库上顺序应用 0001–0012，schema drift 为 0，并通过 Unit 103/103、Integration 41/41、E2E 47/47、Contract 31/31、Security 46/46。该增量没有重建上述 App/MinIO 全栈镜像，因此两组证据都仍不是远程 Staging 或生产证据。
 
-生成日期：2026-08-05。用途：不依赖旧账号、对话或 Memory 的本地接续。根目录为 `C:\Users\23328\Desktop\new_version`；权威后端为 `backend/`；唯一人工维护 API 机器合同为 `docs/backend-contracts/openapi.yaml`。
+其余 8 项仍稳定返回 `SYSTEM_MODE_UNSUPPORTED`：运动目录/折算 2、GPS/位置 6。GPS 已有持久化和应用层基础，但 HTTP 仍关闭；采样、精度、同意撤回、原始/粗化保留、删除、密钥与生产可见范围均未批准，Production GPS Gate 为 NO。
+
+本阶段没有改动 Android/Web 客户端源码，也没有本仓库内 iOS 工程证据；无 Staging HTTPS 部署、iOS 二进制真实 API 闭环或生产验收。逐项对应见 `21-client-capabilities-operation-map.md`，当前本地实现边界见 `21-client-capabilities-local-integration-report.md`，剩余默认拒绝与 2026-08-05 历史快照见 `21-client-capabilities-default-deny-report.md`。
+
+客户端迁移口径已冻结：统一权威后端只使用 `/api/v1`；按完整业务模块逐步迁移，同一构建中的一个页面只能有一个数据源；新接口失败时不得静默回退旧 API 或 Mock。若遥测仍显示历史接口存在真实调用，只有在最低支持客户端版本、调用归零/可接受阈值与回滚窗口明确后才能决定下线日期；当前不虚构具体日期。
+
+历史 `client-backend-integration-v1` 仍保持不可变，但其 92-operation 快照不包含 Stage 21。客户端不得用 v1 生成新增能力；提示见 `docs/client-handoff/STAGE21-CONTRACT-NOTICE.md`。新的不可变交接包只能在 clean HEAD 上记录最终 commit、OpenAPI 哈希和包校验和；当前 dirty 工作树不是可发布交接包。
+
+生成日期：2026-08-06。用途：不依赖旧账号、对话或 Memory 的本地接续。根目录为 `C:\Users\23328\Desktop\new_version`；权威后端为 `backend/`；唯一人工维护 API 机器合同为 `docs/backend-contracts/openapi.yaml`。下方 Stage 20A/19/18 等数字是对应历史阶段证据，不覆盖上方最新 Stage 21 状态。
 
 ## Stage 20A 客户端联调批准与 staging 准备（最新，取代下方待批准判断）
 

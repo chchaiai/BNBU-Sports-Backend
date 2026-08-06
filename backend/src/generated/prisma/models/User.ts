@@ -350,6 +350,20 @@ export type UserWhereInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentListRelationFilter
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventListRelationFilter
   scorePublicationEvents?: Prisma.ScorePublicationEventListRelationFilter
+  studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  notificationEvents?: Prisma.NotificationEventListRelationFilter
+  pushDevices?: Prisma.PushDeviceListRelationFilter
+  pushDeviceEvents?: Prisma.PushDeviceEventListRelationFilter
+  userPreference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
+  userPreferenceEvents?: Prisma.UserPreferenceEventListRelationFilter
+  createdFeedback?: Prisma.FeedbackListRelationFilter
+  feedbackEvents?: Prisma.FeedbackEventListRelationFilter
+  exemptionEvents?: Prisma.ExemptionApplicationEventListRelationFilter
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyListRelationFilter
+  locationConsentEvents?: Prisma.LocationConsentEventListRelationFilter
+  locationTrackEvents?: Prisma.LocationTrackEventListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -404,6 +418,20 @@ export type UserOrderByWithRelationInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentOrderByRelationAggregateInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventOrderByRelationAggregateInput
   scorePublicationEvents?: Prisma.ScorePublicationEventOrderByRelationAggregateInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeOrderByRelationAggregateInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  notificationEvents?: Prisma.NotificationEventOrderByRelationAggregateInput
+  pushDevices?: Prisma.PushDeviceOrderByRelationAggregateInput
+  pushDeviceEvents?: Prisma.PushDeviceEventOrderByRelationAggregateInput
+  userPreference?: Prisma.UserPreferenceOrderByWithRelationInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventOrderByRelationAggregateInput
+  createdFeedback?: Prisma.FeedbackOrderByRelationAggregateInput
+  feedbackEvents?: Prisma.FeedbackEventOrderByRelationAggregateInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventOrderByRelationAggregateInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyOrderByRelationAggregateInput
+  locationConsentEvents?: Prisma.LocationConsentEventOrderByRelationAggregateInput
+  locationTrackEvents?: Prisma.LocationTrackEventOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -464,6 +492,20 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentListRelationFilter
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventListRelationFilter
   scorePublicationEvents?: Prisma.ScorePublicationEventListRelationFilter
+  studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  notificationEvents?: Prisma.NotificationEventListRelationFilter
+  pushDevices?: Prisma.PushDeviceListRelationFilter
+  pushDeviceEvents?: Prisma.PushDeviceEventListRelationFilter
+  userPreference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
+  userPreferenceEvents?: Prisma.UserPreferenceEventListRelationFilter
+  createdFeedback?: Prisma.FeedbackListRelationFilter
+  feedbackEvents?: Prisma.FeedbackEventListRelationFilter
+  exemptionEvents?: Prisma.ExemptionApplicationEventListRelationFilter
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyListRelationFilter
+  locationConsentEvents?: Prisma.LocationConsentEventListRelationFilter
+  locationTrackEvents?: Prisma.LocationTrackEventListRelationFilter
 }, "id" | "id_organizationId" | "organizationId_primaryEmailNormalized" | "organizationId_primaryPhoneNormalized">
 
 export type UserOrderByWithAggregationInput = {
@@ -565,6 +607,20 @@ export type UserCreateInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -618,6 +674,20 @@ export type UserUncheckedCreateInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserUpdateInput = {
@@ -671,6 +741,20 @@ export type UserUpdateInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -724,6 +808,20 @@ export type UserUncheckedUpdateInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1402,6 +1500,206 @@ export type UserUpdateOneRequiredWithoutScorePublicationEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutScorePublicationEventsInput, Prisma.UserUpdateWithoutScorePublicationEventsInput>, Prisma.UserUncheckedUpdateWithoutScorePublicationEventsInput>
 }
 
+export type UserCreateNestedOneWithoutStudentSignInChallengesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedCreateWithoutStudentSignInChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentSignInChallengesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutStudentSignInChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedCreateWithoutStudentSignInChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentSignInChallengesInput
+  upsert?: Prisma.UserUpsertWithoutStudentSignInChallengesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudentSignInChallengesInput, Prisma.UserUpdateWithoutStudentSignInChallengesInput>, Prisma.UserUncheckedUpdateWithoutStudentSignInChallengesInput>
+}
+
+export type UserCreateNestedOneWithoutAccountRecoveryChallengesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedCreateWithoutAccountRecoveryChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountRecoveryChallengesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAccountRecoveryChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedCreateWithoutAccountRecoveryChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountRecoveryChallengesInput
+  upsert?: Prisma.UserUpsertWithoutAccountRecoveryChallengesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountRecoveryChallengesInput, Prisma.UserUpdateWithoutAccountRecoveryChallengesInput>, Prisma.UserUncheckedUpdateWithoutAccountRecoveryChallengesInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationEventsInput, Prisma.UserUncheckedCreateWithoutNotificationEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationEventsInput, Prisma.UserUncheckedCreateWithoutNotificationEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationEventsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationEventsInput, Prisma.UserUpdateWithoutNotificationEventsInput>, Prisma.UserUncheckedUpdateWithoutNotificationEventsInput>
+}
+
+export type UserCreateNestedOneWithoutPushDevicesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPushDevicesInput, Prisma.UserUncheckedCreateWithoutPushDevicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushDevicesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPushDevicesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPushDevicesInput, Prisma.UserUncheckedCreateWithoutPushDevicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushDevicesInput
+  upsert?: Prisma.UserUpsertWithoutPushDevicesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPushDevicesInput, Prisma.UserUpdateWithoutPushDevicesInput>, Prisma.UserUncheckedUpdateWithoutPushDevicesInput>
+}
+
+export type UserCreateNestedOneWithoutPushDeviceEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPushDeviceEventsInput, Prisma.UserUncheckedCreateWithoutPushDeviceEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushDeviceEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPushDeviceEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPushDeviceEventsInput, Prisma.UserUncheckedCreateWithoutPushDeviceEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushDeviceEventsInput
+  upsert?: Prisma.UserUpsertWithoutPushDeviceEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPushDeviceEventsInput, Prisma.UserUpdateWithoutPushDeviceEventsInput>, Prisma.UserUncheckedUpdateWithoutPushDeviceEventsInput>
+}
+
+export type UserCreateNestedOneWithoutUserPreferenceInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceInput, Prisma.UserUncheckedCreateWithoutUserPreferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserPreferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserPreferenceNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceInput, Prisma.UserUncheckedCreateWithoutUserPreferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserPreferenceInput
+  upsert?: Prisma.UserUpsertWithoutUserPreferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserPreferenceInput, Prisma.UserUpdateWithoutUserPreferenceInput>, Prisma.UserUncheckedUpdateWithoutUserPreferenceInput>
+}
+
+export type UserCreateNestedOneWithoutUserPreferenceEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedCreateWithoutUserPreferenceEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserPreferenceEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserPreferenceEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedCreateWithoutUserPreferenceEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserPreferenceEventsInput
+  upsert?: Prisma.UserUpsertWithoutUserPreferenceEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserPreferenceEventsInput, Prisma.UserUpdateWithoutUserPreferenceEventsInput>, Prisma.UserUncheckedUpdateWithoutUserPreferenceEventsInput>
+}
+
+export type UserCreateNestedOneWithoutCreatedFeedbackInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedFeedbackInput, Prisma.UserUncheckedCreateWithoutCreatedFeedbackInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedFeedbackInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedFeedbackNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedFeedbackInput, Prisma.UserUncheckedCreateWithoutCreatedFeedbackInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedFeedbackInput
+  upsert?: Prisma.UserUpsertWithoutCreatedFeedbackInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedFeedbackInput, Prisma.UserUpdateWithoutCreatedFeedbackInput>, Prisma.UserUncheckedUpdateWithoutCreatedFeedbackInput>
+}
+
+export type UserCreateNestedOneWithoutFeedbackEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedbackEventsInput, Prisma.UserUncheckedCreateWithoutFeedbackEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedbackEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFeedbackEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedbackEventsInput, Prisma.UserUncheckedCreateWithoutFeedbackEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedbackEventsInput
+  upsert?: Prisma.UserUpsertWithoutFeedbackEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFeedbackEventsInput, Prisma.UserUpdateWithoutFeedbackEventsInput>, Prisma.UserUncheckedUpdateWithoutFeedbackEventsInput>
+}
+
+export type UserCreateNestedOneWithoutExemptionEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExemptionEventsInput, Prisma.UserUncheckedCreateWithoutExemptionEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExemptionEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutExemptionEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutExemptionEventsInput, Prisma.UserUncheckedCreateWithoutExemptionEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutExemptionEventsInput
+  upsert?: Prisma.UserUpsertWithoutExemptionEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutExemptionEventsInput, Prisma.UserUpdateWithoutExemptionEventsInput>, Prisma.UserUncheckedUpdateWithoutExemptionEventsInput>
+}
+
+export type UserCreateNestedOneWithoutLocationPoliciesCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedCreateWithoutLocationPoliciesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationPoliciesCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLocationPoliciesCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedCreateWithoutLocationPoliciesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationPoliciesCreatedInput
+  upsert?: Prisma.UserUpsertWithoutLocationPoliciesCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLocationPoliciesCreatedInput, Prisma.UserUpdateWithoutLocationPoliciesCreatedInput>, Prisma.UserUncheckedUpdateWithoutLocationPoliciesCreatedInput>
+}
+
+export type UserCreateNestedOneWithoutLocationConsentEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationConsentEventsInput, Prisma.UserUncheckedCreateWithoutLocationConsentEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationConsentEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLocationConsentEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationConsentEventsInput, Prisma.UserUncheckedCreateWithoutLocationConsentEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationConsentEventsInput
+  upsert?: Prisma.UserUpsertWithoutLocationConsentEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLocationConsentEventsInput, Prisma.UserUpdateWithoutLocationConsentEventsInput>, Prisma.UserUncheckedUpdateWithoutLocationConsentEventsInput>
+}
+
+export type UserCreateNestedOneWithoutLocationTrackEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationTrackEventsInput, Prisma.UserUncheckedCreateWithoutLocationTrackEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationTrackEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLocationTrackEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLocationTrackEventsInput, Prisma.UserUncheckedCreateWithoutLocationTrackEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLocationTrackEventsInput
+  upsert?: Prisma.UserUpsertWithoutLocationTrackEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLocationTrackEventsInput, Prisma.UserUpdateWithoutLocationTrackEventsInput>, Prisma.UserUncheckedUpdateWithoutLocationTrackEventsInput>
+}
+
 export type UserCreateNestedOneWithoutAuditLogsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
@@ -1468,6 +1766,20 @@ export type UserCreateWithoutOrganizationInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationInput = {
@@ -1520,6 +1832,20 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationInput = {
@@ -1621,6 +1947,20 @@ export type UserCreateWithoutSystemPolicyChangesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSystemPolicyChangesInput = {
@@ -1673,6 +2013,20 @@ export type UserUncheckedCreateWithoutSystemPolicyChangesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSystemPolicyChangesInput = {
@@ -1741,6 +2095,20 @@ export type UserUpdateWithoutSystemPolicyChangesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSystemPolicyChangesInput = {
@@ -1793,6 +2161,20 @@ export type UserUncheckedUpdateWithoutSystemPolicyChangesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutStudentProfileInput = {
@@ -1845,6 +2227,20 @@ export type UserCreateWithoutStudentProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutStudentProfileInput = {
@@ -1897,6 +2293,20 @@ export type UserUncheckedCreateWithoutStudentProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutStudentProfileInput = {
@@ -1965,6 +2375,20 @@ export type UserUpdateWithoutStudentProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentProfileInput = {
@@ -2017,6 +2441,20 @@ export type UserUncheckedUpdateWithoutStudentProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutTeacherProfileInput = {
@@ -2069,6 +2507,20 @@ export type UserCreateWithoutTeacherProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutTeacherProfileInput = {
@@ -2121,6 +2573,20 @@ export type UserUncheckedCreateWithoutTeacherProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutTeacherProfileInput = {
@@ -2189,6 +2655,20 @@ export type UserUpdateWithoutTeacherProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeacherProfileInput = {
@@ -2241,6 +2721,20 @@ export type UserUncheckedUpdateWithoutTeacherProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAdminProfileInput = {
@@ -2293,6 +2787,20 @@ export type UserCreateWithoutAdminProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAdminProfileInput = {
@@ -2345,6 +2853,20 @@ export type UserUncheckedCreateWithoutAdminProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAdminProfileInput = {
@@ -2413,6 +2935,20 @@ export type UserUpdateWithoutAdminProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminProfileInput = {
@@ -2465,6 +3001,20 @@ export type UserUncheckedUpdateWithoutAdminProfileInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAuthSessionsInput = {
@@ -2517,6 +3067,20 @@ export type UserCreateWithoutAuthSessionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAuthSessionsInput = {
@@ -2569,6 +3133,20 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAuthSessionsInput = {
@@ -2637,6 +3215,20 @@ export type UserUpdateWithoutAuthSessionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthSessionsInput = {
@@ -2689,6 +3281,20 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedSemestersInput = {
@@ -2741,6 +3347,20 @@ export type UserCreateWithoutCreatedSemestersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSemestersInput = {
@@ -2793,6 +3413,20 @@ export type UserUncheckedCreateWithoutCreatedSemestersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSemestersInput = {
@@ -2861,6 +3495,20 @@ export type UserUpdateWithoutCreatedSemestersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSemestersInput = {
@@ -2913,6 +3561,20 @@ export type UserUncheckedUpdateWithoutCreatedSemestersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedCoursesInput = {
@@ -2965,6 +3627,20 @@ export type UserCreateWithoutCreatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCoursesInput = {
@@ -3017,6 +3693,20 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCoursesInput = {
@@ -3074,6 +3764,20 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
@@ -3126,6 +3830,20 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCoursesInput = {
@@ -3183,6 +3901,20 @@ export type UserCreateWithoutDeletedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutDeletedCoursesInput = {
@@ -3235,6 +3967,20 @@ export type UserUncheckedCreateWithoutDeletedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutDeletedCoursesInput = {
@@ -3303,6 +4049,20 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
@@ -3355,6 +4115,20 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCoursesInput = {
@@ -3418,6 +4192,20 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
@@ -3470,6 +4258,20 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutDeletedCoursesInput = {
@@ -3533,6 +4335,20 @@ export type UserUpdateWithoutDeletedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeletedCoursesInput = {
@@ -3585,6 +4401,20 @@ export type UserUncheckedUpdateWithoutDeletedCoursesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedClassSectionsInput = {
@@ -3637,6 +4467,20 @@ export type UserCreateWithoutCreatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedClassSectionsInput = {
@@ -3689,6 +4533,20 @@ export type UserUncheckedCreateWithoutCreatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedClassSectionsInput = {
@@ -3746,6 +4604,20 @@ export type UserCreateWithoutUpdatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedClassSectionsInput = {
@@ -3798,6 +4670,20 @@ export type UserUncheckedCreateWithoutUpdatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedClassSectionsInput = {
@@ -3855,6 +4741,20 @@ export type UserCreateWithoutClosedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutClosedClassSectionsInput = {
@@ -3907,6 +4807,20 @@ export type UserUncheckedCreateWithoutClosedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutClosedClassSectionsInput = {
@@ -3975,6 +4889,20 @@ export type UserUpdateWithoutCreatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedClassSectionsInput = {
@@ -4027,6 +4955,20 @@ export type UserUncheckedUpdateWithoutCreatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutUpdatedClassSectionsInput = {
@@ -4090,6 +5032,20 @@ export type UserUpdateWithoutUpdatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedClassSectionsInput = {
@@ -4142,6 +5098,20 @@ export type UserUncheckedUpdateWithoutUpdatedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutClosedClassSectionsInput = {
@@ -4205,6 +5175,20 @@ export type UserUpdateWithoutClosedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClosedClassSectionsInput = {
@@ -4257,6 +5241,20 @@ export type UserUncheckedUpdateWithoutClosedClassSectionsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedExcludedDatesInput = {
@@ -4309,6 +5307,20 @@ export type UserCreateWithoutCreatedExcludedDatesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExcludedDatesInput = {
@@ -4361,6 +5373,20 @@ export type UserUncheckedCreateWithoutCreatedExcludedDatesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExcludedDatesInput = {
@@ -4429,6 +5455,20 @@ export type UserUpdateWithoutCreatedExcludedDatesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExcludedDatesInput = {
@@ -4481,6 +5521,20 @@ export type UserUncheckedUpdateWithoutCreatedExcludedDatesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedCourseInvitesInput = {
@@ -4533,6 +5587,20 @@ export type UserCreateWithoutCreatedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCourseInvitesInput = {
@@ -4585,6 +5653,20 @@ export type UserUncheckedCreateWithoutCreatedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCourseInvitesInput = {
@@ -4642,6 +5724,20 @@ export type UserCreateWithoutRevokedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRevokedCourseInvitesInput = {
@@ -4694,6 +5790,20 @@ export type UserUncheckedCreateWithoutRevokedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRevokedCourseInvitesInput = {
@@ -4762,6 +5872,20 @@ export type UserUpdateWithoutCreatedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCourseInvitesInput = {
@@ -4814,6 +5938,20 @@ export type UserUncheckedUpdateWithoutCreatedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutRevokedCourseInvitesInput = {
@@ -4877,6 +6015,20 @@ export type UserUpdateWithoutRevokedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRevokedCourseInvitesInput = {
@@ -4929,6 +6081,20 @@ export type UserUncheckedUpdateWithoutRevokedCourseInvitesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedEnrollmentsInput = {
@@ -4981,6 +6147,20 @@ export type UserCreateWithoutCreatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedEnrollmentsInput = {
@@ -5033,6 +6213,20 @@ export type UserUncheckedCreateWithoutCreatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedEnrollmentsInput = {
@@ -5090,6 +6284,20 @@ export type UserCreateWithoutUpdatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedEnrollmentsInput = {
@@ -5142,6 +6350,20 @@ export type UserUncheckedCreateWithoutUpdatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedEnrollmentsInput = {
@@ -5210,6 +6432,20 @@ export type UserUpdateWithoutCreatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedEnrollmentsInput = {
@@ -5262,6 +6498,20 @@ export type UserUncheckedUpdateWithoutCreatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutUpdatedEnrollmentsInput = {
@@ -5325,6 +6575,20 @@ export type UserUpdateWithoutUpdatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedEnrollmentsInput = {
@@ -5377,6 +6641,20 @@ export type UserUncheckedUpdateWithoutUpdatedEnrollmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutEnrollmentEventsInput = {
@@ -5429,6 +6707,20 @@ export type UserCreateWithoutEnrollmentEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutEnrollmentEventsInput = {
@@ -5481,6 +6773,20 @@ export type UserUncheckedCreateWithoutEnrollmentEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutEnrollmentEventsInput = {
@@ -5549,6 +6855,20 @@ export type UserUpdateWithoutEnrollmentEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEnrollmentEventsInput = {
@@ -5601,6 +6921,20 @@ export type UserUncheckedUpdateWithoutEnrollmentEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutExerciseSessionEventsInput = {
@@ -5653,6 +6987,20 @@ export type UserCreateWithoutExerciseSessionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutExerciseSessionEventsInput = {
@@ -5705,6 +7053,20 @@ export type UserUncheckedCreateWithoutExerciseSessionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutExerciseSessionEventsInput = {
@@ -5773,6 +7135,20 @@ export type UserUpdateWithoutExerciseSessionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExerciseSessionEventsInput = {
@@ -5825,6 +7201,20 @@ export type UserUncheckedUpdateWithoutExerciseSessionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutInitiatedMediaEvidenceInput = {
@@ -5877,6 +7267,20 @@ export type UserCreateWithoutInitiatedMediaEvidenceInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutInitiatedMediaEvidenceInput = {
@@ -5929,6 +7333,20 @@ export type UserUncheckedCreateWithoutInitiatedMediaEvidenceInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutInitiatedMediaEvidenceInput = {
@@ -5997,6 +7415,20 @@ export type UserUpdateWithoutInitiatedMediaEvidenceInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInitiatedMediaEvidenceInput = {
@@ -6049,6 +7481,20 @@ export type UserUncheckedUpdateWithoutInitiatedMediaEvidenceInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutExerciseRecordEventsInput = {
@@ -6101,6 +7547,20 @@ export type UserCreateWithoutExerciseRecordEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutExerciseRecordEventsInput = {
@@ -6153,6 +7613,20 @@ export type UserUncheckedCreateWithoutExerciseRecordEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutExerciseRecordEventsInput = {
@@ -6221,6 +7695,20 @@ export type UserUpdateWithoutExerciseRecordEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExerciseRecordEventsInput = {
@@ -6273,6 +7761,20 @@ export type UserUncheckedUpdateWithoutExerciseRecordEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutConsumedCapabilitiesInput = {
@@ -6325,6 +7827,20 @@ export type UserCreateWithoutConsumedCapabilitiesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutConsumedCapabilitiesInput = {
@@ -6377,6 +7893,20 @@ export type UserUncheckedCreateWithoutConsumedCapabilitiesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutConsumedCapabilitiesInput = {
@@ -6445,6 +7975,20 @@ export type UserUpdateWithoutConsumedCapabilitiesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConsumedCapabilitiesInput = {
@@ -6497,6 +8041,20 @@ export type UserUncheckedUpdateWithoutConsumedCapabilitiesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutImportedOfficialRostersInput = {
@@ -6549,6 +8107,20 @@ export type UserCreateWithoutImportedOfficialRostersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutImportedOfficialRostersInput = {
@@ -6601,6 +8173,20 @@ export type UserUncheckedCreateWithoutImportedOfficialRostersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutImportedOfficialRostersInput = {
@@ -6669,6 +8255,20 @@ export type UserUpdateWithoutImportedOfficialRostersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutImportedOfficialRostersInput = {
@@ -6721,6 +8321,20 @@ export type UserUncheckedUpdateWithoutImportedOfficialRostersInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutStartedRosterAlignmentsInput = {
@@ -6773,6 +8387,20 @@ export type UserCreateWithoutStartedRosterAlignmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutStartedRosterAlignmentsInput = {
@@ -6825,6 +8453,20 @@ export type UserUncheckedCreateWithoutStartedRosterAlignmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutStartedRosterAlignmentsInput = {
@@ -6893,6 +8535,20 @@ export type UserUpdateWithoutStartedRosterAlignmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStartedRosterAlignmentsInput = {
@@ -6945,6 +8601,20 @@ export type UserUncheckedUpdateWithoutStartedRosterAlignmentsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutResolvedRosterResultsInput = {
@@ -6997,6 +8667,20 @@ export type UserCreateWithoutResolvedRosterResultsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutResolvedRosterResultsInput = {
@@ -7049,6 +8733,20 @@ export type UserUncheckedCreateWithoutResolvedRosterResultsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutResolvedRosterResultsInput = {
@@ -7117,6 +8815,20 @@ export type UserUpdateWithoutResolvedRosterResultsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResolvedRosterResultsInput = {
@@ -7169,6 +8881,20 @@ export type UserUncheckedUpdateWithoutResolvedRosterResultsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutRosterResolutionEventsInput = {
@@ -7221,6 +8947,20 @@ export type UserCreateWithoutRosterResolutionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRosterResolutionEventsInput = {
@@ -7273,6 +9013,20 @@ export type UserUncheckedCreateWithoutRosterResolutionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRosterResolutionEventsInput = {
@@ -7341,6 +9095,20 @@ export type UserUpdateWithoutRosterResolutionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRosterResolutionEventsInput = {
@@ -7393,6 +9161,20 @@ export type UserUncheckedUpdateWithoutRosterResolutionEventsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutIdempotencyRecordsInput = {
@@ -7445,6 +9227,20 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
@@ -7497,6 +9293,20 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutIdempotencyRecordsInput = {
@@ -7565,6 +9375,20 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
@@ -7617,6 +9441,20 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCreatedScoreRulesInput = {
@@ -7669,6 +9507,20 @@ export type UserCreateWithoutCreatedScoreRulesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCreatedScoreRulesInput = {
@@ -7721,6 +9573,20 @@ export type UserUncheckedCreateWithoutCreatedScoreRulesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCreatedScoreRulesInput = {
@@ -7789,6 +9655,20 @@ export type UserUpdateWithoutCreatedScoreRulesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedScoreRulesInput = {
@@ -7841,6 +9721,20 @@ export type UserUncheckedUpdateWithoutCreatedScoreRulesInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutScoreRuleApprovalsInput = {
@@ -7893,6 +9787,20 @@ export type UserCreateWithoutScoreRuleApprovalsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutScoreRuleApprovalsInput = {
@@ -7945,6 +9853,20 @@ export type UserUncheckedCreateWithoutScoreRuleApprovalsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutScoreRuleApprovalsInput = {
@@ -8013,6 +9935,20 @@ export type UserUpdateWithoutScoreRuleApprovalsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutScoreRuleApprovalsInput = {
@@ -8065,6 +10001,20 @@ export type UserUncheckedUpdateWithoutScoreRuleApprovalsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutRequestedScoreAdjustmentsInput = {
@@ -8117,6 +10067,20 @@ export type UserCreateWithoutRequestedScoreAdjustmentsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRequestedScoreAdjustmentsInput = {
@@ -8169,6 +10133,20 @@ export type UserUncheckedCreateWithoutRequestedScoreAdjustmentsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRequestedScoreAdjustmentsInput = {
@@ -8237,6 +10215,20 @@ export type UserUpdateWithoutRequestedScoreAdjustmentsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRequestedScoreAdjustmentsInput = {
@@ -8289,6 +10281,20 @@ export type UserUncheckedUpdateWithoutRequestedScoreAdjustmentsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutScoreAdjustmentApprovalsInput = {
@@ -8341,6 +10347,20 @@ export type UserCreateWithoutScoreAdjustmentApprovalsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutScoreAdjustmentApprovalsInput = {
@@ -8393,6 +10413,20 @@ export type UserUncheckedCreateWithoutScoreAdjustmentApprovalsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutScoreAdjustmentApprovalsInput = {
@@ -8461,6 +10495,20 @@ export type UserUpdateWithoutScoreAdjustmentApprovalsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutScoreAdjustmentApprovalsInput = {
@@ -8513,6 +10561,20 @@ export type UserUncheckedUpdateWithoutScoreAdjustmentApprovalsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutScorePublicationEventsInput = {
@@ -8565,6 +10627,20 @@ export type UserCreateWithoutScorePublicationEventsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutScorePublicationEventsInput = {
@@ -8617,6 +10693,20 @@ export type UserUncheckedCreateWithoutScorePublicationEventsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutScorePublicationEventsInput = {
@@ -8685,6 +10775,20 @@ export type UserUpdateWithoutScorePublicationEventsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutScorePublicationEventsInput = {
@@ -8737,6 +10841,3940 @@ export type UserUncheckedUpdateWithoutScorePublicationEventsInput = {
   scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutStudentSignInChallengesInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutStudentSignInChallengesInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutStudentSignInChallengesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedCreateWithoutStudentSignInChallengesInput>
+}
+
+export type UserUpsertWithoutStudentSignInChallengesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedUpdateWithoutStudentSignInChallengesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedCreateWithoutStudentSignInChallengesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStudentSignInChallengesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStudentSignInChallengesInput, Prisma.UserUncheckedUpdateWithoutStudentSignInChallengesInput>
+}
+
+export type UserUpdateWithoutStudentSignInChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStudentSignInChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutAccountRecoveryChallengesInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutAccountRecoveryChallengesInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutAccountRecoveryChallengesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedCreateWithoutAccountRecoveryChallengesInput>
+}
+
+export type UserUpsertWithoutAccountRecoveryChallengesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedUpdateWithoutAccountRecoveryChallengesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedCreateWithoutAccountRecoveryChallengesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAccountRecoveryChallengesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAccountRecoveryChallengesInput, Prisma.UserUncheckedUpdateWithoutAccountRecoveryChallengesInput>
+}
+
+export type UserUpdateWithoutAccountRecoveryChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAccountRecoveryChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutNotificationEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutNotificationEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutNotificationEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationEventsInput, Prisma.UserUncheckedCreateWithoutNotificationEventsInput>
+}
+
+export type UserUpsertWithoutNotificationEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationEventsInput, Prisma.UserUncheckedUpdateWithoutNotificationEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationEventsInput, Prisma.UserUncheckedCreateWithoutNotificationEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationEventsInput, Prisma.UserUncheckedUpdateWithoutNotificationEventsInput>
+}
+
+export type UserUpdateWithoutNotificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutPushDevicesInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutPushDevicesInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutPushDevicesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPushDevicesInput, Prisma.UserUncheckedCreateWithoutPushDevicesInput>
+}
+
+export type UserUpsertWithoutPushDevicesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPushDevicesInput, Prisma.UserUncheckedUpdateWithoutPushDevicesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPushDevicesInput, Prisma.UserUncheckedCreateWithoutPushDevicesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPushDevicesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPushDevicesInput, Prisma.UserUncheckedUpdateWithoutPushDevicesInput>
+}
+
+export type UserUpdateWithoutPushDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPushDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutPushDeviceEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutPushDeviceEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutPushDeviceEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPushDeviceEventsInput, Prisma.UserUncheckedCreateWithoutPushDeviceEventsInput>
+}
+
+export type UserUpsertWithoutPushDeviceEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPushDeviceEventsInput, Prisma.UserUncheckedUpdateWithoutPushDeviceEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPushDeviceEventsInput, Prisma.UserUncheckedCreateWithoutPushDeviceEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPushDeviceEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPushDeviceEventsInput, Prisma.UserUncheckedUpdateWithoutPushDeviceEventsInput>
+}
+
+export type UserUpdateWithoutPushDeviceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPushDeviceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutUserPreferenceInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutUserPreferenceInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutUserPreferenceInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceInput, Prisma.UserUncheckedCreateWithoutUserPreferenceInput>
+}
+
+export type UserUpsertWithoutUserPreferenceInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserPreferenceInput, Prisma.UserUncheckedUpdateWithoutUserPreferenceInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceInput, Prisma.UserUncheckedCreateWithoutUserPreferenceInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserPreferenceInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserPreferenceInput, Prisma.UserUncheckedUpdateWithoutUserPreferenceInput>
+}
+
+export type UserUpdateWithoutUserPreferenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserPreferenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutUserPreferenceEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutUserPreferenceEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutUserPreferenceEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedCreateWithoutUserPreferenceEventsInput>
+}
+
+export type UserUpsertWithoutUserPreferenceEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedUpdateWithoutUserPreferenceEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedCreateWithoutUserPreferenceEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserPreferenceEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserPreferenceEventsInput, Prisma.UserUncheckedUpdateWithoutUserPreferenceEventsInput>
+}
+
+export type UserUpdateWithoutUserPreferenceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserPreferenceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutCreatedFeedbackInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutCreatedFeedbackInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutCreatedFeedbackInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedFeedbackInput, Prisma.UserUncheckedCreateWithoutCreatedFeedbackInput>
+}
+
+export type UserUpsertWithoutCreatedFeedbackInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedFeedbackInput, Prisma.UserUncheckedUpdateWithoutCreatedFeedbackInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedFeedbackInput, Prisma.UserUncheckedCreateWithoutCreatedFeedbackInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedFeedbackInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedFeedbackInput, Prisma.UserUncheckedUpdateWithoutCreatedFeedbackInput>
+}
+
+export type UserUpdateWithoutCreatedFeedbackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedFeedbackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutFeedbackEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutFeedbackEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutFeedbackEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedbackEventsInput, Prisma.UserUncheckedCreateWithoutFeedbackEventsInput>
+}
+
+export type UserUpsertWithoutFeedbackEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFeedbackEventsInput, Prisma.UserUncheckedUpdateWithoutFeedbackEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedbackEventsInput, Prisma.UserUncheckedCreateWithoutFeedbackEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFeedbackEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFeedbackEventsInput, Prisma.UserUncheckedUpdateWithoutFeedbackEventsInput>
+}
+
+export type UserUpdateWithoutFeedbackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFeedbackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutExemptionEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutExemptionEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutExemptionEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutExemptionEventsInput, Prisma.UserUncheckedCreateWithoutExemptionEventsInput>
+}
+
+export type UserUpsertWithoutExemptionEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutExemptionEventsInput, Prisma.UserUncheckedUpdateWithoutExemptionEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutExemptionEventsInput, Prisma.UserUncheckedCreateWithoutExemptionEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutExemptionEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutExemptionEventsInput, Prisma.UserUncheckedUpdateWithoutExemptionEventsInput>
+}
+
+export type UserUpdateWithoutExemptionEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutExemptionEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutLocationPoliciesCreatedInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutLocationPoliciesCreatedInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutLocationPoliciesCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedCreateWithoutLocationPoliciesCreatedInput>
+}
+
+export type UserUpsertWithoutLocationPoliciesCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedUpdateWithoutLocationPoliciesCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedCreateWithoutLocationPoliciesCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLocationPoliciesCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLocationPoliciesCreatedInput, Prisma.UserUncheckedUpdateWithoutLocationPoliciesCreatedInput>
+}
+
+export type UserUpdateWithoutLocationPoliciesCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLocationPoliciesCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutLocationConsentEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutLocationConsentEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutLocationConsentEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationConsentEventsInput, Prisma.UserUncheckedCreateWithoutLocationConsentEventsInput>
+}
+
+export type UserUpsertWithoutLocationConsentEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLocationConsentEventsInput, Prisma.UserUncheckedUpdateWithoutLocationConsentEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationConsentEventsInput, Prisma.UserUncheckedCreateWithoutLocationConsentEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLocationConsentEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLocationConsentEventsInput, Prisma.UserUncheckedUpdateWithoutLocationConsentEventsInput>
+}
+
+export type UserUpdateWithoutLocationConsentEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLocationConsentEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutLocationTrackEventsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutLocationTrackEventsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  primaryPhone?: string | null
+  primaryPhoneNormalized?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutLocationTrackEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationTrackEventsInput, Prisma.UserUncheckedCreateWithoutLocationTrackEventsInput>
+}
+
+export type UserUpsertWithoutLocationTrackEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLocationTrackEventsInput, Prisma.UserUncheckedUpdateWithoutLocationTrackEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLocationTrackEventsInput, Prisma.UserUncheckedCreateWithoutLocationTrackEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLocationTrackEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLocationTrackEventsInput, Prisma.UserUncheckedUpdateWithoutLocationTrackEventsInput>
+}
+
+export type UserUpdateWithoutLocationTrackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLocationTrackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -8789,6 +14827,20 @@ export type UserCreateWithoutAuditLogsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -8841,6 +14893,20 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -8909,6 +14975,20 @@ export type UserUpdateWithoutAuditLogsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -8961,6 +15041,20 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyOrganizationInput = {
@@ -9032,6 +15126,20 @@ export type UserUpdateWithoutOrganizationInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationInput = {
@@ -9084,6 +15192,20 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
@@ -9141,6 +15263,19 @@ export type UserCountOutputType = {
   requestedScoreAdjustments: number
   scoreAdjustmentApprovals: number
   scorePublicationEvents: number
+  studentSignInChallenges: number
+  accountRecoveryChallenges: number
+  notifications: number
+  notificationEvents: number
+  pushDevices: number
+  pushDeviceEvents: number
+  userPreferenceEvents: number
+  createdFeedback: number
+  feedbackEvents: number
+  exemptionEvents: number
+  locationPoliciesCreated: number
+  locationConsentEvents: number
+  locationTrackEvents: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9174,6 +15309,19 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   requestedScoreAdjustments?: boolean | UserCountOutputTypeCountRequestedScoreAdjustmentsArgs
   scoreAdjustmentApprovals?: boolean | UserCountOutputTypeCountScoreAdjustmentApprovalsArgs
   scorePublicationEvents?: boolean | UserCountOutputTypeCountScorePublicationEventsArgs
+  studentSignInChallenges?: boolean | UserCountOutputTypeCountStudentSignInChallengesArgs
+  accountRecoveryChallenges?: boolean | UserCountOutputTypeCountAccountRecoveryChallengesArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  notificationEvents?: boolean | UserCountOutputTypeCountNotificationEventsArgs
+  pushDevices?: boolean | UserCountOutputTypeCountPushDevicesArgs
+  pushDeviceEvents?: boolean | UserCountOutputTypeCountPushDeviceEventsArgs
+  userPreferenceEvents?: boolean | UserCountOutputTypeCountUserPreferenceEventsArgs
+  createdFeedback?: boolean | UserCountOutputTypeCountCreatedFeedbackArgs
+  feedbackEvents?: boolean | UserCountOutputTypeCountFeedbackEventsArgs
+  exemptionEvents?: boolean | UserCountOutputTypeCountExemptionEventsArgs
+  locationPoliciesCreated?: boolean | UserCountOutputTypeCountLocationPoliciesCreatedArgs
+  locationConsentEvents?: boolean | UserCountOutputTypeCountLocationConsentEventsArgs
+  locationTrackEvents?: boolean | UserCountOutputTypeCountLocationTrackEventsArgs
 }
 
 /**
@@ -9396,6 +15544,97 @@ export type UserCountOutputTypeCountScorePublicationEventsArgs<ExtArgs extends r
   where?: Prisma.ScorePublicationEventWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudentSignInChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentSignInChallengeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAccountRecoveryChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountRecoveryChallengeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPushDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PushDeviceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPushDeviceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PushDeviceEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserPreferenceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserPreferenceEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedFeedbackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FeedbackWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFeedbackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FeedbackEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountExemptionEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionApplicationEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLocationPoliciesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationPrivacyPolicyWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLocationConsentEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationConsentEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLocationTrackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationTrackEventWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -9449,6 +15688,20 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   requestedScoreAdjustments?: boolean | Prisma.User$requestedScoreAdjustmentsArgs<ExtArgs>
   scoreAdjustmentApprovals?: boolean | Prisma.User$scoreAdjustmentApprovalsArgs<ExtArgs>
   scorePublicationEvents?: boolean | Prisma.User$scorePublicationEventsArgs<ExtArgs>
+  studentSignInChallenges?: boolean | Prisma.User$studentSignInChallengesArgs<ExtArgs>
+  accountRecoveryChallenges?: boolean | Prisma.User$accountRecoveryChallengesArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  notificationEvents?: boolean | Prisma.User$notificationEventsArgs<ExtArgs>
+  pushDevices?: boolean | Prisma.User$pushDevicesArgs<ExtArgs>
+  pushDeviceEvents?: boolean | Prisma.User$pushDeviceEventsArgs<ExtArgs>
+  userPreference?: boolean | Prisma.User$userPreferenceArgs<ExtArgs>
+  userPreferenceEvents?: boolean | Prisma.User$userPreferenceEventsArgs<ExtArgs>
+  createdFeedback?: boolean | Prisma.User$createdFeedbackArgs<ExtArgs>
+  feedbackEvents?: boolean | Prisma.User$feedbackEventsArgs<ExtArgs>
+  exemptionEvents?: boolean | Prisma.User$exemptionEventsArgs<ExtArgs>
+  locationPoliciesCreated?: boolean | Prisma.User$locationPoliciesCreatedArgs<ExtArgs>
+  locationConsentEvents?: boolean | Prisma.User$locationConsentEventsArgs<ExtArgs>
+  locationTrackEvents?: boolean | Prisma.User$locationTrackEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -9550,6 +15803,20 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   requestedScoreAdjustments?: boolean | Prisma.User$requestedScoreAdjustmentsArgs<ExtArgs>
   scoreAdjustmentApprovals?: boolean | Prisma.User$scoreAdjustmentApprovalsArgs<ExtArgs>
   scorePublicationEvents?: boolean | Prisma.User$scorePublicationEventsArgs<ExtArgs>
+  studentSignInChallenges?: boolean | Prisma.User$studentSignInChallengesArgs<ExtArgs>
+  accountRecoveryChallenges?: boolean | Prisma.User$accountRecoveryChallengesArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  notificationEvents?: boolean | Prisma.User$notificationEventsArgs<ExtArgs>
+  pushDevices?: boolean | Prisma.User$pushDevicesArgs<ExtArgs>
+  pushDeviceEvents?: boolean | Prisma.User$pushDeviceEventsArgs<ExtArgs>
+  userPreference?: boolean | Prisma.User$userPreferenceArgs<ExtArgs>
+  userPreferenceEvents?: boolean | Prisma.User$userPreferenceEventsArgs<ExtArgs>
+  createdFeedback?: boolean | Prisma.User$createdFeedbackArgs<ExtArgs>
+  feedbackEvents?: boolean | Prisma.User$feedbackEventsArgs<ExtArgs>
+  exemptionEvents?: boolean | Prisma.User$exemptionEventsArgs<ExtArgs>
+  locationPoliciesCreated?: boolean | Prisma.User$locationPoliciesCreatedArgs<ExtArgs>
+  locationConsentEvents?: boolean | Prisma.User$locationConsentEventsArgs<ExtArgs>
+  locationTrackEvents?: boolean | Prisma.User$locationTrackEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9596,6 +15863,20 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     requestedScoreAdjustments: Prisma.$ScoreAdjustmentPayload<ExtArgs>[]
     scoreAdjustmentApprovals: Prisma.$ScoreAdjustmentApprovalEventPayload<ExtArgs>[]
     scorePublicationEvents: Prisma.$ScorePublicationEventPayload<ExtArgs>[]
+    studentSignInChallenges: Prisma.$StudentSignInChallengePayload<ExtArgs>[]
+    accountRecoveryChallenges: Prisma.$AccountRecoveryChallengePayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    notificationEvents: Prisma.$NotificationEventPayload<ExtArgs>[]
+    pushDevices: Prisma.$PushDevicePayload<ExtArgs>[]
+    pushDeviceEvents: Prisma.$PushDeviceEventPayload<ExtArgs>[]
+    userPreference: Prisma.$UserPreferencePayload<ExtArgs> | null
+    userPreferenceEvents: Prisma.$UserPreferenceEventPayload<ExtArgs>[]
+    createdFeedback: Prisma.$FeedbackPayload<ExtArgs>[]
+    feedbackEvents: Prisma.$FeedbackEventPayload<ExtArgs>[]
+    exemptionEvents: Prisma.$ExemptionApplicationEventPayload<ExtArgs>[]
+    locationPoliciesCreated: Prisma.$LocationPrivacyPolicyPayload<ExtArgs>[]
+    locationConsentEvents: Prisma.$LocationConsentEventPayload<ExtArgs>[]
+    locationTrackEvents: Prisma.$LocationTrackEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -10043,6 +16324,20 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   requestedScoreAdjustments<T extends Prisma.User$requestedScoreAdjustmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$requestedScoreAdjustmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScoreAdjustmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scoreAdjustmentApprovals<T extends Prisma.User$scoreAdjustmentApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scoreAdjustmentApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScoreAdjustmentApprovalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scorePublicationEvents<T extends Prisma.User$scorePublicationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scorePublicationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScorePublicationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studentSignInChallenges<T extends Prisma.User$studentSignInChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentSignInChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentSignInChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accountRecoveryChallenges<T extends Prisma.User$accountRecoveryChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountRecoveryChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountRecoveryChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationEvents<T extends Prisma.User$notificationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pushDevices<T extends Prisma.User$pushDevicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pushDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pushDeviceEvents<T extends Prisma.User$pushDeviceEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pushDeviceEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDeviceEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userPreference<T extends Prisma.User$userPreferenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userPreferenceArgs<ExtArgs>>): Prisma.Prisma__UserPreferenceClient<runtime.Types.Result.GetResult<Prisma.$UserPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  userPreferenceEvents<T extends Prisma.User$userPreferenceEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userPreferenceEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPreferenceEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdFeedback<T extends Prisma.User$createdFeedbackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdFeedbackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedbackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  feedbackEvents<T extends Prisma.User$feedbackEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$feedbackEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedbackEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exemptionEvents<T extends Prisma.User$exemptionEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$exemptionEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionApplicationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationPoliciesCreated<T extends Prisma.User$locationPoliciesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$locationPoliciesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationPrivacyPolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationConsentEvents<T extends Prisma.User$locationConsentEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$locationConsentEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationConsentEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationTrackEvents<T extends Prisma.User$locationTrackEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$locationTrackEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationTrackEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11264,6 +17559,337 @@ export type User$scorePublicationEventsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.ScorePublicationEventScalarFieldEnum | Prisma.ScorePublicationEventScalarFieldEnum[]
+}
+
+/**
+ * User.studentSignInChallenges
+ */
+export type User$studentSignInChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentSignInChallenge
+   */
+  select?: Prisma.StudentSignInChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentSignInChallenge
+   */
+  omit?: Prisma.StudentSignInChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentSignInChallengeInclude<ExtArgs> | null
+  where?: Prisma.StudentSignInChallengeWhereInput
+  orderBy?: Prisma.StudentSignInChallengeOrderByWithRelationInput | Prisma.StudentSignInChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.StudentSignInChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentSignInChallengeScalarFieldEnum | Prisma.StudentSignInChallengeScalarFieldEnum[]
+}
+
+/**
+ * User.accountRecoveryChallenges
+ */
+export type User$accountRecoveryChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountRecoveryChallenge
+   */
+  select?: Prisma.AccountRecoveryChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountRecoveryChallenge
+   */
+  omit?: Prisma.AccountRecoveryChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountRecoveryChallengeInclude<ExtArgs> | null
+  where?: Prisma.AccountRecoveryChallengeWhereInput
+  orderBy?: Prisma.AccountRecoveryChallengeOrderByWithRelationInput | Prisma.AccountRecoveryChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.AccountRecoveryChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountRecoveryChallengeScalarFieldEnum | Prisma.AccountRecoveryChallengeScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.notificationEvents
+ */
+export type User$notificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationEvent
+   */
+  select?: Prisma.NotificationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationEvent
+   */
+  omit?: Prisma.NotificationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationEventInclude<ExtArgs> | null
+  where?: Prisma.NotificationEventWhereInput
+  orderBy?: Prisma.NotificationEventOrderByWithRelationInput | Prisma.NotificationEventOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationEventScalarFieldEnum | Prisma.NotificationEventScalarFieldEnum[]
+}
+
+/**
+ * User.pushDevices
+ */
+export type User$pushDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PushDevice
+   */
+  select?: Prisma.PushDeviceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PushDevice
+   */
+  omit?: Prisma.PushDeviceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PushDeviceInclude<ExtArgs> | null
+  where?: Prisma.PushDeviceWhereInput
+  orderBy?: Prisma.PushDeviceOrderByWithRelationInput | Prisma.PushDeviceOrderByWithRelationInput[]
+  cursor?: Prisma.PushDeviceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PushDeviceScalarFieldEnum | Prisma.PushDeviceScalarFieldEnum[]
+}
+
+/**
+ * User.pushDeviceEvents
+ */
+export type User$pushDeviceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PushDeviceEvent
+   */
+  select?: Prisma.PushDeviceEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PushDeviceEvent
+   */
+  omit?: Prisma.PushDeviceEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PushDeviceEventInclude<ExtArgs> | null
+  where?: Prisma.PushDeviceEventWhereInput
+  orderBy?: Prisma.PushDeviceEventOrderByWithRelationInput | Prisma.PushDeviceEventOrderByWithRelationInput[]
+  cursor?: Prisma.PushDeviceEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PushDeviceEventScalarFieldEnum | Prisma.PushDeviceEventScalarFieldEnum[]
+}
+
+/**
+ * User.userPreference
+ */
+export type User$userPreferenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPreference
+   */
+  select?: Prisma.UserPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPreference
+   */
+  omit?: Prisma.UserPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPreferenceInclude<ExtArgs> | null
+  where?: Prisma.UserPreferenceWhereInput
+}
+
+/**
+ * User.userPreferenceEvents
+ */
+export type User$userPreferenceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPreferenceEvent
+   */
+  select?: Prisma.UserPreferenceEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPreferenceEvent
+   */
+  omit?: Prisma.UserPreferenceEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPreferenceEventInclude<ExtArgs> | null
+  where?: Prisma.UserPreferenceEventWhereInput
+  orderBy?: Prisma.UserPreferenceEventOrderByWithRelationInput | Prisma.UserPreferenceEventOrderByWithRelationInput[]
+  cursor?: Prisma.UserPreferenceEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserPreferenceEventScalarFieldEnum | Prisma.UserPreferenceEventScalarFieldEnum[]
+}
+
+/**
+ * User.createdFeedback
+ */
+export type User$createdFeedbackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Feedback
+   */
+  select?: Prisma.FeedbackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Feedback
+   */
+  omit?: Prisma.FeedbackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackInclude<ExtArgs> | null
+  where?: Prisma.FeedbackWhereInput
+  orderBy?: Prisma.FeedbackOrderByWithRelationInput | Prisma.FeedbackOrderByWithRelationInput[]
+  cursor?: Prisma.FeedbackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FeedbackScalarFieldEnum | Prisma.FeedbackScalarFieldEnum[]
+}
+
+/**
+ * User.feedbackEvents
+ */
+export type User$feedbackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FeedbackEvent
+   */
+  select?: Prisma.FeedbackEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FeedbackEvent
+   */
+  omit?: Prisma.FeedbackEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackEventInclude<ExtArgs> | null
+  where?: Prisma.FeedbackEventWhereInput
+  orderBy?: Prisma.FeedbackEventOrderByWithRelationInput | Prisma.FeedbackEventOrderByWithRelationInput[]
+  cursor?: Prisma.FeedbackEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FeedbackEventScalarFieldEnum | Prisma.FeedbackEventScalarFieldEnum[]
+}
+
+/**
+ * User.exemptionEvents
+ */
+export type User$exemptionEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionApplicationEvent
+   */
+  select?: Prisma.ExemptionApplicationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionApplicationEvent
+   */
+  omit?: Prisma.ExemptionApplicationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionApplicationEventInclude<ExtArgs> | null
+  where?: Prisma.ExemptionApplicationEventWhereInput
+  orderBy?: Prisma.ExemptionApplicationEventOrderByWithRelationInput | Prisma.ExemptionApplicationEventOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionApplicationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionApplicationEventScalarFieldEnum | Prisma.ExemptionApplicationEventScalarFieldEnum[]
+}
+
+/**
+ * User.locationPoliciesCreated
+ */
+export type User$locationPoliciesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationPrivacyPolicy
+   */
+  select?: Prisma.LocationPrivacyPolicySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationPrivacyPolicy
+   */
+  omit?: Prisma.LocationPrivacyPolicyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationPrivacyPolicyInclude<ExtArgs> | null
+  where?: Prisma.LocationPrivacyPolicyWhereInput
+  orderBy?: Prisma.LocationPrivacyPolicyOrderByWithRelationInput | Prisma.LocationPrivacyPolicyOrderByWithRelationInput[]
+  cursor?: Prisma.LocationPrivacyPolicyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationPrivacyPolicyScalarFieldEnum | Prisma.LocationPrivacyPolicyScalarFieldEnum[]
+}
+
+/**
+ * User.locationConsentEvents
+ */
+export type User$locationConsentEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationConsentEvent
+   */
+  select?: Prisma.LocationConsentEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationConsentEvent
+   */
+  omit?: Prisma.LocationConsentEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationConsentEventInclude<ExtArgs> | null
+  where?: Prisma.LocationConsentEventWhereInput
+  orderBy?: Prisma.LocationConsentEventOrderByWithRelationInput | Prisma.LocationConsentEventOrderByWithRelationInput[]
+  cursor?: Prisma.LocationConsentEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationConsentEventScalarFieldEnum | Prisma.LocationConsentEventScalarFieldEnum[]
+}
+
+/**
+ * User.locationTrackEvents
+ */
+export type User$locationTrackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationTrackEvent
+   */
+  select?: Prisma.LocationTrackEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationTrackEvent
+   */
+  omit?: Prisma.LocationTrackEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationTrackEventInclude<ExtArgs> | null
+  where?: Prisma.LocationTrackEventWhereInput
+  orderBy?: Prisma.LocationTrackEventOrderByWithRelationInput | Prisma.LocationTrackEventOrderByWithRelationInput[]
+  cursor?: Prisma.LocationTrackEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationTrackEventScalarFieldEnum | Prisma.LocationTrackEventScalarFieldEnum[]
 }
 
 /**

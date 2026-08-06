@@ -160,7 +160,7 @@ Set-Location ..
 docker build --file backend/Dockerfile --tag bnbu-sports-backend:local .
 ```
 
-Dockerfile 提供 `migrator` 和非 root `runtime` stage；runtime 不复制源码、测试、`.env` 或测试密钥。应用容器与迁移步骤必须使用不同数据库凭证。2026-08-02 的实现机器没有 Docker，这是历史事实；阶段 10B、11、12、13 后续均已在 Docker Desktop 真实构建和运行。阶段 12 证据见 [`../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md`](../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md)，Stage 13 证据见 [`../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md`](../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md)。
+Dockerfile 提供 `migrator` 和非 root `runtime` stage；runtime 不复制源码、测试、`.env` 或测试密钥。应用容器与迁移步骤必须使用不同数据库凭证。Compose 的 `POSTGRES_BOOTSTRAP_*` 身份只负责新卷初始化；实际 Migration 使用显式 `NOSUPERUSER/NOCREATEDB/NOCREATEROLE/NOINHERIT` 的 `POSTGRES_MIGRATOR_USER`，只对该项目数据库和 `public` schema 具有迁移所需的 `CREATE`，不能创建其他数据库。每次容器化 deploy 后都会同步 App 对业务表的 DML，并把 `_prisma_migrations` 收紧为只读，以便 readiness 校验 checksum 而不能篡改迁移历史。三个数据库用户名必须是彼此不同的小写 PostgreSQL identifier。2026-08-02 的实现机器没有 Docker，这是历史事实；阶段 10B、11、12、13 后续均已在 Docker Desktop 真实构建和运行。阶段 12 证据见 [`../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md`](../../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md)，Stage 13 证据见 [`../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md`](../../docs/backend-contracts/13-official-roster-alignment-implementation-report.md)。
 
 手工运行 App 镜像时，宿主机发布端口与容器内 `PORT` 是两个不同参数。例如 `-p 127.0.0.1:53000:3000` 必须同时向容器显式注入 `PORT=3000`；不要把宿主机开发端口原样作为容器监听端口。镜像 Healthcheck 使用容器内 `PORT`，宿主机烟测还必须独立验证实际发布端口。
 

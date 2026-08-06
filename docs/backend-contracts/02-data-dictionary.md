@@ -7,23 +7,24 @@
 > 适用客户端：Android 学生端、未来 iOS 学生端、未来 Web 学生端、Web 教师端、Web 管理端、统一后端
 > 限制：当前工作区没有权威后端、数据库 schema 或 migration；本文冻结逻辑字段、API 映射与迁移语义，不选择数据库引擎，不生成或执行 migration。
 
-## Stage 21 客户端能力合同对象（未持久化）
+## Stage 21 客户端能力合同与本地持久化边界
 
-以下对象只冻结 API 形状，不代表已创建数据库表；业务 Gate 批准前不得据此生成 Migration。
+`0011_client_capabilities` 已以 forward-only Migration 建立 Stage 21 所需的结构。数据库结构存在不等于 HTTP 能力已开放：只有下表标为“本地集成”的 12 个 operation 可在本地 PostgreSQL 路径执行；另外 18 个 operation 仍在真实路由稳定 default deny。GPS 已有持久化和应用层基础，但 6 个位置 HTTP operation 继续关闭，且没有批准任何生产采样、精度、保留或删除参数。
 
-| 合同对象 | 关键字段 | 权威边界 |
+| 合同对象 | 关键字段 | 当前权威边界 |
 |---|---|---|
-| `Notification` / `PushDevice` | recipient、type、readAt；platform、appVersion、locale、status | 推送 token 只写不读；角色只读本人通知 |
-| `UserPreferences` | locale、pushEnabled、emailEnabled、version | 只允许本人读取和按 `expectedVersion` 修改 |
-| `HelpArticle` | category、locale、title、bodyMarkdown、publishedAt、version | 只投影已发布安全内容；当前无编辑 operation |
-| `Feedback` | category、content、status、publicReply、version | 不投影内部备注、日志、Token、联系方式或设备指纹 |
-| `ExemptionApplication` | studentId、enrollmentId、classSectionId、applicationType、reason、mediaIds、status、publicComment、version | 状态值仅为未来传输占位；审批状态机尚未批准 |
-| `AppReleasePolicy` | platform、minimumSupportedVersion、latestVersion、enforcement、effectiveAt、policyVersion | 签名、渠道、灰度与应急策略尚未批准 |
-| `SportCatalogItem` / `ActivityConversionRule` | sportType；activityType、unit、ruleVersion、status | 不得形成第二套 ScoreRule；公式项在批准前不进入合同 |
-| `LocationSample` | sampleId、observedAt、latitude、longitude、accuracy、altitude、speed | 不可信客户端观测；原始坐标全部 write-only |
-| `LocationTrack` | sessionId、status、acceptedSampleCount、policyVersion、version | 仅未来采集状态；不投影原始样本 |
-| `LocationSummary` | recordId、availability、COARSE、coarseRoutePolyline、coarseDistanceMeters、时间范围、policyVersion | 学生/责任教师/本组织管理员得到相同粗化投影 |
-| `LocationPrivacyPolicy` | organizationId、policyVersion、collectionEnabled、采样/精度/保留/粗化参数、version | 生产参数均为 nullable 未决值；当前不能开启采集 |
+| `Notification` / `PushDevice` | recipient、type、readAt；platform、appVersion、locale、status | 本地集成列表/已读及设备注册/注销；推送 token 加密保存且不投影。没有通知业务生产者、APNs/FCM 发送适配器或生产投递证据 |
+| `UserPreferences` | locale、pushEnabled、emailEnabled、version | 本地集成本人读取和按 `expectedVersion` 修改；不扩大到他人 |
+| `HelpArticle` | category、locale、title、bodyMarkdown、publishedAt、version | 本地只读已发布且到达发布时间的安全内容；没有管理端发布/编辑 operation |
+| `Feedback` | category、content、status、publicReply、version | 本地集成创建/列表/详情；非管理员只读本人，管理员只读本组织；处理/回复 mutation 未开放 |
+| `ExemptionApplication` | studentId、enrollmentId、classSectionId、applicationType、reason、mediaIds、status、publicComment、version | 已实现本人草稿/更新/提交、责任教师审核和 ADMIN 组织内只读；附件必须为同 Enrollment 的私有 EXEMPTION_APPLICATION 媒体 |
+| `AppReleasePolicy` | platform、minimumSupportedVersion、latestVersion、minimumSupportedBuildNumber、latestBuildNumber、enforcement、effectiveAt、policyVersion | iOS 只按数字 build 比较；营销版本仅展示。无有效政策返回稳定 503；发布/灰度管理流程仍未开放 |
+| `SportCatalogItem` / `ActivityConversionRule` | sportType；activityType、unit、ruleVersion、status | `SportCatalogItem` 已有表结构，`ActivityConversionRule` 仍只有 transport 结构；2 个 HTTP operation 均 default deny，不得形成第二套 ScoreRule |
+| `StudentSignInChallenge` / `AccountRecoveryChallenge` / `AuthRateLimitFact` | organizationCode 解析后的 organizationId、challenge digest、channel、expiry、attempt、consumption、durable rate facts | 4 个公开 operation 已本地实现；STUDENT 仅 OTP，找回仅 TEACHER/ADMIN；无真实 provider 时非 test 环境 fail closed |
+| `LocationSample` / `LocationSampleSecret` | sampleId、observedAt、粗粒度字段；加密原始坐标和 key version | 持久化/加密基础已存在；原始坐标不进入公共 projection，HTTP 采集仍关闭 |
+| `LocationTrack` | sessionId、status、acceptedSampleCount、policyVersion、version | 持久化和应用层轨迹基础已存在；6 个位置 HTTP operation 仍 default deny |
+| `LocationSummary` | recordId、availability、COARSE、coarseRoutePolyline、coarseDistanceMeters、时间范围、policyVersion | 只定义未来粗化投影；当前 HTTP 不返回摘要 |
+| `LocationPrivacyPolicy` / `LocationConsent` | organizationId、policyVersion、collectionEnabled、同意版本、采样/精度/保留/粗化参数、version | 结构存在但生产参数未批准；政策读写和采集均关闭 |
 
 ## 1. 使用口径
 
@@ -436,15 +437,16 @@
 | MediaEvidence | `id` | `id` | string / varchar | 64 | 是 | 否 | 服务端生成 | — | opaque；唯一 | `med_01JABC123` | 服务端 | INTERNAL | 对外业务语境使用 `mediaId` |
 | MediaEvidence | `organizationId` | `organization_id` | string / varchar | 64 | 是 | 否 | — | — | 引用 `Organization.id` | `org_bnbu` | 服务端 | INTERNAL | 对象存储隔离范围 |
 | MediaEvidence | `ownerStudentId` | `owner_student_id` | string / varchar | 64 | 是 | 否 | 认证主体推导 | — | 引用 `StudentProfile.id` | `stu_01JABC123` | 认证服务 | HIGHLY_SENSITIVE | 教师只按教学班/记录授权读取 |
-| MediaEvidence | `sessionId` | `session_id` | string / varchar | 64 | 是 | 否 | — | — | V1 唯一用途 EXERCISE_RECORD，必须引用本人 `ExerciseSession.id` | `ses_01JABC123` | 上传申请 | HIGHLY_SENSITIVE | 非打卡媒体须在未来单独建模后再扩展 |
+| MediaEvidence | `sessionId` | `session_id` | string / varchar | 64 | 条件必填 | 是 | `null` | — | EXERCISE_RECORD 必须引用本人 `ExerciseSession.id`；免测用途必须为 null | `ses_01JABC123` | 上传申请 | HIGHLY_SENSITIVE | 与 enrollmentId 二选一 |
+| MediaEvidence | `enrollmentId` | `enrollment_id` | string / varchar | 64 | 条件必填 | 是 | `null` | — | EXEMPTION_APPLICATION 必须引用本人 ACTIVE Enrollment；运动用途必须为 null | `enr_01JABC123` | 上传申请 | HIGHLY_SENSITIVE | 与 sessionId 二选一 |
 | MediaEvidence | `recordId` | `record_id` | string / varchar | 64 | 是 | 是 | `null` | — | 绑定后引用 `ExerciseRecord.id`；同组织/本人 | `rec_01JABC123` | 绑定动作 | HIGHLY_SENSITIVE | 上传与 Record 提交分离 |
-| MediaEvidence | `businessPurpose` | `business_purpose` | enum / varchar | 32 | 是 | 否 | `EXERCISE_RECORD` | — | V1 只允许 `EXERCISE_RECORD` | `EXERCISE_RECORD` | 上传申请 | HIGHLY_SENSITIVE | 其他用途保持 default deny，不从 Web Mock 扩展 |
+| MediaEvidence | `businessPurpose` | `business_purpose` | enum / varchar | 32 | 是 | 否 | `EXERCISE_RECORD` | — | `EXERCISE_RECORD/EXEMPTION_APPLICATION`；用途决定且只决定一种目标外键 | `EXEMPTION_APPLICATION` | 上传申请 | HIGHLY_SENSITIVE | 不得跨用途重绑 |
 | MediaEvidence | `mediaType` | `media_type` | enum / varchar | 16 | 是 | 否 | — | — | `IMAGE/VIDEO`；与 MIME/文件签名一致 | `IMAGE` | 上传申请+文件校验 | HIGHLY_SENSITIVE | 不保存中文值 |
 | MediaEvidence | `mimeType` | `mime_type` | string / varchar | 127 | 是 | 否 | — | — | 白名单；以服务端内容检测为准 | `image/jpeg` | 文件校验服务 | HIGHLY_SENSITIVE | 不信任文件扩展名 |
 | MediaEvidence | `fileSizeBytes` | `file_size_bytes` | integer / bigint | 64-bit | 是 | 否 | — | 字节 | `>0` 且符合用途/媒体类型上限 | `2457600` | 对象存储确认 | HIGHLY_SENSITIVE | 统一旧 `size/byteCount` |
 | MediaEvidence | `storageKey` | `storage_key` | string / varchar | 512 | 是 | 否 | 服务端生成 | — | 全局唯一；路径净化；私有对象 | `evidence/2026/...` | 存储服务 | HIGHLY_SENSITIVE | **仅内部 service DTO；学生/教师公共 API 不返回** |
 | MediaEvidence | `thumbnailStorageKey` | `thumbnail_storage_key` | string / varchar | 512 | 否 | 是 | `null` | — | 私有派生对象；仅视频/需要缩略图时存在 | `thumbnails/2026/...` | 媒体处理任务 | HIGHLY_SENSITIVE | 公共 API 只返回短期授权访问链接 |
-| MediaEvidence | `captureSource` | `capture_source` | enum / varchar | 32 | 是 | 否 | — | — | 稳定枚举；打卡推荐只允许 `IN_APP_CAMERA`，待 ADR-030 | `IN_APP_CAMERA` | 客户端声明+服务端能力校验 | HIGHLY_SENSITIVE | 不把声明本身当真实性证明 |
+| MediaEvidence | `captureSource` | `capture_source` | enum / varchar | 32 | 是 | 否 | — | — | EXERCISE_RECORD 只允许 `IN_APP_CAMERA`；EXEMPTION_APPLICATION 允许 `IN_APP_CAMERA/FILE_PICKER` | `FILE_PICKER` | 客户端声明+服务端能力校验 | HIGHLY_SENSITIVE | 不把声明本身当真实性证明 |
 | MediaEvidence | `uploadStatus` | `upload_status` | enum / varchar | 32 | 是 | 否 | `PENDING_UPLOAD` | — | 阶段 3 MediaUploadStatus | `AVAILABLE` | 上传/处理状态机 | HIGHLY_SENSITIVE | 与绑定关系和删除状态分离时由状态机定义组合 |
 | MediaEvidence | `uploadedAt` | `uploaded_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 对象存储确认成功后服务端写 | `2026-08-02T02:01:00Z` | 服务端确认 | HIGHLY_SENSITIVE | 客户端直传完成时间不直接采信 |
 | MediaEvidence | `boundAt` | `bound_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 与 recordId 首次绑定时写入 | `2026-08-02T02:05:00Z` | Record 提交流程 | HIGHLY_SENSITIVE | 防止一个 media 跨学生/记录复用 |
@@ -815,9 +817,9 @@
 | `LoginResponse.token`、CourseJoin session/token | Android | 登录会话凭证 | 待 DeviceSession/Token 对象或认证服务合同 | token 永不落业务表/普通日志；阶段 8 冻结 | 待模型 |
 | `RecoveryRequest*` | Android/Web admin | 联系方式失效后的账户恢复申请 | 待 AccountRecoveryRequest 对象 | 保留申请/审核历史；不得转成 AuditLog 代替领域状态 | 待模型 |
 | `Exemption.*`、`ExemptionStatus/Type` | Android/Web teacher | 免测、校队/社团认证混合 | 待 ExemptionApplication/OrganizationCertification 对象 | 按用途拆分；proofFiles 迁 MediaEvidence；当前状态不丢失 | 待模型 |
-| `StudentNotice/NotificationResponse`、AdminNotification | Android/Web admin | App 内业务消息/公告 | 待 Notification 对象 | ADR-031 要求持久化 App 内消息；不塞 AuditLog | 待模型 |
+| `StudentNotice/NotificationResponse`、AdminNotification | Android/Web admin | App 内业务消息/公告 | `Notification` | Stage 21 本地支持本人列表/已读；尚无业务通知生产者或推送投递 | 本地集成，生产未验收 |
 | `PushDeviceRegistrationRequest` | Android | FCM 设备地址 | 待 PushDevice 对象 | token 为 HIGHLY_SENSITIVE；与 User/DeviceSession 关联 | 待模型 |
-| `FeedbackTicket/SupportTicket/replies` | Android/Web admin | 服务反馈/工单 | 待 SupportTicket/Reply 对象 | 保留线程与附件；不并入 AuditLog.safeMetadata | 待模型 |
+| `FeedbackTicket/SupportTicket/replies` | Android/Web admin | 服务反馈/工单 | `Feedback`（仅当前创建/查询投影） | Stage 21 未实现线程、附件、回复 mutation 或处理 SLA；不得把当前单条反馈扩张为完整工单系统 | 部分本地集成 |
 | `HelpArticle.*` | Web admin | 双语帮助内容 | 待 HelpArticle 对象 | 保持语言字段/发布历史；不并入 Course | 待模型 |
 | `SystemModeRecord/MaintenanceAnnouncement` | Android/Web admin | 全局系统模式与维护公告 | 待 SystemPolicy/MaintenanceAnnouncement 对象 | 未接真实后端前保持 Mock 标签；未知模式 fail closed | 待模型 |
 | `PurgeAllBusinessDataInput/Result` | Web admin | 高危全量清理演示 | 不进入普通领域/API | 按 ADR-024/032 保留为待批准离线运维流程 | 不实现 |

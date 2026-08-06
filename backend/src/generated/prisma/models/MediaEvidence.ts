@@ -47,6 +47,7 @@ export type MediaEvidenceMinAggregateOutputType = {
   organizationId: string | null
   ownerStudentId: string | null
   sessionId: string | null
+  enrollmentId: string | null
   initiatedByUserId: string | null
   businessPurpose: string | null
   mediaType: string | null
@@ -77,6 +78,7 @@ export type MediaEvidenceMaxAggregateOutputType = {
   organizationId: string | null
   ownerStudentId: string | null
   sessionId: string | null
+  enrollmentId: string | null
   initiatedByUserId: string | null
   businessPurpose: string | null
   mediaType: string | null
@@ -107,6 +109,7 @@ export type MediaEvidenceCountAggregateOutputType = {
   organizationId: number
   ownerStudentId: number
   sessionId: number
+  enrollmentId: number
   initiatedByUserId: number
   businessPurpose: number
   mediaType: number
@@ -155,6 +158,7 @@ export type MediaEvidenceMinAggregateInputType = {
   organizationId?: true
   ownerStudentId?: true
   sessionId?: true
+  enrollmentId?: true
   initiatedByUserId?: true
   businessPurpose?: true
   mediaType?: true
@@ -185,6 +189,7 @@ export type MediaEvidenceMaxAggregateInputType = {
   organizationId?: true
   ownerStudentId?: true
   sessionId?: true
+  enrollmentId?: true
   initiatedByUserId?: true
   businessPurpose?: true
   mediaType?: true
@@ -215,6 +220,7 @@ export type MediaEvidenceCountAggregateInputType = {
   organizationId?: true
   ownerStudentId?: true
   sessionId?: true
+  enrollmentId?: true
   initiatedByUserId?: true
   businessPurpose?: true
   mediaType?: true
@@ -331,7 +337,8 @@ export type MediaEvidenceGroupByOutputType = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId: string | null
+  enrollmentId: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -384,7 +391,8 @@ export type MediaEvidenceWhereInput = {
   id?: Prisma.UuidFilter<"MediaEvidence"> | string
   organizationId?: Prisma.UuidFilter<"MediaEvidence"> | string
   ownerStudentId?: Prisma.UuidFilter<"MediaEvidence"> | string
-  sessionId?: Prisma.UuidFilter<"MediaEvidence"> | string
+  sessionId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
+  enrollmentId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
   initiatedByUserId?: Prisma.UuidFilter<"MediaEvidence"> | string
   businessPurpose?: Prisma.StringFilter<"MediaEvidence"> | string
   mediaType?: Prisma.StringFilter<"MediaEvidence"> | string
@@ -410,19 +418,22 @@ export type MediaEvidenceWhereInput = {
   version?: Prisma.IntFilter<"MediaEvidence"> | number
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   ownerStudent?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
-  session?: Prisma.XOR<Prisma.ExerciseSessionScalarRelationFilter, Prisma.ExerciseSessionWhereInput>
+  session?: Prisma.XOR<Prisma.ExerciseSessionNullableScalarRelationFilter, Prisma.ExerciseSessionWhereInput> | null
+  exemptionEnrollment?: Prisma.XOR<Prisma.EnrollmentNullableScalarRelationFilter, Prisma.EnrollmentWhereInput> | null
   initiatedByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   uploadSession?: Prisma.XOR<Prisma.MediaUploadSessionNullableScalarRelationFilter, Prisma.MediaUploadSessionWhereInput> | null
   statusEvents?: Prisma.MediaStatusEventListRelationFilter
   processingAttempts?: Prisma.MediaProcessingAttemptListRelationFilter
   recordAssociation?: Prisma.XOR<Prisma.ExerciseRecordMediaNullableScalarRelationFilter, Prisma.ExerciseRecordMediaWhereInput> | null
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaListRelationFilter
 }
 
 export type MediaEvidenceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   ownerStudentId?: Prisma.SortOrder
-  sessionId?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  enrollmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   initiatedByUserId?: Prisma.SortOrder
   businessPurpose?: Prisma.SortOrder
   mediaType?: Prisma.SortOrder
@@ -449,11 +460,13 @@ export type MediaEvidenceOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   ownerStudent?: Prisma.StudentProfileOrderByWithRelationInput
   session?: Prisma.ExerciseSessionOrderByWithRelationInput
+  exemptionEnrollment?: Prisma.EnrollmentOrderByWithRelationInput
   initiatedByUser?: Prisma.UserOrderByWithRelationInput
   uploadSession?: Prisma.MediaUploadSessionOrderByWithRelationInput
   statusEvents?: Prisma.MediaStatusEventOrderByRelationAggregateInput
   processingAttempts?: Prisma.MediaProcessingAttemptOrderByRelationAggregateInput
   recordAssociation?: Prisma.ExerciseRecordMediaOrderByWithRelationInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaOrderByRelationAggregateInput
 }
 
 export type MediaEvidenceWhereUniqueInput = Prisma.AtLeast<{
@@ -461,12 +474,14 @@ export type MediaEvidenceWhereUniqueInput = Prisma.AtLeast<{
   storageKey?: string
   id_organizationId?: Prisma.MediaEvidenceIdOrganizationIdCompoundUniqueInput
   id_sessionId_ownerStudentId_organizationId?: Prisma.MediaEvidenceIdSessionIdOwnerStudentIdOrganizationIdCompoundUniqueInput
+  id_enrollmentId_ownerStudentId_organizationId?: Prisma.MediaEvidenceIdEnrollmentIdOwnerStudentIdOrganizationIdCompoundUniqueInput
   AND?: Prisma.MediaEvidenceWhereInput | Prisma.MediaEvidenceWhereInput[]
   OR?: Prisma.MediaEvidenceWhereInput[]
   NOT?: Prisma.MediaEvidenceWhereInput | Prisma.MediaEvidenceWhereInput[]
   organizationId?: Prisma.UuidFilter<"MediaEvidence"> | string
   ownerStudentId?: Prisma.UuidFilter<"MediaEvidence"> | string
-  sessionId?: Prisma.UuidFilter<"MediaEvidence"> | string
+  sessionId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
+  enrollmentId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
   initiatedByUserId?: Prisma.UuidFilter<"MediaEvidence"> | string
   businessPurpose?: Prisma.StringFilter<"MediaEvidence"> | string
   mediaType?: Prisma.StringFilter<"MediaEvidence"> | string
@@ -491,19 +506,22 @@ export type MediaEvidenceWhereUniqueInput = Prisma.AtLeast<{
   version?: Prisma.IntFilter<"MediaEvidence"> | number
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   ownerStudent?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
-  session?: Prisma.XOR<Prisma.ExerciseSessionScalarRelationFilter, Prisma.ExerciseSessionWhereInput>
+  session?: Prisma.XOR<Prisma.ExerciseSessionNullableScalarRelationFilter, Prisma.ExerciseSessionWhereInput> | null
+  exemptionEnrollment?: Prisma.XOR<Prisma.EnrollmentNullableScalarRelationFilter, Prisma.EnrollmentWhereInput> | null
   initiatedByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   uploadSession?: Prisma.XOR<Prisma.MediaUploadSessionNullableScalarRelationFilter, Prisma.MediaUploadSessionWhereInput> | null
   statusEvents?: Prisma.MediaStatusEventListRelationFilter
   processingAttempts?: Prisma.MediaProcessingAttemptListRelationFilter
   recordAssociation?: Prisma.XOR<Prisma.ExerciseRecordMediaNullableScalarRelationFilter, Prisma.ExerciseRecordMediaWhereInput> | null
-}, "id" | "storageKey" | "id_organizationId" | "id_sessionId_ownerStudentId_organizationId">
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaListRelationFilter
+}, "id" | "storageKey" | "id_organizationId" | "id_sessionId_ownerStudentId_organizationId" | "id_enrollmentId_ownerStudentId_organizationId">
 
 export type MediaEvidenceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   ownerStudentId?: Prisma.SortOrder
-  sessionId?: Prisma.SortOrder
+  sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  enrollmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   initiatedByUserId?: Prisma.SortOrder
   businessPurpose?: Prisma.SortOrder
   mediaType?: Prisma.SortOrder
@@ -541,7 +559,8 @@ export type MediaEvidenceScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"MediaEvidence"> | string
   organizationId?: Prisma.UuidWithAggregatesFilter<"MediaEvidence"> | string
   ownerStudentId?: Prisma.UuidWithAggregatesFilter<"MediaEvidence"> | string
-  sessionId?: Prisma.UuidWithAggregatesFilter<"MediaEvidence"> | string
+  sessionId?: Prisma.UuidNullableWithAggregatesFilter<"MediaEvidence"> | string | null
+  enrollmentId?: Prisma.UuidNullableWithAggregatesFilter<"MediaEvidence"> | string | null
   initiatedByUserId?: Prisma.UuidWithAggregatesFilter<"MediaEvidence"> | string
   businessPurpose?: Prisma.StringWithAggregatesFilter<"MediaEvidence"> | string
   mediaType?: Prisma.StringWithAggregatesFilter<"MediaEvidence"> | string
@@ -593,19 +612,22 @@ export type MediaEvidenceCreateInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -633,6 +655,7 @@ export type MediaEvidenceUncheckedCreateInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUpdateInput = {
@@ -661,19 +684,22 @@ export type MediaEvidenceUpdateInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -701,13 +727,15 @@ export type MediaEvidenceUncheckedUpdateInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceCreateManyInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -763,7 +791,8 @@ export type MediaEvidenceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -811,11 +840,19 @@ export type MediaEvidenceIdSessionIdOwnerStudentIdOrganizationIdCompoundUniqueIn
   organizationId: string
 }
 
+export type MediaEvidenceIdEnrollmentIdOwnerStudentIdOrganizationIdCompoundUniqueInput = {
+  id: string
+  enrollmentId: string
+  ownerStudentId: string
+  organizationId: string
+}
+
 export type MediaEvidenceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   ownerStudentId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  enrollmentId?: Prisma.SortOrder
   initiatedByUserId?: Prisma.SortOrder
   businessPurpose?: Prisma.SortOrder
   mediaType?: Prisma.SortOrder
@@ -854,6 +891,7 @@ export type MediaEvidenceMaxOrderByAggregateInput = {
   organizationId?: Prisma.SortOrder
   ownerStudentId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  enrollmentId?: Prisma.SortOrder
   initiatedByUserId?: Prisma.SortOrder
   businessPurpose?: Prisma.SortOrder
   mediaType?: Prisma.SortOrder
@@ -884,6 +922,7 @@ export type MediaEvidenceMinOrderByAggregateInput = {
   organizationId?: Prisma.SortOrder
   ownerStudentId?: Prisma.SortOrder
   sessionId?: Prisma.SortOrder
+  enrollmentId?: Prisma.SortOrder
   initiatedByUserId?: Prisma.SortOrder
   businessPurpose?: Prisma.SortOrder
   mediaType?: Prisma.SortOrder
@@ -1048,6 +1087,48 @@ export type MediaEvidenceUncheckedUpdateManyWithoutOwnerStudentNestedInput = {
   deleteMany?: Prisma.MediaEvidenceScalarWhereInput | Prisma.MediaEvidenceScalarWhereInput[]
 }
 
+export type MediaEvidenceCreateNestedManyWithoutExemptionEnrollmentInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput> | Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput[] | Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput[]
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput[]
+  createMany?: Prisma.MediaEvidenceCreateManyExemptionEnrollmentInputEnvelope
+  connect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+}
+
+export type MediaEvidenceUncheckedCreateNestedManyWithoutExemptionEnrollmentInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput> | Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput[] | Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput[]
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput[]
+  createMany?: Prisma.MediaEvidenceCreateManyExemptionEnrollmentInputEnvelope
+  connect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+}
+
+export type MediaEvidenceUpdateManyWithoutExemptionEnrollmentNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput> | Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput[] | Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput[]
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput[]
+  upsert?: Prisma.MediaEvidenceUpsertWithWhereUniqueWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpsertWithWhereUniqueWithoutExemptionEnrollmentInput[]
+  createMany?: Prisma.MediaEvidenceCreateManyExemptionEnrollmentInputEnvelope
+  set?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  disconnect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  delete?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  connect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  update?: Prisma.MediaEvidenceUpdateWithWhereUniqueWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpdateWithWhereUniqueWithoutExemptionEnrollmentInput[]
+  updateMany?: Prisma.MediaEvidenceUpdateManyWithWhereWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpdateManyWithWhereWithoutExemptionEnrollmentInput[]
+  deleteMany?: Prisma.MediaEvidenceScalarWhereInput | Prisma.MediaEvidenceScalarWhereInput[]
+}
+
+export type MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput> | Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput[] | Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput[]
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput[]
+  upsert?: Prisma.MediaEvidenceUpsertWithWhereUniqueWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpsertWithWhereUniqueWithoutExemptionEnrollmentInput[]
+  createMany?: Prisma.MediaEvidenceCreateManyExemptionEnrollmentInputEnvelope
+  set?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  disconnect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  delete?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  connect?: Prisma.MediaEvidenceWhereUniqueInput | Prisma.MediaEvidenceWhereUniqueInput[]
+  update?: Prisma.MediaEvidenceUpdateWithWhereUniqueWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpdateWithWhereUniqueWithoutExemptionEnrollmentInput[]
+  updateMany?: Prisma.MediaEvidenceUpdateManyWithWhereWithoutExemptionEnrollmentInput | Prisma.MediaEvidenceUpdateManyWithWhereWithoutExemptionEnrollmentInput[]
+  deleteMany?: Prisma.MediaEvidenceScalarWhereInput | Prisma.MediaEvidenceScalarWhereInput[]
+}
+
 export type MediaEvidenceCreateNestedManyWithoutSessionInput = {
   create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutSessionInput, Prisma.MediaEvidenceUncheckedCreateWithoutSessionInput> | Prisma.MediaEvidenceCreateWithoutSessionInput[] | Prisma.MediaEvidenceUncheckedCreateWithoutSessionInput[]
   connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutSessionInput | Prisma.MediaEvidenceCreateOrConnectWithoutSessionInput[]
@@ -1162,6 +1243,20 @@ export type MediaEvidenceUpdateOneRequiredWithoutProcessingAttemptsNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.MediaEvidenceUpdateToOneWithWhereWithoutProcessingAttemptsInput, Prisma.MediaEvidenceUpdateWithoutProcessingAttemptsInput>, Prisma.MediaEvidenceUncheckedUpdateWithoutProcessingAttemptsInput>
 }
 
+export type MediaEvidenceCreateNestedOneWithoutExemptionAssociationsInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionAssociationsInput>
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionAssociationsInput
+  connect?: Prisma.MediaEvidenceWhereUniqueInput
+}
+
+export type MediaEvidenceUpdateOneRequiredWithoutExemptionAssociationsNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionAssociationsInput>
+  connectOrCreate?: Prisma.MediaEvidenceCreateOrConnectWithoutExemptionAssociationsInput
+  upsert?: Prisma.MediaEvidenceUpsertWithoutExemptionAssociationsInput
+  connect?: Prisma.MediaEvidenceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MediaEvidenceUpdateToOneWithWhereWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUpdateWithoutExemptionAssociationsInput>, Prisma.MediaEvidenceUncheckedUpdateWithoutExemptionAssociationsInput>
+}
+
 export type MediaEvidenceCreateWithoutOrganizationInput = {
   id: string
   businessPurpose: string
@@ -1187,18 +1282,21 @@ export type MediaEvidenceCreateWithoutOrganizationInput = {
   updatedAt: Date | string
   version?: number
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutOrganizationInput = {
   id: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1226,6 +1324,7 @@ export type MediaEvidenceUncheckedCreateWithoutOrganizationInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutOrganizationInput = {
@@ -1261,7 +1360,8 @@ export type MediaEvidenceScalarWhereInput = {
   id?: Prisma.UuidFilter<"MediaEvidence"> | string
   organizationId?: Prisma.UuidFilter<"MediaEvidence"> | string
   ownerStudentId?: Prisma.UuidFilter<"MediaEvidence"> | string
-  sessionId?: Prisma.UuidFilter<"MediaEvidence"> | string
+  sessionId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
+  enrollmentId?: Prisma.UuidNullableFilter<"MediaEvidence"> | string | null
   initiatedByUserId?: Prisma.UuidFilter<"MediaEvidence"> | string
   businessPurpose?: Prisma.StringFilter<"MediaEvidence"> | string
   mediaType?: Prisma.StringFilter<"MediaEvidence"> | string
@@ -1313,17 +1413,20 @@ export type MediaEvidenceCreateWithoutInitiatedByUserInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutInitiatedByUserInput = {
   id: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   businessPurpose: string
   mediaType: string
   captureSource: string
@@ -1350,6 +1453,7 @@ export type MediaEvidenceUncheckedCreateWithoutInitiatedByUserInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutInitiatedByUserInput = {
@@ -1403,17 +1507,20 @@ export type MediaEvidenceCreateWithoutOwnerStudentInput = {
   updatedAt: Date | string
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutOwnerStudentInput = {
   id: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1441,6 +1548,7 @@ export type MediaEvidenceUncheckedCreateWithoutOwnerStudentInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutOwnerStudentInput = {
@@ -1469,7 +1577,7 @@ export type MediaEvidenceUpdateManyWithWhereWithoutOwnerStudentInput = {
   data: Prisma.XOR<Prisma.MediaEvidenceUpdateManyMutationInput, Prisma.MediaEvidenceUncheckedUpdateManyWithoutOwnerStudentInput>
 }
 
-export type MediaEvidenceCreateWithoutSessionInput = {
+export type MediaEvidenceCreateWithoutExemptionEnrollmentInput = {
   id: string
   businessPurpose: string
   mediaType: string
@@ -1495,15 +1603,18 @@ export type MediaEvidenceCreateWithoutSessionInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
-export type MediaEvidenceUncheckedCreateWithoutSessionInput = {
+export type MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput = {
   id: string
+  sessionId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1531,6 +1642,101 @@ export type MediaEvidenceUncheckedCreateWithoutSessionInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
+}
+
+export type MediaEvidenceCreateOrConnectWithoutExemptionEnrollmentInput = {
+  where: Prisma.MediaEvidenceWhereUniqueInput
+  create: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput>
+}
+
+export type MediaEvidenceCreateManyExemptionEnrollmentInputEnvelope = {
+  data: Prisma.MediaEvidenceCreateManyExemptionEnrollmentInput | Prisma.MediaEvidenceCreateManyExemptionEnrollmentInput[]
+  skipDuplicates?: boolean
+}
+
+export type MediaEvidenceUpsertWithWhereUniqueWithoutExemptionEnrollmentInput = {
+  where: Prisma.MediaEvidenceWhereUniqueInput
+  update: Prisma.XOR<Prisma.MediaEvidenceUpdateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedUpdateWithoutExemptionEnrollmentInput>
+  create: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionEnrollmentInput>
+}
+
+export type MediaEvidenceUpdateWithWhereUniqueWithoutExemptionEnrollmentInput = {
+  where: Prisma.MediaEvidenceWhereUniqueInput
+  data: Prisma.XOR<Prisma.MediaEvidenceUpdateWithoutExemptionEnrollmentInput, Prisma.MediaEvidenceUncheckedUpdateWithoutExemptionEnrollmentInput>
+}
+
+export type MediaEvidenceUpdateManyWithWhereWithoutExemptionEnrollmentInput = {
+  where: Prisma.MediaEvidenceScalarWhereInput
+  data: Prisma.XOR<Prisma.MediaEvidenceUpdateManyMutationInput, Prisma.MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentInput>
+}
+
+export type MediaEvidenceCreateWithoutSessionInput = {
+  id: string
+  businessPurpose: string
+  mediaType: string
+  captureSource: string
+  declaredMimeType: string
+  verifiedMimeType?: string | null
+  declaredFileSizeBytes: bigint | number
+  verifiedFileSizeBytes?: bigint | number | null
+  declaredContentSha256?: string | null
+  verifiedContentSha256?: string | null
+  declaredDurationSeconds?: number | null
+  verifiedDurationSeconds?: number | null
+  uploadStatus: string
+  storageKey: string
+  uploadedAt?: Date | string | null
+  boundAt?: Date | string | null
+  processingStartedAt?: Date | string | null
+  availableAt?: Date | string | null
+  failedAt?: Date | string | null
+  failureCode?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
+  ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
+  initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
+  uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
+  statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
+  processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
+  recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
+}
+
+export type MediaEvidenceUncheckedCreateWithoutSessionInput = {
+  id: string
+  enrollmentId?: string | null
+  initiatedByUserId: string
+  businessPurpose: string
+  mediaType: string
+  captureSource: string
+  declaredMimeType: string
+  verifiedMimeType?: string | null
+  declaredFileSizeBytes: bigint | number
+  verifiedFileSizeBytes?: bigint | number | null
+  declaredContentSha256?: string | null
+  verifiedContentSha256?: string | null
+  declaredDurationSeconds?: number | null
+  verifiedDurationSeconds?: number | null
+  uploadStatus: string
+  storageKey: string
+  uploadedAt?: Date | string | null
+  boundAt?: Date | string | null
+  processingStartedAt?: Date | string | null
+  availableAt?: Date | string | null
+  failedAt?: Date | string | null
+  failureCode?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  uploadSession?: Prisma.MediaUploadSessionUncheckedCreateNestedOneWithoutMediaInput
+  statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutSessionInput = {
@@ -1585,18 +1791,21 @@ export type MediaEvidenceCreateWithoutRecordAssociationInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutRecordAssociationInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1623,6 +1832,7 @@ export type MediaEvidenceUncheckedCreateWithoutRecordAssociationInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutRecordAssociationInput = {
@@ -1667,18 +1877,21 @@ export type MediaEvidenceUpdateWithoutRecordAssociationInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutRecordAssociationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1705,6 +1918,7 @@ export type MediaEvidenceUncheckedUpdateWithoutRecordAssociationInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceCreateWithoutUploadSessionInput = {
@@ -1733,18 +1947,21 @@ export type MediaEvidenceCreateWithoutUploadSessionInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutUploadSessionInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1771,6 +1988,7 @@ export type MediaEvidenceUncheckedCreateWithoutUploadSessionInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutUploadSessionInput = {
@@ -1815,18 +2033,21 @@ export type MediaEvidenceUpdateWithoutUploadSessionInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutUploadSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1853,6 +2074,7 @@ export type MediaEvidenceUncheckedUpdateWithoutUploadSessionInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceCreateWithoutStatusEventsInput = {
@@ -1881,18 +2103,21 @@ export type MediaEvidenceCreateWithoutStatusEventsInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutStatusEventsInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -1919,6 +2144,7 @@ export type MediaEvidenceUncheckedCreateWithoutStatusEventsInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedCreateNestedOneWithoutMediaInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutStatusEventsInput = {
@@ -1963,18 +2189,21 @@ export type MediaEvidenceUpdateWithoutStatusEventsInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutStatusEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2001,6 +2230,7 @@ export type MediaEvidenceUncheckedUpdateWithoutStatusEventsInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedUpdateOneWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceCreateWithoutProcessingAttemptsInput = {
@@ -2029,18 +2259,21 @@ export type MediaEvidenceCreateWithoutProcessingAttemptsInput = {
   version?: number
   organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
   ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
-  session: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
   initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
   uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceUncheckedCreateWithoutProcessingAttemptsInput = {
   id: string
   organizationId: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -2067,6 +2300,7 @@ export type MediaEvidenceUncheckedCreateWithoutProcessingAttemptsInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedCreateNestedOneWithoutMediaInput
   statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedCreateNestedManyWithoutMediaInput
 }
 
 export type MediaEvidenceCreateOrConnectWithoutProcessingAttemptsInput = {
@@ -2111,18 +2345,21 @@ export type MediaEvidenceUpdateWithoutProcessingAttemptsInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutProcessingAttemptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2149,12 +2386,170 @@ export type MediaEvidenceUncheckedUpdateWithoutProcessingAttemptsInput = {
   uploadSession?: Prisma.MediaUploadSessionUncheckedUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaEvidenceCreateWithoutExemptionAssociationsInput = {
+  id: string
+  businessPurpose: string
+  mediaType: string
+  captureSource: string
+  declaredMimeType: string
+  verifiedMimeType?: string | null
+  declaredFileSizeBytes: bigint | number
+  verifiedFileSizeBytes?: bigint | number | null
+  declaredContentSha256?: string | null
+  verifiedContentSha256?: string | null
+  declaredDurationSeconds?: number | null
+  verifiedDurationSeconds?: number | null
+  uploadStatus: string
+  storageKey: string
+  uploadedAt?: Date | string | null
+  boundAt?: Date | string | null
+  processingStartedAt?: Date | string | null
+  availableAt?: Date | string | null
+  failedAt?: Date | string | null
+  failureCode?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutMediaEvidenceInput
+  ownerStudent: Prisma.StudentProfileCreateNestedOneWithoutMediaEvidenceInput
+  session?: Prisma.ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput
+  exemptionEnrollment?: Prisma.EnrollmentCreateNestedOneWithoutExemptionMediaEvidenceInput
+  initiatedByUser: Prisma.UserCreateNestedOneWithoutInitiatedMediaEvidenceInput
+  uploadSession?: Prisma.MediaUploadSessionCreateNestedOneWithoutMediaInput
+  statusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutMediaInput
+  processingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutMediaInput
+  recordAssociation?: Prisma.ExerciseRecordMediaCreateNestedOneWithoutMediaInput
+}
+
+export type MediaEvidenceUncheckedCreateWithoutExemptionAssociationsInput = {
+  id: string
+  organizationId: string
+  ownerStudentId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
+  initiatedByUserId: string
+  businessPurpose: string
+  mediaType: string
+  captureSource: string
+  declaredMimeType: string
+  verifiedMimeType?: string | null
+  declaredFileSizeBytes: bigint | number
+  verifiedFileSizeBytes?: bigint | number | null
+  declaredContentSha256?: string | null
+  verifiedContentSha256?: string | null
+  declaredDurationSeconds?: number | null
+  verifiedDurationSeconds?: number | null
+  uploadStatus: string
+  storageKey: string
+  uploadedAt?: Date | string | null
+  boundAt?: Date | string | null
+  processingStartedAt?: Date | string | null
+  availableAt?: Date | string | null
+  failedAt?: Date | string | null
+  failureCode?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  uploadSession?: Prisma.MediaUploadSessionUncheckedCreateNestedOneWithoutMediaInput
+  statusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutMediaInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutMediaInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUncheckedCreateNestedOneWithoutMediaInput
+}
+
+export type MediaEvidenceCreateOrConnectWithoutExemptionAssociationsInput = {
+  where: Prisma.MediaEvidenceWhereUniqueInput
+  create: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionAssociationsInput>
+}
+
+export type MediaEvidenceUpsertWithoutExemptionAssociationsInput = {
+  update: Prisma.XOR<Prisma.MediaEvidenceUpdateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedUpdateWithoutExemptionAssociationsInput>
+  create: Prisma.XOR<Prisma.MediaEvidenceCreateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedCreateWithoutExemptionAssociationsInput>
+  where?: Prisma.MediaEvidenceWhereInput
+}
+
+export type MediaEvidenceUpdateToOneWithWhereWithoutExemptionAssociationsInput = {
+  where?: Prisma.MediaEvidenceWhereInput
+  data: Prisma.XOR<Prisma.MediaEvidenceUpdateWithoutExemptionAssociationsInput, Prisma.MediaEvidenceUncheckedUpdateWithoutExemptionAssociationsInput>
+}
+
+export type MediaEvidenceUpdateWithoutExemptionAssociationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
+  mediaType?: Prisma.StringFieldUpdateOperationsInput | string
+  captureSource?: Prisma.StringFieldUpdateOperationsInput | string
+  declaredMimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  verifiedMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredFileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  verifiedFileSizeBytes?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  declaredContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  boundAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  processingStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
+  initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
+  uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
+  statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+}
+
+export type MediaEvidenceUncheckedUpdateWithoutExemptionAssociationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
+  mediaType?: Prisma.StringFieldUpdateOperationsInput | string
+  captureSource?: Prisma.StringFieldUpdateOperationsInput | string
+  declaredMimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  verifiedMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredFileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  verifiedFileSizeBytes?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  declaredContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  boundAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  processingStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  uploadSession?: Prisma.MediaUploadSessionUncheckedUpdateOneWithoutMediaNestedInput
+  statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
 }
 
 export type MediaEvidenceCreateManyOrganizationInput = {
   id: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -2205,18 +2600,21 @@ export type MediaEvidenceUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2244,12 +2642,14 @@ export type MediaEvidenceUncheckedUpdateWithoutOrganizationInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2278,7 +2678,8 @@ export type MediaEvidenceUncheckedUpdateManyWithoutOrganizationInput = {
 export type MediaEvidenceCreateManyInitiatedByUserInput = {
   id: string
   ownerStudentId: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   businessPurpose: string
   mediaType: string
   captureSource: string
@@ -2329,17 +2730,20 @@ export type MediaEvidenceUpdateWithoutInitiatedByUserInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutInitiatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
   captureSource?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2366,12 +2770,14 @@ export type MediaEvidenceUncheckedUpdateWithoutInitiatedByUserInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   ownerStudentId?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
   captureSource?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2398,7 +2804,8 @@ export type MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserInput = {
 
 export type MediaEvidenceCreateManyOwnerStudentInput = {
   id: string
-  sessionId: string
+  sessionId?: string | null
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -2449,17 +2856,20 @@ export type MediaEvidenceUpdateWithoutOwnerStudentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
-  session?: Prisma.ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutOwnerStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2487,11 +2897,137 @@ export type MediaEvidenceUncheckedUpdateWithoutOwnerStudentInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateManyWithoutOwnerStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
+  mediaType?: Prisma.StringFieldUpdateOperationsInput | string
+  captureSource?: Prisma.StringFieldUpdateOperationsInput | string
+  declaredMimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  verifiedMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredFileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  verifiedFileSizeBytes?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  declaredContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  boundAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  processingStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type MediaEvidenceCreateManyExemptionEnrollmentInput = {
+  id: string
+  sessionId?: string | null
+  initiatedByUserId: string
+  businessPurpose: string
+  mediaType: string
+  captureSource: string
+  declaredMimeType: string
+  verifiedMimeType?: string | null
+  declaredFileSizeBytes: bigint | number
+  verifiedFileSizeBytes?: bigint | number | null
+  declaredContentSha256?: string | null
+  verifiedContentSha256?: string | null
+  declaredDurationSeconds?: number | null
+  verifiedDurationSeconds?: number | null
+  uploadStatus: string
+  storageKey: string
+  uploadedAt?: Date | string | null
+  boundAt?: Date | string | null
+  processingStartedAt?: Date | string | null
+  availableAt?: Date | string | null
+  failedAt?: Date | string | null
+  failureCode?: string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+}
+
+export type MediaEvidenceUpdateWithoutExemptionEnrollmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
+  mediaType?: Prisma.StringFieldUpdateOperationsInput | string
+  captureSource?: Prisma.StringFieldUpdateOperationsInput | string
+  declaredMimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  verifiedMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredFileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  verifiedFileSizeBytes?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  declaredContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  boundAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  processingStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  session?: Prisma.ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput
+  initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
+  uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
+  statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaEvidenceUncheckedUpdateWithoutExemptionEnrollmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
+  mediaType?: Prisma.StringFieldUpdateOperationsInput | string
+  captureSource?: Prisma.StringFieldUpdateOperationsInput | string
+  declaredMimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  verifiedMimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredFileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  verifiedFileSizeBytes?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  declaredContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verifiedContentSha256?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  declaredDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedDurationSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  uploadStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  boundAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  processingStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  uploadSession?: Prisma.MediaUploadSessionUncheckedUpdateOneWithoutMediaNestedInput
+  statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
+  processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
+  recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
+}
+
+export type MediaEvidenceUncheckedUpdateManyWithoutExemptionEnrollmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2519,6 +3055,7 @@ export type MediaEvidenceUncheckedUpdateManyWithoutOwnerStudentInput = {
 
 export type MediaEvidenceCreateManySessionInput = {
   id: string
+  enrollmentId?: string | null
   initiatedByUserId: string
   businessPurpose: string
   mediaType: string
@@ -2570,15 +3107,18 @@ export type MediaEvidenceUpdateWithoutSessionInput = {
   version?: Prisma.IntFieldUpdateOperationsInput | number
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMediaEvidenceNestedInput
   ownerStudent?: Prisma.StudentProfileUpdateOneRequiredWithoutMediaEvidenceNestedInput
+  exemptionEnrollment?: Prisma.EnrollmentUpdateOneWithoutExemptionMediaEvidenceNestedInput
   initiatedByUser?: Prisma.UserUpdateOneRequiredWithoutInitiatedMediaEvidenceNestedInput
   uploadSession?: Prisma.MediaUploadSessionUpdateOneWithoutMediaNestedInput
   statusEvents?: Prisma.MediaStatusEventUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2606,10 +3146,12 @@ export type MediaEvidenceUncheckedUpdateWithoutSessionInput = {
   statusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutMediaNestedInput
   processingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutMediaNestedInput
   recordAssociation?: Prisma.ExerciseRecordMediaUncheckedUpdateOneWithoutMediaNestedInput
+  exemptionAssociations?: Prisma.ExemptionApplicationMediaUncheckedUpdateManyWithoutMediaNestedInput
 }
 
 export type MediaEvidenceUncheckedUpdateManyWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   initiatedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   businessPurpose?: Prisma.StringFieldUpdateOperationsInput | string
   mediaType?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2643,11 +3185,13 @@ export type MediaEvidenceUncheckedUpdateManyWithoutSessionInput = {
 export type MediaEvidenceCountOutputType = {
   statusEvents: number
   processingAttempts: number
+  exemptionAssociations: number
 }
 
 export type MediaEvidenceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   statusEvents?: boolean | MediaEvidenceCountOutputTypeCountStatusEventsArgs
   processingAttempts?: boolean | MediaEvidenceCountOutputTypeCountProcessingAttemptsArgs
+  exemptionAssociations?: boolean | MediaEvidenceCountOutputTypeCountExemptionAssociationsArgs
 }
 
 /**
@@ -2674,12 +3218,20 @@ export type MediaEvidenceCountOutputTypeCountProcessingAttemptsArgs<ExtArgs exte
   where?: Prisma.MediaProcessingAttemptWhereInput
 }
 
+/**
+ * MediaEvidenceCountOutputType without action
+ */
+export type MediaEvidenceCountOutputTypeCountExemptionAssociationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionApplicationMediaWhereInput
+}
+
 
 export type MediaEvidenceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   organizationId?: boolean
   ownerStudentId?: boolean
   sessionId?: boolean
+  enrollmentId?: boolean
   initiatedByUserId?: boolean
   businessPurpose?: boolean
   mediaType?: boolean
@@ -2705,12 +3257,14 @@ export type MediaEvidenceSelect<ExtArgs extends runtime.Types.Extensions.Interna
   version?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   uploadSession?: boolean | Prisma.MediaEvidence$uploadSessionArgs<ExtArgs>
   statusEvents?: boolean | Prisma.MediaEvidence$statusEventsArgs<ExtArgs>
   processingAttempts?: boolean | Prisma.MediaEvidence$processingAttemptsArgs<ExtArgs>
   recordAssociation?: boolean | Prisma.MediaEvidence$recordAssociationArgs<ExtArgs>
+  exemptionAssociations?: boolean | Prisma.MediaEvidence$exemptionAssociationsArgs<ExtArgs>
   _count?: boolean | Prisma.MediaEvidenceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mediaEvidence"]>
 
@@ -2719,6 +3273,7 @@ export type MediaEvidenceSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   organizationId?: boolean
   ownerStudentId?: boolean
   sessionId?: boolean
+  enrollmentId?: boolean
   initiatedByUserId?: boolean
   businessPurpose?: boolean
   mediaType?: boolean
@@ -2744,7 +3299,8 @@ export type MediaEvidenceSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   version?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mediaEvidence"]>
 
@@ -2753,6 +3309,7 @@ export type MediaEvidenceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   organizationId?: boolean
   ownerStudentId?: boolean
   sessionId?: boolean
+  enrollmentId?: boolean
   initiatedByUserId?: boolean
   businessPurpose?: boolean
   mediaType?: boolean
@@ -2778,7 +3335,8 @@ export type MediaEvidenceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   version?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["mediaEvidence"]>
 
@@ -2787,6 +3345,7 @@ export type MediaEvidenceSelectScalar = {
   organizationId?: boolean
   ownerStudentId?: boolean
   sessionId?: boolean
+  enrollmentId?: boolean
   initiatedByUserId?: boolean
   businessPurpose?: boolean
   mediaType?: boolean
@@ -2812,28 +3371,32 @@ export type MediaEvidenceSelectScalar = {
   version?: boolean
 }
 
-export type MediaEvidenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "ownerStudentId" | "sessionId" | "initiatedByUserId" | "businessPurpose" | "mediaType" | "captureSource" | "declaredMimeType" | "verifiedMimeType" | "declaredFileSizeBytes" | "verifiedFileSizeBytes" | "declaredContentSha256" | "verifiedContentSha256" | "declaredDurationSeconds" | "verifiedDurationSeconds" | "uploadStatus" | "storageKey" | "uploadedAt" | "boundAt" | "processingStartedAt" | "availableAt" | "failedAt" | "failureCode" | "createdAt" | "updatedAt" | "version", ExtArgs["result"]["mediaEvidence"]>
+export type MediaEvidenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "ownerStudentId" | "sessionId" | "enrollmentId" | "initiatedByUserId" | "businessPurpose" | "mediaType" | "captureSource" | "declaredMimeType" | "verifiedMimeType" | "declaredFileSizeBytes" | "verifiedFileSizeBytes" | "declaredContentSha256" | "verifiedContentSha256" | "declaredDurationSeconds" | "verifiedDurationSeconds" | "uploadStatus" | "storageKey" | "uploadedAt" | "boundAt" | "processingStartedAt" | "availableAt" | "failedAt" | "failureCode" | "createdAt" | "updatedAt" | "version", ExtArgs["result"]["mediaEvidence"]>
 export type MediaEvidenceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   uploadSession?: boolean | Prisma.MediaEvidence$uploadSessionArgs<ExtArgs>
   statusEvents?: boolean | Prisma.MediaEvidence$statusEventsArgs<ExtArgs>
   processingAttempts?: boolean | Prisma.MediaEvidence$processingAttemptsArgs<ExtArgs>
   recordAssociation?: boolean | Prisma.MediaEvidence$recordAssociationArgs<ExtArgs>
+  exemptionAssociations?: boolean | Prisma.MediaEvidence$exemptionAssociationsArgs<ExtArgs>
   _count?: boolean | Prisma.MediaEvidenceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MediaEvidenceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type MediaEvidenceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   ownerStudent?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
-  session?: boolean | Prisma.ExerciseSessionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.MediaEvidence$sessionArgs<ExtArgs>
+  exemptionEnrollment?: boolean | Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>
   initiatedByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -2842,18 +3405,21 @@ export type $MediaEvidencePayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
     ownerStudent: Prisma.$StudentProfilePayload<ExtArgs>
-    session: Prisma.$ExerciseSessionPayload<ExtArgs>
+    session: Prisma.$ExerciseSessionPayload<ExtArgs> | null
+    exemptionEnrollment: Prisma.$EnrollmentPayload<ExtArgs> | null
     initiatedByUser: Prisma.$UserPayload<ExtArgs>
     uploadSession: Prisma.$MediaUploadSessionPayload<ExtArgs> | null
     statusEvents: Prisma.$MediaStatusEventPayload<ExtArgs>[]
     processingAttempts: Prisma.$MediaProcessingAttemptPayload<ExtArgs>[]
     recordAssociation: Prisma.$ExerciseRecordMediaPayload<ExtArgs> | null
+    exemptionAssociations: Prisma.$ExemptionApplicationMediaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string
     ownerStudentId: string
-    sessionId: string
+    sessionId: string | null
+    enrollmentId: string | null
     initiatedByUserId: string
     businessPurpose: string
     mediaType: string
@@ -3273,12 +3839,14 @@ export interface Prisma__MediaEvidenceClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ownerStudent<T extends Prisma.StudentProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentProfileClient<runtime.Types.Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  session<T extends Prisma.ExerciseSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__ExerciseSessionClient<runtime.Types.Result.GetResult<Prisma.$ExerciseSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.MediaEvidence$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$sessionArgs<ExtArgs>>): Prisma.Prisma__ExerciseSessionClient<runtime.Types.Result.GetResult<Prisma.$ExerciseSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  exemptionEnrollment<T extends Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$exemptionEnrollmentArgs<ExtArgs>>): Prisma.Prisma__EnrollmentClient<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   initiatedByUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   uploadSession<T extends Prisma.MediaEvidence$uploadSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$uploadSessionArgs<ExtArgs>>): Prisma.Prisma__MediaUploadSessionClient<runtime.Types.Result.GetResult<Prisma.$MediaUploadSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   statusEvents<T extends Prisma.MediaEvidence$statusEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$statusEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaStatusEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   processingAttempts<T extends Prisma.MediaEvidence$processingAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$processingAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaProcessingAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recordAssociation<T extends Prisma.MediaEvidence$recordAssociationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$recordAssociationArgs<ExtArgs>>): Prisma.Prisma__ExerciseRecordMediaClient<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordMediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  exemptionAssociations<T extends Prisma.MediaEvidence$exemptionAssociationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MediaEvidence$exemptionAssociationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionApplicationMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3312,6 +3880,7 @@ export interface MediaEvidenceFieldRefs {
   readonly organizationId: Prisma.FieldRef<"MediaEvidence", 'String'>
   readonly ownerStudentId: Prisma.FieldRef<"MediaEvidence", 'String'>
   readonly sessionId: Prisma.FieldRef<"MediaEvidence", 'String'>
+  readonly enrollmentId: Prisma.FieldRef<"MediaEvidence", 'String'>
   readonly initiatedByUserId: Prisma.FieldRef<"MediaEvidence", 'String'>
   readonly businessPurpose: Prisma.FieldRef<"MediaEvidence", 'String'>
   readonly mediaType: Prisma.FieldRef<"MediaEvidence", 'String'>
@@ -3736,6 +4305,44 @@ export type MediaEvidenceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
+ * MediaEvidence.session
+ */
+export type MediaEvidence$sessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExerciseSession
+   */
+  select?: Prisma.ExerciseSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExerciseSession
+   */
+  omit?: Prisma.ExerciseSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseSessionInclude<ExtArgs> | null
+  where?: Prisma.ExerciseSessionWhereInput
+}
+
+/**
+ * MediaEvidence.exemptionEnrollment
+ */
+export type MediaEvidence$exemptionEnrollmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Enrollment
+   */
+  select?: Prisma.EnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Enrollment
+   */
+  omit?: Prisma.EnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EnrollmentInclude<ExtArgs> | null
+  where?: Prisma.EnrollmentWhereInput
+}
+
+/**
  * MediaEvidence.uploadSession
  */
 export type MediaEvidence$uploadSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3819,6 +4426,30 @@ export type MediaEvidence$recordAssociationArgs<ExtArgs extends runtime.Types.Ex
    */
   include?: Prisma.ExerciseRecordMediaInclude<ExtArgs> | null
   where?: Prisma.ExerciseRecordMediaWhereInput
+}
+
+/**
+ * MediaEvidence.exemptionAssociations
+ */
+export type MediaEvidence$exemptionAssociationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionApplicationMedia
+   */
+  select?: Prisma.ExemptionApplicationMediaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionApplicationMedia
+   */
+  omit?: Prisma.ExemptionApplicationMediaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionApplicationMediaInclude<ExtArgs> | null
+  where?: Prisma.ExemptionApplicationMediaWhereInput
+  orderBy?: Prisma.ExemptionApplicationMediaOrderByWithRelationInput | Prisma.ExemptionApplicationMediaOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionApplicationMediaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionApplicationMediaScalarFieldEnum | Prisma.ExemptionApplicationMediaScalarFieldEnum[]
 }
 
 /**

@@ -88,7 +88,7 @@ describe('Stage 19 Export, Audit Read, and governance contract', () => {
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as { implemented: Record<string, unknown>; implementedDefaultDeny: string[] };
     assert.equal(Object.keys(coverage.implemented).length, 122);
-    assert.equal(coverage.implementedDefaultDeny.length, 40);
+    assert.equal(coverage.implementedDefaultDeny.length, 18);
     for (const operationId of Object.keys(operationPolicies)) {
       assert.ok(coverage.implemented[operationId]);
     }

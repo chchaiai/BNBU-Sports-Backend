@@ -362,6 +362,7 @@ export type ExerciseSessionWhereInput = {
   events?: Prisma.ExerciseSessionEventListRelationFilter
   mediaEvidence?: Prisma.MediaEvidenceListRelationFilter
   exerciseRecord?: Prisma.XOR<Prisma.ExerciseRecordNullableScalarRelationFilter, Prisma.ExerciseRecordWhereInput> | null
+  locationTrack?: Prisma.XOR<Prisma.LocationTrackNullableScalarRelationFilter, Prisma.LocationTrackWhereInput> | null
 }
 
 export type ExerciseSessionOrderByWithRelationInput = {
@@ -396,6 +397,7 @@ export type ExerciseSessionOrderByWithRelationInput = {
   events?: Prisma.ExerciseSessionEventOrderByRelationAggregateInput
   mediaEvidence?: Prisma.MediaEvidenceOrderByRelationAggregateInput
   exerciseRecord?: Prisma.ExerciseRecordOrderByWithRelationInput
+  locationTrack?: Prisma.LocationTrackOrderByWithRelationInput
 }
 
 export type ExerciseSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -436,6 +438,7 @@ export type ExerciseSessionWhereUniqueInput = Prisma.AtLeast<{
   events?: Prisma.ExerciseSessionEventListRelationFilter
   mediaEvidence?: Prisma.MediaEvidenceListRelationFilter
   exerciseRecord?: Prisma.XOR<Prisma.ExerciseRecordNullableScalarRelationFilter, Prisma.ExerciseRecordWhereInput> | null
+  locationTrack?: Prisma.XOR<Prisma.LocationTrackNullableScalarRelationFilter, Prisma.LocationTrackWhereInput> | null
 }, "id" | "id_organizationId" | "id_studentId_organizationId" | "id_enrollmentId_semesterId_classSectionId_studentId_organizationId">
 
 export type ExerciseSessionOrderByWithAggregationInput = {
@@ -520,6 +523,7 @@ export type ExerciseSessionCreateInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateInput = {
@@ -548,6 +552,7 @@ export type ExerciseSessionUncheckedCreateInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUpdateInput = {
@@ -576,6 +581,7 @@ export type ExerciseSessionUpdateInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateInput = {
@@ -604,6 +610,7 @@ export type ExerciseSessionUncheckedUpdateInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionCreateManyInput = {
@@ -789,6 +796,11 @@ export type ExerciseSessionSumOrderByAggregateInput = {
 export type ExerciseSessionScalarRelationFilter = {
   is?: Prisma.ExerciseSessionWhereInput
   isNot?: Prisma.ExerciseSessionWhereInput
+}
+
+export type ExerciseSessionNullableScalarRelationFilter = {
+  is?: Prisma.ExerciseSessionWhereInput | null
+  isNot?: Prisma.ExerciseSessionWhereInput | null
 }
 
 export type ExerciseSessionCreateNestedManyWithoutOrganizationInput = {
@@ -1085,10 +1097,12 @@ export type ExerciseSessionCreateNestedOneWithoutMediaEvidenceInput = {
   connect?: Prisma.ExerciseSessionWhereUniqueInput
 }
 
-export type ExerciseSessionUpdateOneRequiredWithoutMediaEvidenceNestedInput = {
+export type ExerciseSessionUpdateOneWithoutMediaEvidenceNestedInput = {
   create?: Prisma.XOR<Prisma.ExerciseSessionCreateWithoutMediaEvidenceInput, Prisma.ExerciseSessionUncheckedCreateWithoutMediaEvidenceInput>
   connectOrCreate?: Prisma.ExerciseSessionCreateOrConnectWithoutMediaEvidenceInput
   upsert?: Prisma.ExerciseSessionUpsertWithoutMediaEvidenceInput
+  disconnect?: Prisma.ExerciseSessionWhereInput | boolean
+  delete?: Prisma.ExerciseSessionWhereInput | boolean
   connect?: Prisma.ExerciseSessionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ExerciseSessionUpdateToOneWithWhereWithoutMediaEvidenceInput, Prisma.ExerciseSessionUpdateWithoutMediaEvidenceInput>, Prisma.ExerciseSessionUncheckedUpdateWithoutMediaEvidenceInput>
 }
@@ -1105,6 +1119,20 @@ export type ExerciseSessionUpdateOneRequiredWithoutExerciseRecordNestedInput = {
   upsert?: Prisma.ExerciseSessionUpsertWithoutExerciseRecordInput
   connect?: Prisma.ExerciseSessionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ExerciseSessionUpdateToOneWithWhereWithoutExerciseRecordInput, Prisma.ExerciseSessionUpdateWithoutExerciseRecordInput>, Prisma.ExerciseSessionUncheckedUpdateWithoutExerciseRecordInput>
+}
+
+export type ExerciseSessionCreateNestedOneWithoutLocationTrackInput = {
+  create?: Prisma.XOR<Prisma.ExerciseSessionCreateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedCreateWithoutLocationTrackInput>
+  connectOrCreate?: Prisma.ExerciseSessionCreateOrConnectWithoutLocationTrackInput
+  connect?: Prisma.ExerciseSessionWhereUniqueInput
+}
+
+export type ExerciseSessionUpdateOneRequiredWithoutLocationTrackNestedInput = {
+  create?: Prisma.XOR<Prisma.ExerciseSessionCreateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedCreateWithoutLocationTrackInput>
+  connectOrCreate?: Prisma.ExerciseSessionCreateOrConnectWithoutLocationTrackInput
+  upsert?: Prisma.ExerciseSessionUpsertWithoutLocationTrackInput
+  connect?: Prisma.ExerciseSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ExerciseSessionUpdateToOneWithWhereWithoutLocationTrackInput, Prisma.ExerciseSessionUpdateWithoutLocationTrackInput>, Prisma.ExerciseSessionUncheckedUpdateWithoutLocationTrackInput>
 }
 
 export type ExerciseSessionCreateWithoutOrganizationInput = {
@@ -1132,6 +1160,7 @@ export type ExerciseSessionCreateWithoutOrganizationInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutOrganizationInput = {
@@ -1159,6 +1188,7 @@ export type ExerciseSessionUncheckedCreateWithoutOrganizationInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutOrganizationInput = {
@@ -1239,6 +1269,7 @@ export type ExerciseSessionCreateWithoutStudentInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutStudentInput = {
@@ -1265,6 +1296,7 @@ export type ExerciseSessionUncheckedCreateWithoutStudentInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutStudentInput = {
@@ -1318,6 +1350,7 @@ export type ExerciseSessionCreateWithoutStartedByAuthSessionInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutStartedByAuthSessionInput = {
@@ -1344,6 +1377,7 @@ export type ExerciseSessionUncheckedCreateWithoutStartedByAuthSessionInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutStartedByAuthSessionInput = {
@@ -1397,6 +1431,7 @@ export type ExerciseSessionCreateWithoutSemesterInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutSemesterInput = {
@@ -1423,6 +1458,7 @@ export type ExerciseSessionUncheckedCreateWithoutSemesterInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutSemesterInput = {
@@ -1476,6 +1512,7 @@ export type ExerciseSessionCreateWithoutClassSectionInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutClassSectionInput = {
@@ -1501,6 +1538,7 @@ export type ExerciseSessionUncheckedCreateWithoutClassSectionInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutClassSectionInput = {
@@ -1554,6 +1592,7 @@ export type ExerciseSessionCreateWithoutEnrollmentInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutEnrollmentInput = {
@@ -1577,6 +1616,7 @@ export type ExerciseSessionUncheckedCreateWithoutEnrollmentInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutEnrollmentInput = {
@@ -1630,6 +1670,7 @@ export type ExerciseSessionCreateWithoutSegmentsInput = {
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutSegmentsInput = {
@@ -1657,6 +1698,7 @@ export type ExerciseSessionUncheckedCreateWithoutSegmentsInput = {
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutSegmentsInput = {
@@ -1700,6 +1742,7 @@ export type ExerciseSessionUpdateWithoutSegmentsInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutSegmentsInput = {
@@ -1727,6 +1770,7 @@ export type ExerciseSessionUncheckedUpdateWithoutSegmentsInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionCreateWithoutEventsInput = {
@@ -1754,6 +1798,7 @@ export type ExerciseSessionCreateWithoutEventsInput = {
   segments?: Prisma.ExerciseSessionSegmentCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutEventsInput = {
@@ -1781,6 +1826,7 @@ export type ExerciseSessionUncheckedCreateWithoutEventsInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutEventsInput = {
@@ -1824,6 +1870,7 @@ export type ExerciseSessionUpdateWithoutEventsInput = {
   segments?: Prisma.ExerciseSessionSegmentUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutEventsInput = {
@@ -1851,6 +1898,7 @@ export type ExerciseSessionUncheckedUpdateWithoutEventsInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionCreateWithoutMediaEvidenceInput = {
@@ -1878,6 +1926,7 @@ export type ExerciseSessionCreateWithoutMediaEvidenceInput = {
   segments?: Prisma.ExerciseSessionSegmentCreateNestedManyWithoutExerciseSessionInput
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutMediaEvidenceInput = {
@@ -1905,6 +1954,7 @@ export type ExerciseSessionUncheckedCreateWithoutMediaEvidenceInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedCreateNestedManyWithoutExerciseSessionInput
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutMediaEvidenceInput = {
@@ -1948,6 +1998,7 @@ export type ExerciseSessionUpdateWithoutMediaEvidenceInput = {
   segments?: Prisma.ExerciseSessionSegmentUpdateManyWithoutExerciseSessionNestedInput
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutMediaEvidenceInput = {
@@ -1975,6 +2026,7 @@ export type ExerciseSessionUncheckedUpdateWithoutMediaEvidenceInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedUpdateManyWithoutExerciseSessionNestedInput
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionCreateWithoutExerciseRecordInput = {
@@ -2002,6 +2054,7 @@ export type ExerciseSessionCreateWithoutExerciseRecordInput = {
   segments?: Prisma.ExerciseSessionSegmentCreateNestedManyWithoutExerciseSessionInput
   events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionUncheckedCreateWithoutExerciseRecordInput = {
@@ -2029,6 +2082,7 @@ export type ExerciseSessionUncheckedCreateWithoutExerciseRecordInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedCreateNestedManyWithoutExerciseSessionInput
   events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
+  locationTrack?: Prisma.LocationTrackUncheckedCreateNestedOneWithoutSessionInput
 }
 
 export type ExerciseSessionCreateOrConnectWithoutExerciseRecordInput = {
@@ -2072,6 +2126,7 @@ export type ExerciseSessionUpdateWithoutExerciseRecordInput = {
   segments?: Prisma.ExerciseSessionSegmentUpdateManyWithoutExerciseSessionNestedInput
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutExerciseRecordInput = {
@@ -2099,6 +2154,135 @@ export type ExerciseSessionUncheckedUpdateWithoutExerciseRecordInput = {
   segments?: Prisma.ExerciseSessionSegmentUncheckedUpdateManyWithoutExerciseSessionNestedInput
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
+}
+
+export type ExerciseSessionCreateWithoutLocationTrackInput = {
+  id: string
+  status: string
+  startedAt: Date | string
+  businessDate: Date | string
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  expiredAt?: Date | string | null
+  endReason?: string | null
+  actualDurationSeconds?: bigint | number
+  pausedDurationSeconds?: bigint | number
+  currentIntervalStartedAt?: Date | string | null
+  lastHeartbeatAt?: Date | string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutExerciseSessionsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutExerciseSessionsInput
+  enrollment: Prisma.EnrollmentCreateNestedOneWithoutExerciseSessionsInput
+  classSection: Prisma.ClassSectionCreateNestedOneWithoutExerciseSessionsInput
+  semester: Prisma.SemesterCreateNestedOneWithoutExerciseSessionsInput
+  startedByAuthSession: Prisma.AuthSessionCreateNestedOneWithoutStartedExerciseSessionsInput
+  segments?: Prisma.ExerciseSessionSegmentCreateNestedManyWithoutExerciseSessionInput
+  events?: Prisma.ExerciseSessionEventCreateNestedManyWithoutExerciseSessionInput
+  mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutSessionInput
+  exerciseRecord?: Prisma.ExerciseRecordCreateNestedOneWithoutSessionInput
+}
+
+export type ExerciseSessionUncheckedCreateWithoutLocationTrackInput = {
+  id: string
+  organizationId: string
+  studentId: string
+  enrollmentId: string
+  classSectionId: string
+  semesterId: string
+  startedByAuthSessionId: string
+  status: string
+  startedAt: Date | string
+  businessDate: Date | string
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  expiredAt?: Date | string | null
+  endReason?: string | null
+  actualDurationSeconds?: bigint | number
+  pausedDurationSeconds?: bigint | number
+  currentIntervalStartedAt?: Date | string | null
+  lastHeartbeatAt?: Date | string | null
+  createdAt: Date | string
+  updatedAt: Date | string
+  version?: number
+  segments?: Prisma.ExerciseSessionSegmentUncheckedCreateNestedManyWithoutExerciseSessionInput
+  events?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutExerciseSessionInput
+  mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutSessionInput
+  exerciseRecord?: Prisma.ExerciseRecordUncheckedCreateNestedOneWithoutSessionInput
+}
+
+export type ExerciseSessionCreateOrConnectWithoutLocationTrackInput = {
+  where: Prisma.ExerciseSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExerciseSessionCreateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedCreateWithoutLocationTrackInput>
+}
+
+export type ExerciseSessionUpsertWithoutLocationTrackInput = {
+  update: Prisma.XOR<Prisma.ExerciseSessionUpdateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedUpdateWithoutLocationTrackInput>
+  create: Prisma.XOR<Prisma.ExerciseSessionCreateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedCreateWithoutLocationTrackInput>
+  where?: Prisma.ExerciseSessionWhereInput
+}
+
+export type ExerciseSessionUpdateToOneWithWhereWithoutLocationTrackInput = {
+  where?: Prisma.ExerciseSessionWhereInput
+  data: Prisma.XOR<Prisma.ExerciseSessionUpdateWithoutLocationTrackInput, Prisma.ExerciseSessionUncheckedUpdateWithoutLocationTrackInput>
+}
+
+export type ExerciseSessionUpdateWithoutLocationTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  businessDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currentIntervalStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastHeartbeatAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutExerciseSessionsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutExerciseSessionsNestedInput
+  enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutExerciseSessionsNestedInput
+  classSection?: Prisma.ClassSectionUpdateOneRequiredWithoutExerciseSessionsNestedInput
+  semester?: Prisma.SemesterUpdateOneRequiredWithoutExerciseSessionsNestedInput
+  startedByAuthSession?: Prisma.AuthSessionUpdateOneRequiredWithoutStartedExerciseSessionsNestedInput
+  segments?: Prisma.ExerciseSessionSegmentUpdateManyWithoutExerciseSessionNestedInput
+  events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
+  mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
+  exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+}
+
+export type ExerciseSessionUncheckedUpdateWithoutLocationTrackInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
+  classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  semesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  startedByAuthSessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  businessDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currentIntervalStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastHeartbeatAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  segments?: Prisma.ExerciseSessionSegmentUncheckedUpdateManyWithoutExerciseSessionNestedInput
+  events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
+  mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
+  exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionCreateManyOrganizationInput = {
@@ -2149,6 +2333,7 @@ export type ExerciseSessionUpdateWithoutOrganizationInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutOrganizationInput = {
@@ -2176,6 +2361,7 @@ export type ExerciseSessionUncheckedUpdateWithoutOrganizationInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutOrganizationInput = {
@@ -2248,6 +2434,7 @@ export type ExerciseSessionUpdateWithoutStudentInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutStudentInput = {
@@ -2274,6 +2461,7 @@ export type ExerciseSessionUncheckedUpdateWithoutStudentInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutStudentInput = {
@@ -2345,6 +2533,7 @@ export type ExerciseSessionUpdateWithoutStartedByAuthSessionInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutStartedByAuthSessionInput = {
@@ -2371,6 +2560,7 @@ export type ExerciseSessionUncheckedUpdateWithoutStartedByAuthSessionInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionInput = {
@@ -2442,6 +2632,7 @@ export type ExerciseSessionUpdateWithoutSemesterInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutSemesterInput = {
@@ -2468,6 +2659,7 @@ export type ExerciseSessionUncheckedUpdateWithoutSemesterInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutSemesterInput = {
@@ -2538,6 +2730,7 @@ export type ExerciseSessionUpdateWithoutClassSectionInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutClassSectionInput = {
@@ -2563,6 +2756,7 @@ export type ExerciseSessionUncheckedUpdateWithoutClassSectionInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutClassSectionInput = {
@@ -2630,6 +2824,7 @@ export type ExerciseSessionUpdateWithoutEnrollmentInput = {
   events?: Prisma.ExerciseSessionEventUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateWithoutEnrollmentInput = {
@@ -2653,6 +2848,7 @@ export type ExerciseSessionUncheckedUpdateWithoutEnrollmentInput = {
   events?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutExerciseSessionNestedInput
   mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutSessionNestedInput
   exerciseRecord?: Prisma.ExerciseRecordUncheckedUpdateOneWithoutSessionNestedInput
+  locationTrack?: Prisma.LocationTrackUncheckedUpdateOneWithoutSessionNestedInput
 }
 
 export type ExerciseSessionUncheckedUpdateManyWithoutEnrollmentInput = {
@@ -2755,6 +2951,7 @@ export type ExerciseSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   events?: boolean | Prisma.ExerciseSession$eventsArgs<ExtArgs>
   mediaEvidence?: boolean | Prisma.ExerciseSession$mediaEvidenceArgs<ExtArgs>
   exerciseRecord?: boolean | Prisma.ExerciseSession$exerciseRecordArgs<ExtArgs>
+  locationTrack?: boolean | Prisma.ExerciseSession$locationTrackArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exerciseSession"]>
 
@@ -2854,6 +3051,7 @@ export type ExerciseSessionInclude<ExtArgs extends runtime.Types.Extensions.Inte
   events?: boolean | Prisma.ExerciseSession$eventsArgs<ExtArgs>
   mediaEvidence?: boolean | Prisma.ExerciseSession$mediaEvidenceArgs<ExtArgs>
   exerciseRecord?: boolean | Prisma.ExerciseSession$exerciseRecordArgs<ExtArgs>
+  locationTrack?: boolean | Prisma.ExerciseSession$locationTrackArgs<ExtArgs>
   _count?: boolean | Prisma.ExerciseSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ExerciseSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2886,6 +3084,7 @@ export type $ExerciseSessionPayload<ExtArgs extends runtime.Types.Extensions.Int
     events: Prisma.$ExerciseSessionEventPayload<ExtArgs>[]
     mediaEvidence: Prisma.$MediaEvidencePayload<ExtArgs>[]
     exerciseRecord: Prisma.$ExerciseRecordPayload<ExtArgs> | null
+    locationTrack: Prisma.$LocationTrackPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3313,6 +3512,7 @@ export interface Prisma__ExerciseSessionClient<T, Null = never, ExtArgs extends 
   events<T extends Prisma.ExerciseSession$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseSession$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseSessionEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mediaEvidence<T extends Prisma.ExerciseSession$mediaEvidenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseSession$mediaEvidenceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaEvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseRecord<T extends Prisma.ExerciseSession$exerciseRecordArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseSession$exerciseRecordArgs<ExtArgs>>): Prisma.Prisma__ExerciseRecordClient<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  locationTrack<T extends Prisma.ExerciseSession$locationTrackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExerciseSession$locationTrackArgs<ExtArgs>>): Prisma.Prisma__LocationTrackClient<runtime.Types.Result.GetResult<Prisma.$LocationTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3852,6 +4052,25 @@ export type ExerciseSession$exerciseRecordArgs<ExtArgs extends runtime.Types.Ext
    */
   include?: Prisma.ExerciseRecordInclude<ExtArgs> | null
   where?: Prisma.ExerciseRecordWhereInput
+}
+
+/**
+ * ExerciseSession.locationTrack
+ */
+export type ExerciseSession$locationTrackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationTrack
+   */
+  select?: Prisma.LocationTrackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationTrack
+   */
+  omit?: Prisma.LocationTrackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationTrackInclude<ExtArgs> | null
+  where?: Prisma.LocationTrackWhereInput
 }
 
 /**

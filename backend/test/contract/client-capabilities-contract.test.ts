@@ -70,15 +70,32 @@ const requestMethods = {
   delete: RequestMethod.DELETE,
 } as const;
 
+const defaultDenyOperations = new Set([
+  'getSportCatalog',
+  'getActivityConversionRules',
+  'startExerciseLocationTrack',
+  'appendExerciseLocationSamples',
+  'finalizeExerciseLocationTrack',
+  'getExerciseRecordLocationSummary',
+  'getLocationPrivacyPolicy',
+  'updateLocationPrivacyPolicy',
+]);
+
 describe('Stage 21 client capability contract', () => {
-  it('binds all thirty added operations to real handlers with exact default deny', () => {
+  it('binds all thirty added operations and keeps only unresolved capabilities default-deny', () => {
     const paths = object(contract.paths, 'paths');
     for (const [path, method, operationId] of bindings) {
       const operation = object(object(paths[path], path)[method], operationId);
       assert.equal(operation.operationId, operationId);
-      assert.equal(operation['x-enabled-by-default'], false);
-      assert.equal(operation['x-default-deny-error'], 'SYSTEM_MODE_UNSUPPORTED');
-      assert.equal(typeof operation['x-business-blocker'], 'string');
+      if (defaultDenyOperations.has(operationId)) {
+        assert.equal(operation['x-enabled-by-default'], false);
+        assert.equal(operation['x-default-deny-error'], 'SYSTEM_MODE_UNSUPPORTED');
+        assert.equal(typeof operation['x-business-blocker'], 'string');
+      } else {
+        assert.equal(Object.hasOwn(operation, 'x-enabled-by-default'), false);
+        assert.equal(Object.hasOwn(operation, 'x-default-deny-error'), false);
+        assert.equal(Object.hasOwn(operation, 'x-business-blocker'), false);
+      }
       assert.equal(object(operation['x-access-policy'], `${operationId} policy`).defaultDeny, true);
       assert.ok(operationPolicies[operationId]);
 
@@ -120,7 +137,49 @@ describe('Stage 21 client capability contract', () => {
     assert.ok(Object.hasOwn(summaryProperties, 'coarseDistanceMeters'));
   });
 
-  it('closes all 122 operations without inventing persistence models', () => {
+  it('supports IOS in every public client-platform contract without removing Android or Web', () => {
+    const paths = object(contract.paths, 'paths');
+    const releasePolicyOperation = object(
+      object(paths['/app-release-policy'], '/app-release-policy').get,
+      'getAppReleasePolicy',
+    );
+    const parameters = releasePolicyOperation.parameters as unknown[];
+    const platformParameter = parameters
+      .map((parameter) => object(parameter, 'getAppReleasePolicy parameter'))
+      .find((parameter) => parameter.name === 'platform');
+    assert.ok(platformParameter);
+    assert.deepEqual(object(platformParameter.schema, 'platform query schema').enum, [
+      'ANDROID',
+      'WEB',
+      'IOS',
+    ]);
+
+    const schemas = object(object(contract.components, 'components').schemas, 'schemas');
+    for (const schemaName of ['PushDeviceRegistrationRequest', 'PushDevice', 'AppReleasePolicy']) {
+      const properties = object(object(schemas[schemaName], schemaName).properties, 'properties');
+      assert.deepEqual(object(properties.platform, `${schemaName}.platform`).enum, [
+        'ANDROID',
+        'WEB',
+        'IOS',
+      ]);
+    }
+
+    const feedbackProperties = object(
+      object(schemas.CreateFeedbackRequest, 'CreateFeedbackRequest').properties,
+      'CreateFeedbackRequest properties',
+    );
+    const contextProperties = object(
+      object(feedbackProperties.clientContext, 'clientContext').properties,
+      'clientContext properties',
+    );
+    assert.deepEqual(object(contextProperties.platform, 'clientContext.platform').enum, [
+      'ANDROID',
+      'WEB',
+      'IOS',
+    ]);
+  });
+
+  it('closes all 122 operations and reports the persisted subset separately from default deny', () => {
     const coverage = JSON.parse(
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as {
@@ -130,9 +189,12 @@ describe('Stage 21 client capability contract', () => {
     };
     assert.equal(coverage.expectedOperationCount, 122);
     assert.equal(Object.keys(coverage.implemented).length, 122);
-    assert.equal(coverage.implementedDefaultDeny.length, 40);
+    assert.equal(coverage.implementedDefaultDeny.length, 18);
     for (const [, , operationId] of bindings) {
-      assert.ok(coverage.implementedDefaultDeny.includes(operationId));
+      assert.equal(
+        coverage.implementedDefaultDeny.includes(operationId),
+        defaultDenyOperations.has(operationId),
+      );
     }
 
     const prisma = readFileSync(new URL('../../prisma/schema.prisma', import.meta.url), 'utf8');
@@ -143,7 +205,7 @@ describe('Stage 21 client capability contract', () => {
       'ExemptionApplication',
       'LocationTrack',
     ]) {
-      assert.equal(new RegExp(`model\\s+${model}\\b`, 'u').test(prisma), false);
+      assert.equal(new RegExp(`model\\s+${model}\\b`, 'u').test(prisma), true);
     }
   });
 });

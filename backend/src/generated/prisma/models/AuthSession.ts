@@ -288,6 +288,14 @@ export type AuthSessionWhereInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionListRelationFilter
   exerciseSessionEvents?: Prisma.ExerciseSessionEventListRelationFilter
   exerciseRecordEvents?: Prisma.ExerciseRecordEventListRelationFilter
+  pushDevices?: Prisma.PushDeviceListRelationFilter
+  notificationEvents?: Prisma.NotificationEventListRelationFilter
+  pushDeviceEvents?: Prisma.PushDeviceEventListRelationFilter
+  userPreferenceEvents?: Prisma.UserPreferenceEventListRelationFilter
+  feedbackEvents?: Prisma.FeedbackEventListRelationFilter
+  exemptionEvents?: Prisma.ExemptionApplicationEventListRelationFilter
+  locationConsentEvents?: Prisma.LocationConsentEventListRelationFilter
+  locationTrackEvents?: Prisma.LocationTrackEventListRelationFilter
 }
 
 export type AuthSessionOrderByWithRelationInput = {
@@ -312,6 +320,14 @@ export type AuthSessionOrderByWithRelationInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionOrderByRelationAggregateInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventOrderByRelationAggregateInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventOrderByRelationAggregateInput
+  pushDevices?: Prisma.PushDeviceOrderByRelationAggregateInput
+  notificationEvents?: Prisma.NotificationEventOrderByRelationAggregateInput
+  pushDeviceEvents?: Prisma.PushDeviceEventOrderByRelationAggregateInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventOrderByRelationAggregateInput
+  feedbackEvents?: Prisma.FeedbackEventOrderByRelationAggregateInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventOrderByRelationAggregateInput
+  locationConsentEvents?: Prisma.LocationConsentEventOrderByRelationAggregateInput
+  locationTrackEvents?: Prisma.LocationTrackEventOrderByRelationAggregateInput
 }
 
 export type AuthSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -340,6 +356,14 @@ export type AuthSessionWhereUniqueInput = Prisma.AtLeast<{
   startedExerciseSessions?: Prisma.ExerciseSessionListRelationFilter
   exerciseSessionEvents?: Prisma.ExerciseSessionEventListRelationFilter
   exerciseRecordEvents?: Prisma.ExerciseRecordEventListRelationFilter
+  pushDevices?: Prisma.PushDeviceListRelationFilter
+  notificationEvents?: Prisma.NotificationEventListRelationFilter
+  pushDeviceEvents?: Prisma.PushDeviceEventListRelationFilter
+  userPreferenceEvents?: Prisma.UserPreferenceEventListRelationFilter
+  feedbackEvents?: Prisma.FeedbackEventListRelationFilter
+  exemptionEvents?: Prisma.ExemptionApplicationEventListRelationFilter
+  locationConsentEvents?: Prisma.LocationConsentEventListRelationFilter
+  locationTrackEvents?: Prisma.LocationTrackEventListRelationFilter
 }, "id" | "tokenFamilyId" | "id_organizationId">
 
 export type AuthSessionOrderByWithAggregationInput = {
@@ -402,6 +426,14 @@ export type AuthSessionCreateInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateInput = {
@@ -424,6 +456,14 @@ export type AuthSessionUncheckedCreateInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUpdateInput = {
@@ -446,6 +486,14 @@ export type AuthSessionUpdateInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateInput = {
@@ -468,6 +516,14 @@ export type AuthSessionUncheckedUpdateInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateManyInput = {
@@ -769,6 +825,118 @@ export type AuthSessionUpdateOneWithoutIdempotencyRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutIdempotencyRecordsInput, Prisma.AuthSessionUpdateWithoutIdempotencyRecordsInput>, Prisma.AuthSessionUncheckedUpdateWithoutIdempotencyRecordsInput>
 }
 
+export type AuthSessionCreateNestedOneWithoutNotificationEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedCreateWithoutNotificationEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutNotificationEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutNotificationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedCreateWithoutNotificationEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutNotificationEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutNotificationEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutNotificationEventsInput, Prisma.AuthSessionUpdateWithoutNotificationEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutNotificationEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutPushDevicesInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedCreateWithoutPushDevicesInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutPushDevicesInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutPushDevicesNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedCreateWithoutPushDevicesInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutPushDevicesInput
+  upsert?: Prisma.AuthSessionUpsertWithoutPushDevicesInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutPushDevicesInput, Prisma.AuthSessionUpdateWithoutPushDevicesInput>, Prisma.AuthSessionUncheckedUpdateWithoutPushDevicesInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutPushDeviceEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutPushDeviceEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutPushDeviceEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutPushDeviceEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutPushDeviceEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutPushDeviceEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutPushDeviceEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutPushDeviceEventsInput, Prisma.AuthSessionUpdateWithoutPushDeviceEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutPushDeviceEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutUserPreferenceEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutUserPreferenceEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutUserPreferenceEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutUserPreferenceEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutUserPreferenceEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutUserPreferenceEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutUserPreferenceEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutUserPreferenceEventsInput, Prisma.AuthSessionUpdateWithoutUserPreferenceEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutUserPreferenceEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutFeedbackEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutFeedbackEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutFeedbackEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutFeedbackEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutFeedbackEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutFeedbackEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutFeedbackEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutFeedbackEventsInput, Prisma.AuthSessionUpdateWithoutFeedbackEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutFeedbackEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutExemptionEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedCreateWithoutExemptionEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutExemptionEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutExemptionEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedCreateWithoutExemptionEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutExemptionEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutExemptionEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutExemptionEventsInput, Prisma.AuthSessionUpdateWithoutExemptionEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutExemptionEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutLocationConsentEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationConsentEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutLocationConsentEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutLocationConsentEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationConsentEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutLocationConsentEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutLocationConsentEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutLocationConsentEventsInput, Prisma.AuthSessionUpdateWithoutLocationConsentEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutLocationConsentEventsInput>
+}
+
+export type AuthSessionCreateNestedOneWithoutLocationTrackEventsInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationTrackEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutLocationTrackEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+}
+
+export type AuthSessionUpdateOneRequiredWithoutLocationTrackEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationTrackEventsInput>
+  connectOrCreate?: Prisma.AuthSessionCreateOrConnectWithoutLocationTrackEventsInput
+  upsert?: Prisma.AuthSessionUpsertWithoutLocationTrackEventsInput
+  connect?: Prisma.AuthSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthSessionUpdateToOneWithWhereWithoutLocationTrackEventsInput, Prisma.AuthSessionUpdateWithoutLocationTrackEventsInput>, Prisma.AuthSessionUncheckedUpdateWithoutLocationTrackEventsInput>
+}
+
 export type AuthSessionCreateWithoutOrganizationInput = {
   id: string
   deviceIdHash?: string | null
@@ -788,6 +956,14 @@ export type AuthSessionCreateWithoutOrganizationInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutOrganizationInput = {
@@ -809,6 +985,14 @@ export type AuthSessionUncheckedCreateWithoutOrganizationInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutOrganizationInput = {
@@ -875,6 +1059,14 @@ export type AuthSessionCreateWithoutUserInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutUserInput = {
@@ -895,6 +1087,14 @@ export type AuthSessionUncheckedCreateWithoutUserInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutUserInput = {
@@ -942,6 +1142,14 @@ export type AuthSessionCreateWithoutRefreshTokensInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutRefreshTokensInput = {
@@ -963,6 +1171,14 @@ export type AuthSessionUncheckedCreateWithoutRefreshTokensInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutRefreshTokensInput = {
@@ -1000,6 +1216,14 @@ export type AuthSessionUpdateWithoutRefreshTokensInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1021,6 +1245,14 @@ export type AuthSessionUncheckedUpdateWithoutRefreshTokensInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateWithoutStartedExerciseSessionsInput = {
@@ -1042,6 +1274,14 @@ export type AuthSessionCreateWithoutStartedExerciseSessionsInput = {
   joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutStartedExerciseSessionsInput = {
@@ -1063,6 +1303,14 @@ export type AuthSessionUncheckedCreateWithoutStartedExerciseSessionsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutStartedExerciseSessionsInput = {
@@ -1100,6 +1348,14 @@ export type AuthSessionUpdateWithoutStartedExerciseSessionsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutStartedExerciseSessionsInput = {
@@ -1121,6 +1377,14 @@ export type AuthSessionUncheckedUpdateWithoutStartedExerciseSessionsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateWithoutExerciseSessionEventsInput = {
@@ -1142,6 +1406,14 @@ export type AuthSessionCreateWithoutExerciseSessionEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutExerciseSessionEventsInput = {
@@ -1163,6 +1435,14 @@ export type AuthSessionUncheckedCreateWithoutExerciseSessionEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutExerciseSessionEventsInput = {
@@ -1200,6 +1480,14 @@ export type AuthSessionUpdateWithoutExerciseSessionEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutExerciseSessionEventsInput = {
@@ -1221,6 +1509,14 @@ export type AuthSessionUncheckedUpdateWithoutExerciseSessionEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateWithoutExerciseRecordEventsInput = {
@@ -1242,6 +1538,14 @@ export type AuthSessionCreateWithoutExerciseRecordEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutExerciseRecordEventsInput = {
@@ -1263,6 +1567,14 @@ export type AuthSessionUncheckedCreateWithoutExerciseRecordEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutExerciseRecordEventsInput = {
@@ -1300,6 +1612,14 @@ export type AuthSessionUpdateWithoutExerciseRecordEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutExerciseRecordEventsInput = {
@@ -1321,6 +1641,14 @@ export type AuthSessionUncheckedUpdateWithoutExerciseRecordEventsInput = {
   joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateWithoutJoinCapabilitiesInput = {
@@ -1342,6 +1670,14 @@ export type AuthSessionCreateWithoutJoinCapabilitiesInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutJoinCapabilitiesInput = {
@@ -1363,6 +1699,14 @@ export type AuthSessionUncheckedCreateWithoutJoinCapabilitiesInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutJoinCapabilitiesInput = {
@@ -1400,6 +1744,14 @@ export type AuthSessionUpdateWithoutJoinCapabilitiesInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutJoinCapabilitiesInput = {
@@ -1421,6 +1773,14 @@ export type AuthSessionUncheckedUpdateWithoutJoinCapabilitiesInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateWithoutIdempotencyRecordsInput = {
@@ -1442,6 +1802,14 @@ export type AuthSessionCreateWithoutIdempotencyRecordsInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionUncheckedCreateWithoutIdempotencyRecordsInput = {
@@ -1463,6 +1831,14 @@ export type AuthSessionUncheckedCreateWithoutIdempotencyRecordsInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
 }
 
 export type AuthSessionCreateOrConnectWithoutIdempotencyRecordsInput = {
@@ -1500,6 +1876,14 @@ export type AuthSessionUpdateWithoutIdempotencyRecordsInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutIdempotencyRecordsInput = {
@@ -1521,6 +1905,1070 @@ export type AuthSessionUncheckedUpdateWithoutIdempotencyRecordsInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutNotificationEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutNotificationEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutNotificationEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedCreateWithoutNotificationEventsInput>
+}
+
+export type AuthSessionUpsertWithoutNotificationEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutNotificationEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedCreateWithoutNotificationEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutNotificationEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutNotificationEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutNotificationEventsInput>
+}
+
+export type AuthSessionUpdateWithoutNotificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutNotificationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutPushDevicesInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutPushDevicesInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutPushDevicesInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedCreateWithoutPushDevicesInput>
+}
+
+export type AuthSessionUpsertWithoutPushDevicesInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedUpdateWithoutPushDevicesInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedCreateWithoutPushDevicesInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutPushDevicesInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutPushDevicesInput, Prisma.AuthSessionUncheckedUpdateWithoutPushDevicesInput>
+}
+
+export type AuthSessionUpdateWithoutPushDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutPushDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutPushDeviceEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutPushDeviceEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutPushDeviceEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutPushDeviceEventsInput>
+}
+
+export type AuthSessionUpsertWithoutPushDeviceEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutPushDeviceEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutPushDeviceEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutPushDeviceEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutPushDeviceEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutPushDeviceEventsInput>
+}
+
+export type AuthSessionUpdateWithoutPushDeviceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutPushDeviceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutUserPreferenceEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutUserPreferenceEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutUserPreferenceEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutUserPreferenceEventsInput>
+}
+
+export type AuthSessionUpsertWithoutUserPreferenceEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutUserPreferenceEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedCreateWithoutUserPreferenceEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutUserPreferenceEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutUserPreferenceEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutUserPreferenceEventsInput>
+}
+
+export type AuthSessionUpdateWithoutUserPreferenceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutUserPreferenceEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutFeedbackEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutFeedbackEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutFeedbackEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutFeedbackEventsInput>
+}
+
+export type AuthSessionUpsertWithoutFeedbackEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutFeedbackEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutFeedbackEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutFeedbackEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutFeedbackEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutFeedbackEventsInput>
+}
+
+export type AuthSessionUpdateWithoutFeedbackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutFeedbackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutExemptionEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutExemptionEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutExemptionEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedCreateWithoutExemptionEventsInput>
+}
+
+export type AuthSessionUpsertWithoutExemptionEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutExemptionEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedCreateWithoutExemptionEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutExemptionEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutExemptionEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutExemptionEventsInput>
+}
+
+export type AuthSessionUpdateWithoutExemptionEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutExemptionEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutLocationConsentEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutLocationConsentEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutLocationConsentEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationConsentEventsInput>
+}
+
+export type AuthSessionUpsertWithoutLocationConsentEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutLocationConsentEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationConsentEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutLocationConsentEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutLocationConsentEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutLocationConsentEventsInput>
+}
+
+export type AuthSessionUpdateWithoutLocationConsentEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutLocationConsentEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionCreateWithoutLocationTrackEventsInput = {
+  id: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  organization: Prisma.OrganizationCreateNestedOneWithoutAuthSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutAuthSessionsInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionUncheckedCreateWithoutLocationTrackEventsInput = {
+  id: string
+  organizationId: string
+  userId: string
+  deviceIdHash?: string | null
+  status: string
+  tokenFamilyId: string
+  createdAt: Date | string
+  lastSeenAt: Date | string
+  absoluteExpiresAt: Date | string
+  idleExpiresAt: Date | string
+  revokedAt?: Date | string | null
+  revokeReasonCode?: string | null
+  version?: number
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAuthSessionInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutAuthSessionInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutAuthSessionInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutStartedByAuthSessionInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutAuthSessionInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutAuthSessionInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutAuthSessionInput
+}
+
+export type AuthSessionCreateOrConnectWithoutLocationTrackEventsInput = {
+  where: Prisma.AuthSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationTrackEventsInput>
+}
+
+export type AuthSessionUpsertWithoutLocationTrackEventsInput = {
+  update: Prisma.XOR<Prisma.AuthSessionUpdateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutLocationTrackEventsInput>
+  create: Prisma.XOR<Prisma.AuthSessionCreateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedCreateWithoutLocationTrackEventsInput>
+  where?: Prisma.AuthSessionWhereInput
+}
+
+export type AuthSessionUpdateToOneWithWhereWithoutLocationTrackEventsInput = {
+  where?: Prisma.AuthSessionWhereInput
+  data: Prisma.XOR<Prisma.AuthSessionUpdateWithoutLocationTrackEventsInput, Prisma.AuthSessionUncheckedUpdateWithoutLocationTrackEventsInput>
+}
+
+export type AuthSessionUpdateWithoutLocationTrackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutAuthSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAuthSessionsNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+}
+
+export type AuthSessionUncheckedUpdateWithoutLocationTrackEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  tokenFamilyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  absoluteExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idleExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  revokeReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAuthSessionNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutAuthSessionNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutAuthSessionNestedInput
+  startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionCreateManyOrganizationInput = {
@@ -1557,6 +3005,14 @@ export type AuthSessionUpdateWithoutOrganizationInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutOrganizationInput = {
@@ -1578,6 +3034,14 @@ export type AuthSessionUncheckedUpdateWithoutOrganizationInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1628,6 +3092,14 @@ export type AuthSessionUpdateWithoutUserInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateWithoutUserInput = {
@@ -1648,6 +3120,14 @@ export type AuthSessionUncheckedUpdateWithoutUserInput = {
   startedExerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutStartedByAuthSessionNestedInput
   exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutAuthSessionNestedInput
   exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutAuthSessionNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutAuthSessionNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutAuthSessionNestedInput
 }
 
 export type AuthSessionUncheckedUpdateManyWithoutUserInput = {
@@ -1676,6 +3156,14 @@ export type AuthSessionCountOutputType = {
   startedExerciseSessions: number
   exerciseSessionEvents: number
   exerciseRecordEvents: number
+  pushDevices: number
+  notificationEvents: number
+  pushDeviceEvents: number
+  userPreferenceEvents: number
+  feedbackEvents: number
+  exemptionEvents: number
+  locationConsentEvents: number
+  locationTrackEvents: number
 }
 
 export type AuthSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1685,6 +3173,14 @@ export type AuthSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   startedExerciseSessions?: boolean | AuthSessionCountOutputTypeCountStartedExerciseSessionsArgs
   exerciseSessionEvents?: boolean | AuthSessionCountOutputTypeCountExerciseSessionEventsArgs
   exerciseRecordEvents?: boolean | AuthSessionCountOutputTypeCountExerciseRecordEventsArgs
+  pushDevices?: boolean | AuthSessionCountOutputTypeCountPushDevicesArgs
+  notificationEvents?: boolean | AuthSessionCountOutputTypeCountNotificationEventsArgs
+  pushDeviceEvents?: boolean | AuthSessionCountOutputTypeCountPushDeviceEventsArgs
+  userPreferenceEvents?: boolean | AuthSessionCountOutputTypeCountUserPreferenceEventsArgs
+  feedbackEvents?: boolean | AuthSessionCountOutputTypeCountFeedbackEventsArgs
+  exemptionEvents?: boolean | AuthSessionCountOutputTypeCountExemptionEventsArgs
+  locationConsentEvents?: boolean | AuthSessionCountOutputTypeCountLocationConsentEventsArgs
+  locationTrackEvents?: boolean | AuthSessionCountOutputTypeCountLocationTrackEventsArgs
 }
 
 /**
@@ -1739,6 +3235,62 @@ export type AuthSessionCountOutputTypeCountExerciseRecordEventsArgs<ExtArgs exte
   where?: Prisma.ExerciseRecordEventWhereInput
 }
 
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountPushDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PushDeviceWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountNotificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountPushDeviceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PushDeviceEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountUserPreferenceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserPreferenceEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountFeedbackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FeedbackEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountExemptionEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionApplicationEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountLocationConsentEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationConsentEventWhereInput
+}
+
+/**
+ * AuthSessionCountOutputType without action
+ */
+export type AuthSessionCountOutputTypeCountLocationTrackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationTrackEventWhereInput
+}
+
 
 export type AuthSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1762,6 +3314,14 @@ export type AuthSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   startedExerciseSessions?: boolean | Prisma.AuthSession$startedExerciseSessionsArgs<ExtArgs>
   exerciseSessionEvents?: boolean | Prisma.AuthSession$exerciseSessionEventsArgs<ExtArgs>
   exerciseRecordEvents?: boolean | Prisma.AuthSession$exerciseRecordEventsArgs<ExtArgs>
+  pushDevices?: boolean | Prisma.AuthSession$pushDevicesArgs<ExtArgs>
+  notificationEvents?: boolean | Prisma.AuthSession$notificationEventsArgs<ExtArgs>
+  pushDeviceEvents?: boolean | Prisma.AuthSession$pushDeviceEventsArgs<ExtArgs>
+  userPreferenceEvents?: boolean | Prisma.AuthSession$userPreferenceEventsArgs<ExtArgs>
+  feedbackEvents?: boolean | Prisma.AuthSession$feedbackEventsArgs<ExtArgs>
+  exemptionEvents?: boolean | Prisma.AuthSession$exemptionEventsArgs<ExtArgs>
+  locationConsentEvents?: boolean | Prisma.AuthSession$locationConsentEventsArgs<ExtArgs>
+  locationTrackEvents?: boolean | Prisma.AuthSession$locationTrackEventsArgs<ExtArgs>
   _count?: boolean | Prisma.AuthSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["authSession"]>
 
@@ -1827,6 +3387,14 @@ export type AuthSessionInclude<ExtArgs extends runtime.Types.Extensions.Internal
   startedExerciseSessions?: boolean | Prisma.AuthSession$startedExerciseSessionsArgs<ExtArgs>
   exerciseSessionEvents?: boolean | Prisma.AuthSession$exerciseSessionEventsArgs<ExtArgs>
   exerciseRecordEvents?: boolean | Prisma.AuthSession$exerciseRecordEventsArgs<ExtArgs>
+  pushDevices?: boolean | Prisma.AuthSession$pushDevicesArgs<ExtArgs>
+  notificationEvents?: boolean | Prisma.AuthSession$notificationEventsArgs<ExtArgs>
+  pushDeviceEvents?: boolean | Prisma.AuthSession$pushDeviceEventsArgs<ExtArgs>
+  userPreferenceEvents?: boolean | Prisma.AuthSession$userPreferenceEventsArgs<ExtArgs>
+  feedbackEvents?: boolean | Prisma.AuthSession$feedbackEventsArgs<ExtArgs>
+  exemptionEvents?: boolean | Prisma.AuthSession$exemptionEventsArgs<ExtArgs>
+  locationConsentEvents?: boolean | Prisma.AuthSession$locationConsentEventsArgs<ExtArgs>
+  locationTrackEvents?: boolean | Prisma.AuthSession$locationTrackEventsArgs<ExtArgs>
   _count?: boolean | Prisma.AuthSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AuthSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1849,6 +3417,14 @@ export type $AuthSessionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     startedExerciseSessions: Prisma.$ExerciseSessionPayload<ExtArgs>[]
     exerciseSessionEvents: Prisma.$ExerciseSessionEventPayload<ExtArgs>[]
     exerciseRecordEvents: Prisma.$ExerciseRecordEventPayload<ExtArgs>[]
+    pushDevices: Prisma.$PushDevicePayload<ExtArgs>[]
+    notificationEvents: Prisma.$NotificationEventPayload<ExtArgs>[]
+    pushDeviceEvents: Prisma.$PushDeviceEventPayload<ExtArgs>[]
+    userPreferenceEvents: Prisma.$UserPreferenceEventPayload<ExtArgs>[]
+    feedbackEvents: Prisma.$FeedbackEventPayload<ExtArgs>[]
+    exemptionEvents: Prisma.$ExemptionApplicationEventPayload<ExtArgs>[]
+    locationConsentEvents: Prisma.$LocationConsentEventPayload<ExtArgs>[]
+    locationTrackEvents: Prisma.$LocationTrackEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2266,6 +3842,14 @@ export interface Prisma__AuthSessionClient<T, Null = never, ExtArgs extends runt
   startedExerciseSessions<T extends Prisma.AuthSession$startedExerciseSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$startedExerciseSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseSessionEvents<T extends Prisma.AuthSession$exerciseSessionEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$exerciseSessionEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseSessionEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exerciseRecordEvents<T extends Prisma.AuthSession$exerciseRecordEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$exerciseRecordEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pushDevices<T extends Prisma.AuthSession$pushDevicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$pushDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationEvents<T extends Prisma.AuthSession$notificationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$notificationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pushDeviceEvents<T extends Prisma.AuthSession$pushDeviceEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$pushDeviceEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDeviceEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userPreferenceEvents<T extends Prisma.AuthSession$userPreferenceEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$userPreferenceEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPreferenceEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  feedbackEvents<T extends Prisma.AuthSession$feedbackEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$feedbackEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedbackEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exemptionEvents<T extends Prisma.AuthSession$exemptionEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$exemptionEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionApplicationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationConsentEvents<T extends Prisma.AuthSession$locationConsentEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$locationConsentEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationConsentEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationTrackEvents<T extends Prisma.AuthSession$locationTrackEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthSession$locationTrackEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationTrackEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2850,6 +4434,198 @@ export type AuthSession$exerciseRecordEventsArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.ExerciseRecordEventScalarFieldEnum | Prisma.ExerciseRecordEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.pushDevices
+ */
+export type AuthSession$pushDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PushDevice
+   */
+  select?: Prisma.PushDeviceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PushDevice
+   */
+  omit?: Prisma.PushDeviceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PushDeviceInclude<ExtArgs> | null
+  where?: Prisma.PushDeviceWhereInput
+  orderBy?: Prisma.PushDeviceOrderByWithRelationInput | Prisma.PushDeviceOrderByWithRelationInput[]
+  cursor?: Prisma.PushDeviceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PushDeviceScalarFieldEnum | Prisma.PushDeviceScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.notificationEvents
+ */
+export type AuthSession$notificationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationEvent
+   */
+  select?: Prisma.NotificationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationEvent
+   */
+  omit?: Prisma.NotificationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationEventInclude<ExtArgs> | null
+  where?: Prisma.NotificationEventWhereInput
+  orderBy?: Prisma.NotificationEventOrderByWithRelationInput | Prisma.NotificationEventOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationEventScalarFieldEnum | Prisma.NotificationEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.pushDeviceEvents
+ */
+export type AuthSession$pushDeviceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PushDeviceEvent
+   */
+  select?: Prisma.PushDeviceEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PushDeviceEvent
+   */
+  omit?: Prisma.PushDeviceEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PushDeviceEventInclude<ExtArgs> | null
+  where?: Prisma.PushDeviceEventWhereInput
+  orderBy?: Prisma.PushDeviceEventOrderByWithRelationInput | Prisma.PushDeviceEventOrderByWithRelationInput[]
+  cursor?: Prisma.PushDeviceEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PushDeviceEventScalarFieldEnum | Prisma.PushDeviceEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.userPreferenceEvents
+ */
+export type AuthSession$userPreferenceEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPreferenceEvent
+   */
+  select?: Prisma.UserPreferenceEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPreferenceEvent
+   */
+  omit?: Prisma.UserPreferenceEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPreferenceEventInclude<ExtArgs> | null
+  where?: Prisma.UserPreferenceEventWhereInput
+  orderBy?: Prisma.UserPreferenceEventOrderByWithRelationInput | Prisma.UserPreferenceEventOrderByWithRelationInput[]
+  cursor?: Prisma.UserPreferenceEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserPreferenceEventScalarFieldEnum | Prisma.UserPreferenceEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.feedbackEvents
+ */
+export type AuthSession$feedbackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FeedbackEvent
+   */
+  select?: Prisma.FeedbackEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FeedbackEvent
+   */
+  omit?: Prisma.FeedbackEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackEventInclude<ExtArgs> | null
+  where?: Prisma.FeedbackEventWhereInput
+  orderBy?: Prisma.FeedbackEventOrderByWithRelationInput | Prisma.FeedbackEventOrderByWithRelationInput[]
+  cursor?: Prisma.FeedbackEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FeedbackEventScalarFieldEnum | Prisma.FeedbackEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.exemptionEvents
+ */
+export type AuthSession$exemptionEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionApplicationEvent
+   */
+  select?: Prisma.ExemptionApplicationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionApplicationEvent
+   */
+  omit?: Prisma.ExemptionApplicationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionApplicationEventInclude<ExtArgs> | null
+  where?: Prisma.ExemptionApplicationEventWhereInput
+  orderBy?: Prisma.ExemptionApplicationEventOrderByWithRelationInput | Prisma.ExemptionApplicationEventOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionApplicationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionApplicationEventScalarFieldEnum | Prisma.ExemptionApplicationEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.locationConsentEvents
+ */
+export type AuthSession$locationConsentEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationConsentEvent
+   */
+  select?: Prisma.LocationConsentEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationConsentEvent
+   */
+  omit?: Prisma.LocationConsentEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationConsentEventInclude<ExtArgs> | null
+  where?: Prisma.LocationConsentEventWhereInput
+  orderBy?: Prisma.LocationConsentEventOrderByWithRelationInput | Prisma.LocationConsentEventOrderByWithRelationInput[]
+  cursor?: Prisma.LocationConsentEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationConsentEventScalarFieldEnum | Prisma.LocationConsentEventScalarFieldEnum[]
+}
+
+/**
+ * AuthSession.locationTrackEvents
+ */
+export type AuthSession$locationTrackEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationTrackEvent
+   */
+  select?: Prisma.LocationTrackEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationTrackEvent
+   */
+  omit?: Prisma.LocationTrackEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationTrackEventInclude<ExtArgs> | null
+  where?: Prisma.LocationTrackEventWhereInput
+  orderBy?: Prisma.LocationTrackEventOrderByWithRelationInput | Prisma.LocationTrackEventOrderByWithRelationInput[]
+  cursor?: Prisma.LocationTrackEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationTrackEventScalarFieldEnum | Prisma.LocationTrackEventScalarFieldEnum[]
 }
 
 /**

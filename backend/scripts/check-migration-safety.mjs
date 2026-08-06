@@ -22,6 +22,8 @@ const expectedMigrationDirectories = [
   '0008_review_core',
   '0009_score',
   '0010_export_audit_governance',
+  '0011_client_capabilities',
+  '0012_ios_auth_release_exemption',
 ];
 
 if (
@@ -63,12 +65,37 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
     '0006_media_evidence',
     '0007_exercise_record',
     '0010_export_audit_governance',
+    '0011_client_capabilities',
+    '0012_ios_auth_release_exemption',
   ].includes(migrationId)
     ? sql.replace(
         'DROP CONSTRAINT "audit_logs_action_type_check"',
         'REPLACE CONSTRAINT "audit_logs_action_type_check"',
       )
     : sql;
+  if (migrationId === '0012_ios_auth_release_exemption') {
+    destructiveScanSql = destructiveScanSql
+      .replace(
+        'DROP CONSTRAINT "account_recovery_challenges_role_check"',
+        'REPLACE CONSTRAINT "account_recovery_challenges_role_check"',
+      )
+      .replace(
+        'DROP CONSTRAINT "media_evidence_session_owner_organization_fkey"',
+        'REPLACE CONSTRAINT "media_evidence_session_owner_organization_fkey"',
+      )
+      .replace(
+        'DROP CONSTRAINT "media_evidence_business_purpose_check"',
+        'REPLACE CONSTRAINT "media_evidence_business_purpose_check"',
+      )
+      .replace(
+        'DROP CONSTRAINT "media_evidence_capture_source_check"',
+        'REPLACE CONSTRAINT "media_evidence_capture_source_check"',
+      )
+      .replace(
+        'ALTER COLUMN "session_id" DROP NOT NULL',
+        'ALTER COLUMN "session_id" REMOVE NOT NULL',
+      );
+  }
   if (migrationId === '0008_review_core') {
     destructiveScanSql = destructiveScanSql
       .replace(
@@ -111,6 +138,26 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
   ) {
     throw new Error('0010_export_audit_governance: audit read action CHECK expansion is required');
   }
+  if (
+    migrationId === '0011_client_capabilities' &&
+    (!sql.includes('DROP CONSTRAINT "audit_logs_action_type_check"') ||
+      !sql.includes("'LOCATION_RETENTION_APPLIED'"))
+  ) {
+    throw new Error(
+      '0011_client_capabilities: client capability audit action expansion is required',
+    );
+  }
+  if (
+    migrationId === '0012_ios_auth_release_exemption' &&
+    (!sql.includes('account_recovery_challenges_role_check') ||
+      !sql.includes('app_release_policies_ios_build_number_required_check') ||
+      !sql.includes('media_evidence_target_shape_check') ||
+      !sql.includes('exemption_application_media_scope_guard_trigger'))
+  ) {
+    throw new Error(
+      '0012_ios_auth_release_exemption: auth, iOS build, and exemption media invariants are required',
+    );
+  }
   for (const pattern of forbiddenSql) {
     if (pattern.test(destructiveScanSql)) {
       throw new Error(`${migrationId}: forbidden destructive SQL matched ${pattern}`);
@@ -133,6 +180,8 @@ const exerciseRecord = migrations[6];
 const reviewCore = migrations[7];
 const scoreCore = migrations[8];
 const exportAuditGovernance = migrations[9];
+const clientCapabilities = migrations[10];
+const iosAuthReleaseExemption = migrations[11];
 const immutableFoundationChecksum =
   '0573e3d13018e0db103ef4b605eb35278723174507b37379425a489b10e1462d';
 if (foundation.checksum !== immutableFoundationChecksum) {
@@ -207,6 +256,35 @@ const scoreTables = [
   'score_publication_events',
   'score_recalculation_attempts',
 ];
+const clientCapabilityTables = [
+  'student_sign_in_challenges',
+  'account_recovery_challenges',
+  'auth_rate_limit_facts',
+  'app_release_policies',
+  'notifications',
+  'notification_events',
+  'push_devices',
+  'push_device_events',
+  'user_preferences',
+  'user_preference_events',
+  'help_articles',
+  'feedback',
+  'feedback_events',
+  'exemption_applications',
+  'exemption_application_events',
+  'exemption_review_records',
+  'exemption_application_media',
+  'sport_catalog_items',
+  'location_privacy_policies',
+  'location_consents',
+  'location_consent_events',
+  'location_tracks',
+  'location_track_events',
+  'location_samples',
+  'location_sample_secrets',
+  'location_summaries',
+  'location_retention_events',
+];
 
 function assertExactTables(migration, expectedTables) {
   const createdTables = [...migration.sql.matchAll(/CREATE TABLE "([^"]+)"/g)].map(
@@ -232,6 +310,8 @@ assertExactTables(exerciseRecord, exerciseRecordTables);
 assertExactTables(reviewCore, []);
 assertExactTables(scoreCore, scoreTables);
 assertExactTables(exportAuditGovernance, []);
+assertExactTables(clientCapabilities, clientCapabilityTables);
+assertExactTables(iosAuthReleaseExemption, []);
 
 const laterBusinessTables = ['export_jobs'];
 for (const table of laterBusinessTables) {
@@ -425,6 +505,38 @@ for (const invariant of ['audit_logs_action_type_check', "'AUDIT_LOG_READ'"]) {
   }
 }
 
+const clientCapabilityInvariants = [
+  'student_sign_in_challenges_consumed_shape_check',
+  'auth_rate_limit_facts_scope_occurred_idx',
+  'app_release_policies_platform_version_key',
+  'app_release_policies_download_url_check',
+  'notifications_recipient_unread_idx',
+  'notifications_guard_trigger',
+  'push_devices_registration_token_hash_key',
+  'push_devices_guard_trigger',
+  'notification_events_append_only_trigger',
+  'user_preferences_guard_trigger',
+  'feedback_guard_trigger',
+  'help_articles_active_content_check',
+  'exemption_applications_enrollment_id_semester_id_class_sec_fkey',
+  'exemption_applications_mutation_guard_trigger',
+  'location_privacy_policies_parameter_check',
+  'location_consents_mutation_guard_trigger',
+  'location_tracks_session_scope_key',
+  'location_tracks_mutation_guard_trigger',
+  'location_samples_track_sample_key',
+  'location_samples_no_update_trigger',
+  'location_sample_secrets_no_update_trigger',
+  'location_retention_events_append_only_trigger',
+  "'IOS'",
+  "'LOCATION_RETENTION_APPLIED'",
+];
+for (const invariant of clientCapabilityInvariants) {
+  if (!clientCapabilities.sql.includes(invariant)) {
+    throw new Error(`0011_client_capabilities: missing invariant ${invariant}`);
+  }
+}
+
 for (const migration of migrations) {
   const foreignKeyCount = (migration.sql.match(/\bFOREIGN KEY\b/g) ?? []).length;
   const uniqueCount = (migration.sql.match(/CREATE UNIQUE INDEX/g) ?? []).length;
@@ -435,5 +547,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through Audit Read governance)\n',
+  'Migration safety: PASS (forward-only Foundation through Stage 21 iOS auth, release, and exemption)\n',
 );

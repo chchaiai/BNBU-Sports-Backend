@@ -8,13 +8,16 @@
 
 ## Stage 21 客户端能力与 GPS 规则
 
-1. 新增 30 个客户端支持 operation 均为真实路由默认拒绝；合同存在不等于业务已启用。
-2. Android GPS 写入只能使用学生本人既有 ExerciseSession；`clientObservedAt` 和坐标是设备观测，不能改变服务端权威时长、`businessDate`、Record 或 Score。
-3. GPS 原始经纬度只允许作为 write-only 输入，不得进入公共 projection、日志、AuditLog、Outbox、通知或成绩事实。
-4. 轨迹摘要必须先按 ExerciseRecord 解析学生本人、责任教师或本组织管理员范围，且三类角色只取得相同粗化投影，不得返回原始点或精确起终点。
-5. 只有本组织 ADMIN 具备未来位置政策 mutation 的角色资格；当前 route 仍默认拒绝。管理员不能据此代行教师审核。
-6. 在同意/撤回、采样、精度、保留、删除、加密、审计、异常检测和 Production Gate 全部批准前，`collectionEnabled` 不得变为有效生产事实。
-7. 通知、反馈、免测、帮助、版本、项目目录和折算规则同样不得落库或返回假成功；任何启用都必须另行闭合业务状态、权限、幂等、事务、AuditLog 和 Outbox。
+1. Stage 21 共 30 个客户端支持 operation；其中 12 个仅在本地集成路径实现，18 个继续真实 default deny。`IMPLEMENTED_VERIFIED` 只说明本地代码/数据库路径已闭合，不表示 Staging、iOS 二进制或生产验收已完成。
+2. 本地实现范围固定为：通知列表/已读、推送设备注册/注销、本人偏好读写、帮助文章读取、反馈创建/列表/详情和 App 版本政策读取。mutation 必须复用 requestId、认证/范围、幂等、事务、历史事件、AuditLog 与 Outbox。
+3. 通知读取严格限制为本人；当前没有业务通知生产者。设备注册只保存带用途绑定的加密 token，显式注销清除密文；当前没有 APNs/FCM provider、投递 worker、自动会话撤销 hook 或生产密钥轮换证据。
+4. 帮助只返回 `PUBLISHED` 且 `publishedAt <= serverNow` 的安全内容；反馈非管理员只读本人、管理员只读本组织；当前没有帮助发布、反馈处理/回复 operation。
+5. App 版本政策只读取当前生效且未过期的持久化政策；无政策稳定返回 `SYSTEM_MODE_UNSUPPORTED`。版本字符串保持 opaque，读取路径不得自行发明 iOS/Android 版本比较、签名、灰度或发布规则。
+6. 验证码/找回 4 与免测 6 个 operation 已按 ADR-098 进入本地真实实现；运动目录/折算 2 与 GPS 6 个 operation 继续 stable default deny。验证码的真实外部投递仍取决于显式 provider 配置。
+7. 未来 GPS 写入只能使用学生本人既有 ExerciseSession；`clientObservedAt` 和坐标是设备观测，不能改变服务端权威时长、`businessDate`、Record 或 Score。
+8. GPS 原始经纬度只允许进入用途绑定的加密存储，不得进入公共 projection、日志、AuditLog、Outbox、通知或成绩事实；轨迹摘要必须按 ExerciseRecord 校验学生本人、责任教师或本组织管理员范围，并且只返回同一粗化投影。
+9. 只有本组织 ADMIN 具备未来位置政策 mutation 的角色资格；当前 6 个位置 HTTP route 均 default deny。管理员不能据此代行教师审核。
+10. 在同意/撤回、采样、精度、保留、删除、密钥托管/轮换、审计、异常检测和 Production Gate 全部批准前，`collectionEnabled` 不得成为有效生产事实；GPS 本地基础不能被描述为生产开放。
 
 ## 1. 适用范围与冲突优先级
 
@@ -52,6 +55,7 @@
 | 编号 | 后端校验与处理 | 输出结果与边界情况 | 错误码 | 影响成绩 | 审计 | 相关接口 | 相关状态转换 |
 |---|---|---|---|---|---|---|---|
 | AUTH-001 | 校验凭证、速率、账户状态；由服务端装载 role/organization claims；未知安全枚举 fail closed | 返回访问会话及最小本人投影；学生验证码完成后必须真正安装可用会话；Token 期限与多设备策略仍见 ADR-022 | `AUTH_CREDENTIAL_INVALID`、`AUTH_VERIFICATION_CODE_INVALID`、`AUTH_ACCOUNT_DISABLED`、`AUTH_RATE_LIMITED` | 否 | 是（成功/失败摘要） | Authentication、Current User | User `ACTIVE -> LOCKED/DISABLED` 仅由相应管理流程触发 |
+| AUTH-002 | 验证码/找回先用 `organizationCode` 确定组织，再按验证过的邮箱或手机号创建单次 challenge；响应只返回 challenge/recovery ID 与到期时间 | STUDENT 仅 OTP；密码找回仅 TEACHER/ADMIN。找回完成后增加 tokenVersion 并撤销旧会话/刷新令牌 | `AUTH_VERIFICATION_CODE_INVALID`、`AUTH_RATE_LIMITED`、`SYSTEM_SERVICE_UNAVAILABLE` | 否 | 是（不含账号、验证码、密码） | Authentication | `PENDING_DELIVERY -> ACTIVE -> CONSUMED/LOCKED/EXPIRED/DELIVERY_FAILED` |
 | AUTH-002 | 校验 token family、设备会话和账户版本；刷新时轮换；退出/禁用时撤销 | 重放旧 refresh token 必须拒绝；具体 Access/Refresh 时长待定，但“可撤销”不可省略 | `AUTH_TOKEN_INVALID`、`AUTH_TOKEN_EXPIRED`、`AUTH_SESSION_REVOKED` | 否 | 是 | Authentication | 无核心领域对象转换；更新认证会话撤销事实 |
 | AUTH-003 | 从服务端配置读取模式；`READ_ONLY` 拒绝业务写，`MAINTENANCE` 仅允许白名单运维/认证能力 | 前端即使漏隐藏按钮，后端仍拒绝；未知模式按最严格状态处理 | `SYSTEM_READ_ONLY`、`SYSTEM_MAINTENANCE`、`SYSTEM_MODE_UNSUPPORTED` | 间接 | 是（拒绝可采样） | 所有 mutation | 无业务对象转换 |
 
@@ -216,7 +220,7 @@
 | 已发布成绩出现新输入 | 保留旧发布版，新工作版不向学生暴露 | Score 修订/通知 | ADR-059 |
 | AVAILABLE 媒体重绑/删除 | 已绑定不重绑，正式证据不由学生删除 | Media 生命周期 | ADR-060 |
 | 归档后成绩修正职责 | 默认拒绝普通写 | 已发布/归档成绩修正 | ADR-026 |
-| GPS 是否收集 | 新契约不新增位置字段/轨迹 API | 地图、位置审核、保留策略 | ADR-029 |
+| GPS 是否收集 | OpenAPI 已登记 6 个位置 operation，且已有持久化/应用层基础；HTTP 与生产采集仍 default deny | 明示同意/撤回、采样、精度、密钥、保留、删除、地图与位置审核 | ADR-029 / ADR-097 |
 | 不足 1h 本地媒体草稿保留期限 | 不形成正式 record；客户端保留行为尚未冻结 | Android/iOS 本地草稿一致性 | ADR-040 |
 | QR Join/Export 持久化对象 | Stage 12 已按 ADR-080/093/094 实现 CourseInvite、JoinCapability、原子 Join 与 Enrollment；学生 withdraw/rejoin 仍受 ADR-054 默认拒绝。ExportType 只冻结枚举，V1 不建 ExportJob | Export 实现；学生退出/重入决策 | ADR-054、ADR-084、ADR-085 |
 

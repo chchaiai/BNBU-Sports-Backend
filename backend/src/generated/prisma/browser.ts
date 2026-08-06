@@ -238,6 +238,141 @@ export type ScorePublicationEvent = Prisma.ScorePublicationEventModel
  */
 export type ScoreRecalculationAttempt = Prisma.ScoreRecalculationAttemptModel
 /**
+ * Model StudentSignInChallenge
+ * 
+ */
+export type StudentSignInChallenge = Prisma.StudentSignInChallengeModel
+/**
+ * Model AccountRecoveryChallenge
+ * 
+ */
+export type AccountRecoveryChallenge = Prisma.AccountRecoveryChallengeModel
+/**
+ * Model AuthRateLimitFact
+ * 
+ */
+export type AuthRateLimitFact = Prisma.AuthRateLimitFactModel
+/**
+ * Model AppReleasePolicy
+ * 
+ */
+export type AppReleasePolicy = Prisma.AppReleasePolicyModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model NotificationEvent
+ * 
+ */
+export type NotificationEvent = Prisma.NotificationEventModel
+/**
+ * Model PushDevice
+ * 
+ */
+export type PushDevice = Prisma.PushDeviceModel
+/**
+ * Model PushDeviceEvent
+ * 
+ */
+export type PushDeviceEvent = Prisma.PushDeviceEventModel
+/**
+ * Model UserPreference
+ * 
+ */
+export type UserPreference = Prisma.UserPreferenceModel
+/**
+ * Model UserPreferenceEvent
+ * 
+ */
+export type UserPreferenceEvent = Prisma.UserPreferenceEventModel
+/**
+ * Model HelpArticle
+ * 
+ */
+export type HelpArticle = Prisma.HelpArticleModel
+/**
+ * Model Feedback
+ * 
+ */
+export type Feedback = Prisma.FeedbackModel
+/**
+ * Model FeedbackEvent
+ * 
+ */
+export type FeedbackEvent = Prisma.FeedbackEventModel
+/**
+ * Model ExemptionApplication
+ * 
+ */
+export type ExemptionApplication = Prisma.ExemptionApplicationModel
+/**
+ * Model ExemptionApplicationEvent
+ * 
+ */
+export type ExemptionApplicationEvent = Prisma.ExemptionApplicationEventModel
+/**
+ * Model ExemptionReviewRecord
+ * 
+ */
+export type ExemptionReviewRecord = Prisma.ExemptionReviewRecordModel
+/**
+ * Model ExemptionApplicationMedia
+ * 
+ */
+export type ExemptionApplicationMedia = Prisma.ExemptionApplicationMediaModel
+/**
+ * Model SportCatalogItem
+ * 
+ */
+export type SportCatalogItem = Prisma.SportCatalogItemModel
+/**
+ * Model LocationPrivacyPolicy
+ * 
+ */
+export type LocationPrivacyPolicy = Prisma.LocationPrivacyPolicyModel
+/**
+ * Model LocationConsent
+ * 
+ */
+export type LocationConsent = Prisma.LocationConsentModel
+/**
+ * Model LocationConsentEvent
+ * 
+ */
+export type LocationConsentEvent = Prisma.LocationConsentEventModel
+/**
+ * Model LocationTrack
+ * 
+ */
+export type LocationTrack = Prisma.LocationTrackModel
+/**
+ * Model LocationTrackEvent
+ * 
+ */
+export type LocationTrackEvent = Prisma.LocationTrackEventModel
+/**
+ * Model LocationSample
+ * 
+ */
+export type LocationSample = Prisma.LocationSampleModel
+/**
+ * Model LocationSampleSecret
+ * 
+ */
+export type LocationSampleSecret = Prisma.LocationSampleSecretModel
+/**
+ * Model LocationSummary
+ * 
+ */
+export type LocationSummary = Prisma.LocationSummaryModel
+/**
+ * Model LocationRetentionEvent
+ * 
+ */
+export type LocationRetentionEvent = Prisma.LocationRetentionEventModel
+/**
  * Model AuditLog
  * 
  */

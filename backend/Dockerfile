@@ -24,9 +24,10 @@ WORKDIR /app
 COPY --from=dependencies /workspace/backend/node_modules ./node_modules
 COPY backend/package.json backend/package-lock.json backend/prisma.config.ts ./
 COPY backend/prisma ./prisma
+COPY backend/scripts/harden-runtime-database-access.mjs ./scripts/harden-runtime-database-access.mjs
 COPY --from=build /workspace/backend/src/generated/prisma ./src/generated/prisma
 USER node
-CMD ["npm", "run", "db:migrate:deploy"]
+CMD ["npm", "run", "db:migrate:deploy:container"]
 
 FROM node-base AS production-dependencies
 WORKDIR /app

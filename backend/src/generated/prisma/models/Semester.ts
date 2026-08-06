@@ -282,6 +282,8 @@ export type SemesterWhereInput = {
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   scoreRules?: Prisma.ScoreRuleListRelationFilter
   studentScores?: Prisma.StudentScoreListRelationFilter
+  exemptionApplications?: Prisma.ExemptionApplicationListRelationFilter
+  locationTracks?: Prisma.LocationTrackListRelationFilter
 }
 
 export type SemesterOrderByWithRelationInput = {
@@ -307,6 +309,8 @@ export type SemesterOrderByWithRelationInput = {
   exerciseRecords?: Prisma.ExerciseRecordOrderByRelationAggregateInput
   scoreRules?: Prisma.ScoreRuleOrderByRelationAggregateInput
   studentScores?: Prisma.StudentScoreOrderByRelationAggregateInput
+  exemptionApplications?: Prisma.ExemptionApplicationOrderByRelationAggregateInput
+  locationTracks?: Prisma.LocationTrackOrderByRelationAggregateInput
 }
 
 export type SemesterWhereUniqueInput = Prisma.AtLeast<{
@@ -337,6 +341,8 @@ export type SemesterWhereUniqueInput = Prisma.AtLeast<{
   exerciseRecords?: Prisma.ExerciseRecordListRelationFilter
   scoreRules?: Prisma.ScoreRuleListRelationFilter
   studentScores?: Prisma.StudentScoreListRelationFilter
+  exemptionApplications?: Prisma.ExemptionApplicationListRelationFilter
+  locationTracks?: Prisma.LocationTrackListRelationFilter
 }, "id" | "id_organizationId" | "organizationId_academicYear_termCode">
 
 export type SemesterOrderByWithAggregationInput = {
@@ -398,6 +404,8 @@ export type SemesterCreateInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateInput = {
@@ -421,6 +429,8 @@ export type SemesterUncheckedCreateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUpdateInput = {
@@ -444,6 +454,8 @@ export type SemesterUpdateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateInput = {
@@ -467,6 +479,8 @@ export type SemesterUncheckedUpdateInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateManyInput = {
@@ -787,6 +801,34 @@ export type SemesterUpdateOneRequiredWithoutStudentScoresNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SemesterUpdateToOneWithWhereWithoutStudentScoresInput, Prisma.SemesterUpdateWithoutStudentScoresInput>, Prisma.SemesterUncheckedUpdateWithoutStudentScoresInput>
 }
 
+export type SemesterCreateNestedOneWithoutExemptionApplicationsInput = {
+  create?: Prisma.XOR<Prisma.SemesterCreateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedCreateWithoutExemptionApplicationsInput>
+  connectOrCreate?: Prisma.SemesterCreateOrConnectWithoutExemptionApplicationsInput
+  connect?: Prisma.SemesterWhereUniqueInput
+}
+
+export type SemesterUpdateOneRequiredWithoutExemptionApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.SemesterCreateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedCreateWithoutExemptionApplicationsInput>
+  connectOrCreate?: Prisma.SemesterCreateOrConnectWithoutExemptionApplicationsInput
+  upsert?: Prisma.SemesterUpsertWithoutExemptionApplicationsInput
+  connect?: Prisma.SemesterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SemesterUpdateToOneWithWhereWithoutExemptionApplicationsInput, Prisma.SemesterUpdateWithoutExemptionApplicationsInput>, Prisma.SemesterUncheckedUpdateWithoutExemptionApplicationsInput>
+}
+
+export type SemesterCreateNestedOneWithoutLocationTracksInput = {
+  create?: Prisma.XOR<Prisma.SemesterCreateWithoutLocationTracksInput, Prisma.SemesterUncheckedCreateWithoutLocationTracksInput>
+  connectOrCreate?: Prisma.SemesterCreateOrConnectWithoutLocationTracksInput
+  connect?: Prisma.SemesterWhereUniqueInput
+}
+
+export type SemesterUpdateOneRequiredWithoutLocationTracksNestedInput = {
+  create?: Prisma.XOR<Prisma.SemesterCreateWithoutLocationTracksInput, Prisma.SemesterUncheckedCreateWithoutLocationTracksInput>
+  connectOrCreate?: Prisma.SemesterCreateOrConnectWithoutLocationTracksInput
+  upsert?: Prisma.SemesterUpsertWithoutLocationTracksInput
+  connect?: Prisma.SemesterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SemesterUpdateToOneWithWhereWithoutLocationTracksInput, Prisma.SemesterUpdateWithoutLocationTracksInput>, Prisma.SemesterUncheckedUpdateWithoutLocationTracksInput>
+}
+
 export type SemesterCreateWithoutOrganizationInput = {
   id: string
   academicYear: string
@@ -807,6 +849,8 @@ export type SemesterCreateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutOrganizationInput = {
@@ -829,6 +873,8 @@ export type SemesterUncheckedCreateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutOrganizationInput = {
@@ -895,6 +941,8 @@ export type SemesterCreateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutCreatedByUserInput = {
@@ -916,6 +964,8 @@ export type SemesterUncheckedCreateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutCreatedByUserInput = {
@@ -964,6 +1014,8 @@ export type SemesterCreateWithoutClassSectionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutClassSectionsInput = {
@@ -986,6 +1038,8 @@ export type SemesterUncheckedCreateWithoutClassSectionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutClassSectionsInput = {
@@ -1024,6 +1078,8 @@ export type SemesterUpdateWithoutClassSectionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutClassSectionsInput = {
@@ -1046,6 +1102,8 @@ export type SemesterUncheckedUpdateWithoutClassSectionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutEnrollmentsInput = {
@@ -1068,6 +1126,8 @@ export type SemesterCreateWithoutEnrollmentsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutEnrollmentsInput = {
@@ -1090,6 +1150,8 @@ export type SemesterUncheckedCreateWithoutEnrollmentsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutEnrollmentsInput = {
@@ -1128,6 +1190,8 @@ export type SemesterUpdateWithoutEnrollmentsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1150,6 +1214,8 @@ export type SemesterUncheckedUpdateWithoutEnrollmentsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutExerciseSessionsInput = {
@@ -1172,6 +1238,8 @@ export type SemesterCreateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutExerciseSessionsInput = {
@@ -1194,6 +1262,8 @@ export type SemesterUncheckedCreateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutExerciseSessionsInput = {
@@ -1232,6 +1302,8 @@ export type SemesterUpdateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutExerciseSessionsInput = {
@@ -1254,6 +1326,8 @@ export type SemesterUncheckedUpdateWithoutExerciseSessionsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutExerciseRecordsInput = {
@@ -1276,6 +1350,8 @@ export type SemesterCreateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutExerciseRecordsInput = {
@@ -1298,6 +1374,8 @@ export type SemesterUncheckedCreateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutExerciseRecordsInput = {
@@ -1336,6 +1414,8 @@ export type SemesterUpdateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutExerciseRecordsInput = {
@@ -1358,6 +1438,8 @@ export type SemesterUncheckedUpdateWithoutExerciseRecordsInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutRosterAlignmentRunsInput = {
@@ -1380,6 +1462,8 @@ export type SemesterCreateWithoutRosterAlignmentRunsInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutRosterAlignmentRunsInput = {
@@ -1402,6 +1486,8 @@ export type SemesterUncheckedCreateWithoutRosterAlignmentRunsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutRosterAlignmentRunsInput = {
@@ -1440,6 +1526,8 @@ export type SemesterUpdateWithoutRosterAlignmentRunsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutRosterAlignmentRunsInput = {
@@ -1462,6 +1550,8 @@ export type SemesterUncheckedUpdateWithoutRosterAlignmentRunsInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -1484,6 +1574,8 @@ export type SemesterCreateWithoutRosterAlignmentPlatformEntriesInput = {
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -1506,6 +1598,8 @@ export type SemesterUncheckedCreateWithoutRosterAlignmentPlatformEntriesInput = 
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutRosterAlignmentPlatformEntriesInput = {
@@ -1544,6 +1638,8 @@ export type SemesterUpdateWithoutRosterAlignmentPlatformEntriesInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutRosterAlignmentPlatformEntriesInput = {
@@ -1566,6 +1662,8 @@ export type SemesterUncheckedUpdateWithoutRosterAlignmentPlatformEntriesInput = 
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutScoreRulesInput = {
@@ -1588,6 +1686,8 @@ export type SemesterCreateWithoutScoreRulesInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutSemesterInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutScoreRulesInput = {
@@ -1610,6 +1710,8 @@ export type SemesterUncheckedCreateWithoutScoreRulesInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutSemesterInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutScoreRulesInput = {
@@ -1648,6 +1750,8 @@ export type SemesterUpdateWithoutScoreRulesInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutSemesterNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutScoreRulesInput = {
@@ -1670,6 +1774,8 @@ export type SemesterUncheckedUpdateWithoutScoreRulesInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutSemesterNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateWithoutStudentScoresInput = {
@@ -1692,6 +1798,8 @@ export type SemesterCreateWithoutStudentScoresInput = {
   exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutSemesterInput
   exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterUncheckedCreateWithoutStudentScoresInput = {
@@ -1714,6 +1822,8 @@ export type SemesterUncheckedCreateWithoutStudentScoresInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutSemesterInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
   scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
 }
 
 export type SemesterCreateOrConnectWithoutStudentScoresInput = {
@@ -1752,6 +1862,8 @@ export type SemesterUpdateWithoutStudentScoresInput = {
   exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutSemesterNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutStudentScoresInput = {
@@ -1774,6 +1886,232 @@ export type SemesterUncheckedUpdateWithoutStudentScoresInput = {
   exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutSemesterNestedInput
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
+}
+
+export type SemesterCreateWithoutExemptionApplicationsInput = {
+  id: string
+  academicYear: string
+  termCode: string
+  displayName: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSemestersInput
+  createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedSemestersInput
+  classSections?: Prisma.ClassSectionCreateNestedManyWithoutSemesterInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSemesterInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunCreateNestedManyWithoutSemesterInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutSemesterInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutSemesterInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
+  scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
+  studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutSemesterInput
+}
+
+export type SemesterUncheckedCreateWithoutExemptionApplicationsInput = {
+  id: string
+  organizationId: string
+  academicYear: string
+  termCode: string
+  displayName: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  createdBy?: string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutSemesterInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSemesterInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutSemesterInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutSemesterInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutSemesterInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
+  scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
+  studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutSemesterInput
+}
+
+export type SemesterCreateOrConnectWithoutExemptionApplicationsInput = {
+  where: Prisma.SemesterWhereUniqueInput
+  create: Prisma.XOR<Prisma.SemesterCreateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedCreateWithoutExemptionApplicationsInput>
+}
+
+export type SemesterUpsertWithoutExemptionApplicationsInput = {
+  update: Prisma.XOR<Prisma.SemesterUpdateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedUpdateWithoutExemptionApplicationsInput>
+  create: Prisma.XOR<Prisma.SemesterCreateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedCreateWithoutExemptionApplicationsInput>
+  where?: Prisma.SemesterWhereInput
+}
+
+export type SemesterUpdateToOneWithWhereWithoutExemptionApplicationsInput = {
+  where?: Prisma.SemesterWhereInput
+  data: Prisma.XOR<Prisma.SemesterUpdateWithoutExemptionApplicationsInput, Prisma.SemesterUncheckedUpdateWithoutExemptionApplicationsInput>
+}
+
+export type SemesterUpdateWithoutExemptionApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  termCode?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSemestersNestedInput
+  createdByUser?: Prisma.UserUpdateOneWithoutCreatedSemestersNestedInput
+  classSections?: Prisma.ClassSectionUpdateManyWithoutSemesterNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutSemesterNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutSemesterNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
+  scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
+  studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
+}
+
+export type SemesterUncheckedUpdateWithoutExemptionApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  termCode?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutSemesterNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutSemesterNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutSemesterNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
+  scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
+  studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
+}
+
+export type SemesterCreateWithoutLocationTracksInput = {
+  id: string
+  academicYear: string
+  termCode: string
+  displayName: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSemestersInput
+  createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedSemestersInput
+  classSections?: Prisma.ClassSectionCreateNestedManyWithoutSemesterInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSemesterInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunCreateNestedManyWithoutSemesterInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutSemesterInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutSemesterInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutSemesterInput
+  scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutSemesterInput
+  studentScores?: Prisma.StudentScoreCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutSemesterInput
+}
+
+export type SemesterUncheckedCreateWithoutLocationTracksInput = {
+  id: string
+  organizationId: string
+  academicYear: string
+  termCode: string
+  displayName: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  createdBy?: string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutSemesterInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSemesterInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutSemesterInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutSemesterInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutSemesterInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutSemesterInput
+  scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutSemesterInput
+  studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutSemesterInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutSemesterInput
+}
+
+export type SemesterCreateOrConnectWithoutLocationTracksInput = {
+  where: Prisma.SemesterWhereUniqueInput
+  create: Prisma.XOR<Prisma.SemesterCreateWithoutLocationTracksInput, Prisma.SemesterUncheckedCreateWithoutLocationTracksInput>
+}
+
+export type SemesterUpsertWithoutLocationTracksInput = {
+  update: Prisma.XOR<Prisma.SemesterUpdateWithoutLocationTracksInput, Prisma.SemesterUncheckedUpdateWithoutLocationTracksInput>
+  create: Prisma.XOR<Prisma.SemesterCreateWithoutLocationTracksInput, Prisma.SemesterUncheckedCreateWithoutLocationTracksInput>
+  where?: Prisma.SemesterWhereInput
+}
+
+export type SemesterUpdateToOneWithWhereWithoutLocationTracksInput = {
+  where?: Prisma.SemesterWhereInput
+  data: Prisma.XOR<Prisma.SemesterUpdateWithoutLocationTracksInput, Prisma.SemesterUncheckedUpdateWithoutLocationTracksInput>
+}
+
+export type SemesterUpdateWithoutLocationTracksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  termCode?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSemestersNestedInput
+  createdByUser?: Prisma.UserUpdateOneWithoutCreatedSemestersNestedInput
+  classSections?: Prisma.ClassSectionUpdateManyWithoutSemesterNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutSemesterNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutSemesterNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
+  scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
+  studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+}
+
+export type SemesterUncheckedUpdateWithoutLocationTracksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  termCode?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutSemesterNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutSemesterNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutSemesterNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutSemesterNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
+  scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
+  studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterCreateManyOrganizationInput = {
@@ -1810,6 +2148,8 @@ export type SemesterUpdateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutOrganizationInput = {
@@ -1832,6 +2172,8 @@ export type SemesterUncheckedUpdateWithoutOrganizationInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1881,6 +2223,8 @@ export type SemesterUpdateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateWithoutCreatedByUserInput = {
@@ -1902,6 +2246,8 @@ export type SemesterUncheckedUpdateWithoutCreatedByUserInput = {
   exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutSemesterNestedInput
   scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutSemesterNestedInput
   studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutSemesterNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutSemesterNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutSemesterNestedInput
 }
 
 export type SemesterUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -1931,6 +2277,8 @@ export type SemesterCountOutputType = {
   exerciseRecords: number
   scoreRules: number
   studentScores: number
+  exemptionApplications: number
+  locationTracks: number
 }
 
 export type SemesterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1942,6 +2290,8 @@ export type SemesterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   exerciseRecords?: boolean | SemesterCountOutputTypeCountExerciseRecordsArgs
   scoreRules?: boolean | SemesterCountOutputTypeCountScoreRulesArgs
   studentScores?: boolean | SemesterCountOutputTypeCountStudentScoresArgs
+  exemptionApplications?: boolean | SemesterCountOutputTypeCountExemptionApplicationsArgs
+  locationTracks?: boolean | SemesterCountOutputTypeCountLocationTracksArgs
 }
 
 /**
@@ -2010,6 +2360,20 @@ export type SemesterCountOutputTypeCountStudentScoresArgs<ExtArgs extends runtim
   where?: Prisma.StudentScoreWhereInput
 }
 
+/**
+ * SemesterCountOutputType without action
+ */
+export type SemesterCountOutputTypeCountExemptionApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExemptionApplicationWhereInput
+}
+
+/**
+ * SemesterCountOutputType without action
+ */
+export type SemesterCountOutputTypeCountLocationTracksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocationTrackWhereInput
+}
+
 
 export type SemesterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2034,6 +2398,8 @@ export type SemesterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   exerciseRecords?: boolean | Prisma.Semester$exerciseRecordsArgs<ExtArgs>
   scoreRules?: boolean | Prisma.Semester$scoreRulesArgs<ExtArgs>
   studentScores?: boolean | Prisma.Semester$studentScoresArgs<ExtArgs>
+  exemptionApplications?: boolean | Prisma.Semester$exemptionApplicationsArgs<ExtArgs>
+  locationTracks?: boolean | Prisma.Semester$locationTracksArgs<ExtArgs>
   _count?: boolean | Prisma.SemesterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["semester"]>
 
@@ -2098,6 +2464,8 @@ export type SemesterInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   exerciseRecords?: boolean | Prisma.Semester$exerciseRecordsArgs<ExtArgs>
   scoreRules?: boolean | Prisma.Semester$scoreRulesArgs<ExtArgs>
   studentScores?: boolean | Prisma.Semester$studentScoresArgs<ExtArgs>
+  exemptionApplications?: boolean | Prisma.Semester$exemptionApplicationsArgs<ExtArgs>
+  locationTracks?: boolean | Prisma.Semester$locationTracksArgs<ExtArgs>
   _count?: boolean | Prisma.SemesterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SemesterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2122,6 +2490,8 @@ export type $SemesterPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     exerciseRecords: Prisma.$ExerciseRecordPayload<ExtArgs>[]
     scoreRules: Prisma.$ScoreRulePayload<ExtArgs>[]
     studentScores: Prisma.$StudentScorePayload<ExtArgs>[]
+    exemptionApplications: Prisma.$ExemptionApplicationPayload<ExtArgs>[]
+    locationTracks: Prisma.$LocationTrackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2540,6 +2910,8 @@ export interface Prisma__SemesterClient<T, Null = never, ExtArgs extends runtime
   exerciseRecords<T extends Prisma.Semester$exerciseRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Semester$exerciseRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExerciseRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scoreRules<T extends Prisma.Semester$scoreRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Semester$scoreRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScoreRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentScores<T extends Prisma.Semester$studentScoresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Semester$studentScoresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentScorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exemptionApplications<T extends Prisma.Semester$exemptionApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Semester$exemptionApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExemptionApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  locationTracks<T extends Prisma.Semester$locationTracksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Semester$locationTracksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocationTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3190,6 +3562,54 @@ export type Semester$studentScoresArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.StudentScoreScalarFieldEnum | Prisma.StudentScoreScalarFieldEnum[]
+}
+
+/**
+ * Semester.exemptionApplications
+ */
+export type Semester$exemptionApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExemptionApplication
+   */
+  select?: Prisma.ExemptionApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExemptionApplication
+   */
+  omit?: Prisma.ExemptionApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExemptionApplicationInclude<ExtArgs> | null
+  where?: Prisma.ExemptionApplicationWhereInput
+  orderBy?: Prisma.ExemptionApplicationOrderByWithRelationInput | Prisma.ExemptionApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ExemptionApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExemptionApplicationScalarFieldEnum | Prisma.ExemptionApplicationScalarFieldEnum[]
+}
+
+/**
+ * Semester.locationTracks
+ */
+export type Semester$locationTracksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocationTrack
+   */
+  select?: Prisma.LocationTrackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocationTrack
+   */
+  omit?: Prisma.LocationTrackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocationTrackInclude<ExtArgs> | null
+  where?: Prisma.LocationTrackWhereInput
+  orderBy?: Prisma.LocationTrackOrderByWithRelationInput | Prisma.LocationTrackOrderByWithRelationInput[]
+  cursor?: Prisma.LocationTrackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocationTrackScalarFieldEnum | Prisma.LocationTrackScalarFieldEnum[]
 }
 
 /**

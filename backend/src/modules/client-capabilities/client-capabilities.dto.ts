@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
+  ArrayUnique,
   IsBoolean,
   IsIn,
   IsInt,
@@ -24,6 +25,10 @@ const trim = ({ value }: { value: unknown }): unknown =>
   typeof value === 'string' ? value.trim() : value;
 
 export class StudentSignInCodeRequestDto {
+  @Transform(trim)
+  @Matches(/^[A-Z0-9][A-Z0-9_-]{1,31}$/)
+  organizationCode!: string;
+
   @Transform(trim)
   @IsString()
   @Length(1, 254)
@@ -52,12 +57,22 @@ export class StudentSignInCodeVerificationRequestDto {
 
 export class AccountRecoveryRequestDto {
   @Transform(trim)
+  @Matches(/^[A-Z0-9][A-Z0-9_-]{1,31}$/)
+  organizationCode!: string;
+
+  @Transform(trim)
   @IsString()
   @Length(1, 254)
   account!: string;
 
-  @IsIn(['STUDENT', 'TEACHER', 'ADMIN'])
+  @IsIn(['TEACHER', 'ADMIN'])
   requestedRole!: string;
+
+  @IsIn(['EMAIL', 'PHONE'])
+  channel!: string;
+
+  @IsIn(['zh-CN', 'en'])
+  locale!: string;
 }
 
 export class AccountRecoveryCompletionRequestDto {
@@ -79,7 +94,7 @@ export class NotificationPathDto {
   notificationId!: string;
 }
 
-export class NotificationListQueryDto {
+export class CursorListQueryDto {
   @IsOptional()
   @IsString()
   @MaxLength(2048)
@@ -91,7 +106,9 @@ export class NotificationListQueryDto {
   @Min(1)
   @Max(100)
   limit = 20;
+}
 
+export class NotificationListQueryDto extends CursorListQueryDto {
   @IsOptional()
   @IsBoolean()
   @Transform(({ value }: { value: unknown }) =>
@@ -101,7 +118,7 @@ export class NotificationListQueryDto {
 }
 
 export class PushDeviceRegistrationRequestDto {
-  @IsIn(['ANDROID', 'WEB'])
+  @IsIn(['ANDROID', 'WEB', 'IOS'])
   platform!: string;
 
   @Transform(trim)
@@ -160,7 +177,7 @@ export class FeedbackPathDto {
   feedbackId!: string;
 }
 
-export class FeedbackListQueryDto extends NotificationListQueryDto {
+export class FeedbackListQueryDto extends CursorListQueryDto {
   @IsOptional()
   @Matches(/^[A-Z][A-Z0-9_]*$/)
   status?: string;
@@ -168,7 +185,7 @@ export class FeedbackListQueryDto extends NotificationListQueryDto {
 
 export class FeedbackClientContextDto {
   @IsOptional()
-  @IsIn(['ANDROID', 'WEB'])
+  @IsIn(['ANDROID', 'WEB', 'IOS'])
   platform?: string;
 
   @IsOptional()
@@ -204,7 +221,7 @@ export class ExemptionApplicationPathDto {
   applicationId!: string;
 }
 
-export class ExemptionApplicationListQueryDto extends NotificationListQueryDto {
+export class ExemptionApplicationListQueryDto extends CursorListQueryDto {
   @IsOptional()
   @Matches(/^[A-Z][A-Z0-9_]*$/)
   status?: string;
@@ -227,6 +244,7 @@ export class CreateExemptionApplicationRequestDto {
   reason!: string;
 
   @ArrayMaxSize(20)
+  @ArrayUnique()
   @IsUUID(undefined, { each: true })
   mediaIds!: string[];
 }
@@ -240,6 +258,7 @@ export class UpdateExemptionApplicationRequestDto {
 
   @IsOptional()
   @ArrayMaxSize(20)
+  @ArrayUnique()
   @IsUUID(undefined, { each: true })
   mediaIds?: string[];
 
@@ -275,7 +294,7 @@ export class ReviewExemptionApplicationRequestDto {
 }
 
 export class ClientPlatformQueryDto {
-  @IsIn(['ANDROID', 'WEB'])
+  @IsIn(['ANDROID', 'WEB', 'IOS'])
   platform!: string;
 
   @IsOptional()
@@ -283,6 +302,13 @@ export class ClientPlatformQueryDto {
   @IsString()
   @MaxLength(64)
   currentVersion?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(2_147_483_647)
+  currentBuildNumber?: number;
 }
 
 export class SessionLocationPathDto {

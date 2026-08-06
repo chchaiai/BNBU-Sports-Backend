@@ -45,6 +45,9 @@ export interface EstablishStudentSessionFacts {
   requestId: string;
   idempotencyKey: string;
   sourceIp?: string;
+  deviceIdHash?: string;
+  credentialType?: 'QR_JOIN' | 'OTP';
+  permissionId?: 'ENROLLMENT-JOIN' | 'AUTH-STUDENT-CODE-VERIFY';
 }
 
 interface StudentSessionUser {
@@ -103,6 +106,7 @@ export class AuthService {
         id: sessionId,
         organizationId: user.organizationId,
         userId: user.id,
+        deviceIdHash: facts.deviceIdHash ?? null,
         status: 'ACTIVE',
         tokenFamilyId,
         createdAt: now,
@@ -129,14 +133,14 @@ export class AuthService {
       organizationId: user.organizationId,
       actorUserId: user.id,
       actorRoleSnapshot: 'STUDENT',
-      permissionId: 'ENROLLMENT-JOIN',
+      permissionId: facts.permissionId ?? 'ENROLLMENT-JOIN',
       actionType: 'AUTHENTICATION_SUCCEEDED',
       targetType: 'AUTH_SESSION',
       targetId: sessionId,
       requestId: facts.requestId,
       idempotencyKeyReference: this.idempotencyKeyReference(facts.idempotencyKey),
       outcome: 'SUCCEEDED',
-      safeMetadata: { credentialType: 'QR_JOIN' },
+      safeMetadata: { credentialType: facts.credentialType ?? 'QR_JOIN' },
       ...(facts.sourceIp === undefined ? {} : { sourceIp: facts.sourceIp }),
     });
     await this.outbox.append(transaction, {

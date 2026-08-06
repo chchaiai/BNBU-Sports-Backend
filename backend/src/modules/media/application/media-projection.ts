@@ -4,7 +4,8 @@ export interface MediaEvidenceProjection {
   id: string;
   organizationId: string;
   ownerStudentId: string;
-  sessionId: string;
+  sessionId: string | null;
+  enrollmentId: string | null;
   recordId: string | null;
   businessPurpose: string;
   mediaType: string;
@@ -38,6 +39,7 @@ export function mediaProjection(
     organizationId: media.organizationId,
     ownerStudentId: media.ownerStudentId,
     sessionId: media.sessionId,
+    enrollmentId: media.enrollmentId,
     recordId: media.recordAssociation?.recordId ?? null,
     businessPurpose: media.businessPurpose,
     mediaType: media.mediaType,

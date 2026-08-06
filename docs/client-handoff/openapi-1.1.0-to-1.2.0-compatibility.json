@@ -1,0 +1,105 @@
+{
+  "formatVersion": 1,
+  "baseline": {
+    "file": "docs/client-handoff/contract-history/1.1.0-contract-fb040b671e3f25c48279ad6b173ced5f633de1b1a1a9db0cc0f23a11e3fde4d1/openapi.snapshot.yaml",
+    "version": "1.1.0-contract",
+    "sha256": "fb040b671e3f25c48279ad6b173ced5f633de1b1a1a9db0cc0f23a11e3fde4d1",
+    "pathCount": 104,
+    "operationCount": 122,
+    "schemaCount": 271
+  },
+  "current": {
+    "file": "docs/backend-contracts/openapi.yaml",
+    "version": "1.2.0-contract",
+    "sha256": "f194eb01c6386882220c72c5256c1ef60d09a4bf624a65d23b03ed6dd233cb4c",
+    "pathCount": 104,
+    "operationCount": 122,
+    "schemaCount": 271
+  },
+  "compatible": true,
+  "summary": {
+    "paths": {
+      "removed": 0,
+      "added": 0
+    },
+    "operations": {
+      "removed": 0,
+      "added": 0
+    },
+    "schemas": {
+      "removed": 0,
+      "added": 0
+    },
+    "properties": {
+      "removed": 0,
+      "added": 0
+    },
+    "requiredMembers": {
+      "removed": 0,
+      "added": 0
+    },
+    "enumValues": {
+      "removed": 0,
+      "added": 5
+    }
+  },
+  "changes": {
+    "paths": {
+      "removed": [],
+      "added": []
+    },
+    "operations": {
+      "removed": [],
+      "added": []
+    },
+    "schemas": {
+      "removed": [],
+      "added": []
+    },
+    "properties": {
+      "removed": [],
+      "added": []
+    },
+    "requiredMembers": {
+      "removed": [],
+      "added": []
+    },
+    "enumValues": {
+      "removed": [],
+      "added": [
+        {
+          "schema": "AppReleasePolicy",
+          "schemaPath": "#/properties/platform",
+          "location": "components.schemas.AppReleasePolicy#/properties/platform",
+          "value": "IOS"
+        },
+        {
+          "schema": "CreateFeedbackRequest",
+          "schemaPath": "#/properties/clientContext/properties/platform",
+          "location": "components.schemas.CreateFeedbackRequest#/properties/clientContext/properties/platform",
+          "value": "IOS"
+        },
+        {
+          "operation": "GET /app-release-policy",
+          "parameterIn": "query",
+          "parameterName": "platform",
+          "schemaPath": "#",
+          "location": "GET /app-release-policy parameter query:platform",
+          "value": "IOS"
+        },
+        {
+          "schema": "PushDevice",
+          "schemaPath": "#/properties/platform",
+          "location": "components.schemas.PushDevice#/properties/platform",
+          "value": "IOS"
+        },
+        {
+          "schema": "PushDeviceRegistrationRequest",
+          "schemaPath": "#/properties/platform",
+          "location": "components.schemas.PushDeviceRegistrationRequest#/properties/platform",
+          "value": "IOS"
+        }
+      ]
+    }
+  }
+}

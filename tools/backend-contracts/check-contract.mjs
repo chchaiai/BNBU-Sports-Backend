@@ -308,7 +308,13 @@ assert(mediaFields.includes('verifiedContentSha256'), 'MediaEvidence must contai
 assert(!mediaFields.includes('contentSha256'), 'MediaEvidence must not contain ambiguous contentSha256');
 assert(schemas.MediaUploadSession?.required?.includes('mediaId'), 'Media initiate response must allocate a stable mediaId');
 assert(schemas.InitiateMediaUploadRequest?.properties?.declaredContentSha256, 'Media initiate request must use declaredContentSha256');
-assert(sameArray(schemas.MediaBusinessPurpose?.enum, ['EXERCISE_RECORD']), 'V1 MediaBusinessPurpose must contain only EXERCISE_RECORD');
+assert(
+  sameArray(schemas.MediaBusinessPurpose?.enum, [
+    'EXERCISE_RECORD',
+    'EXEMPTION_APPLICATION',
+  ]),
+  'MediaBusinessPurpose must contain only EXERCISE_RECORD and EXEMPTION_APPLICATION',
+);
 
 const issueJoin = operations.find(({ operation }) => operation.operationId === 'issueJoinCapability')?.operation;
 const atomicJoin = operations.find(({ operation }) => operation.operationId === 'joinClassSectionWithInvite')?.operation;

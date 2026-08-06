@@ -51,6 +51,16 @@ export const foundationMigrations = [
     sha256: '42aea4159d943b1c1c541ef8558c123d0e88d8e5aed06fd462aeabc1f98fe3df',
     destructive: false,
   },
+  {
+    migrationId: '0011_client_capabilities',
+    sha256: '78acf3c51ef2c3be25c7b9c534f487c65653bec7486535ccb889df12eeb56da6',
+    destructive: false,
+  },
+  {
+    migrationId: '0012_ios_auth_release_exemption',
+    sha256: '7b36c521540b5d20916c1858da90d464fce9952c4ab686d8d16125dd2c1aabfa',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -63,3 +73,5 @@ export const exerciseRecordMigration = foundationMigrations[6];
 export const reviewCoreMigration = foundationMigrations[7];
 export const scoreCoreMigration = foundationMigrations[8];
 export const exportAuditGovernanceMigration = foundationMigrations[9];
+export const clientCapabilitiesMigration = foundationMigrations[10];
+export const iosAuthReleaseExemptionMigration = foundationMigrations[11];
