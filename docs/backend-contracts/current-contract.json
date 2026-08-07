@@ -1,9 +1,11 @@
 {
-  "currentCandidate": "1.4.0-contract",
+  "currentPublished": "1.4.0-contract",
+  "releaseState": "PUBLISHED",
   "sha256": "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b",
   "canonicalPath": "docs/backend-contracts/openapi.yaml",
   "releaseManifest": "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
-  "publishedBaseline": {
+  "immutableSnapshot": "docs/backend-contracts/contract-history/1.4.0-contract-c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b/openapi.snapshot.yaml",
+  "previousPublishedBaseline": {
     "version": "1.3.0-contract",
     "sha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9"
   }

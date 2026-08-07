@@ -1,4 +1,4 @@
-# Contract 1.4.0 Candidate Changelog
+# Contract 1.4.0 Changelog
 
 Baseline: immutable `1.3.0-contract` SHA-256 `914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9`.
 

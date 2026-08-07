@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 import YAML from "yaml";
@@ -91,9 +91,50 @@ if (
   provenance.contractVersion !== document.info.version ||
   !/^[0-9a-f]{40}$/.test(provenance.sourceCommit)
 ) {
-  throw new Error("Release provenance is invalid or does not match the candidate");
+  throw new Error(
+    "Release provenance is invalid or does not match the candidate",
+  );
 }
 const candidateHash = sha256(canonical);
+const historyRelative = `docs/backend-contracts/contract-history/${document.info.version}-${candidateHash}`;
+const historyDirectory = resolve(repositoryRoot, historyRelative);
+const historySnapshotRelative = `${historyRelative}/openapi.snapshot.yaml`;
+const historySnapshotPath = resolve(historyDirectory, "openapi.snapshot.yaml");
+const historyManifestPath = resolve(historyDirectory, "manifest.json");
+const historySnapshotExists = existsSync(historySnapshotPath);
+const historyManifestExists = existsSync(historyManifestPath);
+if (historySnapshotExists !== historyManifestExists) {
+  throw new Error(
+    "Published Contract 1.4 history must contain both snapshot and manifest",
+  );
+}
+let publishedHistory = null;
+if (historySnapshotExists) {
+  const historySnapshot = readFileSync(historySnapshotPath, "utf8");
+  const historyManifest = JSON.parse(readFileSync(historyManifestPath, "utf8"));
+  if (
+    historySnapshot !== canonical ||
+    sha256(historySnapshot) !== candidateHash
+  ) {
+    throw new Error(
+      "Published Contract 1.4 snapshot is not byte-identical to the canonical contract",
+    );
+  }
+  if (
+    historyManifest.formatVersion !== 1 ||
+    historyManifest.version !== document.info.version ||
+    historyManifest.sha256 !== candidateHash ||
+    historyManifest.byteLength !== Buffer.byteLength(canonical) ||
+    !/^[0-9a-f]{40}$/.test(historyManifest.sourceCommit) ||
+    historyManifest.sourcePath !== "docs/backend-contracts/openapi.yaml" ||
+    historyManifest.snapshotPath !== historySnapshotRelative ||
+    historyManifest.immutable !== true
+  ) {
+    throw new Error("Published Contract 1.4 history manifest is invalid");
+  }
+  publishedHistory = historyManifest;
+}
+const isPublished = publishedHistory !== null;
 const releaseDirectory = resolve(
   repositoryRoot,
   "docs/backend-contracts/releases/1.4.0-contract",
@@ -103,6 +144,7 @@ const snapshotRelative =
 const metadata = {
   formatVersion: 1,
   contractVersion: document.info.version,
+  releaseState: isPublished ? "PUBLISHED" : "CANDIDATE",
   openapiVersion: document.openapi,
   sha256: candidateHash,
   byteLength: Buffer.byteLength(canonical),
@@ -131,10 +173,16 @@ const metadata = {
     intentionallyDisabled: runtime.implementedDefaultDeny.length,
     notImplemented: 0,
   },
+  ...(isPublished
+    ? {
+        publishedSnapshot: historySnapshotRelative,
+        publishedFromCommit: publishedHistory.sourceCommit,
+      }
+    : {}),
 };
 
 const manifest = `${JSON.stringify(metadata, null, 2)}\n`;
-const changelog = `# Contract 1.4.0 Candidate Changelog
+const changelog = `# Contract 1.4.0${isPublished ? "" : " Candidate"} Changelog
 
 Baseline: immutable \`1.3.0-contract\` SHA-256 \`${publishedHash}\`.
 
@@ -172,12 +220,13 @@ This pull request prepares artifacts only. Do not create a tag or GitHub Release
 6. Create the approved Git tag and GitHub Release from the verified merged commit; attach the manifest, OpenAPI snapshot, compatibility reports, changelog, migration notes, and client handoff.
 7. If any hash or gate differs, stop and forward-fix; never overwrite a historical snapshot.
 `;
-const handoff = `# BNBU Sports Contract 1.4.0 Candidate Handoff
+const handoff = `# BNBU Sports Contract 1.4.0 ${isPublished ? "Published" : "Candidate"} Handoff
 
 | Item | Value |
 | --- | --- |
 | Canonical OpenAPI | \`docs/backend-contracts/openapi.yaml\` |
-| Candidate version | \`${document.info.version}\` |
+| Contract version | \`${document.info.version}\` |
+| Release state | \`${isPublished ? "PUBLISHED" : "CANDIDATE"}\` |
 | OpenAPI version | \`${document.openapi}\` |
 | SHA-256 | \`${candidateHash}\` |
 | Source commit containing the canonical contract | \`${metadata.sourceCommit}\` |
@@ -188,9 +237,26 @@ const handoff = `# BNBU Sports Contract 1.4.0 Candidate Handoff
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The 18 disabled operations remain real authenticated routes that fail closed; this handoff does not authorize Export, profile mutation, location collection, or other unapproved capabilities. Client source code was not changed by this release preparation.
+The 18 disabled operations remain real authenticated routes that fail closed; this handoff does not authorize Export, profile mutation, location collection, or other unapproved capabilities. Client source code was not changed by this contract release.
 `;
-const currentHandoff = `# BNBU Sports Backend Current Handoff
+const currentHandoff = isPublished
+  ? `# BNBU Sports Backend Current Handoff
+
+The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
+
+- Published contract: \`${document.info.version}\`
+- OpenAPI: \`${document.openapi}\`
+- SHA-256: \`${candidateHash}\`
+- Immutable snapshot: \`${historySnapshotRelative}\`
+- Surface: ${metadata.counts.paths} paths / ${metadata.counts.operations} operations / ${metadata.counts.schemas} schemas
+- Runtime: ${metadata.runtime.implementedAndConformant} implemented and conformant / ${metadata.runtime.intentionallyDisabled} intentionally disabled / 0 not implemented
+- Previous published baseline: \`1.3.0-contract\` SHA-256 \`${publishedHash}\`, immutable
+- Breaking gate: PASS, 0 unapproved blockers
+- Release state: published as \`${document.info.version}\`
+
+See \`docs/backend-contracts/releases/1.4.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md\`.
+`
+  : `# BNBU Sports Backend Current Handoff
 
 The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
 
@@ -206,14 +272,29 @@ The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
 See \`docs/backend-contracts/releases/1.4.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md\`.
 `;
 const pointer = `${JSON.stringify(
-  {
-    currentCandidate: document.info.version,
-    sha256: candidateHash,
-    canonicalPath: "docs/backend-contracts/openapi.yaml",
-    releaseManifest:
-      "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
-    publishedBaseline: { version: "1.3.0-contract", sha256: publishedHash },
-  },
+  isPublished
+    ? {
+        currentPublished: document.info.version,
+        releaseState: "PUBLISHED",
+        sha256: candidateHash,
+        canonicalPath: "docs/backend-contracts/openapi.yaml",
+        releaseManifest:
+          "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
+        immutableSnapshot: historySnapshotRelative,
+        previousPublishedBaseline: {
+          version: "1.3.0-contract",
+          sha256: publishedHash,
+        },
+      }
+    : {
+        currentCandidate: document.info.version,
+        releaseState: "CANDIDATE",
+        sha256: candidateHash,
+        canonicalPath: "docs/backend-contracts/openapi.yaml",
+        releaseManifest:
+          "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
+        publishedBaseline: { version: "1.3.0-contract", sha256: publishedHash },
+      },
   null,
   2,
 )}\n`;
