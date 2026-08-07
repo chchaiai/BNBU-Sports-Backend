@@ -1522,6 +1522,18 @@ model AuthRateLimitFact {
   @@map("auth_rate_limit_facts")
 }
 
+model RateLimitWindow {
+  purpose     String   @db.VarChar(32)
+  scopeDigest String   @map("scope_digest") @db.Char(64)
+  count       Int
+  resetAt     DateTime @map("reset_at") @db.Timestamptz(6)
+  updatedAt   DateTime @map("updated_at") @db.Timestamptz(6)
+
+  @@id([purpose, scopeDigest], map: "rate_limit_windows_pkey")
+  @@index([resetAt], map: "rate_limit_windows_reset_at_idx")
+  @@map("rate_limit_windows")
+}
+
 model AppReleasePolicy {
   id                          String    @id @db.Uuid
   platform                    String    @db.VarChar(16)

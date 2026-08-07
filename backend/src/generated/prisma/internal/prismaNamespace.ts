@@ -444,6 +444,7 @@ export const ModelName = {
   StudentSignInChallenge: 'StudentSignInChallenge',
   AccountRecoveryChallenge: 'AccountRecoveryChallenge',
   AuthRateLimitFact: 'AuthRateLimitFact',
+  RateLimitWindow: 'RateLimitWindow',
   AppReleasePolicy: 'AppReleasePolicy',
   Notification: 'Notification',
   NotificationEvent: 'NotificationEvent',
@@ -485,7 +486,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "systemPolicy" | "user" | "studentProfile" | "teacherProfile" | "adminProfile" | "authSession" | "refreshToken" | "semester" | "course" | "classSection" | "classSectionExcludedDate" | "courseInvite" | "enrollment" | "enrollmentStatusEvent" | "exerciseSession" | "exerciseSessionSegment" | "exerciseSessionEvent" | "mediaEvidence" | "exerciseRecord" | "exerciseRecordMedia" | "exerciseRecordDailySlot" | "exerciseRecordEvent" | "reviewRecord" | "mediaUploadSession" | "mediaStatusEvent" | "mediaProcessingAttempt" | "joinCapability" | "officialRosterImport" | "officialRosterEntry" | "rosterAlignmentRun" | "rosterAlignmentPlatformEntry" | "rosterAlignmentResult" | "rosterResolutionEvent" | "idempotencyRecord" | "scoreRule" | "scoreRuleApprovalEvent" | "studentScore" | "studentScoreRevision" | "scoreContribution" | "scoreAdjustment" | "scoreAdjustmentApprovalEvent" | "scorePublicationEvent" | "scoreRecalculationAttempt" | "studentSignInChallenge" | "accountRecoveryChallenge" | "authRateLimitFact" | "appReleasePolicy" | "notification" | "notificationEvent" | "pushDevice" | "pushDeviceEvent" | "userPreference" | "userPreferenceEvent" | "helpArticle" | "feedback" | "feedbackEvent" | "exemptionApplication" | "exemptionApplicationEvent" | "exemptionReviewRecord" | "exemptionApplicationMedia" | "sportCatalogItem" | "locationPrivacyPolicy" | "locationConsent" | "locationConsentEvent" | "locationTrack" | "locationTrackEvent" | "locationSample" | "locationSampleSecret" | "locationSummary" | "locationRetentionEvent" | "auditLog" | "outboxEvent"
+    modelProps: "organization" | "systemPolicy" | "user" | "studentProfile" | "teacherProfile" | "adminProfile" | "authSession" | "refreshToken" | "semester" | "course" | "classSection" | "classSectionExcludedDate" | "courseInvite" | "enrollment" | "enrollmentStatusEvent" | "exerciseSession" | "exerciseSessionSegment" | "exerciseSessionEvent" | "mediaEvidence" | "exerciseRecord" | "exerciseRecordMedia" | "exerciseRecordDailySlot" | "exerciseRecordEvent" | "reviewRecord" | "mediaUploadSession" | "mediaStatusEvent" | "mediaProcessingAttempt" | "joinCapability" | "officialRosterImport" | "officialRosterEntry" | "rosterAlignmentRun" | "rosterAlignmentPlatformEntry" | "rosterAlignmentResult" | "rosterResolutionEvent" | "idempotencyRecord" | "scoreRule" | "scoreRuleApprovalEvent" | "studentScore" | "studentScoreRevision" | "scoreContribution" | "scoreAdjustment" | "scoreAdjustmentApprovalEvent" | "scorePublicationEvent" | "scoreRecalculationAttempt" | "studentSignInChallenge" | "accountRecoveryChallenge" | "authRateLimitFact" | "rateLimitWindow" | "appReleasePolicy" | "notification" | "notificationEvent" | "pushDevice" | "pushDeviceEvent" | "userPreference" | "userPreferenceEvent" | "helpArticle" | "feedback" | "feedbackEvent" | "exemptionApplication" | "exemptionApplicationEvent" | "exemptionReviewRecord" | "exemptionApplicationMedia" | "sportCatalogItem" | "locationPrivacyPolicy" | "locationConsent" | "locationConsentEvent" | "locationTrack" | "locationTrackEvent" | "locationSample" | "locationSampleSecret" | "locationSummary" | "locationRetentionEvent" | "auditLog" | "outboxEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3967,6 +3968,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RateLimitWindow: {
+      payload: Prisma.$RateLimitWindowPayload<ExtArgs>
+      fields: Prisma.RateLimitWindowFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RateLimitWindowFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RateLimitWindowFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        findFirst: {
+          args: Prisma.RateLimitWindowFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RateLimitWindowFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        findMany: {
+          args: Prisma.RateLimitWindowFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>[]
+        }
+        create: {
+          args: Prisma.RateLimitWindowCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        createMany: {
+          args: Prisma.RateLimitWindowCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RateLimitWindowCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>[]
+        }
+        delete: {
+          args: Prisma.RateLimitWindowDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        update: {
+          args: Prisma.RateLimitWindowUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        deleteMany: {
+          args: Prisma.RateLimitWindowDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RateLimitWindowUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RateLimitWindowUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>[]
+        }
+        upsert: {
+          args: Prisma.RateLimitWindowUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitWindowPayload>
+        }
+        aggregate: {
+          args: Prisma.RateLimitWindowAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRateLimitWindow>
+        }
+        groupBy: {
+          args: Prisma.RateLimitWindowGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitWindowGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RateLimitWindowCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitWindowCountAggregateOutputType> | number
+        }
+      }
+    }
     AppReleasePolicy: {
       payload: Prisma.$AppReleasePolicyPayload<ExtArgs>
       fields: Prisma.AppReleasePolicyFieldRefs
@@ -6891,6 +6966,17 @@ export const AuthRateLimitFactScalarFieldEnum = {
 export type AuthRateLimitFactScalarFieldEnum = (typeof AuthRateLimitFactScalarFieldEnum)[keyof typeof AuthRateLimitFactScalarFieldEnum]
 
 
+export const RateLimitWindowScalarFieldEnum = {
+  purpose: 'purpose',
+  scopeDigest: 'scopeDigest',
+  count: 'count',
+  resetAt: 'resetAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RateLimitWindowScalarFieldEnum = (typeof RateLimitWindowScalarFieldEnum)[keyof typeof RateLimitWindowScalarFieldEnum]
+
+
 export const AppReleasePolicyScalarFieldEnum = {
   id: 'id',
   platform: 'platform',
@@ -7708,6 +7794,7 @@ export type GlobalOmitConfig = {
   studentSignInChallenge?: Prisma.StudentSignInChallengeOmit
   accountRecoveryChallenge?: Prisma.AccountRecoveryChallengeOmit
   authRateLimitFact?: Prisma.AuthRateLimitFactOmit
+  rateLimitWindow?: Prisma.RateLimitWindowOmit
   appReleasePolicy?: Prisma.AppReleasePolicyOmit
   notification?: Prisma.NotificationOmit
   notificationEvent?: Prisma.NotificationEventOmit

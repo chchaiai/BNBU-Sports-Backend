@@ -159,12 +159,9 @@ export class EnrollmentsService {
         );
         if (permanent !== null) {
           return this.idempotency.failure(
-            new ApplicationError(
-              permanent.status === 'ACTIVE'
-                ? 'ENROLLMENT_ALREADY_ACTIVE'
-                : 'ENROLLMENT_REJOIN_DISABLED',
-              409,
-            ),
+            permanent.status === 'ACTIVE'
+              ? new ApplicationError('ENROLLMENT_ALREADY_ACTIVE', 409)
+              : new ApplicationError('ENROLLMENT_REJOIN_DISABLED', 409),
           );
         }
         const semesterActive = await this.repository.findActiveForSemesterStudent(

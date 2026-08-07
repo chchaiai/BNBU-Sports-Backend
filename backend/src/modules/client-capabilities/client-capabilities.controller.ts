@@ -376,6 +376,7 @@ export class ClientCapabilitiesController {
   }
 
   @Post('exercise-sessions/:sessionId/location-samples')
+  @HttpCode(200)
   @OperationPolicy('appendExerciseLocationSamples')
   appendExerciseLocationSamples(
     @CurrentPrincipal() principal: AuthenticatedPrincipal,
@@ -390,6 +391,7 @@ export class ClientCapabilitiesController {
   }
 
   @Post('exercise-sessions/:sessionId/location-track/finalize')
+  @HttpCode(200)
   @OperationPolicy('finalizeExerciseLocationTrack')
   finalizeExerciseLocationTrack(
     @CurrentPrincipal() principal: AuthenticatedPrincipal,

@@ -17,6 +17,7 @@ const migrationIds = [
   '0010_export_audit_governance',
   '0011_client_capabilities',
   '0012_ios_auth_release_exemption',
+  '0013_production_rate_limits',
 ];
 const outputPath = path.join(
   backendDirectory,
@@ -56,17 +57,18 @@ const generated = `// Generated from the authoritative Prisma migration manifest
 const generatedWithExerciseRecord = `${generated}export const exerciseRecordMigration = foundationMigrations[6];\nexport const reviewCoreMigration = foundationMigrations[7];\nexport const scoreCoreMigration = foundationMigrations[8];\nexport const exportAuditGovernanceMigration = foundationMigrations[9];\n`;
 const generatedWithClientCapabilities = `${generatedWithExerciseRecord}export const clientCapabilitiesMigration = foundationMigrations[10];\n`;
 const generatedWithIosIntegration = `${generatedWithClientCapabilities}export const iosAuthReleaseExemptionMigration = foundationMigrations[11];\n`;
+const generatedWithProductionRateLimits = `${generatedWithIosIntegration}export const productionRateLimitsMigration = foundationMigrations[12];\n`;
 
 if (checkOnly) {
   if (
     !fs.existsSync(outputPath) ||
-    fs.readFileSync(outputPath, 'utf8') !== generatedWithIosIntegration
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithProductionRateLimits
   ) {
     throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
   }
   process.stdout.write('Generated migration manifest: PASS\n');
 } else {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, generatedWithIosIntegration, 'utf8');
+  fs.writeFileSync(outputPath, generatedWithProductionRateLimits, 'utf8');
   process.stdout.write('Generated migration manifest updated.\n');
 }

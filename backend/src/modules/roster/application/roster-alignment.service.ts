@@ -277,7 +277,7 @@ export class RosterAlignmentService {
               },
             });
             return this.idempotency.failure(
-              new ApplicationError('ROSTER_ALIGNMENT_EXCEPTION', 422, {
+              new ApplicationError('ROSTER_ALIGNMENT_EXCEPTION', 409, {
                 alignmentRunId: runId,
               }),
               {
@@ -386,12 +386,12 @@ export class RosterAlignmentService {
     input: RosterAlignmentListQueryDto,
   ): Promise<PagedResult<RosterAlignmentResultProjection>> {
     if (principal.role === 'STUDENT') this.scopeDenied();
-    if (principal.role === 'ADMIN' && input.search !== undefined) this.scopeDenied();
+    if (principal.role === 'ADMIN' && input.q !== undefined) this.scopeDenied();
     if (input.classSectionId !== undefined) {
       await this.assertReadSection(principal, input.classSectionId);
     }
     const ascending = input.sort === 'createdAt';
-    const search = input.search?.trim();
+    const search = input.q?.trim();
     const binding = {
       resource: 'ROSTER_ALIGNMENT_RESULT' as const,
       organizationId: principal.organizationId,

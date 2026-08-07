@@ -253,6 +253,11 @@ export type AccountRecoveryChallenge = Prisma.AccountRecoveryChallengeModel
  */
 export type AuthRateLimitFact = Prisma.AuthRateLimitFactModel
 /**
+ * Model RateLimitWindow
+ * 
+ */
+export type RateLimitWindow = Prisma.RateLimitWindowModel
+/**
  * Model AppReleasePolicy
  * 
  */

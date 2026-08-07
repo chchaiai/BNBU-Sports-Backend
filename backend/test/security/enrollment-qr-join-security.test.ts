@@ -17,6 +17,7 @@ import type {
   QrJoinPolicyResolver,
 } from '../../src/common/policy/qr-join-policy-resolver.js';
 import { QrJoinPublicRateLimitService } from '../../src/common/rate-limit/qr-join-public-rate-limit.service.js';
+import { InMemoryRateLimitAdapter } from '../../src/common/rate-limit/in-memory-rate-limit.adapter.js';
 import { FixedClock } from '../../src/common/time/clock.js';
 import type { PrismaService } from '../../src/common/database/prisma.service.js';
 import { AccessTokenGuard } from '../../src/modules/auth/access-token.guard.js';
@@ -164,19 +165,19 @@ describe('Stage 12 security negatives', () => {
     for (const value of Object.values(redacted)) assert.equal(value, REDACTED_VALUE);
   });
 
-  it('rate limits public QR keys together and resets only after the configured window', () => {
+  it('rate limits public QR keys together and resets only after the configured window', async () => {
     const clock = new FixedClock(new Date('2026-08-03T00:00:00.000Z'));
-    const limiter = new QrJoinPublicRateLimitService(clock, {
+    const limiter = new QrJoinPublicRateLimitService(new InMemoryRateLimitAdapter(clock), {
       qrJoinPublicRateLimitWindowSeconds: 60,
       qrJoinPublicRateLimitMaxRequests: 2,
     } as RuntimeConfig);
-    limiter.enforce(['invite:a', 'source:b']);
-    limiter.enforce(['invite:a', 'source:b']);
-    assert.throws(
-      () => limiter.enforce(['invite:a', 'source:b']),
+    await limiter.enforce(['invite:a', 'source:b']);
+    await limiter.enforce(['invite:a', 'source:b']);
+    await assert.rejects(
+      limiter.enforce(['invite:a', 'source:b']),
       (error: unknown) => error instanceof ApplicationError && error.code === 'AUTH_RATE_LIMITED',
     );
     clock.advanceMilliseconds(60_000);
-    limiter.enforce(['invite:a', 'source:b']);
+    await limiter.enforce(['invite:a', 'source:b']);
   });
 });

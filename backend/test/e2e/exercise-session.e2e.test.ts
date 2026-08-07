@@ -190,6 +190,9 @@ describe('ExerciseSession HTTP E2E', () => {
     );
 
     const sessionId = String(initial.id);
+    const fetched = await request(`/api/v1/exercise-sessions/${sessionId}`, authenticated(token));
+    assert.equal(fetched.status, 200);
+    assert.equal(object(fetched.body.data).id, sessionId);
     const active = await request('/api/v1/exercise-sessions/active', authenticated(token));
     assert.equal(object(active.body.data).id, sessionId);
     const paused = await request(

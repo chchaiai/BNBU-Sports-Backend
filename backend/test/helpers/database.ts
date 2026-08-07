@@ -40,6 +40,7 @@ export function createTestPrisma(databaseUrl: string): PrismaClient {
 export async function resetFoundationDatabase(prisma: PrismaClient): Promise<void> {
   await prisma.$executeRawUnsafe(`
     TRUNCATE TABLE
+      rate_limit_windows,
       location_retention_events,
       location_summaries,
       location_sample_secrets,

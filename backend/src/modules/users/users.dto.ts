@@ -82,17 +82,17 @@ export class UpdateCurrentProfileRequestDto {
 }
 
 export class UpdateStudentRequestDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @Length(1, 100)
   fullName?: string;
 
-  @IsOptional()
-  @IsIn(['MALE', 'FEMALE', 'OTHER', 'UNSPECIFIED'])
+  @ValidateIf((_object, value: unknown) => value !== undefined)
+  @IsIn(['MALE', 'FEMALE', 'OTHER'])
   gender?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Type(() => Number)
   @IsInt()
   @Min(2000)

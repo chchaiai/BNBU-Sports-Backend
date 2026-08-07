@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'node:net';
 import { after, before, beforeEach, describe, it } from 'node:test';
 
@@ -158,6 +159,17 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
     assert.equal(JSON.stringify(me.body).includes('passwordHash'), false);
     assert.equal(JSON.stringify(me.body).includes('tokenVersion'), false);
 
+    const organization = await request('/api/v1/organizations/current', {
+      headers: { authorization: `Bearer ${data.accessToken}` },
+    });
+    assert.equal(organization.status, 200);
+    assert.equal(asObject(organization.body.data).id, fixture.organizationId);
+    const semester = await request('/api/v1/semesters/current', {
+      headers: { authorization: `Bearer ${data.accessToken}` },
+    });
+    assert.equal(semester.status, 200);
+    assert.equal(asObject(semester.body.data).id, fixture.semesterId);
+
     assert.equal(await prisma.authSession.count(), 1);
     assert.equal(await prisma.refreshToken.count(), 1);
     assert.equal(
@@ -175,6 +187,87 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
       (await prisma.refreshToken.findFirstOrThrow()).tokenHash.includes(data.refreshToken),
       false,
     );
+  });
+
+  it('validates unauthenticated access responses for every secured operation', async () => {
+    const document = JSON.parse(
+      readFileSync(
+        new URL('../../src/generated/openapi.document.generated.json', import.meta.url),
+        'utf8',
+      ),
+    ) as {
+      security?: Record<string, string[]>[];
+      paths: Record<
+        string,
+        Record<string, { operationId?: string; security?: Record<string, string[]>[] }>
+      >;
+    };
+    const methods = new Set(['get', 'post', 'put', 'patch', 'delete']);
+    const secured = Object.entries(document.paths).flatMap(([template, pathItem]) =>
+      Object.entries(pathItem)
+        .filter(
+          ([method, operation]) =>
+            methods.has(method) && ((operation.security ?? document.security)?.length ?? 0) > 0,
+        )
+        .map(([method, operation]) => ({
+          method: method.toUpperCase(),
+          operationId: operation.operationId ?? 'missing-operation-id',
+          path: template.replaceAll(/\{[^}]+\}/g, uuidv7()),
+          securityScheme: Object.keys((operation.security ?? document.security)?.[0] ?? {})[0],
+        })),
+    );
+    assert.equal(secured.length, 108);
+
+    for (const operation of secured) {
+      const result = await request(`/api/v1${operation.path}`, {
+        method: operation.method,
+        headers: { 'content-type': 'application/json' },
+        ...(['POST', 'PUT', 'PATCH'].includes(operation.method) ? { body: '{}' } : {}),
+      });
+      assert.equal(
+        result.status,
+        401,
+        `${operation.operationId} returned ${result.status}: ${JSON.stringify(result.body)}`,
+      );
+      assert.equal(
+        result.body.code,
+        operation.securityScheme === 'JoinCapability'
+          ? 'AUTH_JOIN_CAPABILITY_INVALID'
+          : 'AUTH_REQUIRED',
+        operation.operationId,
+      );
+    }
+  });
+
+  it('validates error responses for public operations with request input', async () => {
+    const publicFailures: { path: string; method: 'GET' | 'POST'; body?: string }[] = [
+      {
+        path: `/api/v1/course-invites/${uuidv7()}/join-capabilities`,
+        method: 'POST',
+        body: '{}',
+      },
+      { path: '/api/v1/auth/student-sign-in-codes', method: 'POST', body: '{}' },
+      { path: '/api/v1/auth/student-sign-in-codes/verify', method: 'POST', body: '{}' },
+      { path: '/api/v1/auth/account-recovery-requests', method: 'POST', body: '{}' },
+      {
+        path: '/api/v1/auth/account-recovery-requests/complete',
+        method: 'POST',
+        body: '{}',
+      },
+      { path: '/api/v1/help-articles?limit=0', method: 'GET' },
+      { path: `/api/v1/help-articles/${uuidv7()}`, method: 'GET' },
+    ];
+
+    for (const failure of publicFailures) {
+      const response = await request(failure.path, {
+        method: failure.method,
+        ...(failure.body === undefined
+          ? {}
+          : { headers: { 'content-type': 'application/json' }, body: failure.body }),
+      });
+      assert.ok(response.status >= 400, `${failure.path} returned ${response.status}`);
+      assert.equal(typeof response.body.code, 'string', failure.path);
+    }
   });
 
   it('returns stable generic errors for wrong passwords and a specific disabled-account result', async () => {
@@ -202,7 +295,7 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
       headers: { 'content-type': 'application/json', 'idempotency-key': uuidv7() },
       body: JSON.stringify({ account: fixture.teacherEmail, password: TEST_PASSWORD }),
     });
-    assert.equal(disabled.status, 401);
+    assert.equal(disabled.status, 403);
     assert.equal(disabled.body.code, 'AUTH_ACCOUNT_DISABLED');
   });
 

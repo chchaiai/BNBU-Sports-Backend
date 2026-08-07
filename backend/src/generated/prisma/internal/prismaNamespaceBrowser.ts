@@ -98,6 +98,7 @@ export const ModelName = {
   StudentSignInChallenge: 'StudentSignInChallenge',
   AccountRecoveryChallenge: 'AccountRecoveryChallenge',
   AuthRateLimitFact: 'AuthRateLimitFact',
+  RateLimitWindow: 'RateLimitWindow',
   AppReleasePolicy: 'AppReleasePolicy',
   Notification: 'Notification',
   NotificationEvent: 'NotificationEvent',
@@ -1101,6 +1102,17 @@ export const AuthRateLimitFactScalarFieldEnum = {
 } as const
 
 export type AuthRateLimitFactScalarFieldEnum = (typeof AuthRateLimitFactScalarFieldEnum)[keyof typeof AuthRateLimitFactScalarFieldEnum]
+
+
+export const RateLimitWindowScalarFieldEnum = {
+  purpose: 'purpose',
+  scopeDigest: 'scopeDigest',
+  count: 'count',
+  resetAt: 'resetAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RateLimitWindowScalarFieldEnum = (typeof RateLimitWindowScalarFieldEnum)[keyof typeof RateLimitWindowScalarFieldEnum]
 
 
 export const AppReleasePolicyScalarFieldEnum = {

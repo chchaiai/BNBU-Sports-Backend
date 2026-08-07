@@ -47,7 +47,7 @@ export class ExerciseRecordListQueryDto {
   @IsOptional()
   @IsString()
   @MaxLength(200)
-  search?: string;
+  q?: string;
 
   @IsOptional()
   @IsUUID('7')
@@ -115,11 +115,11 @@ export class CreateExerciseRecordRequestDto extends RecordContentDto {
 }
 
 export class UpdateExerciseRecordRequestDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsIn(CREDIT_TYPES)
   creditType?: (typeof CREDIT_TYPES)[number];
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsString()
   @Matches(/^[A-Z][A-Z0-9_]*$/)
   @MaxLength(64)
@@ -131,7 +131,7 @@ export class UpdateExerciseRecordRequestDto {
   @Matches(/\S/u)
   sportName?: string | null;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsString()
   @MinLength(1)
   @MaxLength(200)

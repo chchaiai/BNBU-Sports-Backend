@@ -289,12 +289,9 @@ export class ExerciseSessionsService {
             ) {
               await this.appendRejectedReconcile(transaction, session, principal, facts, 1);
               return this.idempotency.failure(
-                new ApplicationError(
-                  event.eventType === 'STATE_SYNC'
-                    ? 'SESSION_EVENT_OUT_OF_ORDER'
-                    : 'SESSION_RECONCILIATION_REQUIRED',
-                  409,
-                ),
+                event.eventType === 'STATE_SYNC'
+                  ? new ApplicationError('SESSION_EVENT_OUT_OF_ORDER', 409)
+                  : new ApplicationError('SESSION_RECONCILIATION_REQUIRED', 409),
               );
             }
           }

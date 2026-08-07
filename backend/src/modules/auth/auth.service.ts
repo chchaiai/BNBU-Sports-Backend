@@ -1,8 +1,10 @@
 import { randomBytes } from 'node:crypto';
 
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { AuditService } from '../../common/audit/audit.service.js';
+import type { RuntimeConfig } from '../../common/config/environment.js';
+import { RUNTIME_CONFIG } from '../../common/config/runtime-config.module.js';
 import { PrismaService } from '../../common/database/prisma.service.js';
 import { ApplicationError } from '../../common/errors/application-error.js';
 import type { AuthenticatedPrincipal, UserRole } from '../../common/http/request-context.js';
@@ -76,6 +78,7 @@ export class AuthService {
     private readonly digest: SecureDigestService,
     private readonly clock: Clock,
     private readonly idGenerator: IdGenerator,
+    @Inject(RUNTIME_CONFIG) private readonly config: RuntimeConfig,
   ) {}
 
   async establishStudentSession(
@@ -163,7 +166,7 @@ export class AuthService {
 
   async passwordLogin(input: PasswordLoginRequest, facts: RequestFacts): Promise<AuthProjection> {
     const account = input.account.trim().toLowerCase();
-    this.enforceRateLimit([
+    await this.enforceRateLimit([
       `login:account:${this.digest.digest('auth-rate-account', account)}`,
       `login:source:${this.digest.digest('auth-rate-source', facts.sourceIp ?? 'unavailable')}`,
     ]);
@@ -193,7 +196,7 @@ export class AuthService {
     }
     if (user.status === 'DISABLED') {
       await this.recordAuthenticationFailure(user, facts, 'AUTH_ACCOUNT_DISABLED');
-      throw new ApplicationError('AUTH_ACCOUNT_DISABLED', 401);
+      throw new ApplicationError('AUTH_ACCOUNT_DISABLED', 403);
     }
     if (user.status !== 'ACTIVE') {
       throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500, {
@@ -297,7 +300,7 @@ export class AuthService {
 
   async refresh(input: RefreshRequest, facts: RequestFacts): Promise<AuthProjection> {
     const tokenHash = this.digest.digest('refresh-token', input.refreshToken);
-    this.enforceRateLimit([
+    await this.enforceRateLimit([
       `refresh:token:${tokenHash}`,
       `refresh:source:${this.digest.digest('auth-rate-source', facts.sourceIp ?? 'unavailable')}`,
     ]);
@@ -522,10 +525,9 @@ export class AuthService {
         payload: { requestId: facts.requestId, userId: user.id, sessionId: session.id },
       });
       return this.idempotency.failure(
-        new ApplicationError(
-          user.status === 'LOCKED' ? 'AUTH_CREDENTIAL_INVALID' : 'AUTH_ACCOUNT_DISABLED',
-          401,
-        ),
+        user.status === 'LOCKED'
+          ? new ApplicationError('AUTH_CREDENTIAL_INVALID', 401)
+          : new ApplicationError('AUTH_ACCOUNT_DISABLED', 403),
         references,
       );
     }
@@ -664,15 +666,17 @@ export class AuthService {
     );
   }
 
-  private enforceRateLimit(keys: readonly string[]): void {
-    let retryAfterSeconds = 0;
-    for (const key of keys) {
-      const decision = this.rateLimits.consume(key);
-      if (!decision.allowed)
-        retryAfterSeconds = Math.max(retryAfterSeconds, decision.retryAfterSeconds);
-    }
-    if (retryAfterSeconds > 0) {
-      throw new ApplicationError('AUTH_RATE_LIMITED', 429, { retryAfterSeconds });
+  private async enforceRateLimit(keys: readonly string[]): Promise<void> {
+    const decision = await this.rateLimits.consume({
+      purpose: 'AUTHENTICATION',
+      keys,
+      windowSeconds: this.config.authRateLimitWindowSeconds,
+      maximumAttempts: this.config.authRateLimitMaxAttempts,
+    });
+    if (!decision.allowed) {
+      throw new ApplicationError('AUTH_RATE_LIMITED', 429, {
+        retryAfterSeconds: decision.retryAfterSeconds,
+      });
     }
   }
 

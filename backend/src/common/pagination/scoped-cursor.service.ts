@@ -20,7 +20,10 @@ export interface CursorBinding {
     | 'AUDIT_LOG'
     | 'NOTIFICATION'
     | 'FEEDBACK'
-    | 'EXEMPTION_APPLICATION';
+    | 'EXEMPTION_APPLICATION'
+    | 'SCORE_RULE'
+    | 'STUDENT_SCORE'
+    | 'SCORE_ADJUSTMENT';
   organizationId: string;
   principalId: string;
   role: string;

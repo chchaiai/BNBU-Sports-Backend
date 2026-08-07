@@ -253,6 +253,44 @@ describe('Stage 18 Score HTTP E2E', () => {
     assert.equal(created.status, 201, JSON.stringify(created.body));
     const ruleId = String(object(created.body.data).id);
 
+    const listedRules = await request(
+      `/api/v1/class-sections/${fixture.teacherAActiveSectionId}/score-rules`,
+      authenticated(creator),
+    );
+    assert.equal(listedRules.status, 200);
+    assert.equal((listedRules.body.data as unknown[]).length, 1);
+    const fetchedRule = await request(`/api/v1/score-rules/${ruleId}`, authenticated(creator));
+    assert.equal(fetchedRule.status, 200);
+    assert.equal(object(fetchedRule.body.data).id, ruleId);
+
+    const rejectCandidate = await request(
+      `/api/v1/class-sections/${fixture.teacherAActiveSectionId}/score-rules`,
+      authenticated(
+        creator,
+        'POST',
+        { ruleCode: 'REJECT_V1', displayName: 'Synthetic Rejected V1' },
+        uuidv7(),
+      ),
+    );
+    assert.equal(rejectCandidate.status, 201);
+    const rejectRuleId = String(object(rejectCandidate.body.data).id);
+    const submittedRejectCandidate = await request(
+      `/api/v1/score-rules/${rejectRuleId}/submit-approval`,
+      authenticated(creator, 'POST', { expectedVersion: 1 }, uuidv7()),
+    );
+    assert.equal(submittedRejectCandidate.status, 200);
+    const rejectedRule = await request(
+      `/api/v1/score-rules/${rejectRuleId}/reject`,
+      authenticated(
+        approverOne,
+        'POST',
+        { reason: 'Synthetic governance rejection', expectedVersion: 2 },
+        uuidv7(),
+      ),
+    );
+    assert.equal(rejectedRule.status, 200, JSON.stringify(rejectedRule.body));
+    assert.equal(object(rejectedRule.body.data).status, 'REJECTED');
+
     const submitted = await request(
       `/api/v1/score-rules/${ruleId}/submit-approval`,
       authenticated(creator, 'POST', { expectedVersion: 1 }, uuidv7()),
@@ -301,6 +339,17 @@ describe('Stage 18 Score HTTP E2E', () => {
     );
     assert.equal(scoreList.status, 200);
     assert.equal((scoreList.body.data as unknown[]).length, 1);
+    assert.equal(object((scoreList.body.data as unknown[])[0]).status, 'CALCULATED');
+    const calculatedScores = await request(
+      `/api/v1/student-scores?classSectionId=${fixture.teacherAActiveSectionId}&status=CALCULATED`,
+      authenticated(teacher),
+    );
+    const unpublishedScores = await request(
+      `/api/v1/student-scores?classSectionId=${fixture.teacherAActiveSectionId}&status=PUBLISHED`,
+      authenticated(teacher),
+    );
+    assert.equal((calculatedScores.body.data as unknown[]).length, 1);
+    assert.equal((unpublishedScores.body.data as unknown[]).length, 0);
 
     const manualKey = uuidv7();
     const manual = await request(
@@ -319,7 +368,16 @@ describe('Stage 18 Score HTTP E2E', () => {
       authenticated(teacher, 'POST', { expectedVersion: 2 }, uuidv7()),
     );
     assert.equal(published.status, 200, JSON.stringify(published.body));
-    const firstPublishedRevision = String(object(object(published.body.data).publishedRevision).id);
+    assert.equal(object(published.body.data).status, 'PUBLISHED');
+    const firstPublication = await prisma.studentScore.findUniqueOrThrow({
+      where: { id: scoreRow.id },
+    });
+    const firstPublishedRevision = String(firstPublication.publishedRevisionId);
+    const publishedScores = await request(
+      `/api/v1/student-scores?classSectionId=${fixture.teacherAActiveSectionId}&status=PUBLISHED`,
+      authenticated(teacher),
+    );
+    assert.equal((publishedScores.body.data as unknown[]).length, 1);
 
     const reopened = await request(
       `/api/v1/exercise-records/${record.recordId}/reviews/reopen`,
@@ -373,6 +431,12 @@ describe('Stage 18 Score HTTP E2E', () => {
     );
     assert.equal(adjustment.status, 201, JSON.stringify(adjustment.body));
     const adjustmentId = String(object(adjustment.body.data).id);
+    const listedAdjustments = await request(
+      `/api/v1/student-scores/${scoreRow.id}/adjustments`,
+      authenticated(teacher),
+    );
+    assert.equal(listedAdjustments.status, 200);
+    assert.equal((listedAdjustments.body.data as unknown[]).length, 1);
     const teacherSelfApproval = await request(
       `/api/v1/score-adjustments/${adjustmentId}/approve`,
       authenticated(teacher, 'POST', { expectedVersion: 1 }, uuidv7()),
@@ -396,6 +460,37 @@ describe('Stage 18 Score HTTP E2E', () => {
       authenticated(teacher, 'POST', { expectedVersion: adjustedScore.version }, uuidv7()),
     );
     assert.equal(adjustedPublication.status, 200, JSON.stringify(adjustedPublication.body));
+    const afterAdjustedPublication = await prisma.studentScore.findUniqueOrThrow({
+      where: { id: scoreRow.id },
+    });
+    const rejectionAdjustment = await request(
+      `/api/v1/student-scores/${scoreRow.id}/adjustments`,
+      authenticated(
+        teacher,
+        'POST',
+        {
+          adjustmentType: 'FINAL_SCORE_DELTA',
+          adjustmentValue: -0.25,
+          reasonCode: 'CALCULATION_ERROR',
+          reason: 'Synthetic rejected adjustment',
+          evidenceReference: 'audit:case/SYNTH-SCORE-REJECT-001',
+          expectedVersion: afterAdjustedPublication.version,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(rejectionAdjustment.status, 201, JSON.stringify(rejectionAdjustment.body));
+    const rejectedAdjustment = await request(
+      `/api/v1/score-adjustments/${String(object(rejectionAdjustment.body.data).id)}/reject`,
+      authenticated(
+        approverTwo,
+        'POST',
+        { reason: 'Synthetic adjustment rejection', expectedVersion: 1 },
+        uuidv7(),
+      ),
+    );
+    assert.equal(rejectedAdjustment.status, 200, JSON.stringify(rejectedAdjustment.body));
+    assert.equal(object(rejectedAdjustment.body.data).status, 'REJECTED');
     const finalScore = await prisma.studentScore.findUniqueOrThrow({ where: { id: scoreRow.id } });
     const correction = await request(
       `/api/v1/student-scores/${scoreRow.id}/open-correction`,
@@ -416,14 +511,10 @@ describe('Stage 18 Score HTTP E2E', () => {
     );
     assert.equal(studentRead.status, 200, JSON.stringify(studentRead.body));
     const studentProjection = object(studentRead.body.data);
-    assert.equal(object(studentProjection.publishedScore).finalScore, 6.25);
-    for (const forbidden of [
-      'studentId',
-      'workingRevision',
-      'sourceFingerprint',
-      'approvalEvents',
-      'internalNote',
-    ]) {
+    assert.equal(studentProjection.finalScore, 6.25);
+    assert.equal(studentProjection.status, 'PUBLISHED');
+    assert.equal(typeof studentProjection.sourceFingerprint, 'string');
+    for (const forbidden of ['studentId', 'workingRevision', 'approvalEvents', 'internalNote']) {
       assert.equal(Object.hasOwn(studentProjection, forbidden), false);
     }
 
@@ -432,7 +523,7 @@ describe('Stage 18 Score HTTP E2E', () => {
       await prisma.scorePublicationEvent.count({ where: { studentScoreId: scoreRow.id } }),
       3,
     );
-    assert.equal(await prisma.scoreAdjustment.count({ where: { studentScoreId: scoreRow.id } }), 1);
+    assert.equal(await prisma.scoreAdjustment.count({ where: { studentScoreId: scoreRow.id } }), 2);
     assert.equal(await prisma.exerciseSession.count({ where: { id: record.sessionId } }), 1);
     assert.equal(await prisma.exerciseRecord.count({ where: { id: record.recordId } }), 1);
   });

@@ -5,6 +5,7 @@ import { createServer } from 'node:net';
 import { after, before, beforeEach, describe, it } from 'node:test';
 
 import { v7 as uuidv7 } from 'uuid';
+import { importPKCS8, SignJWT } from 'jose';
 import { AuthCodeCrypto } from '../../src/modules/client-capabilities/auth-code.crypto.js';
 
 import type { PrismaClient } from '../../src/generated/prisma/client.js';
@@ -18,7 +19,9 @@ import {
   foundationEnvironment,
   requireTestDatabaseUrl,
   TEST_PASSWORD,
+  TEST_PRIVATE_KEY,
 } from '../helpers/test-environment.js';
+import { seedSubmittedExerciseRecord } from '../helpers/exercise-review.js';
 import { seedExerciseSessionStudent } from '../helpers/exercise-session.js';
 
 interface HttpResult {
@@ -285,6 +288,30 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     assert.equal(draft.status, 'DRAFT');
     assert.deepEqual(draft.mediaIds, [mediaId]);
 
+    const listedDrafts = await request('/api/v1/exemption-applications?status=DRAFT&limit=20', {
+      headers: authorization(studentAuth.accessToken),
+    });
+    assert.equal(listedDrafts.status, 200);
+    assert.equal(array(listedDrafts.body.data).length, 1);
+    const fetchedDraft = await request(`/api/v1/exemption-applications/${String(draft.id)}`, {
+      headers: authorization(studentAuth.accessToken),
+    });
+    assert.equal(fetchedDraft.status, 200);
+    const updatedDraft = await request(`/api/v1/exemption-applications/${String(draft.id)}`, {
+      method: 'PATCH',
+      headers: {
+        ...authorization(studentAuth.accessToken),
+        'content-type': 'application/json',
+        'idempotency-key': uuidv7(),
+      },
+      body: JSON.stringify({
+        reason: 'Updated synthetic exemption evidence for iOS integration.',
+        expectedVersion: draft.version,
+      }),
+    });
+    assert.equal(updatedDraft.status, 200);
+    const updatedDraftData = object(updatedDraft.body.data);
+
     const submitted = await request(`/api/v1/exemption-applications/${String(draft.id)}/submit`, {
       method: 'POST',
       headers: {
@@ -292,7 +319,7 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
         'content-type': 'application/json',
         'idempotency-key': uuidv7(),
       },
-      body: JSON.stringify({ expectedVersion: draft.version }),
+      body: JSON.stringify({ expectedVersion: updatedDraftData.version }),
     });
     assert.equal(submitted.status, 200);
     assert.equal(object(submitted.body.data).status, 'SUBMITTED');
@@ -328,6 +355,19 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
 
   it('completes recovery only for a teacher and revokes prior sessions', async () => {
     const { data: existingSession } = await login();
+    const requested = await request('/api/v1/auth/account-recovery-requests', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'idempotency-key': uuidv7() },
+      body: JSON.stringify({
+        organizationCode: 'BNBU-TEST',
+        account: 'absent.recovery.synthetic@invalid.test',
+        requestedRole: 'TEACHER',
+        channel: 'EMAIL',
+        locale: 'en',
+      }),
+    });
+    assert.equal(requested.status, 202);
+    assert.equal(typeof object(requested.body.data).recoveryId, 'string');
     const recoveryId = uuidv7();
     const code = '271828';
     const now = new Date();
@@ -608,6 +648,9 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     assert.equal(help.status, 200);
     assert.equal(array(help.body.data).length, 1);
     assert.equal(object(array(help.body.data)[0]).id, articleId);
+    const helpDetail = await request(`/api/v1/help-articles/${articleId}?locale=en`);
+    assert.equal(helpDetail.status, 200);
+    assert.equal(object(helpDetail.body.data).id, articleId);
     await assert.rejects(() =>
       prisma.helpArticle.create({
         data: {
@@ -641,6 +684,11 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     });
     assert.equal(feedback.status, 201);
     const feedbackId = String(object(feedback.body.data).id);
+    const fetchedFeedback = await request(`/api/v1/feedback/${feedbackId}`, {
+      headers: authorization(auth.accessToken),
+    });
+    assert.equal(fetchedFeedback.status, 200);
+    assert.equal(object(fetchedFeedback.body.data).id, feedbackId);
     const foreignFeedbackId = uuidv7();
     await prisma.feedback.create({
       data: {
@@ -683,5 +731,91 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
         data: { content: 'Direct rewrite must fail.', version: { increment: 1 } },
       }),
     );
+  });
+
+  it('keeps all location and conversion capabilities explicitly fail-closed', async () => {
+    const resources = await seedSubmittedExerciseRecord(prisma, fixture, 'LOC-DENY');
+    const seconds = Math.floor(Date.now() / 1000);
+    const accessToken = await new SignJWT({
+      organizationId: fixture.organizationId,
+      role: 'STUDENT',
+      sessionId: resources.studentAuthSessionId,
+      tokenVersion: 0,
+    })
+      .setProtectedHeader({ alg: 'EdDSA', typ: 'JWT' })
+      .setSubject(resources.studentUserId)
+      .setJti(uuidv7())
+      .setIssuer('bnbu-sports-test')
+      .setAudience('bnbu-sports-test-clients')
+      .setIssuedAt(seconds)
+      .setExpirationTime(seconds + 600)
+      .sign(await importPKCS8(TEST_PRIVATE_KEY, 'EdDSA'));
+    const { data: adminAuth } = await login(fixture.adminEmail);
+    const sessionId = resources.sessionId;
+    const recordId = resources.recordId;
+    const now = new Date().toISOString();
+    const probes: { path: string; init?: RequestInit; accessToken?: string }[] = [
+      { path: '/api/v1/sport-catalog' },
+      { path: '/api/v1/activity-conversion-rules' },
+      {
+        path: `/api/v1/exercise-sessions/${sessionId}/location-track`,
+        init: {
+          method: 'POST',
+          body: JSON.stringify({ consentPolicyVersion: 'synthetic-v1', clientObservedAt: now }),
+        },
+      },
+      {
+        path: `/api/v1/exercise-sessions/${sessionId}/location-samples`,
+        init: {
+          method: 'POST',
+          body: JSON.stringify({
+            samples: [
+              {
+                sampleId: uuidv7(),
+                observedAt: now,
+                latitude: 22.35,
+                longitude: 113.53,
+                accuracyMeters: 10,
+              },
+            ],
+            expectedVersion: 1,
+          }),
+        },
+      },
+      {
+        path: `/api/v1/exercise-sessions/${sessionId}/location-track/finalize`,
+        init: {
+          method: 'POST',
+          body: JSON.stringify({ clientObservedAt: now, expectedVersion: 1 }),
+        },
+      },
+      { path: `/api/v1/exercise-records/${recordId}/location-summary` },
+      { path: '/api/v1/location-privacy-policy' },
+      {
+        path: '/api/v1/location-privacy-policy',
+        accessToken: adminAuth.accessToken,
+        init: {
+          method: 'PATCH',
+          body: JSON.stringify({
+            policyVersion: 'synthetic-v1',
+            collectionEnabled: false,
+            expectedVersion: 1,
+          }),
+        },
+      },
+    ];
+
+    for (const probe of probes) {
+      const mutation = probe.init?.method !== undefined;
+      const response = await request(probe.path, {
+        ...probe.init,
+        headers: {
+          ...authorization(probe.accessToken ?? accessToken),
+          ...(mutation ? { 'content-type': 'application/json', 'idempotency-key': uuidv7() } : {}),
+        },
+      });
+      assert.equal(response.status, 503, `${probe.path}: ${JSON.stringify(response.body)}`);
+      assert.equal(response.body.code, 'SYSTEM_MODE_UNSUPPORTED');
+    }
   });
 });

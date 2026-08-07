@@ -1,7 +1,10 @@
 import type { AuthenticatedPrincipal } from '../../../common/http/request-context.js';
+import { ApplicationError } from '../../../common/errors/application-error.js';
 import type {
   ScoreAdjustment,
   ScoreAdjustmentApprovalEvent,
+  ScoreContribution,
+  ScorePublicationEvent,
   ScoreRule,
   ScoreRuleApprovalEvent,
   StudentScore,
@@ -9,9 +12,11 @@ import type {
 } from '../../../generated/prisma/client.js';
 
 type RuleWithEvents = ScoreRule & { approvalEvents: ScoreRuleApprovalEvent[] };
+type RevisionWithContributions = StudentScoreRevision & { contributions: ScoreContribution[] };
 type ScoreWithRevisions = StudentScore & {
-  currentWorkingRevision: StudentScoreRevision | null;
-  publishedRevision: StudentScoreRevision | null;
+  currentWorkingRevision: RevisionWithContributions | null;
+  publishedRevision: RevisionWithContributions | null;
+  publicationEvents: ScorePublicationEvent[];
 };
 type AdjustmentWithEvents = ScoreAdjustment & {
   approvalEvents: ScoreAdjustmentApprovalEvent[];
@@ -49,22 +54,45 @@ export function projectScoreRule(rule: RuleWithEvents): Record<string, unknown> 
   };
 }
 
-function projectRevision(revision: StudentScoreRevision | null): Record<string, unknown> | null {
-  if (revision === null) return null;
+function creditedSeconds(revision: RevisionWithContributions, creditType: string): number {
+  return revision.contributions
+    .filter((contribution) => contribution.creditType === creditType)
+    .reduce((total, contribution) => total + Number(contribution.contributionSeconds), 0);
+}
+
+function projectRevision(
+  score: ScoreWithRevisions,
+  revision: RevisionWithContributions,
+  options: { published: boolean; hideUnpublishedScore: boolean },
+): Record<string, unknown> {
+  const publication = options.published ? score.publicationEvents.at(0) : undefined;
   return {
-    id: revision.id,
+    id: score.id,
+    organizationId: score.organizationId,
+    enrollmentId: score.enrollmentId,
     scoreRuleId: revision.scoreRuleId,
     calculationRevision: revision.calculationRevision,
+    validCourseDurationSeconds: creditedSeconds(revision, 'COURSE_RELATED'),
+    validGeneralDurationSeconds: creditedSeconds(revision, 'GENERAL'),
     totalValidDurationSeconds: Number(revision.totalValidCreditedSeconds),
     scoringSeconds: Number(revision.scoringSeconds),
     excessSeconds: Number(revision.excessSeconds),
     qualificationStatus: revision.qualificationStatus,
-    baseScore: decimal(revision.calculatedScore),
-    adjustmentTotal: decimal(revision.adjustedScore.minus(revision.calculatedScore)),
-    finalScore: decimal(revision.finalScore),
-    status: revision.status,
-    calculatedAt: revision.calculatedAt.toISOString(),
+    baseScore: options.hideUnpublishedScore ? null : decimal(revision.calculatedScore),
+    adjustmentTotal: options.hideUnpublishedScore
+      ? 0
+      : decimal(revision.adjustedScore.minus(revision.calculatedScore)),
+    finalScore: options.hideUnpublishedScore ? null : decimal(revision.finalScore),
+    status: options.hideUnpublishedScore
+      ? 'NOT_CALCULATED'
+      : options.published
+        ? 'PUBLISHED'
+        : revision.status,
+    calculatedAt: options.hideUnpublishedScore ? null : revision.calculatedAt.toISOString(),
+    publishedAt: publication?.createdAt.toISOString() ?? null,
+    lockedAt: null,
     sourceFingerprint: revision.sourceFingerprint,
+    version: score.version,
   };
 }
 
@@ -72,36 +100,21 @@ export function projectStudentScore(
   score: ScoreWithRevisions,
   principal: AuthenticatedPrincipal,
 ): Record<string, unknown> {
-  const working = projectRevision(score.currentWorkingRevision);
-  const published = projectRevision(score.publishedRevision);
   if (principal.role === 'STUDENT') {
-    const progress = score.currentWorkingRevision;
-    return {
-      id: score.id,
-      organizationId: score.organizationId,
-      enrollmentId: score.enrollmentId,
-      classSectionId: score.classSectionId,
-      totalValidDurationSeconds: Number(progress?.totalValidCreditedSeconds ?? 0n),
-      scoringSeconds: Number(progress?.scoringSeconds ?? 0n),
-      excessSeconds: Number(progress?.excessSeconds ?? 0n),
-      qualificationStatus: progress?.qualificationStatus ?? 'NOT_QUALIFIED',
-      publishedScore: published,
-      version: score.version,
-    };
+    const revision = score.publishedRevision ?? score.currentWorkingRevision;
+    if (revision === null) throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
+    return projectRevision(score, revision, {
+      published: score.publishedRevision !== null,
+      hideUnpublishedScore: score.publishedRevision === null,
+    });
   }
-  return {
-    id: score.id,
-    organizationId: score.organizationId,
-    enrollmentId: score.enrollmentId,
-    classSectionId: score.classSectionId,
-    studentId: score.studentId,
-    workingRevision: working,
-    publishedRevision: published,
-    hasUnpublishedChanges:
-      score.currentWorkingRevisionId !== null &&
-      score.currentWorkingRevisionId !== score.publishedRevisionId,
-    version: score.version,
-  };
+  if (score.currentWorkingRevision === null)
+    throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
+  const published = score.currentWorkingRevisionId === score.publishedRevisionId;
+  return projectRevision(score, score.currentWorkingRevision, {
+    published,
+    hideUnpublishedScore: false,
+  });
 }
 
 export function projectScoreAdjustment(adjustment: AdjustmentWithEvents): Record<string, unknown> {

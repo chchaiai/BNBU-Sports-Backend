@@ -49,7 +49,7 @@ export class JoinCapabilitiesService {
       inviteId: invite.inviteId,
       ...identity,
     });
-    this.rateLimits.enforce([
+    await this.rateLimits.enforce([
       `qr:issue:identity:${identityFingerprint}`,
       `qr:issue:source-identity:${this.crypto.opaqueReference('source-identity', `${facts.sourceIp ?? 'unavailable'}\0${identityFingerprint}`)}`,
     ]);

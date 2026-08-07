@@ -341,6 +341,49 @@ describe('ExerciseRecord HTTP E2E', () => {
     assert.equal((listed.body.data as unknown[]).length, 1);
   });
 
+  it('discards a draft atomically with append-only evidence', async () => {
+    const token = await studentToken();
+    const created = await request(
+      '/api/v1/exercise-records',
+      authenticated(
+        token,
+        'POST',
+        {
+          sessionId,
+          creditType: 'GENERAL',
+          sportType: 'RUNNING',
+          description: 'Synthetic discard path',
+          clientRequestId: `android-${uuidv7()}`,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(created.status, 201);
+    const draft = object(created.body.data);
+    const recordId = String(draft.id);
+    const discarded = await request(
+      `/api/v1/exercise-records/${recordId}/discard`,
+      authenticated(
+        token,
+        'POST',
+        { reason: 'Synthetic student discard', expectedVersion: draft.version },
+        uuidv7(),
+      ),
+    );
+    assert.equal(discarded.status, 200, JSON.stringify(discarded.body));
+    assert.equal(object(discarded.body.data).status, 'CANCELLED');
+    assert.equal(
+      await prisma.exerciseRecordEvent.count({ where: { recordId, eventType: 'DISCARDED' } }),
+      1,
+    );
+    assert.equal(
+      await prisma.auditLog.count({
+        where: { targetId: recordId, actionType: 'EXERCISE_RECORD_DISCARDED' },
+      }),
+      1,
+    );
+  });
+
   it('routes withdrawal to stable default deny with zero domain side effects', async () => {
     const token = await studentToken();
     const created = await request(

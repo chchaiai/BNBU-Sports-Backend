@@ -77,7 +77,7 @@ export class RosterEntryListQueryDto extends CursorPageDto {
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  search?: string;
+  q?: string;
 
   @IsOptional()
   @IsIn(ROW_STATUSES)
@@ -92,7 +92,7 @@ export class RosterAlignmentListQueryDto extends CursorPageDto {
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  search?: string;
+  q?: string;
 
   @IsOptional()
   @IsUUID('7')

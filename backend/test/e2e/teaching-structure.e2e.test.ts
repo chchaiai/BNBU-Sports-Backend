@@ -266,6 +266,12 @@ describe('Course and ClassSection HTTP E2E', () => {
     const course = object(created.body.data);
     assert.equal(course.courseCode, 'SYNTH-NEW-201');
     assert.equal(object(replay.body.data).id, course.id);
+    const fetched = await request(
+      `/api/v1/courses/${String(course.id)}`,
+      authenticated(adminToken),
+    );
+    assert.equal(fetched.status, 200);
+    assert.equal(object(fetched.body.data).id, course.id);
     assert.equal(await prisma.course.count(), before + 1);
 
     const changedReplay = await request(
@@ -353,6 +359,12 @@ describe('Course and ClassSection HTTP E2E', () => {
     assert.equal(created.status, 201);
     const section = object(created.body.data);
     assert.equal(section.teacherId, fixture.teacherProfileId);
+    const fetched = await request(
+      `/api/v1/class-sections/${String(section.id)}`,
+      authenticated(teacherToken),
+    );
+    assert.equal(fetched.status, 200);
+    assert.equal(object(fetched.body.data).id, section.id);
 
     const updated = await request(
       `/api/v1/class-sections/${String(section.id)}`,

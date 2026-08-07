@@ -1,4 +1,72 @@
-export type ErrorDetails = Record<string, unknown>;
+import { ERROR_HTTP_STATUS } from './error-http-status.js';
+
+export interface PublicErrorDetails {
+  fieldErrors?: unknown[];
+  resourceType?: string;
+  resourceId?: string;
+  currentState?: string;
+  allowedActions?: string[];
+  expectedVersion?: number;
+  actualVersion?: number;
+  retryAfterSeconds?: number;
+  idempotencyKey?: string;
+  itemErrors?: unknown[];
+  migrationReference?: string;
+}
+
+export interface ErrorDetails extends PublicErrorDetails {
+  invariant?: string;
+  dependency?: string;
+  category?: string;
+  source?: string;
+  resource?: string;
+  field?: string;
+  currentVersion?: number | null;
+  capability?: string;
+  platform?: string;
+  reason?: string;
+  alignmentRunId?: string;
+  rosterImportId?: string;
+  failureCode?: string | null;
+  actionType?: string;
+  operationId?: string;
+  requiredStatus?: string;
+  missingParameters?: readonly string[];
+  invalidParameters?: readonly string[];
+  metadataKey?: string;
+}
+
+export function publicErrorDetails(details: ErrorDetails): PublicErrorDetails {
+  const actualVersion = details.actualVersion ?? details.currentVersion ?? undefined;
+  const itemErrors = details.itemErrors?.map((item) => {
+    if (item === null || typeof item !== 'object' || Array.isArray(item)) return item;
+    const entry = item as Record<string, unknown>;
+    const nested = entry.details;
+    return {
+      ...entry,
+      ...(nested !== null && typeof nested === 'object' && !Array.isArray(nested)
+        ? { details: publicErrorDetails(nested) }
+        : {}),
+    };
+  });
+  return {
+    ...(details.fieldErrors === undefined ? {} : { fieldErrors: details.fieldErrors }),
+    ...(details.resourceType === undefined ? {} : { resourceType: details.resourceType }),
+    ...(details.resourceId === undefined ? {} : { resourceId: details.resourceId }),
+    ...(details.currentState === undefined ? {} : { currentState: details.currentState }),
+    ...(details.allowedActions === undefined ? {} : { allowedActions: details.allowedActions }),
+    ...(details.expectedVersion === undefined ? {} : { expectedVersion: details.expectedVersion }),
+    ...(actualVersion === undefined ? {} : { actualVersion }),
+    ...(details.retryAfterSeconds === undefined
+      ? {}
+      : { retryAfterSeconds: details.retryAfterSeconds }),
+    ...(details.idempotencyKey === undefined ? {} : { idempotencyKey: details.idempotencyKey }),
+    ...(itemErrors === undefined ? {} : { itemErrors }),
+    ...(details.migrationReference === undefined
+      ? {}
+      : { migrationReference: details.migrationReference }),
+  };
+}
 
 const ERROR_MESSAGES = {
   AUTH_REQUIRED: 'A valid authentication session is required.',
@@ -12,10 +80,13 @@ const ERROR_MESSAGES = {
   USER_NOT_FOUND: 'The user or profile was not found.',
   USER_PROFILE_INVALID: 'The student profile data is invalid.',
   USER_IDENTITY_CONFLICT: 'The student identity conflicts with an existing account.',
+  USER_STATUS_NOT_ACTIVE: 'The user status does not allow this action.',
   VALIDATION_FAILED: 'One or more request fields are invalid.',
   VALIDATION_FIELD_REQUIRED: 'A required request field is missing.',
   VALIDATION_FORMAT_INVALID: 'A request field has an invalid format.',
   VALIDATION_ENUM_UNSUPPORTED: 'A request field contains an unsupported enum value.',
+  VALIDATION_DURATION_INVALID: 'A duration field is invalid.',
+  PERMISSION_DENIED: 'The requested action is not permitted.',
   PERMISSION_RESOURCE_NOT_FOUND: 'The requested resource was not found.',
   PERMISSION_RESOURCE_SCOPE_DENIED:
     'The requested action is outside the authorized resource scope.',
@@ -27,6 +98,8 @@ const ERROR_MESSAGES = {
   COURSE_CLASS_SECTION_NOT_JOINABLE: 'The class section is not open for joining.',
   COURSE_SEMESTER_ARCHIVED: 'The semester is archived.',
   COURSE_TEACHER_ASSIGNMENT_CONFLICT: 'The teacher assignment cannot be changed.',
+  COURSE_CHECKIN_WINDOW_CLOSED: 'The class section check-in window is closed.',
+  COURSE_WRITE_DISABLED: 'Writes to this course are disabled.',
   COURSE_INVITE_INVALID: 'The course invite is invalid.',
   COURSE_INVITE_EXPIRED: 'The course invite has expired.',
   COURSE_INVITE_REVOKED: 'The course invite was revoked.',
@@ -40,6 +113,7 @@ const ERROR_MESSAGES = {
   ENROLLMENT_TRANSITION_NOT_ALLOWED: 'The enrollment transition is not allowed.',
   ENROLLMENT_WITHDRAWAL_DISABLED: 'Student self-withdrawal is disabled.',
   ENROLLMENT_REJOIN_DISABLED: 'Student self-rejoin is disabled.',
+  ENROLLMENT_HAS_BLOCKING_WORK: 'The enrollment has work that blocks this transition.',
   ROSTER_IMPORT_NOT_FOUND: 'The official roster import was not found.',
   ROSTER_FILE_INVALID: 'The official roster file is invalid.',
   ROSTER_SCHEMA_INVALID: 'The official roster schema or row structure is invalid.',
@@ -62,6 +136,8 @@ const ERROR_MESSAGES = {
   SESSION_TRANSITION_NOT_ALLOWED: 'The exercise session transition is not allowed.',
   SESSION_DURATION_CAP_REACHED: 'The exercise session reached the 7200 second duration cap.',
   SESSION_ALREADY_COMPLETED: 'The exercise session is already completed.',
+  SESSION_ALREADY_USED: 'The exercise session has already been used.',
+  SESSION_NOT_COMPLETED: 'The exercise session is not completed.',
   SESSION_EXPIRATION_NOT_ALLOWED: 'The exercise session cannot be expired by this operation.',
   SESSION_RESUME_WINDOW_EXPIRED: 'The exercise session cannot be resumed in the current window.',
   SESSION_TIMELINE_INVALID: 'The exercise session timeline is invalid.',
@@ -149,6 +225,9 @@ const ERROR_MESSAGES = {
   SYSTEM_MAINTENANCE: 'The system is currently in maintenance mode.',
   SYSTEM_MODE_UNSUPPORTED: 'The current system mode does not support this request.',
   SYSTEM_DATA_INTEGRITY_ERROR: 'A required data invariant is not satisfied.',
+  SYSTEM_DEPENDENCY_TIMEOUT: 'A required service dependency timed out.',
+  AUDIT_WRITE_FAILED: 'The audit record could not be written.',
+  AUDIT_RETENTION_POLICY_REQUIRED: 'An approved audit retention policy is required.',
   COURSE_DEADLINE_PASSED: 'The course submission deadline has passed.',
 } as const;
 
@@ -161,6 +240,12 @@ export class ApplicationError extends Error {
     readonly details: ErrorDetails = {},
     message: string = ERROR_MESSAGES[code],
   ) {
+    const canonicalStatus = ERROR_HTTP_STATUS[code];
+    if (status !== canonicalStatus) {
+      throw new TypeError(
+        `ApplicationError ${code} must use canonical HTTP status ${String(canonicalStatus)}, received ${String(status)}`,
+      );
+    }
     super(message);
     this.name = 'ApplicationError';
   }
@@ -172,5 +257,10 @@ export function applicationErrorFromSnapshot(snapshot: {
   message: string;
   details: ErrorDetails;
 }): ApplicationError {
-  return new ApplicationError(snapshot.code, snapshot.status, snapshot.details, snapshot.message);
+  return new ApplicationError(
+    snapshot.code,
+    ERROR_HTTP_STATUS[snapshot.code],
+    snapshot.details,
+    snapshot.message,
+  );
 }

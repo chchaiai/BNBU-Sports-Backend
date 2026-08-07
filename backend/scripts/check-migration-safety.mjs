@@ -24,6 +24,7 @@ const expectedMigrationDirectories = [
   '0010_export_audit_governance',
   '0011_client_capabilities',
   '0012_ios_auth_release_exemption',
+  '0013_production_rate_limits',
 ];
 
 if (
@@ -182,6 +183,7 @@ const scoreCore = migrations[8];
 const exportAuditGovernance = migrations[9];
 const clientCapabilities = migrations[10];
 const iosAuthReleaseExemption = migrations[11];
+const productionRateLimits = migrations[12];
 const immutableFoundationChecksum =
   '0573e3d13018e0db103ef4b605eb35278723174507b37379425a489b10e1462d';
 if (foundation.checksum !== immutableFoundationChecksum) {
@@ -312,6 +314,7 @@ assertExactTables(scoreCore, scoreTables);
 assertExactTables(exportAuditGovernance, []);
 assertExactTables(clientCapabilities, clientCapabilityTables);
 assertExactTables(iosAuthReleaseExemption, []);
+assertExactTables(productionRateLimits, ['rate_limit_windows']);
 
 const laterBusinessTables = ['export_jobs'];
 for (const table of laterBusinessTables) {
@@ -537,6 +540,20 @@ for (const invariant of clientCapabilityInvariants) {
   }
 }
 
+const productionRateLimitInvariants = [
+  'rate_limit_windows_pkey',
+  'rate_limit_windows_purpose_check',
+  'rate_limit_windows_scope_digest_check',
+  'rate_limit_windows_count_check',
+  'rate_limit_windows_time_check',
+  'rate_limit_windows_reset_at_idx',
+];
+for (const invariant of productionRateLimitInvariants) {
+  if (!productionRateLimits.sql.includes(invariant)) {
+    throw new Error(`0013_production_rate_limits: missing invariant ${invariant}`);
+  }
+}
+
 for (const migration of migrations) {
   const foreignKeyCount = (migration.sql.match(/\bFOREIGN KEY\b/g) ?? []).length;
   const uniqueCount = (migration.sql.match(/CREATE UNIQUE INDEX/g) ?? []).length;
@@ -547,5 +564,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through Stage 21 iOS auth, release, and exemption)\n',
+  'Migration safety: PASS (forward-only Foundation through production rate limits)\n',
 );

@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 import { AuditService } from '../../../common/audit/audit.service.js';
 import { PrismaService } from '../../../common/database/prisma.service.js';
-import { ApplicationError } from '../../../common/errors/application-error.js';
+import {
+  ApplicationError,
+  publicErrorDetails,
+  type PublicErrorDetails,
+} from '../../../common/errors/application-error.js';
 import { pagedResult, type PagedResult } from '../../../common/http/envelope.interceptor.js';
 import type { AuthenticatedPrincipal } from '../../../common/http/request-context.js';
 import {
@@ -51,7 +55,7 @@ export interface BatchReviewItemResult {
   error: {
     code: string;
     message: string;
-    details: Record<string, unknown>;
+    details: PublicErrorDetails;
     requestId: string;
     timestamp: string;
   } | null;
@@ -292,7 +296,7 @@ export class ExerciseReviewsService {
           error: {
             code: error.code,
             message: error.message,
-            details: error.details,
+            details: publicErrorDetails(error.details),
             requestId: facts.requestId,
             timestamp: this.clock.now().toISOString(),
           },
@@ -350,7 +354,7 @@ export class ExerciseReviewsService {
             input.creditedDurationOverrideSeconds !== null
           ) {
             return this.idempotency.failure(
-              new ApplicationError('REVIEW_CREDIT_OVERRIDE_NOT_APPROVED', 422),
+              new ApplicationError('REVIEW_CREDIT_OVERRIDE_NOT_APPROVED', 409),
             );
           }
           await this.lockRecord(transaction, recordId);

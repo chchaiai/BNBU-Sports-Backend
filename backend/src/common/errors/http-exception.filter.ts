@@ -9,7 +9,7 @@ import type { Response } from 'express';
 
 import { Clock } from '../time/clock.js';
 import type { FoundationRequest } from '../http/request-context.js';
-import { ApplicationError } from './application-error.js';
+import { ApplicationError, publicErrorDetails } from './application-error.js';
 
 @Catch()
 @Injectable()
@@ -25,7 +25,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(error.status).json({
       code: error.code,
       message: error.message,
-      details: error.details,
+      details: publicErrorDetails(error.details),
       requestId: request.requestId,
       timestamp: this.clock.now().toISOString(),
     });

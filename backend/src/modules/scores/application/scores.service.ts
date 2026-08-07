@@ -9,6 +9,7 @@ import { pagedResult, type PagedResult } from '../../../common/http/envelope.int
 import type { AuthenticatedPrincipal } from '../../../common/http/request-context.js';
 import { IdempotencyService } from '../../../common/idempotency/idempotency.service.js';
 import { OutboxService } from '../../../common/outbox/outbox.service.js';
+import { ScopedCursorService } from '../../../common/pagination/scoped-cursor.service.js';
 import { SecureDigestService } from '../../../common/security/secure-digest.service.js';
 import { Clock } from '../../../common/time/clock.js';
 import { IdGenerator } from '../../../common/time/id-generator.js';
@@ -17,6 +18,7 @@ import type {
   CreateScoreAdjustmentRequestDto,
   CreateScoreRuleRequestDto,
   ExpectedVersionRequestDto,
+  ScoreAdjustmentListQueryDto,
   ScoreApprovalRequestDto,
   ScoreListQueryDto,
   ScoreRuleListQueryDto,
@@ -39,7 +41,16 @@ interface MutationFacts {
 const ruleInclude = {
   approvalEvents: { orderBy: [{ createdAt: 'asc' as const }, { id: 'asc' as const }] },
 };
-const scoreInclude = { currentWorkingRevision: true, publishedRevision: true };
+const revisionInclude = { contributions: true };
+const scoreInclude = {
+  currentWorkingRevision: { include: revisionInclude },
+  publishedRevision: { include: revisionInclude },
+  publicationEvents: {
+    where: { action: 'PUBLISH' },
+    orderBy: [{ createdAt: 'desc' as const }, { id: 'desc' as const }],
+    take: 1,
+  },
+};
 const authorizedScoreInclude = {
   ...scoreInclude,
   classSection: { include: { teacher: true } },
@@ -49,6 +60,35 @@ const adjustmentInclude = {
   approvalEvents: { orderBy: [{ createdAt: 'asc' as const }, { id: 'asc' as const }] },
 };
 
+export function studentScoreStatusWhere(
+  status: string | undefined,
+  publishedRevision: Prisma.StudentScoreFieldRefs['publishedRevisionId'],
+): Prisma.StudentScoreWhereInput {
+  if (status === undefined) return {};
+  switch (status) {
+    case 'NOT_CALCULATED':
+      return { currentWorkingRevisionId: null };
+    case 'CALCULATED':
+    case 'ADJUSTED':
+      return {
+        currentWorkingRevision: { status },
+        OR: [
+          { publishedRevisionId: null },
+          { NOT: { currentWorkingRevisionId: { equals: publishedRevision } } },
+        ],
+      };
+    case 'PUBLISHED':
+      return {
+        publishedRevisionId: { not: null },
+        currentWorkingRevisionId: { equals: publishedRevision },
+      };
+    case 'LOCKED':
+      return { id: { in: [] } };
+    default:
+      throw new ApplicationError('VALIDATION_ENUM_UNSUPPORTED', 422);
+  }
+}
+
 @Injectable()
 export class ScoresService {
   constructor(
@@ -57,6 +97,7 @@ export class ScoresService {
     private readonly audit: AuditService,
     private readonly outbox: OutboxService,
     private readonly digest: SecureDigestService,
+    private readonly cursors: ScopedCursorService,
     private readonly clock: Clock,
     private readonly ids: IdGenerator,
   ) {}
@@ -67,20 +108,45 @@ export class ScoresService {
     input: ScoreRuleListQueryDto,
   ): Promise<PagedResult<Record<string, unknown>>> {
     await this.assertClassSectionReadScope(this.prisma, principal, classSectionId);
+    const binding = {
+      resource: 'SCORE_RULE' as const,
+      organizationId: principal.organizationId,
+      principalId: principal.userId,
+      role: principal.role,
+      filters: { classSectionId, status: input.status ?? null },
+      sort: '-ruleVersion',
+      limit: input.limit,
+    };
+    const position = this.cursors.decode(input.cursor, binding);
+    const ruleVersion = position === null ? null : Number.parseInt(position.value, 10);
+    if (position !== null && !Number.isSafeInteger(ruleVersion)) this.invalidCursor();
     const rows = await this.prisma.scoreRule.findMany({
       where: {
         organizationId: principal.organizationId,
         classSectionId,
         ...(input.status === undefined ? {} : { status: input.status }),
+        ...(position === null
+          ? {}
+          : {
+              OR: [
+                { ruleVersion: { lt: ruleVersion! } },
+                { ruleVersion: ruleVersion!, id: { lt: position.id } },
+              ],
+            }),
       },
       include: ruleInclude,
       orderBy: [{ ruleVersion: 'desc' }, { id: 'desc' }],
-      take: input.limit,
+      take: input.limit + 1,
     });
-    return pagedResult(rows.map(projectScoreRule), {
-      hasMore: false,
+    const page = rows.slice(0, input.limit);
+    const last = page.at(-1);
+    return pagedResult(page.map(projectScoreRule), {
+      hasMore: rows.length > input.limit,
       limit: input.limit,
-      nextCursor: null,
+      nextCursor:
+        rows.length > input.limit && last !== undefined
+          ? this.cursors.encode(binding, { value: String(last.ruleVersion), id: last.id })
+          : null,
     });
   }
 
@@ -322,18 +388,55 @@ export class ScoresService {
     input: ScoreListQueryDto,
   ): Promise<PagedResult<Record<string, unknown>>> {
     const scope = this.scoreWhereForPrincipal(principal, input.classSectionId);
+    const binding = {
+      resource: 'STUDENT_SCORE' as const,
+      organizationId: principal.organizationId,
+      principalId: principal.userId,
+      role: principal.role,
+      filters: {
+        classSectionId: input.classSectionId ?? null,
+        enrollmentId: input.enrollmentId ?? null,
+        status: input.status ?? null,
+      },
+      sort: '-updatedAt',
+      limit: input.limit,
+    };
+    const position = this.cursors.decode(input.cursor, binding);
+    const updatedAt = position === null ? null : new Date(position.value);
+    if (updatedAt !== null && Number.isNaN(updatedAt.getTime())) this.invalidCursor();
     const rows = await this.prisma.studentScore.findMany({
       where: {
         ...scope,
         ...(input.enrollmentId === undefined ? {} : { enrollmentId: input.enrollmentId }),
+        ...studentScoreStatusWhere(
+          input.status,
+          this.prisma.studentScore.fields.publishedRevisionId,
+        ),
+        ...(position === null
+          ? {}
+          : {
+              OR: [
+                { updatedAt: { lt: updatedAt! } },
+                { updatedAt: updatedAt!, id: { lt: position.id } },
+              ],
+            }),
       },
       include: scoreInclude,
       orderBy: [{ updatedAt: 'desc' }, { id: 'desc' }],
-      take: input.limit,
+      take: input.limit + 1,
     });
+    const page = rows.slice(0, input.limit);
+    const last = page.at(-1);
     return pagedResult(
-      rows.map((row) => projectStudentScore(row, principal)),
-      { hasMore: false, limit: input.limit, nextCursor: null },
+      page.map((row) => projectStudentScore(row, principal)),
+      {
+        hasMore: rows.length > input.limit,
+        limit: input.limit,
+        nextCursor:
+          rows.length > input.limit && last !== undefined
+            ? this.cursors.encode(binding, { value: last.updatedAt.toISOString(), id: last.id })
+            : null,
+      },
     );
   }
 
@@ -452,21 +555,49 @@ export class ScoresService {
   async listAdjustments(
     principal: AuthenticatedPrincipal,
     scoreId: string,
-    input: ScoreListQueryDto,
+    input: ScoreAdjustmentListQueryDto,
   ): Promise<PagedResult<Record<string, unknown>>> {
     await this.findAuthorizedScore(this.prisma, principal, scoreId, principal.role === 'TEACHER');
     if (principal.role === 'STUDENT')
       throw new ApplicationError('PERMISSION_RESOURCE_SCOPE_DENIED', 403);
+    const binding = {
+      resource: 'SCORE_ADJUSTMENT' as const,
+      organizationId: principal.organizationId,
+      principalId: principal.userId,
+      role: principal.role,
+      filters: { studentScoreId: scoreId },
+      sort: '-requestedAt',
+      limit: input.limit,
+    };
+    const position = this.cursors.decode(input.cursor, binding);
+    const requestedAt = position === null ? null : new Date(position.value);
+    if (requestedAt !== null && Number.isNaN(requestedAt.getTime())) this.invalidCursor();
     const rows = await this.prisma.scoreAdjustment.findMany({
-      where: { organizationId: principal.organizationId, studentScoreId: scoreId },
+      where: {
+        organizationId: principal.organizationId,
+        studentScoreId: scoreId,
+        ...(position === null
+          ? {}
+          : {
+              OR: [
+                { requestedAt: { lt: requestedAt! } },
+                { requestedAt: requestedAt!, id: { lt: position.id } },
+              ],
+            }),
+      },
       include: adjustmentInclude,
       orderBy: [{ requestedAt: 'desc' }, { id: 'desc' }],
-      take: input.limit,
+      take: input.limit + 1,
     });
-    return pagedResult(rows.map(projectScoreAdjustment), {
-      hasMore: false,
+    const page = rows.slice(0, input.limit);
+    const last = page.at(-1);
+    return pagedResult(page.map(projectScoreAdjustment), {
+      hasMore: rows.length > input.limit,
       limit: input.limit,
-      nextCursor: null,
+      nextCursor:
+        rows.length > input.limit && last !== undefined
+          ? this.cursors.encode(binding, { value: last.requestedAt.toISOString(), id: last.id })
+          : null,
     });
   }
 
@@ -842,6 +973,19 @@ export class ScoresService {
     if (principal.role === 'TEACHER')
       return { ...base, classSection: { teacher: { userId: principal.userId } } };
     return base;
+  }
+
+  private invalidCursor(): never {
+    throw new ApplicationError('VALIDATION_FORMAT_INVALID', 422, {
+      fieldErrors: [
+        {
+          field: 'cursor',
+          code: 'INVALID',
+          i18nKey: 'error.validation.failed',
+          params: {},
+        },
+      ],
+    });
   }
 
   private async assertClassSectionReadScope(
