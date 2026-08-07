@@ -29,7 +29,7 @@ export class PrismaQrJoinPolicyResolver extends QrJoinPolicyResolver {
     sourceIp: string | undefined;
     operationId: 'previewCourseInvite' | 'issueJoinCapability';
   }): Promise<CourseInvitePolicyContext> {
-    this.rateLimits.enforce([
+    await this.rateLimits.enforce([
       `qr:${input.operationId}:invite:${this.crypto.opaqueReference('invite-rate', input.inviteToken)}`,
       `qr:${input.operationId}:source:${this.crypto.opaqueReference('source-rate', input.sourceIp ?? 'unavailable')}`,
     ]);
@@ -48,7 +48,7 @@ export class PrismaQrJoinPolicyResolver extends QrJoinPolicyResolver {
     joinCapability: string;
     sourceIp: string | undefined;
   }): Promise<JoinCapabilityPolicyContext> {
-    this.rateLimits.enforce([
+    await this.rateLimits.enforce([
       `qr:join:capability:${this.crypto.opaqueReference('capability-rate', input.joinCapability)}`,
       `qr:join:invite:${this.crypto.opaqueReference('invite-rate', input.inviteToken)}`,
       `qr:join:source:${this.crypto.opaqueReference('source-rate', input.sourceIp ?? 'unavailable')}`,

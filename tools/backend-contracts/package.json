@@ -8,9 +8,16 @@
     "npm": ">=11 <12"
   },
   "scripts": {
-    "check": "node ./check-contract.mjs",
+    "check": "node ./check-contract.mjs && node ./check-system-mode-responses.mjs && node ./apply-contract-errata.mjs",
+    "contract:errata:write": "node ./apply-contract-errata.mjs --write",
+    "system-mode-responses:write": "node ./check-system-mode-responses.mjs --write",
     "lint:openapi": "redocly lint ../../docs/backend-contracts/openapi.yaml --format=stylish --max-problems=1000",
-    "contract:check": "npm run check && npm run lint:openapi"
+    "contract:compatibility:generate": "node ./check-openapi-compatibility.mjs",
+    "contract:compatibility:check": "node --test ./check-openapi-compatibility.fixtures.test.mjs && node ./check-openapi-compatibility.mjs --check",
+    "contract:release:prepare": "node ./prepare-contract-release.mjs",
+    "contract:release:check": "node ./prepare-contract-release.mjs --check",
+    "production-closure:inventory:check": "node ./generate-production-closure-inventory.mjs --check",
+    "contract:check": "npm run check && npm run lint:openapi && npm run contract:compatibility:check && npm run contract:release:check"
   },
   "devDependencies": {
     "@redocly/cli": "2.43.2",

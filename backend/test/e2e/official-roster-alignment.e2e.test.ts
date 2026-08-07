@@ -371,7 +371,7 @@ describe('Official Roster Import and Alignment HTTP E2E', () => {
         body: unsupported,
       },
     );
-    assert.equal(unsupportedResult.status, 422);
+    assert.equal(unsupportedResult.status, 409);
     assert.equal(unsupportedResult.body.code, 'ROSTER_IMPORT_SOURCE_UNSUPPORTED');
     assert.equal(await prisma.officialRosterImport.count(), 0);
 
@@ -442,6 +442,12 @@ describe('Official Roster Import and Alignment HTTP E2E', () => {
     assert.equal('sourceFileStorageKey' in first, false);
     assert.equal('fileChecksumSha256' in first, false);
     assert.equal('fileName' in first, false);
+    const fetched = await request(
+      `/api/v1/roster-imports/${String(first.id)}`,
+      authenticated(teacherToken),
+    );
+    assert.equal(fetched.status, 200);
+    assert.equal(object(fetched.body.data).id, first.id);
     assert.equal(storage.objects.size, 2);
     const keyConflict = await upload(
       teacherToken,
@@ -661,6 +667,12 @@ describe('Official Roster Import and Alignment HTTP E2E', () => {
 
     const identityConflict = results.find((entry) => entry.status === 'IDENTITY_CONFLICT');
     assert.ok(identityConflict !== undefined);
+    const fetchedConflict = await request(
+      `/api/v1/roster-alignment-results/${String(identityConflict.id)}`,
+      authenticated(teacherToken),
+    );
+    assert.equal(fetchedConflict.status, 200);
+    assert.equal(object(fetchedConflict.body.data).id, identityConflict.id);
     const relatedEvidenceId = uuidv7();
     await prisma.enrollmentStatusEvent.create({
       data: {

@@ -1,5 +1,14 @@
 # BNBU Sports Greenfield 权威后端
 
+> **Current production-closure authority (2026-08-06):** the versioned candidate is
+> Contract `1.4.0-contract`, derived from the byte-verified immutable Contract 1.3
+> snapshot. Current governance covers 122 OpenAPI operations: 104 enabled operations
+> require real HTTP conformance evidence and 18 intentionally disabled operations must
+> fail closed. Historical stage totals below are retained only as prior-stage evidence
+> and are superseded by
+> [`CURRENT-HANDOFF.md`](../docs/backend-contracts/CURRENT-HANDOFF.md) and the generated
+> [`OPERATION-COMPLETION-MATRIX.md`](../docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md).
+
 ## Stage 19：Operation closure（当前状态）
 
 当前生成器结果为 92 operations：82 verified、10 exact default-deny、0 not implemented、0 blocked。Student/Teacher projection 与 ADMIN-only Audit Read 已实现；Audit Read 自身追加 `AUDIT_LOG_READ` 且 public metadata 递归脱敏。Export 因持久化、格式、artifact lifecycle、retention、download TTL 和 retry 尚未批准，四个路由固定返回 `SYSTEM_MODE_UNSUPPORTED`，不创建表、Job、文件或 URL。

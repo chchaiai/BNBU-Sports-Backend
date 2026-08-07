@@ -218,7 +218,7 @@ export class RosterMultipartUploadService {
         parser,
       );
       if (fields.source === 'OFFICIAL_API') {
-        throw new ApplicationError('ROSTER_IMPORT_SOURCE_UNSUPPORTED', 422, {
+        throw new ApplicationError('ROSTER_IMPORT_SOURCE_UNSUPPORTED', 409, {
           source: 'OFFICIAL_API',
         });
       }

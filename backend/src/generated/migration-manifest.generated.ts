@@ -61,6 +61,11 @@ export const foundationMigrations = [
     sha256: '7b36c521540b5d20916c1858da90d464fce9952c4ab686d8d16125dd2c1aabfa',
     destructive: false,
   },
+  {
+    migrationId: '0013_production_rate_limits',
+    sha256: 'e6333720a29643af6d6eddef0a67710b742c76348060e9eef89a35c5c2b6abae',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -75,3 +80,4 @@ export const scoreCoreMigration = foundationMigrations[8];
 export const exportAuditGovernanceMigration = foundationMigrations[9];
 export const clientCapabilitiesMigration = foundationMigrations[10];
 export const iosAuthReleaseExemptionMigration = foundationMigrations[11];
+export const productionRateLimitsMigration = foundationMigrations[12];

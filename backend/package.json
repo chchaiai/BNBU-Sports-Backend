@@ -33,8 +33,15 @@
     "generate:check": "npm run repo-layout:check && npm run openapi:check && npm run db:manifest:check",
     "repo-layout:check": "node ../tools/repository/check-monorepo-layout.mjs",
     "contract:check": "npm --prefix ../tools/backend-contracts run contract:check && npm run openapi:check",
+    "contract:parity:check": "node ./scripts/check-contract-parity.mjs",
+    "contract:compatibility:check": "npm --prefix ../tools/backend-contracts run contract:compatibility:check",
+    "contract:release:prepare": "npm --prefix ../tools/backend-contracts run contract:release:prepare",
+    "contract:release:check": "npm --prefix ../tools/backend-contracts run contract:release:check",
+    "production-closure:inventory:check": "npm --prefix ../tools/backend-contracts run production-closure:inventory:check",
     "runtime-coverage:generate": "node ./scripts/check-runtime-coverage.mjs --write",
     "runtime-coverage:check": "node ./scripts/check-runtime-coverage.mjs",
+    "runtime-conformance:check": "node ./scripts/check-runtime-conformance-report.mjs",
+    "runtime-conformance:write": "node ./scripts/check-runtime-conformance-report.mjs --write",
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:migrate:dev": "prisma migrate dev",
@@ -53,7 +60,7 @@
     "@nestjs/config": "4.0.4",
     "@nestjs/core": "11.1.28",
     "@nestjs/platform-express": "11.1.28",
-    "@nestjs/swagger": "11.4.5",
+    "@nestjs/swagger": "11.4.6",
     "@nestjs/throttler": "6.5.0",
     "@prisma/adapter-pg": "7.9.1",
     "@prisma/client": "7.9.1",
@@ -66,7 +73,7 @@
     "helmet": "8.3.0",
     "jose": "6.2.7",
     "nestjs-pino": "4.6.1",
-    "pg": "8.22.0",
+    "pg": "8.16.3",
     "pino": "10.3.1",
     "pino-http": "11.0.0",
     "reflect-metadata": "0.2.2",
@@ -80,6 +87,8 @@
     "@types/express": "5.0.6",
     "@types/node": "24.13.3",
     "@types/pg": "8.20.3",
+    "ajv": "8.18.0",
+    "ajv-formats": "3.0.1",
     "eslint": "10.8.0",
     "eslint-config-prettier": "10.1.8",
     "globals": "17.9.0",
@@ -90,5 +99,10 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.65.0",
     "yaml": "2.9.0"
+  },
+  "overrides": {
+    "@nestjs/swagger": {
+      "js-yaml": "5.2.3"
+    }
   }
 }

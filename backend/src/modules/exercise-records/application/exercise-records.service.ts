@@ -75,7 +75,7 @@ export class ExerciseRecordsService {
     }
     const direction = input.sort === 'businessDate' ? 'asc' : 'desc';
     const filters = {
-      search: input.search === undefined || input.search.trim() === '' ? null : input.search.trim(),
+      search: input.q === undefined || input.q.trim() === '' ? null : input.q.trim(),
       classSectionId: input.classSectionId ?? null,
       enrollmentId: input.enrollmentId ?? null,
       status: input.status ?? null,

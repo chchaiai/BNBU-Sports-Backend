@@ -162,7 +162,7 @@ export class MediaService {
       );
     } catch (error: unknown) {
       if (this.isQuotaConstraint(error)) {
-        throw new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 409);
+        throw new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 422);
       }
       throw error;
     }
@@ -230,7 +230,7 @@ export class MediaService {
         }
         if (upload.capabilityExpiresAt <= this.clock.now()) {
           return this.idempotency.failure(
-            new ApplicationError('MEDIA_UPLOAD_SESSION_EXPIRED', 409),
+            new ApplicationError('MEDIA_UPLOAD_SESSION_EXPIRED', 410),
           );
         }
         return this.idempotency.stage(
@@ -399,7 +399,7 @@ export class MediaService {
           !['IN_PROGRESS', 'PAUSED', 'COMPLETED'].includes(media.session.status) ||
           media.session.enrollment.status !== 'ACTIVE'
         ) {
-          return this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 409));
+          return this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422));
         }
         const now = this.clock.now();
         const updated = await transaction.mediaEvidence.update({
@@ -548,7 +548,7 @@ export class MediaService {
     });
     const allowedCount = target.sessionId === null ? 20 : input.mediaType === 'IMAGE' ? 6 : 1;
     if (activeCount >= allowedCount) {
-      return this.idempotency.failure(new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 409));
+      return this.idempotency.failure(new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 422));
     }
     const now = this.clock.now();
     const mediaId = this.idGenerator.next();
@@ -736,7 +736,7 @@ export class MediaService {
       ) {
         return {
           kind: 'FAILURE',
-          failure: this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 409)),
+          failure: this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422)),
         };
       }
       return {

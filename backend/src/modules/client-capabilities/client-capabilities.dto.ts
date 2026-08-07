@@ -18,6 +18,7 @@ import {
   Max,
   MaxLength,
   Min,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 
@@ -184,17 +185,17 @@ export class FeedbackListQueryDto extends CursorListQueryDto {
 }
 
 export class FeedbackClientContextDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsIn(['ANDROID', 'WEB', 'IOS'])
   platform?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @MaxLength(64)
   appVersion?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @MaxLength(64)
@@ -210,7 +211,7 @@ export class CreateFeedbackRequestDto {
   @Length(1, 2000)
   content!: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @ValidateNested()
   @Type(() => FeedbackClientContextDto)
   clientContext?: FeedbackClientContextDto;
@@ -250,13 +251,13 @@ export class CreateExemptionApplicationRequestDto {
 }
 
 export class UpdateExemptionApplicationRequestDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @Length(1, 1000)
   reason?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @ArrayMaxSize(20)
   @ArrayUnique()
   @IsUUID(undefined, { each: true })
@@ -350,13 +351,13 @@ export class LocationSampleDto {
   @Max(10000)
   accuracyMeters!: number;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsInt()
   @Min(-500)
   @Max(10000)
   altitudeMeters?: number;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsInt()
   @Min(0)
   @Max(100000)

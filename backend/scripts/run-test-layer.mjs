@@ -1,6 +1,8 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 
 const layer = process.argv[2];
 if (layer === undefined || !/^[a-z0-9-]+$/.test(layer)) {
@@ -15,10 +17,32 @@ const files = readdirSync(directory, { withFileTypes: true })
   .sort();
 if (files.length === 0) throw new Error(`No tests were found for layer: ${layer}`);
 
+const imports = ['--import', 'tsx'];
+const environment = { ...process.env };
+if (layer === 'e2e') {
+  const reportPath = resolve(tmpdir(), 'bnbu-runtime-conformance-e2e.ndjson');
+  rmSync(reportPath, { force: true });
+  environment.BNBU_RUNTIME_CONFORMANCE_REPORT = reportPath;
+  imports.push('--import', pathToFileURL(resolve('scripts/runtime-conformance-hook.mjs')).href);
+}
+
 const result = spawnSync(
   process.execPath,
-  ['--import', 'tsx', '--test', '--test-concurrency=1', ...files],
-  { stdio: 'inherit', env: process.env },
+  [...imports, '--test', '--test-concurrency=1', ...files],
+  { stdio: 'inherit', env: environment },
 );
 if (result.error !== undefined) throw result.error;
-process.exitCode = result.status ?? 1;
+let status = result.status ?? 1;
+if (layer === 'e2e' && status === 0) {
+  const conformance = spawnSync(
+    process.execPath,
+    [
+      resolve('scripts/check-runtime-conformance-report.mjs'),
+      `--report=${environment.BNBU_RUNTIME_CONFORMANCE_REPORT}`,
+    ],
+    { stdio: 'inherit', env: environment },
+  );
+  if (conformance.error !== undefined) throw conformance.error;
+  status = conformance.status ?? 1;
+}
+process.exitCode = status;

@@ -491,15 +491,18 @@ describe('Idempotency, Audit, Outbox, and rate limiting', () => {
         error instanceof ApplicationError && error.code === 'CONFLICT_UNSUPPORTED_RESOURCE_STATE',
     );
 
-    const config = runtimeConfig();
-    config.authRateLimitMaxAttempts = 2;
     const limiter = new InMemoryRateLimitAdapter(
       new FixedClock(new Date('2026-08-02T00:00:00.000Z')),
-      config,
     );
-    assert.equal(limiter.consume('same-key').allowed, true);
-    assert.equal(limiter.consume('same-key').allowed, true);
-    assert.equal(limiter.consume('same-key').allowed, false);
+    const request = {
+      purpose: 'AUTHENTICATION' as const,
+      keys: ['same-key'],
+      windowSeconds: 60,
+      maximumAttempts: 2,
+    };
+    assert.equal((await limiter.consume(request)).allowed, true);
+    assert.equal((await limiter.consume(request)).allowed, true);
+    assert.equal((await limiter.consume(request)).allowed, false);
   });
 
   it('redacts secrets and PII recursively', () => {

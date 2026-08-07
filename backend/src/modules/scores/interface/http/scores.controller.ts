@@ -13,6 +13,7 @@ import {
   CreateScoreAdjustmentRequestDto,
   CreateScoreRuleRequestDto,
   ExpectedVersionRequestDto,
+  ScoreAdjustmentListQueryDto,
   ScoreAdjustmentPathDto,
   ScoreApprovalRequestDto,
   ScoreListQueryDto,
@@ -175,7 +176,7 @@ export class ScoresController {
   listAdjustments(
     @CurrentPrincipal() principal: AuthenticatedPrincipal,
     @Param() path: StudentScorePathDto,
-    @Query() query: ScoreListQueryDto,
+    @Query() query: ScoreAdjustmentListQueryDto,
   ): Promise<PagedResult<Record<string, unknown>>> {
     return this.scores.listAdjustments(principal, path.studentScoreId, query);
   }

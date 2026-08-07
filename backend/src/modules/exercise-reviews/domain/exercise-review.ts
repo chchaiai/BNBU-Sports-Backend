@@ -38,7 +38,7 @@ export function normalizeReviewDecision(input: ReviewDecisionInput): NormalizedR
   const reason = optionalText(input.reason);
   const reasonCode = input.reasonCode ?? null;
   if (input.result === 'VALID' && reasonCode !== null) {
-    throw new ApplicationError('REVIEW_CHANGE_NOT_ALLOWED', 422);
+    throw new ApplicationError('REVIEW_CHANGE_NOT_ALLOWED', 409);
   }
   if (input.result === 'INVALID' && reasonCode === null) {
     throw new ApplicationError('REVIEW_INVALID_REASON_REQUIRED', 422);

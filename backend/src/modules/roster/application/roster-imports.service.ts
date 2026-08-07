@@ -498,11 +498,11 @@ export class RosterImportsService {
   ): Promise<PagedResult<OfficialRosterEntryProjection>> {
     const rosterImport = await this.requiredImport(principal.organizationId, rosterImportId);
     await this.assertReadSection(principal, rosterImport.classSectionId);
-    if (principal.role === 'ADMIN' && input.search !== undefined) {
+    if (principal.role === 'ADMIN' && input.q !== undefined) {
       throw new ApplicationError('PERMISSION_RESOURCE_SCOPE_DENIED', 403);
     }
     const ascending = input.sort !== '-sourceRowNumber';
-    const search = input.search?.trim();
+    const search = input.q?.trim();
     const binding = {
       resource: 'OFFICIAL_ROSTER_ENTRY' as const,
       organizationId: principal.organizationId,

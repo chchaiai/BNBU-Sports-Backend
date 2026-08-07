@@ -5,6 +5,7 @@ on:
     paths:
       - "backend/**"
       - "docs/backend-contracts/**"
+      - "docs/client-handoff/**"
       - "tools/backend-contracts/**"
       - "tools/repository/**"
       - "AGENTS.md"
@@ -14,6 +15,7 @@ on:
     paths:
       - "backend/**"
       - "docs/backend-contracts/**"
+      - "docs/client-handoff/**"
       - "tools/backend-contracts/**"
       - "tools/repository/**"
       - "AGENTS.md"
@@ -101,7 +103,9 @@ jobs:
           npm run lint
           npm run typecheck
           npm run contract:check
+          npm run contract:parity:check
           npm run runtime-coverage:check
+          npm run production-closure:inventory:check
           npm run generate:check
 
       - name: Validate and statically inspect the migration
@@ -122,6 +126,7 @@ jobs:
           npm run test
           npm run test:integration
           npm run test:e2e
+          npm run runtime-conformance:check
           npm run test:contract
           npm run test:security
 
@@ -129,7 +134,9 @@ jobs:
         run: npm run build
 
       - name: Audit locked dependencies
-        run: npm audit --audit-level=high
+        run: |
+          npm audit --audit-level=high
+          npm audit --omit=dev --audit-level=high
 
       - name: Build the non-root runtime and migrator images
         run: |

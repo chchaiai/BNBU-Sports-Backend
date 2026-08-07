@@ -115,7 +115,7 @@ export class AccessTokenGuard implements CanActivate {
       session.user.deletedAt !== null ||
       session.user.status === 'DISABLED'
     ) {
-      throw new ApplicationError('AUTH_ACCOUNT_DISABLED', 401);
+      throw new ApplicationError('AUTH_ACCOUNT_DISABLED', 403);
     }
     if (session.user.status === 'LOCKED') {
       throw new ApplicationError('AUTH_CREDENTIAL_INVALID', 401);

@@ -50,7 +50,7 @@ describe('Stage 18 Score domain', () => {
     );
   });
 
-  it('keeps working revision internals and approval identity out of the student projection', () => {
+  it('keeps unpublished score values hidden while preserving the Contract 1.3 transport shape', () => {
     const now = new Date('2026-08-04T00:00:00.000Z');
     const revision = {
       id: 'revision-1',
@@ -69,6 +69,19 @@ describe('Stage 18 Score domain', () => {
       status: 'CALCULATED',
       calculatedAt: now,
       createdAt: now,
+      contributions: [
+        {
+          id: 'contribution-1',
+          organizationId: 'organization-1',
+          studentScoreRevisionId: 'revision-1',
+          recordId: 'record-1',
+          reviewId: 'review-1',
+          scoreRuleId: 'rule-1',
+          creditType: 'COURSE_RELATED',
+          contributionSeconds: 3600n,
+          createdAt: now,
+        },
+      ],
     };
     const projection = projectStudentScore(
       {
@@ -85,6 +98,7 @@ describe('Stage 18 Score domain', () => {
         version: 2,
         currentWorkingRevision: revision,
         publishedRevision: null,
+        publicationEvents: [],
       },
       {
         userId: 'student-user',
@@ -96,14 +110,13 @@ describe('Stage 18 Score domain', () => {
       },
     );
     assert.equal(projection.totalValidDurationSeconds, 3600);
-    assert.equal(projection.publishedScore, null);
-    for (const forbidden of [
-      'studentId',
-      'workingRevision',
-      'sourceFingerprint',
-      'approvalEvents',
-      'internalNote',
-    ]) {
+    assert.equal(projection.validCourseDurationSeconds, 3600);
+    assert.equal(projection.validGeneralDurationSeconds, 0);
+    assert.equal(projection.baseScore, null);
+    assert.equal(projection.finalScore, null);
+    assert.equal(projection.status, 'NOT_CALCULATED');
+    assert.equal(projection.sourceFingerprint, 'a'.repeat(64));
+    for (const forbidden of ['studentId', 'workingRevision', 'approvalEvents', 'internalNote']) {
       assert.equal(Object.hasOwn(projection, forbidden), false);
     }
   });

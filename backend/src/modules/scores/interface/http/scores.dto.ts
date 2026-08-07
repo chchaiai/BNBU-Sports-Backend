@@ -62,6 +62,20 @@ export class ScoreListQueryDto {
   status?: string;
 }
 
+export class ScoreAdjustmentListQueryDto {
+  @IsOptional()
+  @IsString()
+  @MaxLength(2048)
+  cursor?: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  limit = 20;
+}
+
 export class ScoreRuleListQueryDto {
   @IsOptional()
   @IsString()

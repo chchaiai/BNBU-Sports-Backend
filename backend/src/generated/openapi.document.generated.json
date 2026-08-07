@@ -2,9 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "BNBU Sports Unified API",
-    "version": "1.3.0-contract",
+    "version": "1.4.0-contract",
     "summary": "Unified contract for the sports check-in platform",
-    "description": "Stage 21B contract. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Of the 30 client-support operations added in\nStage 21, authentication, exemption, release-policy, notification,\npush-device, preference, help, and feedback capabilities are approved for\nreal local implementation, while unresolved capabilities remain explicit\nrouted denials. GPS has persistence and\napplication-layer foundations, but all six location HTTP operations remain\ndenied. None of these statements proves Staging, iOS-binary, push-delivery,\nGPS-production, or Production-Gate readiness.\n"
+    "license": {
+      "name": "UNLICENSED",
+      "identifier": "LicenseRef-UNLICENSED"
+    },
+    "description": "Production-closure candidate derived from the immutable published 1.3.0\nsnapshot. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Of the 30 client-support operations added in\nStage 21, authentication, exemption, release-policy, notification,\npush-device, preference, help, and feedback capabilities are approved for\nreal local implementation, while unresolved capabilities remain explicit\nrouted denials. GPS has persistence and\napplication-layer foundations, but all six location HTTP operations remain\ndenied. None of these statements proves Staging, iOS-binary, push-delivery,\nGPS-production, or Production-Gate readiness.\n"
   },
   "servers": [
     {
@@ -395,6 +399,9 @@
           "401": {
             "$ref": "#/components/responses/Unauthorized"
           },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
           "409": {
             "$ref": "#/components/responses/Conflict"
           },
@@ -406,6 +413,9 @@
           },
           "500": {
             "$ref": "#/components/responses/InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -460,6 +470,9 @@
           },
           "500": {
             "$ref": "#/components/responses/InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -512,11 +525,17 @@
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "409": {
             "$ref": "#/components/responses/Conflict"
           },
           "500": {
             "$ref": "#/components/responses/InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -651,7 +670,21 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "fullName",
+              "-fullName",
+              "studentNumber",
+              "-studentNumber",
+              "createdAt",
+              "-createdAt"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/Search"
@@ -1021,6 +1054,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1121,6 +1157,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1178,6 +1217,12 @@
           {
             "name": "status",
             "in": "query",
+            "x-runtime-enum": [
+              "UPCOMING",
+              "ACTIVE",
+              "CLOSED",
+              "ARCHIVED"
+            ],
             "schema": {
               "type": "string"
             }
@@ -1251,6 +1296,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1350,6 +1398,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1408,6 +1459,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1443,7 +1497,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "joinedAt",
+              "-joinedAt"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/ClassSectionFilter"
@@ -1543,6 +1607,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1649,6 +1716,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1707,6 +1777,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1765,6 +1838,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1824,6 +1900,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1932,6 +2011,9 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -1988,6 +2070,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2025,7 +2110,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "versionNumber",
+              "-versionNumber"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "name": "status",
@@ -2112,11 +2207,17 @@
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "409": {
             "$ref": "#/components/responses/Conflict"
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2264,6 +2365,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2301,7 +2405,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "sourceRowNumber",
+              "-sourceRowNumber"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/Search"
@@ -2393,6 +2507,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2427,7 +2544,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "createdAt",
+              "-createdAt"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/Search"
@@ -2581,6 +2708,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2642,6 +2772,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2697,6 +2830,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2748,6 +2884,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2807,6 +2946,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2943,6 +3085,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -2994,6 +3139,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3048,6 +3196,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3099,6 +3250,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3161,6 +3315,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3196,7 +3353,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "businessDate",
+              "-businessDate"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/Search"
@@ -3359,6 +3526,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3462,6 +3632,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3529,6 +3702,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3580,6 +3756,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3635,6 +3814,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3712,6 +3894,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3773,6 +3958,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3878,6 +4066,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3937,6 +4128,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -3973,7 +4167,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "reviewVersion",
+              "-reviewVersion"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           }
         ],
         "responses": {
@@ -4056,6 +4260,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4117,6 +4324,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4178,6 +4388,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4215,7 +4428,15 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "deprecated": true,
+            "x-runtime-unsupported": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Compatibility-only Contract 1.3 field; V1 applies a fixed deterministic order and rejects no request solely for this field."
           },
           {
             "name": "status",
@@ -4300,6 +4521,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4404,6 +4628,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4465,6 +4692,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4516,6 +4746,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4551,7 +4784,15 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "deprecated": true,
+            "x-runtime-unsupported": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Compatibility-only Contract 1.3 field; V1 applies a fixed deterministic order and rejects no request solely for this field."
           },
           {
             "$ref": "#/components/parameters/ClassSectionFilter"
@@ -4566,6 +4807,7 @@
           {
             "name": "status",
             "in": "query",
+            "description": "Mutually exclusive public StudentScore aggregate state. NOT_CALCULATED means no working revision; CALCULATED or ADJUSTED means the current working revision has not been published; PUBLISHED means working and published revision pointers match; LOCKED is reserved and currently yields no rows because V1 has no lock transition.",
             "schema": {
               "$ref": "#/components/schemas/ScoreStatus"
             }
@@ -4692,6 +4934,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4753,6 +4998,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4806,6 +5054,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4844,7 +5095,15 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "deprecated": true,
+            "x-runtime-unsupported": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Compatibility-only Contract 1.3 field; V1 applies a fixed deterministic order and rejects no request solely for this field."
           }
         ],
         "responses": {
@@ -4925,6 +5184,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -4986,6 +5248,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -5037,6 +5302,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -5074,7 +5342,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "requestedAt",
+              "-requestedAt"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "name": "exportType",
@@ -5106,6 +5384,9 @@
           },
           "422": {
             "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       },
@@ -5212,6 +5493,9 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -5285,6 +5569,9 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
           }
         }
       }
@@ -5323,7 +5610,17 @@
             "$ref": "#/components/parameters/Limit"
           },
           {
-            "$ref": "#/components/parameters/Sort"
+            "name": "sort",
+            "in": "query",
+            "x-runtime-enum": [
+              "occurredAt",
+              "-occurredAt"
+            ],
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Open Contract 1.3 string retained for input compatibility; runtime accepts only x-runtime-enum values."
           },
           {
             "$ref": "#/components/parameters/Search"
@@ -10033,18 +10330,36 @@
             "format": "date"
           },
           "dailyStartTime": {
-            "type": [
-              "string",
-              "null"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "time"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+              }
             ],
-            "format": "time"
+            "description": "Organization-local wall time; RFC3339 time remains a deprecated compatibility input."
           },
           "dailyEndTime": {
-            "type": [
-              "string",
-              "null"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "time"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+              }
             ],
-            "format": "time"
+            "description": "Organization-local wall time; RFC3339 time remains a deprecated compatibility input."
           },
           "submissionDeadlineAt": {
             "type": [
@@ -12350,18 +12665,34 @@
             "format": "date"
           },
           "dailyStartTime": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "time"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "time"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+              }
+            ]
           },
           "dailyEndTime": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "time"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "time"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$"
+              }
+            ]
           },
           "submissionDeadlineAt": {
             "type": [
@@ -12851,6 +13182,10 @@
           },
           "captureSource": {
             "$ref": "#/components/schemas/CaptureSource",
+            "x-runtime-enum": [
+              "IN_APP_CAMERA",
+              "FILE_PICKER"
+            ],
             "description": "EXERCISE_RECORD requires IN_APP_CAMERA. EXEMPTION_APPLICATION permits IN_APP_CAMERA or FILE_PICKER; SYSTEM_IMPORT is not accepted by this student endpoint."
           },
           "declaredContentSha256": {
@@ -12959,7 +13294,10 @@
         "properties": {
           "purpose": {
             "type": "string",
-            "pattern": "^[A-Z][A-Z0-9_]*$"
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "x-runtime-enum": [
+              "VIEW_ORIGINAL"
+            ]
           }
         }
       },

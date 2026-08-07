@@ -13,6 +13,7 @@ import {
   Max,
   MaxLength,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 import {
@@ -24,6 +25,15 @@ import {
 
 const trim = ({ value }: { value: unknown }): unknown =>
   typeof value === 'string' ? value.trim() : value;
+const normalizeLocalTime = ({ value }: { value: unknown }): unknown => {
+  if (typeof value !== 'string') return value;
+  const normalized = value.trim();
+  const match =
+    /^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d)(?:[zZ]|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/u.exec(
+      normalized,
+    );
+  return match?.[1] ?? normalized;
+};
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_PATTERN = /^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/;
 
@@ -116,23 +126,23 @@ export class CreateClassSectionRequestDto {
   @Length(1, 200)
   displayName!: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsBoolean()
   isEnrollmentOpen = false;
 }
 
 export class UpdateClassSectionRequestDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @Length(1, 200)
   displayName?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsBoolean()
   isEnrollmentOpen?: boolean;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsIn(CHECK_IN_WINDOW_MODES)
   checkInWindowMode?: CheckInWindowMode;
 
@@ -145,10 +155,12 @@ export class UpdateClassSectionRequestDto {
   checkInEndDate?: string | null;
 
   @IsOptional()
+  @Transform(normalizeLocalTime)
   @Matches(TIME_PATTERN)
   dailyStartTime?: string | null;
 
   @IsOptional()
+  @Transform(normalizeLocalTime)
   @Matches(TIME_PATTERN)
   dailyEndTime?: string | null;
 
@@ -156,7 +168,7 @@ export class UpdateClassSectionRequestDto {
   @IsISO8601({ strict: true })
   submissionDeadlineAt?: string | null;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsArray()
   @Matches(DATE_PATTERN, { each: true })
   excludedDates?: string[];

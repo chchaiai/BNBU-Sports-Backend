@@ -10,6 +10,7 @@ import {
   Max,
   MaxLength,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 import { COURSE_STATUSES, type CourseStatus } from '../../domain/course-status.js';
@@ -73,7 +74,7 @@ export class CreateCourseRequestDto {
 }
 
 export class UpdateCourseRequestDto {
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()
   @Length(1, 200)
@@ -85,7 +86,7 @@ export class UpdateCourseRequestDto {
   @MaxLength(2000)
   description?: string | null;
 
-  @IsOptional()
+  @ValidateIf((_object, value: unknown) => value !== undefined)
   @IsIn(COURSE_STATUSES)
   status?: CourseStatus;
 
