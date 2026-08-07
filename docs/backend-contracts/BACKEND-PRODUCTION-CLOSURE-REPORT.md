@@ -13,7 +13,7 @@ The backend production-closure implementation is complete locally. Contract, run
 
 ## 3. Repository Scope
 
-The audit covered 578 files under backend source, tests, scripts, Prisma, Docker, backend contracts, client handoff owned by the API team, repository checks, and backend CI. Android, Web, and iOS source trees were not modified. The existing user-owned `AGENTS.md` modification is preserved and excluded from commits.
+The audit covered 579 files under backend source, tests, scripts, Prisma, Docker, backend contracts, client handoff owned by the API team, repository checks, and backend CI. Android, Web, and iOS source trees were not modified. The existing user-owned `AGENTS.md` modification is preserved and excluded from commits.
 
 ## 4. Full Inventory
 

@@ -11,7 +11,7 @@
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 578,
+    "fileCount": 579,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
@@ -21,7 +21,7 @@
       "backend-source": 213,
       "backend-test": 68,
       "client-handoff": 36,
-      "contract-tool": 11,
+      "contract-tool": 12,
       "database": 29,
       "docker": 2,
       "repository-doc": 1,
@@ -2338,6 +2338,10 @@
         "category": "contract-tool"
       },
       {
+        "path": "tools/backend-contracts/release-provenance.json",
+        "category": "contract-tool"
+      },
+      {
         "path": "tools/repository/check-monorepo-layout.mjs",
         "category": "repository-tool"
       }
@@ -2393,7 +2397,7 @@
       "files": 1
     },
     "throw new Error": {
-      "matches": 179,
+      "matches": 180,
       "files": 41
     },
     "console.log": {

@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
@@ -30,18 +29,14 @@ const runtimeManifestPath = resolve(
   repositoryRoot,
   "backend/runtime-coverage.manifest.json",
 );
+const provenancePath = resolve(
+  repositoryRoot,
+  "tools/backend-contracts/release-provenance.json",
+);
 const check = process.argv.includes("--check");
 
 function sha256(contents) {
   return createHash("sha256").update(contents).digest("hex");
-}
-
-function sourceCommit() {
-  return execFileSync(
-    "git",
-    ["log", "-1", "--format=%H", "--", "docs/backend-contracts/openapi.yaml"],
-    { cwd: repositoryRoot, encoding: "utf8" },
-  ).trim();
 }
 
 function countOperations(document) {
@@ -90,6 +85,14 @@ if (
   throw new Error("Compatibility report contains unapproved blockers");
 }
 const runtime = JSON.parse(readFileSync(runtimeManifestPath, "utf8"));
+const provenance = JSON.parse(readFileSync(provenancePath, "utf8"));
+if (
+  provenance.formatVersion !== 1 ||
+  provenance.contractVersion !== document.info.version ||
+  !/^[0-9a-f]{40}$/.test(provenance.sourceCommit)
+) {
+  throw new Error("Release provenance is invalid or does not match the candidate");
+}
 const candidateHash = sha256(canonical);
 const releaseDirectory = resolve(
   repositoryRoot,
@@ -103,7 +106,7 @@ const metadata = {
   openapiVersion: document.openapi,
   sha256: candidateHash,
   byteLength: Buffer.byteLength(canonical),
-  sourceCommit: sourceCommit(),
+  sourceCommit: provenance.sourceCommit,
   canonicalPath: "docs/backend-contracts/openapi.yaml",
   immutableCandidateSnapshot: snapshotRelative,
   publishedBaseline: {

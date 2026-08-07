@@ -19,7 +19,7 @@ Synthetic credentials and database URLs were supplied only through process/conta
 | Area | Command or execution | Exit | Pass | Fail | Warnings | Environment |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
 | Repository topology | `npm --prefix backend run repo-layout:check` | 0 | 1 | 0 | 0 | Windows/PowerShell; clients=2, gitlinks=0, nestedGit=0 |
-| Inventory | `node tools/backend-contracts/generate-production-closure-inventory.mjs --check` | 0 | 32 findings closed | 0 open | 0 | Windows/Node.js; 578 governed files scanned |
+| Inventory | `node tools/backend-contracts/generate-production-closure-inventory.mjs --check` | 0 | 32 findings closed | 0 open | 0 | Windows/Node.js; 579 governed files scanned |
 | Format | `npm --prefix backend run format:check` | 0 | 1 | 0 | 0 | Windows/Node.js |
 | ESLint | `npm --prefix backend run lint` | 0 | 1 | 0 | 0 | Windows/Node.js; `--max-warnings=0` |
 | Strict types | `npm --prefix backend run typecheck` | 0 | 1 | 0 | 0 | Windows/TypeScript |

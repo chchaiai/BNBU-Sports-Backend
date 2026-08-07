@@ -18,13 +18,13 @@ This inventory preserves the initial findings and records their final production
 | backend-source | 213 |
 | backend-test | 68 |
 | client-handoff | 36 |
-| contract-tool | 11 |
+| contract-tool | 12 |
 | database | 29 |
 | docker | 2 |
 | repository-doc | 1 |
 | repository-tool | 1 |
 | root-governance | 6 |
-| **Total** | **578** |
+| **Total** | **579** |
 
 Excluded from mutation: Android, Web, iOS, and all client implementation files. `AGENTS.md` is audited as a root governance file but its user-owned modification is protected from editing, staging, commit, and PR inclusion.
 
@@ -44,7 +44,7 @@ Every requested lexical category is retained with a contextual disposition; coun
 | stub | 3 | 3 | INTENTIONAL_DESIGN | RESOLVED |
 | not implemented | 16 | 11 | INTENTIONAL_DESIGN | RESOLVED |
 | NotImplementedException | 1 | 1 | INTENTIONAL_DESIGN | RESOLVED |
-| throw new Error | 179 | 41 | INTENTIONAL_DESIGN | RESOLVED |
+| throw new Error | 180 | 41 | INTENTIONAL_DESIGN | RESOLVED |
 | console.log | 14 | 8 | INTENTIONAL_DESIGN | RESOLVED |
 | console.error | 11 | 6 | INTENTIONAL_DESIGN | RESOLVED |
 | debugger | 2 | 1 | FALSE_POSITIVE | RESOLVED |
