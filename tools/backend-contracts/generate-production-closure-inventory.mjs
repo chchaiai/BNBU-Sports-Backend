@@ -693,9 +693,9 @@ const resolutionOverrides = new Map([
       evidence:
         ".github/workflows/backend-ci.yml; backend/package.json; tools/backend-contracts/package.json",
       testEvidence:
-        "Newly wired commands pass locally; hosted GitHub checks remain part of PC-028 external delivery.",
+        "PR #4 Backend CI succeeded for both push and pull_request events, including the explicit inventory and runtime-conformance gates.",
       residualRisk:
-        "Hosted enforcement is unverified until the authoritative repository is identified.",
+        "GitHub reports a non-blocking Node 20 action-runtime deprecation annotation for checkout/setup-node v4; upgrade when GitHub publishes the approved next major actions.",
       status: "RESOLVED",
     },
   ],
@@ -703,9 +703,9 @@ const resolutionOverrides = new Map([
     "PC-028",
     {
       testEvidence:
-        "Authenticated GitHub inspection and git ls-remote verified chchaiai/BNBU-Sports-Backend, default branch main, and published commit 4b4f88b.",
+        "Authenticated GitHub inspection and git ls-remote verified repository/default branch/baseline; non-force push created PR #4 and both push and pull_request Backend CI runs succeeded.",
       residualRisk:
-        "Required GitHub PR checks must reach a passing terminal state before final closure.",
+        "No delivery blocker remains; PR merge and post-merge release remain human-controlled.",
       status: "RESOLVED",
     },
   ],

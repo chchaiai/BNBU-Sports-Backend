@@ -2,7 +2,7 @@
 
 ## 1. Executive Summary
 
-The backend production-closure implementation is complete locally. Contract, runtime, migration, security, release, and Docker gates pass against real NestJS HTTP and PostgreSQL execution. The remaining delivery step at this report revision is hosted GitHub PR validation; no merge or GitHub Release is authorized.
+The backend production-closure implementation and delivery are complete. Contract, runtime, migration, security, release, Docker, and GitHub gates pass against real NestJS HTTP and PostgreSQL execution. A non-draft PR is ready for human review; no merge, tag, or GitHub Release is authorized in this task.
 
 ## 2. Baseline
 
@@ -89,7 +89,7 @@ Under Windows identity `laptop-v69h45g8\23328`, Docker client/server 29.6.2 and 
 
 ## 22. GitHub PR Validation
 
-Repository identity is verified as `https://github.com/chchaiai/BNBU-Sports-Backend`, with default/base branch `main`. The repository is a backend-only publication mirror with history distinct from the source monorepo, so delivery uses a same-repository mirror commit based on `origin/main` containing only governed backend/contract/tooling paths. PR URL, head SHA, and terminal required-check results are pending hosted execution at this report revision.
+Repository identity is verified as `https://github.com/chchaiai/BNBU-Sports-Backend`, with default/base branch `main`. The repository is a backend-only publication mirror with history distinct from the source monorepo, so delivery uses a same-repository mirror branch based on `origin/main` containing only governed backend/contract/tooling paths. Non-draft PR [#4](https://github.com/chchaiai/BNBU-Sports-Backend/pull/4) is open and mergeable. Both push and pull-request `Backend CI / foundation` workflows reached `Success`; the final documentation update must retain the same all-green state.
 
 ## 23. Files Changed
 
@@ -97,10 +97,10 @@ Changes are limited to `.github/workflows/backend-ci.yml`, `backend/**`, `docs/b
 
 ## 24. Remaining Risks
 
-- Hosted GitHub workflow results must be recorded before closure is declared complete.
 - Docker emits a legacy-builder deprecation notice and npm lifecycle allow-script notices for known packages; these are non-blocking P2 toolchain maintenance items because both no-cache builds and both audits pass.
+- GitHub emits a non-blocking P2 annotation because `actions/checkout@v4` and `actions/setup-node@v4` target Node.js 20 while the runner forces Node.js 24; upgrade after GitHub publishes and the repository approves the next major action versions.
 - Contract 1.4 is a PR candidate only. Tagging and GitHub Release creation require post-merge human approval and the committed checklist.
 
 ## 25. Final Verdict
 
-Local backend production closure is complete and the implementation conforms to candidate Contract 1.4 while preserving published Contract 1.3 compatibility. The final production-closure and human-review verdict remains pending until the non-draft PR exists and all required GitHub checks are green. The PR must not be merged by this task.
+Backend production closure is complete. The implementation conforms to candidate Contract 1.4, published Contract 1.3 compatibility is preserved, future Backend/OpenAPI drift and breaking changes are automatically gated, and PR #4 is ready for human review after its final push and pull-request jobs are green. The PR remains open and must not be merged by this task.

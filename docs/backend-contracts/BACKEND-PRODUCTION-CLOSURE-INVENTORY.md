@@ -51,13 +51,13 @@ Every requested lexical category is retained with a contextual disposition; coun
 | @ts-ignore | 3 | 1 | INTENTIONAL_DESIGN | RESOLVED |
 | @ts-nocheck | 87 | 83 | INTENTIONAL_DESIGN | RESOLVED |
 | eslint-disable | 87 | 85 | INTENTIONAL_DESIGN | RESOLVED |
-| any | 281 | 91 | INTENTIONAL_DESIGN | RESOLVED |
+| any | 282 | 92 | INTENTIONAL_DESIGN | RESOLVED |
 | unknown as | 53 | 24 | INTENTIONAL_DESIGN | RESOLVED |
 | skip | 1136 | 93 | FALSE_POSITIVE | RESOLVED |
 | only | 3 | 1 | FALSE_POSITIVE | RESOLVED |
 | empty catch | 0 | 0 | FALSE_POSITIVE | RESOLVED |
 | hard-coded secret | 36 | 15 | FALSE_POSITIVE | RESOLVED |
-| hard-coded URL | 3387 | 119 | FALSE_POSITIVE | RESOLVED |
+| hard-coded URL | 3389 | 120 | FALSE_POSITIVE | RESOLVED |
 | default deny | 412 | 74 | INTENTIONAL_DESIGN | RESOLVED |
 | deprecated | 69 | 19 | INTENTIONAL_DESIGN | RESOLVED |
 | legacy | 23 | 19 | INTENTIONAL_DESIGN | RESOLVED |

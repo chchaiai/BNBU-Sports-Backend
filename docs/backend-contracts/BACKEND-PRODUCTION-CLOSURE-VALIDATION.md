@@ -68,4 +68,6 @@ The final results above are clean reruns. Earlier runs exposed and then verified
 
 ## GitHub validation
 
-The authoritative public repository, default branch, and published baseline commit were verified before push. PR URL, remote PR head, workflow runs, and required-check terminal results are filled into the final closure report after hosted validation completes.
+The authoritative public repository, default branch, and published baseline commit were verified before push. The non-draft PR is [#4](https://github.com/chchaiai/BNBU-Sports-Backend/pull/4), base `main`, head `backend/production-closure-contract-governance`. Backend CI completed successfully for both the push event (run `31149390201`, 6m20s) and pull-request event (run `31149449037`, 5m09s). Each `foundation` job executed the full PostgreSQL test stack, both audits, no-cache runtime/migrator Docker builds, and whitespace check.
+
+Both successful runs emitted one non-blocking GitHub runner annotation: `actions/checkout@v4` and `actions/setup-node@v4` still target Node.js 20 and are currently forced to Node.js 24. This is tracked as P2 action-toolchain maintenance; it did not weaken or bypass any gate. The final documentation-only update is required to pass the same push and pull-request workflows before the closure verdict is delivered.
