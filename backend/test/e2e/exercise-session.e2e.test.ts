@@ -403,4 +403,106 @@ describe('ExerciseSession HTTP E2E', () => {
     });
     assert.ok(Number(stored.actualDurationSeconds) < 5);
   });
+
+  it('rejects a new session after latest VALID reviews reach 20 hours', async () => {
+    const token = await studentToken(student);
+    const now = new Date();
+    const sessions = Array.from({ length: 10 }, (_, index) => ({
+      sessionId: uuidv7(),
+      recordId: uuidv7(),
+      pendingReviewId: uuidv7(),
+      validReviewId: uuidv7(),
+      businessDate: new Date(Date.UTC(2026, 7, index + 1)),
+    }));
+    await prisma.$transaction(async (transaction) => {
+      await transaction.exerciseSession.createMany({
+        data: sessions.map((entry) => ({
+          id: entry.sessionId,
+          organizationId: foundation.organizationId,
+          studentId: student.studentId,
+          enrollmentId: student.enrollmentId,
+          classSectionId: foundation.teacherAActiveSectionId,
+          semesterId: foundation.semesterId,
+          startedByAuthSessionId: student.authSessionId,
+          status: 'COMPLETED',
+          startedAt: new Date(entry.businessDate.getTime() + 1_000),
+          businessDate: entry.businessDate,
+          completedAt: new Date(entry.businessDate.getTime() + 7_201_000),
+          endReason: 'USER_COMPLETED',
+          actualDurationSeconds: 7_200n,
+          pausedDurationSeconds: 0n,
+          createdAt: now,
+          updatedAt: now,
+        })),
+      });
+      await transaction.exerciseRecord.createMany({
+        data: sessions.map((entry, index) => ({
+          id: entry.recordId,
+          organizationId: foundation.organizationId,
+          semesterId: foundation.semesterId,
+          studentId: student.studentId,
+          enrollmentId: student.enrollmentId,
+          classSectionId: foundation.teacherAActiveSectionId,
+          courseId: foundation.activeCourseId,
+          teacherId: foundation.teacherProfileId,
+          sessionId: entry.sessionId,
+          businessDate: entry.businessDate,
+          creditType: 'GENERAL',
+          sportType: 'RUNNING',
+          description: `Synthetic qualified record ${index + 1}`,
+          actualDurationSeconds: 7_200n,
+          pausedDurationSeconds: 0n,
+          creditedDurationSeconds: 7_200n,
+          status: 'REVIEWED',
+          submittedAt: now,
+          clientRequestId: `qualified-${index + 1}-${uuidv7()}`,
+          version: 3,
+          createdAt: now,
+          updatedAt: now,
+        })),
+      });
+      await transaction.reviewRecord.createMany({
+        data: sessions.map((entry) => ({
+          id: entry.pendingReviewId,
+          organizationId: foundation.organizationId,
+          recordId: entry.recordId,
+          reviewVersion: 1,
+          result: 'PENDING',
+          createdAt: now,
+        })),
+      });
+      await transaction.reviewRecord.createMany({
+        data: sessions.map((entry) => ({
+          id: entry.validReviewId,
+          organizationId: foundation.organizationId,
+          recordId: entry.recordId,
+          reviewVersion: 2,
+          previousReviewId: entry.pendingReviewId,
+          teacherId: foundation.teacherProfileId,
+          result: 'VALID',
+          reviewedAt: now,
+          createdAt: now,
+        })),
+      });
+    });
+
+    const rejected = await request(
+      '/api/v1/exercise-sessions',
+      authenticated(
+        token,
+        'POST',
+        { enrollmentId: student.enrollmentId, clientObservedAt: now.toISOString() },
+        uuidv7(),
+      ),
+    );
+
+    assert.equal(rejected.status, 409);
+    assert.equal(rejected.body.code, 'SESSION_ALREADY_COMPLETED');
+    assert.equal(
+      await prisma.exerciseSession.count({
+        where: { enrollmentId: student.enrollmentId, status: { in: ['IN_PROGRESS', 'PAUSED'] } },
+      }),
+      0,
+    );
+  });
 });

@@ -27,6 +27,11 @@ import {
   projectExerciseSession,
   type ExerciseSessionProjection,
 } from './exercise-session-projection.js';
+import {
+  loadValidScoreSources,
+  totalValidCreditedSeconds,
+} from '../../scores/application/score-source.js';
+import { SCORE_THRESHOLD_SECONDS } from '../../scores/domain/score-calculation.js';
 
 type Transaction = Prisma.TransactionClient;
 
@@ -89,7 +94,6 @@ export class ExerciseSessionsService {
             throw new ApplicationError('ENROLLMENT_NOT_ACTIVE', 409);
           }
           const now = this.clock.now();
-          const businessDate = this.assertStartWindow(enrollment, now);
           const active = await transaction.exerciseSession.findFirst({
             where: {
               organizationId: principal.organizationId,
@@ -98,6 +102,12 @@ export class ExerciseSessionsService {
             },
           });
           if (active !== null) throw new ApplicationError('SESSION_ALREADY_ACTIVE', 409);
+
+          const validScoreSources = await loadValidScoreSources(transaction, enrollment.id);
+          if (totalValidCreditedSeconds(validScoreSources) >= SCORE_THRESHOLD_SECONDS) {
+            throw new ApplicationError('SESSION_ALREADY_COMPLETED', 409);
+          }
+          const businessDate = this.assertStartWindow(enrollment, now);
 
           const sessionId = this.ids.next();
           const session = await transaction.exerciseSession.create({

@@ -500,7 +500,7 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | `SESSION_OUTSIDE_TIME_WINDOW` | 409 | 当前时间不允许开始或结束会话 | 服务端时间不在课程允许窗口 | 是，窗口开放后 | 展示服务端窗口；不依赖设备时间绕过 | `error.session.outsideTimeWindow` |
 | `SESSION_TRANSITION_NOT_ALLOWED` | 409 | 会话状态不允许该动作 | 请求边不在已启用状态机中 | 是，刷新后 | 刷新状态及 allowedActions | `error.session.transitionNotAllowed` |
 | `SESSION_DURATION_CAP_REACHED` | 409 | 会话已达到可记录时长上限 | 继续/恢复会超过服务端时长上限 | 否 | 要求结束会话并按规则提交 | `error.session.durationCapReached` |
-| `SESSION_ALREADY_COMPLETED` | 409 | 会话已完成 | 对 COMPLETED 会话重复结束或写事件 | 否；读取现有结果 | 展示现有完成时间，不重复写入 | `error.session.alreadyCompleted` |
+| `SESSION_ALREADY_COMPLETED` | 409 | 会话或当前 Enrollment 的合格打卡要求已完成 | 对 COMPLETED 会话重复结束或写事件；或无活动会话且最新有效计入时长已达到 72000 秒时再次开始 | 否；教师后续复核导致低于门槛后可再开始 | 会话操作展示既有完成时间；开始操作提示“已达到合格打卡时长，无需继续打卡”；均不重复写入 | `error.session.alreadyCompleted` |
 | `SESSION_ALREADY_USED` | 409 | 会话已被记录消费 | sessionId 已关联 ExerciseRecord | 否；读取现有记录 | 打开已有记录，不重复提交 | `error.session.alreadyUsed` |
 | `SESSION_NOT_COMPLETED` | 409 | 会话尚未完成 | 创建记录要求 COMPLETED，但当前仍 ACTIVE/PAUSED | 是，完成会话后 | 返回会话页完成合法动作 | `error.session.notCompleted` |
 | `SESSION_EXPIRATION_NOT_ALLOWED` | 409 | 当前会话不可标记过期 | 非系统任务、状态不符或 ADR-021 未批准相应超时路径 | 否 | 不展示人工过期入口；刷新状态 | `error.session.expirationNotAllowed` |

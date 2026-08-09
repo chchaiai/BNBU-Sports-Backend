@@ -109,14 +109,14 @@
 
 | 编号 | 名称 | 业务目的 | 触发条件 | 输入数据 | 前置条件 |
 |---|---|---|---|---|---|
-| SESSION-001 | 开始运动 | 建立后端可核验的唯一活动会话 | 学生点击开始 | enrollmentId、exerciseType、clientObservedAt、idempotencyKey | Enrollment ACTIVE；课程可写；时间窗允许；无其他活动 session |
+| SESSION-001 | 开始运动 | 建立后端可核验的唯一活动会话，并阻止已达标学生继续产生非必要打卡 | 学生点击开始 | enrollmentId、exerciseType、clientObservedAt、idempotencyKey | Enrollment ACTIVE；课程可写；时间窗允许；无其他活动 session；当前有效计入时长未达到 72000 秒 |
 | SESSION-002 | 暂停与继续 | 只累计运行区间，排除暂停时间 | 学生点击暂停/继续 | sessionId、clientObservedAt、expectedVersion | session 属本人；状态允许 |
 | SESSION-003 | 手动结束与 2h 封顶 | 固化可提交结果并停止继续累计 | 学生结束或 accepted duration 达 7200 秒 | sessionId、clientObservedAt、expectedVersion | session 属本人且 IN_PROGRESS/PAUSED |
 | SESSION-004 | 恢复、断网与多设备 | 防止客户端时钟、异常退出或双设备重复增加时长 | App 重启、网络恢复、heartbeat、第二设备开始 | sessionId、deviceSessionId、client events | 已有会话可识别；认证有效 |
 
 | 编号 | 后端校验与处理 | 输出结果与边界情况 | 错误码 | 影响成绩 | 审计 | 相关接口 | 相关状态转换 |
 |---|---|---|---|---|---|---|---|
-| SESSION-001 | 后端写 `startedAt`，客户端时间只作风险信号；事务唯一约束保证每学生最多一个 IN_PROGRESS/PAUSED session；不接受请求体指定 studentId | 重试返回原 session；同一 Enrollment 的 businessDate 从服务端 startedAt 计算 | `SESSION_ALREADY_ACTIVE`、`SESSION_OUTSIDE_TIME_WINDOW`、`ENROLLMENT_NOT_ACTIVE` | 间接 | 是 | Exercise Sessions start | 新建 `IN_PROGRESS` |
+| SESSION-001 | 后端写 `startedAt`，客户端时间只作风险信号；事务唯一约束保证每学生最多一个 IN_PROGRESS/PAUSED session；复用 SCORE 的最新 VALID Review 汇总核验 72000 秒门槛；不接受请求体指定 studentId | 已有活动 session 优先恢复；无活动 session 且已达标时不创建新 session，客户端提示无需继续打卡；同一 Enrollment 的 businessDate 从服务端 startedAt 计算 | `SESSION_ALREADY_ACTIVE`、`SESSION_ALREADY_COMPLETED`（已完成本 Enrollment 的合格打卡要求）、`SESSION_OUTSIDE_TIME_WINDOW`、`ENROLLMENT_NOT_ACTIVE` | 间接 | 是 | Exercise Sessions start | 未达标时新建 `IN_PROGRESS`；已达标时不转换 |
 | SESSION-002 | 以服务端接受事件时间切分区间；暂停区间为 0；重复同一动作幂等；达到上限后拒绝 resume | `actualDurationSeconds` 不超过 7200；客户端计时与服务端冲突时以后端为准并返回权威快照 | `SESSION_TRANSITION_NOT_ALLOWED`、`SESSION_DURATION_CAP_REACHED`、`CONFLICT_VERSION_MISMATCH` | 间接 | 保留领域事件；异常审计 | Exercise Sessions pause/resume | `IN_PROGRESS <-> PAUSED` |
 | SESSION-003 | 汇总服务端接受的 IN_PROGRESS 区间并 cap 7200；到 7200 自动转 COMPLETED；手动结束同样固化；完成不等于 record 已提交 | 精确 7200 秒停止；并发结束幂等；小于 3600 可完成 session 但不能形成成功打卡记录 | `SESSION_ALREADY_COMPLETED`、`SESSION_TRANSITION_NOT_ALLOWED` | 间接 | 是 | Exercise Sessions complete | `IN_PROGRESS/PAUSED -> COMPLETED` |
 | SESSION-004 | 客户端先读取后端 active session 并用本地草稿补界面；未被后端确认的离线区间不自动计入；第二设备开始返回冲突；心跳容差/离线补证阈值待 ADR-021 确认 | 系统杀进程不结束后端 session；恢复返回权威状态。无法证明的时间保持 excluded 并标风险，不让客户端自行补时 | `SESSION_ALREADY_ACTIVE`、`SESSION_RECONCILIATION_REQUIRED`、`SESSION_EVENT_OUT_OF_ORDER` | 间接 | 是（冲突/调和） | Exercise Sessions current/reconcile | 可恢复原状态；不得创建平行活动会话 |

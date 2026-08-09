@@ -12,6 +12,8 @@ import {
   SESSION_DURATION_CAP_SECONDS,
   wholeSeconds,
 } from '../../src/modules/exercise-sessions/domain/exercise-session.js';
+import { totalValidCreditedSeconds } from '../../src/modules/scores/application/score-source.js';
+import { SCORE_THRESHOLD_SECONDS } from '../../src/modules/scores/domain/score-calculation.js';
 
 const at = (seconds: number): Date => new Date(Date.UTC(2026, 7, 4, 0, 0, seconds));
 
@@ -147,5 +149,13 @@ describe('ExerciseSession authoritative domain', () => {
     assert.equal(projection.businessDate, '2026-08-04');
     assert.equal(Object.hasOwn(projection, 'currentIntervalStartedAt'), false);
     assert.equal(Object.hasOwn(projection, 'startedByAuthSessionId'), false);
+  });
+
+  it('uses the exact VALID credited-duration boundary for new-session admission', () => {
+    const sources = (seconds: bigint[]) =>
+      seconds.map((creditedDurationSeconds) => ({ record: { creditedDurationSeconds } }));
+
+    assert.equal(totalValidCreditedSeconds(sources([71_999n])), SCORE_THRESHOLD_SECONDS - 1n);
+    assert.equal(totalValidCreditedSeconds(sources([36_000n, 36_000n])), SCORE_THRESHOLD_SECONDS);
   });
 });
