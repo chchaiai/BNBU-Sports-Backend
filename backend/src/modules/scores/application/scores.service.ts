@@ -31,6 +31,7 @@ import {
   projectScoreRule,
   projectStudentScore,
 } from './score-projection.js';
+import { loadValidScoreSources, totalValidCreditedSeconds } from './score-source.js';
 
 type Transaction = Prisma.TransactionClient;
 interface MutationFacts {
@@ -764,16 +765,8 @@ export class ScoresService {
     rule: { id: string; organizationId: string },
     now: Date,
   ): Promise<Prisma.StudentScoreGetPayload<{ include: typeof scoreInclude }>> {
-    const records = await tx.exerciseRecord.findMany({
-      where: { enrollmentId: score.enrollmentId, status: 'REVIEWED' },
-      include: { reviews: { orderBy: { reviewVersion: 'desc' }, take: 1 } },
-      orderBy: { id: 'asc' },
-    });
-    const valid = records.flatMap((record) => {
-      const review = record.reviews[0];
-      return review?.result === 'VALID' ? [{ record, review }] : [];
-    });
-    const total = valid.reduce((sum, item) => sum + item.record.creditedDurationSeconds, 0n);
+    const valid = await loadValidScoreSources(tx, score.enrollmentId);
+    const total = totalValidCreditedSeconds(valid);
     const adjustments = await tx.scoreAdjustment.findMany({
       where: { studentScoreId: score.id, status: 'APPROVED' },
       orderBy: [{ decidedAt: 'asc' }, { id: 'asc' }],
