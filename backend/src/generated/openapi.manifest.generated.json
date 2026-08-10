@@ -1,6 +1,6 @@
 {
   "source": "docs/backend-contracts/openapi.yaml",
-  "sha256": "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b",
+  "sha256": "d004ccb34b3e2bbf2958a34afba0cb64f820c0a1e610be1581d5ad1b3bf42ca1",
   "openapi": "3.1.0",
   "paths": 104,
   "operations": 122,

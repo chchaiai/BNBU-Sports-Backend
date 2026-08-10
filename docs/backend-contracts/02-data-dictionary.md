@@ -67,9 +67,7 @@
 ### 2.2 时间、日期和单位
 
 - 数据库时间点统一按 UTC 保存；API 返回 RFC 3339/ISO 8601 带偏移时间，例如 `2026-08-02T09:30:00+08:00`。
-- `startedAt`、`endedAt`、`submittedAt` 等时间点由客户端按角色展示：学生端换算为学生设备时区，教师端和管理员端换算为 `Asia/Shanghai`（北京时间）。这只改变显示文字，不改变 API 时间点事实。
-- `businessDate` 是 `YYYY-MM-DD` 日期，不是时间点。服务端按 `ClassSection.organizationId` 对应组织时区和 `ExerciseSession.startedAt` 计算并冻结；BNBU 当前固定使用 `Asia/Shanghai`。客户端不得把 `businessDate` 当作 UTC 时间再次换算。
-- 每日开始窗口的统一外边界是北京时间 `06:00:00` 至 `22:00:00`（含边界）；教学班 `dailyStartTime`/`dailyEndTime` 只允许收窄该范围。该窗口只裁决新 session 的开始，不裁决已开始 session 的结束/提交。
+- `businessDate` 是 `YYYY-MM-DD` 日期，不是时间点。服务端按 `ClassSection.organizationId` 对应组织时区和 `ExerciseSession.startedAt` 计算并冻结；BNBU 当前默认 `Asia/Shanghai`。
 - 事实时长全部为 `int64` 秒：`actualDurationSeconds`、`pausedDurationSeconds`、`creditedDurationSeconds`。小时、分钟和 `1h/2h` 只在展示层派生。
 - 按 ADR-009，客户端旧字段换算为秒后必须做整值和范围校验；转换不能静默改变边界或覆盖原始来源。
 
@@ -444,8 +442,8 @@
 | MediaEvidence | `recordId` | `record_id` | string / varchar | 64 | 是 | 是 | `null` | — | 绑定后引用 `ExerciseRecord.id`；同组织/本人 | `rec_01JABC123` | 绑定动作 | HIGHLY_SENSITIVE | 上传与 Record 提交分离 |
 | MediaEvidence | `businessPurpose` | `business_purpose` | enum / varchar | 32 | 是 | 否 | `EXERCISE_RECORD` | — | `EXERCISE_RECORD/EXEMPTION_APPLICATION`；用途决定且只决定一种目标外键 | `EXEMPTION_APPLICATION` | 上传申请 | HIGHLY_SENSITIVE | 不得跨用途重绑 |
 | MediaEvidence | `mediaType` | `media_type` | enum / varchar | 16 | 是 | 否 | — | — | `IMAGE/VIDEO`；与 MIME/文件签名一致 | `IMAGE` | 上传申请+文件校验 | HIGHLY_SENSITIVE | 不保存中文值 |
-| MediaEvidence | `mimeType` | `mime_type` | string / varchar | 127 | 是 | 否 | — | — | 白名单；以服务端内容检测为准 | `image/jpeg` | 文件校验服务 | HIGHLY_SENSITIVE | 不信任文件扩展名 |
-| MediaEvidence | `fileSizeBytes` | `file_size_bytes` | integer / bigint | 64-bit | 是 | 否 | — | 字节 | `>0` 且符合用途/媒体类型上限 | `2457600` | 对象存储确认 | HIGHLY_SENSITIVE | 统一旧 `size/byteCount` |
+| MediaEvidence | `mimeType` | `mime_type` | string / varchar | 127 | 是 | 否 | — | — | 图片按白名单；打卡视频记录设备/压缩产物声明并以服务端内容检测为准 | `image/jpeg` | 文件校验服务 | HIGHLY_SENSITIVE | 不信任文件扩展名；视频格式不是业务限制 |
+| MediaEvidence | `fileSizeBytes` | `file_size_bytes` | integer / bigint | 64-bit | 是 | 否 | — | 字节 | `>0`；图片符合用途上限；打卡视频不设业务大小上限 | `2457600` | 对象存储确认 | HIGHLY_SENSITIVE | 统一旧 `size/byteCount`；仍用于传输完整性 |
 | MediaEvidence | `storageKey` | `storage_key` | string / varchar | 512 | 是 | 否 | 服务端生成 | — | 全局唯一；路径净化；私有对象 | `evidence/2026/...` | 存储服务 | HIGHLY_SENSITIVE | **仅内部 service DTO；学生/教师公共 API 不返回** |
 | MediaEvidence | `thumbnailStorageKey` | `thumbnail_storage_key` | string / varchar | 512 | 否 | 是 | `null` | — | 私有派生对象；仅视频/需要缩略图时存在 | `thumbnails/2026/...` | 媒体处理任务 | HIGHLY_SENSITIVE | 公共 API 只返回短期授权访问链接 |
 | MediaEvidence | `captureSource` | `capture_source` | enum / varchar | 32 | 是 | 否 | — | — | EXERCISE_RECORD 只允许 `IN_APP_CAMERA`；EXEMPTION_APPLICATION 允许 `IN_APP_CAMERA/FILE_PICKER` | `FILE_PICKER` | 客户端声明+服务端能力校验 | HIGHLY_SENSITIVE | 不把声明本身当真实性证明 |
@@ -454,7 +452,7 @@
 | MediaEvidence | `boundAt` | `bound_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 与 recordId 首次绑定时写入 | `2026-08-02T02:05:00Z` | Record 提交流程 | HIGHLY_SENSITIVE | 防止一个 media 跨学生/记录复用 |
 | MediaEvidence | `declaredContentSha256` | `declared_content_sha256` | string / char | 64 | 否 | 是 | `null` | hex | 客户端可选声明；`^[a-f0-9]{64}$`；始终视为不可信 | `9f86d081...` | 客户端 | HIGHLY_SENSITIVE | 不得单独作为完整性、去重或审核事实 |
 | MediaEvidence | `verifiedContentSha256` | `verified_content_sha256` | string / char | 64 | 否 | 是 | `null` | hex | 仅在服务端/对象存储内容验证成功后写入；`^[a-f0-9]{64}$` | `9f86d081...` | 文件校验服务 | HIGHLY_SENSITIVE | 唯一可作为内容完整性事实的 hash；不对学生暴露 |
-| MediaEvidence | `durationSeconds` | `duration_seconds` | integer / bigint | 64-bit | 条件必填 | 是 | `null` | 秒 | VIDEO 必填且 `>0`；IMAGE 为 null | `15` | 媒体探测 | HIGHLY_SENSITIVE | 统一旧 Double；事实时长仍为整数秒 |
+| MediaEvidence | `durationSeconds` | `duration_seconds` | integer / bigint | 64-bit | 条件必填 | 是 | `null` | 秒 | VIDEO 必填且 `>0`；EXERCISE_RECORD VIDEO 真实累计录制时长 `<=15`；IMAGE 为 null | `15` | 媒体探测 | HIGHLY_SENSITIVE | 暂停时间不计入；服务端探测值最终裁决 |
 
 ### 4.16 ReviewRecord（审核记录）
 

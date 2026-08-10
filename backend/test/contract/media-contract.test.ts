@@ -121,6 +121,27 @@ describe('Stage 15 MediaEvidence contract', () => {
     assert.equal(object(bind.properties, 'bind properties').recordId, undefined);
   });
 
+  it('publishes the trusted audio-track failure only on upload confirmation', () => {
+    const paths = object(contract.paths, 'paths');
+    const initiate = object(object(paths['/media-uploads'], 'initiate path').post, 'initiate');
+    const confirm = object(
+      object(paths['/media-uploads/{uploadSessionId}/confirm'], 'confirm path').post,
+      'confirm',
+    );
+    assert.equal(
+      stringArray(initiate['x-error-codes'], 'initiate errors').includes(
+        'MEDIA_AUDIO_TRACK_REQUIRED',
+      ),
+      false,
+    );
+    assert.equal(
+      stringArray(confirm['x-error-codes'], 'confirm errors').includes(
+        'MEDIA_AUDIO_TRACK_REQUIRED',
+      ),
+      true,
+    );
+  });
+
   it('keeps 122 total operations and exactly five MediaEvidence operations', () => {
     const operations: JsonObject[] = [];
     const methods = new Set(['get', 'post', 'put', 'patch', 'delete', 'options', 'head']);

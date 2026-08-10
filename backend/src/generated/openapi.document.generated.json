@@ -3827,6 +3827,9 @@
           "Media Uploads"
         ],
         "operationId": "initiateMediaUpload",
+        "x-error-codes": [
+          "MEDIA_VIDEO_DURATION_EXCEEDED"
+        ],
         "x-access-policy": {
           "policyId": "MEDIA-UPLOAD-INITIATE",
           "authentication": "ACCESS_TOKEN",
@@ -3907,6 +3910,10 @@
           "Media Uploads"
         ],
         "operationId": "confirmMediaUpload",
+        "x-error-codes": [
+          "MEDIA_VIDEO_DURATION_EXCEEDED",
+          "MEDIA_AUDIO_TRACK_REQUIRED"
+        ],
         "x-access-policy": {
           "policyId": "MEDIA-UPLOAD-CONFIRM",
           "authentication": "ACCESS_TOKEN",
@@ -11158,7 +11165,7 @@
           "declaredMimeType": {
             "type": "string",
             "maxLength": 127,
-            "description": "Untrusted client declaration captured at initiation."
+            "description": "Untrusted client declaration captured at initiation. Exercise-record video format is not a business limit."
           },
           "verifiedMimeType": {
             "type": [
@@ -11171,7 +11178,7 @@
           "declaredFileSizeBytes": {
             "type": "integer",
             "minimum": 1,
-            "description": "Untrusted client declaration captured at initiation."
+            "description": "Untrusted client declaration captured at initiation. It is a transport and integrity fact; exercise-record video has no business size maximum."
           },
           "verifiedFileSizeBytes": {
             "type": [
@@ -11230,7 +11237,7 @@
               "null"
             ],
             "minimum": 1,
-            "description": "Untrusted client declaration; required for VIDEO and null for IMAGE."
+            "description": "Untrusted client declaration; required for VIDEO and null for IMAGE. EXERCISE_RECORD VIDEO is limited to 15 cumulative recorded seconds."
           },
           "verifiedDurationSeconds": {
             "type": [
@@ -11238,7 +11245,7 @@
               "null"
             ],
             "minimum": 1,
-            "description": "Trusted parsed duration for VIDEO and null for IMAGE or before processing."
+            "description": "Trusted parsed duration for VIDEO and null for IMAGE or before processing; this value finally enforces the 15-second exercise-video cap."
           },
           "version": {
             "$ref": "#/components/schemas/PositiveVersion"
@@ -13174,11 +13181,13 @@
           "mimeType": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 127
+            "maxLength": 127,
+            "description": "Transport declaration. Exercise-record source-video format is device-defined and not a business restriction."
           },
           "fileSizeBytes": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1,
+            "description": "Exact upload length used for transport integrity. No business maximum applies to EXERCISE_RECORD VIDEO."
           },
           "captureSource": {
             "$ref": "#/components/schemas/CaptureSource",
@@ -13205,7 +13214,7 @@
               "null"
             ],
             "minimum": 1,
-            "description": "Required and positive for VIDEO; omit or null for IMAGE. Runtime validation enforces the media-type condition."
+            "description": "Required and positive for VIDEO; omit or null for IMAGE. EXERCISE_RECORD VIDEO has a fixed maximum of 15 cumulative recorded seconds; pauses are excluded. Runtime validation enforces the media-type and purpose conditions."
           }
         },
         "oneOf": [
@@ -13248,6 +13257,36 @@
               },
               "required": [
                 "sessionId"
+              ]
+            }
+          }
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "businessPurpose": {
+                  "const": "EXERCISE_RECORD"
+                },
+                "mediaType": {
+                  "const": "VIDEO"
+                }
+              },
+              "required": [
+                "businessPurpose",
+                "mediaType"
+              ]
+            },
+            "then": {
+              "properties": {
+                "durationSeconds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 15
+                }
+              },
+              "required": [
+                "durationSeconds"
               ]
             }
           }

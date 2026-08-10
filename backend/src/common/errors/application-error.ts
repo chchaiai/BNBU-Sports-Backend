@@ -155,6 +155,8 @@ const ERROR_MESSAGES = {
   MEDIA_EVIDENCE_REQUIRED: 'Media evidence is required.',
   MEDIA_COUNT_LIMIT_EXCEEDED: 'The exercise session media limit was exceeded.',
   MEDIA_SIZE_EXCEEDED: 'The declared or observed media size exceeds the configured limit.',
+  MEDIA_VIDEO_DURATION_EXCEEDED: 'The exercise evidence video exceeds 15 recorded seconds.',
+  MEDIA_AUDIO_TRACK_REQUIRED: 'The exercise evidence video must contain an audio track.',
   MEDIA_TYPE_NOT_ALLOWED: 'The media type or MIME type is not allowed.',
   MEDIA_CAPTURE_SOURCE_NOT_ALLOWED: 'The media capture source is not allowed.',
   MEDIA_UPLOAD_SESSION_EXPIRED: 'The media upload session has expired.',

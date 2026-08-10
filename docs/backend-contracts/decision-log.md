@@ -106,6 +106,7 @@
 | ADR-096  | StudentProfile 字段级所有权：哪些非权威字段允许学生自助修改、哪些权威字段只允许 ADMIN/学校同步维护，以及是否需要二次验证                                                                                                     | 当前 Domain 禁止教师修改并区分非权威/权威资料，但 OpenAPI 的单一 UpdateStudentRequest 尚未冻结字段级角色矩阵                                                               | StudentProfile、OpenAPI、授权、AuditLog                                | 是                   | 正式批准前 `updateStudent` 保留真实路由并稳定返回 `SYSTEM_MODE_UNSUPPORTED`；不修改 Profile/version，不写成功 AuditLog/Outbox；Teacher 不因当前运输角色声明获得写权限                                                                                                                                                                                            | PROPOSED   |
 | ADR-097  | Stage 21 将 12 个客户端能力 operation 提升为仅本地集成，并为其余能力建立结构基础；不提升 Staging、iOS 或 Production Gate                                                                                                     | 2026-08-05 的 30 项统一 default deny 已不能描述当前实现；又必须防止把本地 PostgreSQL 证据误报为推送、GPS 或生产已开放                                                       | Notification、PushDevice、UserPreference、Help、Feedback、AppReleasePolicy、Auth/Exemption/Sport/GPS 结构、OpenAPI、Migration、runtime coverage | 是 | 12 个 operation 记为 `IMPLEMENTED_VERIFIED` 且仅作本地集成；18 个继续 `IMPLEMENTED_DEFAULT_DENY`；GPS 仅持久化/应用层基础且 6 个 HTTP operation 关闭；无 APNs/FCM、Staging、iOS 二进制或生产 GPS 完成声明 | ACCEPTED   |
 | ADR-098  | iOS 认证、版本与免测附件规则：请求显式携带 `organizationCode`；学生仅 OTP 登录，密码找回仅 TEACHER/ADMIN；iOS 强制升级只比较数字 `buildNumber`；免测附件使用私有 `EXEMPTION_APPLICATION` 媒体用途 | 负责人已于 2026-08-06 明确三项客户端阻塞决策；必须避免跨组织账号歧义、营销版本字符串误判、学生密码流和免测附件复用运动记录媒体语义 | Auth challenge/recovery、AuthSession、AppReleasePolicy、MediaEvidence、ExemptionApplication、OpenAPI、0012 migration | 是 | 认证/找回 4、免测 6 与版本读取 1 个 operation 进入本地真实实现；学生无密码找回；版本文本仅展示；运动媒体仍只允许相机，免测媒体允许相机或文件选择器；无短信/邮件生产 provider、Staging 或生产开放声明 | ACCEPTED   |
+| ADR-099  | 学生打卡视频固定为 App 内有声录制，单条记录最多 1 个，累计实际录制最多 15 秒；暂停不计时；不设文件大小、分辨率、码率或源格式业务限制 | 负责人于 2026-08-09 明确以短时现场凭证替代旧 300 秒及视频大小/格式规则，并要求客户端压缩后上传 | MediaEvidence、Android 采集/压缩、OpenAPI、媒体校验 | 是 | 学生可暂停/继续或提前结束，达到 15 秒自动结束；相机和麦克风权限均为录像前置；客户端压缩成功后才上传；后端以真实媒体时长最终裁决，超过 15 秒返回 `MEDIA_VIDEO_DURATION_EXCEEDED`；图片、免测、反馈规则不变 | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -324,3 +325,12 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - `MediaEvidence.businessPurpose` 增加 `EXEMPTION_APPLICATION`。该用途必须绑定本人 ACTIVE Enrollment、存入私有对象路径，并只能关联同一学生/组织/Enrollment 的免测申请；公共投影不返回 storageKey、签名 URL 或 `internalNote`。
 - 本地/test 可使用受限的验证码投递适配器。非 test 环境未配置真实短信/邮件 provider 时必须返回 503，禁止通用验证码。本 ADR 不授权 Staging/Production 部署。
 - 本决策不批准通知业务生产者、APNs/FCM provider 或投递 worker，不证明 Staging HTTPS、iOS 二进制真实 API 闭环或 Production Gate，不允许生产 GPS。后续隔离的本地 Docker Synthetic Staging 运行证据已记录在 `21-client-capabilities-local-integration-report.md`，但它不改变上述外部门禁；帮助/版本政策也没有管理端发布流程或已批准生产内容。
+
+### ADR-099：15 秒有声打卡视频与客户端压缩（2026-08-09，ACCEPTED）
+
+- 每条 ExerciseRecord 最多关联 1 个现场 VIDEO；视频累计实际录制时长必须大于 0 且不超过 15 秒。暂停期间不累计，可继续录制、提前结束，达到 15 秒必须自动结束。
+- Android 使用 App 内相机并同时录制声音；相机或麦克风权限缺失时不得开始录像。完成后必须先在本机压缩，压缩失败保留原始本地草稿供重试或重拍，不得上传未压缩文件。
+- 源格式、文件大小、分辨率、码率由设备和客户端兼容层决定，不作为业务拒绝条件。`mimeType/fileSizeBytes` 仍作为传输和完整性事实，服务端仍拒绝损坏、伪造或无法安全解析的媒体。
+- 后端不信任客户端声明时长，确认与处理阶段均以媒体字节探测的真实时长裁决；超过 15 秒进入 FAILED 并返回 `MEDIA_VIDEO_DURATION_EXCEEDED`。Record 仍必须等待媒体 AVAILABLE 才能提交。
+- ADR-099 只替换 ExerciseRecord 视频规则；图片数量/大小、免测附件、反馈附件、媒体权限、保留和访问控制均不改变。
+- 新错误只登记在实际可能返回它的媒体 operation `x-error-codes` 中，不扩散到所有 API 的公共 `ErrorCode` 枚举；合同门禁以基础枚举与 operation 扩展的并集校验后端唯一错误词表。

@@ -554,7 +554,7 @@ export class MediaService {
     const mediaId = this.idGenerator.next();
     const uploadSessionId = this.idGenerator.next();
     const capabilityExpiresAt = new Date(now.getTime() + config.uploadUrlTtlSeconds * 1000);
-    const storageKey = `media/${principal.organizationId}/${input.businessPurpose.toLowerCase()}/${mediaId}/${input.mediaType.toLowerCase()}`;
+    const storageKey = `media/${principal.organizationId}/${mediaId}/${input.mediaType.toLowerCase()}`;
     const media = await transaction.mediaEvidence.create({
       data: {
         id: mediaId,
@@ -812,6 +812,7 @@ export class MediaService {
 
   private declaredFacts(input: InitiateMediaUploadRequestDto): DeclaredMediaFacts {
     return {
+      businessPurpose: input.businessPurpose,
       mediaType: input.mediaType,
       mimeType: input.mimeType.toLowerCase(),
       fileSizeBytes: input.fileSizeBytes,
@@ -822,6 +823,7 @@ export class MediaService {
 
   private declaredFactsFromMedia(media: MediaEvidence): DeclaredMediaFacts {
     return {
+      businessPurpose: media.businessPurpose,
       mediaType: media.mediaType,
       mimeType: media.declaredMimeType,
       fileSizeBytes: Number(media.declaredFileSizeBytes),
@@ -844,9 +846,13 @@ export class MediaService {
   }
 
   private isDeterministicIntegrityFailure(error: ApplicationError): boolean {
-    return ['MEDIA_INTEGRITY_MISMATCH', 'MEDIA_SIZE_EXCEEDED', 'MEDIA_TYPE_NOT_ALLOWED'].includes(
-      error.code,
-    );
+    return [
+      'MEDIA_INTEGRITY_MISMATCH',
+      'MEDIA_SIZE_EXCEEDED',
+      'MEDIA_TYPE_NOT_ALLOWED',
+      'MEDIA_VIDEO_DURATION_EXCEEDED',
+      'MEDIA_AUDIO_TRACK_REQUIRED',
+    ].includes(error.code);
   }
 
   private isQuotaConstraint(error: unknown): boolean {

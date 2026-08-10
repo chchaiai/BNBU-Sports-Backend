@@ -5,7 +5,7 @@ Result: **COMPATIBLE**.
 | Source | Version | SHA-256 | Operations |
 | --- | --- | --- | ---: |
 | Published baseline | 1.3.0-contract | `914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9` | 122 |
-| Candidate | 1.4.0-contract | `c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b` | 122 |
+| Candidate | 1.4.0-contract | `d004ccb34b3e2bbf2958a34afba0cb64f820c0a1e610be1581d5ad1b3bf42ca1` | 122 |
 
 | Classification | Count |
 | --- | ---: |

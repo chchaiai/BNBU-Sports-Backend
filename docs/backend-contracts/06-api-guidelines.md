@@ -25,9 +25,8 @@
 | 认证 | 每个 operation 由自身 `x-access-policy.authentication` 决定：`PUBLIC`、`ACCESS_TOKEN` 或 `JOIN_CAPABILITY`；禁止依赖全局 Bearer 推断资源权限 |
 | Token 来源 | 后端验证并从会话解析 `userId/role/organizationId`；请求体中的同名字段不构成授权 |
 | 资源隐藏 | 无权获知资源是否存在时返回 `404 PERMISSION_RESOURCE_NOT_FOUND`；已知资源但无动作权限时返回 403 |
-| 时间 | RFC 3339 带时区，例如 `2026-08-02T09:30:00+08:00`；数据库实现应归一到 UTC；学生端按设备时区展示，教师/管理员端按北京时间展示 |
-| 业务日期 | `YYYY-MM-DD`，由服务端按 Organization.timezone 计算并冻结；BNBU 使用 `Asia/Shanghai`，客户端不得再次做时区换算 |
-| 打卡开始窗口 | 服务端按北京时间 `06:00:00` 至 `22:00:00`（含边界）裁决新 session；教学班窗口只能收窄；窗内开始后允许在 22:00 后结束/提交 |
+| 时间 | RFC 3339 带时区，例如 `2026-08-02T09:30:00+08:00`；数据库实现应归一到 UTC |
+| 业务日期 | `YYYY-MM-DD`，由服务端按 Organization.timezone 计算 |
 | 时长 | 非负整数秒；禁止在新 API 写入小时、分钟或浮点秒 |
 | 枚举 | 稳定英文 `UPPER_SNAKE_CASE`；客户端用 i18n key 显示中文/英文 |
 | 版本策略 | v1 只做向后兼容新增；删除/改名/收紧必填属于破坏性变更，需弃用期、调用遥测和新主版本 |
@@ -236,8 +235,8 @@
 | `POST /exercise-records/{id}/submit` | DRAFT → SUBMITTED + Review v1 PENDING | STUDENT | `mediaIds, expectedVersion` | 原子冻结、创建 PENDING Review、占用每日提交、通知 | `EXERCISE_RECORD_MEDIA_INCOMPLETE`, `MEDIA_NOT_AVAILABLE`, `EXERCISE_RECORD_DAILY_LIMIT_REACHED` |
 | `POST /exercise-records/{id}/discard` | DRAFT → CANCELLED | STUDENT | `reason, expectedVersion` | 不删除事实；安全清理/解绑媒体 | `PERMISSION_RESOURCE_SCOPE_DENIED`, `CONFLICT_STATE_TRANSITION` |
 | `POST /exercise-records/{id}/withdraw` | 无转换（V1 关闭） | STUDENT | `reason, expectedVersion` | 在写入前拒绝；不取消、不解绑、不释放每日槽位 | `EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED` |
-| `POST /media-uploads` | 不存在 → stable mediaId/PENDING_UPLOAD | STUDENT | MIME/size/declaredContentSha256?/purpose=EXERCISE_RECORD/source/session | 申请即创建 MediaEvidence；返回同一 mediaId 和短期直传参数；不记录 signed URL | `MEDIA_COUNT_LIMIT_EXCEEDED`, `MEDIA_TYPE_NOT_ALLOWED`, `MEDIA_SIZE_EXCEEDED`, `MEDIA_PURPOSE_MISMATCH` |
-| `POST /media-uploads/{uploadSessionId}/confirm` | PENDING_UPLOAD → UPLOADED | STUDENT | `etag` | 验证对象并写 verifiedContentSha256；返回申请时同一 mediaId；重复确认返回首次结果 | `MEDIA_UPLOAD_SESSION_EXPIRED`, `MEDIA_OBJECT_NOT_FOUND`, `MEDIA_INTEGRITY_MISMATCH` |
+| `POST /media-uploads` | 不存在 → stable mediaId/PENDING_UPLOAD | STUDENT | MIME/size/duration?/declaredContentSha256?/purpose=EXERCISE_RECORD/source/session | 申请即创建 MediaEvidence；打卡视频 duration 必填且最多 15 秒，不设视频业务大小上限；返回同一 mediaId 和短期直传参数；不记录 signed URL | `MEDIA_COUNT_LIMIT_EXCEEDED`, `MEDIA_TYPE_NOT_ALLOWED`, `MEDIA_SIZE_EXCEEDED`, `MEDIA_VIDEO_DURATION_EXCEEDED`, `MEDIA_PURPOSE_MISMATCH` |
+| `POST /media-uploads/{uploadSessionId}/confirm` | PENDING_UPLOAD → UPLOADED | STUDENT | `etag` | 验证对象并写 verifiedContentSha256；打卡视频还必须包含可解析音轨；返回申请时同一 mediaId；重复确认返回首次结果 | `MEDIA_UPLOAD_SESSION_EXPIRED`, `MEDIA_OBJECT_NOT_FOUND`, `MEDIA_INTEGRITY_MISMATCH`, `MEDIA_VIDEO_DURATION_EXCEEDED`, `MEDIA_AUDIO_TRACK_REQUIRED` |
 | `POST /media/{mediaId}/bind` | UPLOADED → BOUND | STUDENT | `recordId/sessionId, expectedVersion` | 建稳定绑定并触发处理；不可跨人复用 | `MEDIA_BIND_TARGET_INVALID`, `MEDIA_ALREADY_BOUND`, `MEDIA_PURPOSE_MISMATCH` |
 | `POST /exercise-records/{id}/reviews` | PENDING → VALID/INVALID；Record SUBMITTED → REVIEWED | TEACHER | `result, reasonCode?, reason?, publicComment?, internalNote?, creditedDurationOverrideSeconds?, expectedReviewVersion, expectedVersion` | 无领取；expectedVersion + expectedReviewVersion + 唯一 reviewVersion + 事务；INVALID 必有 enum code，OTHER 必有 reason；override 非 null 稳定拒绝 | `REVIEW_RESULT_REQUIRED`, `REVIEW_INVALID_REASON_REQUIRED`, `REVIEW_CREDIT_OVERRIDE_NOT_APPROVED`, `CONFLICT_VERSION_MISMATCH` |
 | `POST /exercise-records/{id}/reviews/reopen` | VALID/INVALID → PENDING；Record REVIEWED → SUBMITTED | TEACHER | `reason, expectedReviewVersion, expectedVersion` | 事务追加 PENDING、临时移除贡献、触发重算 | `VALIDATION_FIELD_REQUIRED`, `SCORE_LOCKED`, `SCORE_CORRECTION_WINDOW_REQUIRED`, `CONFLICT_VERSION_MISMATCH` |

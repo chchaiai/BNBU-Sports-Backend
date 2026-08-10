@@ -19,8 +19,6 @@ const config: MediaConfig = {
   uploadUrlTtlSeconds: 300,
   accessUrlTtlSeconds: 300,
   maxImageBytes: 10_000,
-  maxVideoBytes: 10_000,
-  maxVideoDurationSeconds: 300,
   maxImagePixels: 1_000_000,
   scannerMode: 'TEST_SIGNATURE',
   workerEnabled: false,
@@ -40,6 +38,35 @@ function png(width = 2, height = 3): Buffer {
   return Buffer.concat([header, Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 0, 0, 0, 0])]);
 }
 
+function mp4(
+  durationMilliseconds: number,
+  options: { hasAudio?: boolean; spoofAudioInMediaData?: boolean } = {},
+): Buffer {
+  const box = (type: string, payload: Buffer): Buffer => {
+    const value = Buffer.alloc(8 + payload.length);
+    value.writeUInt32BE(value.length, 0);
+    value.write(type, 4, 'ascii');
+    payload.copy(value, 8);
+    return value;
+  };
+  const fileTypePayload = Buffer.alloc(16);
+  fileTypePayload.write('isom', 0, 'ascii');
+  fileTypePayload.write('isom', 8, 'ascii');
+  const movieHeaderPayload = Buffer.alloc(36);
+  movieHeaderPayload.writeUInt32BE(1_000, 12);
+  movieHeaderPayload.writeUInt32BE(durationMilliseconds, 16);
+  const handlerPayload = Buffer.alloc(24);
+  handlerPayload.write(options.hasAudio === false ? 'vide' : 'soun', 8, 'ascii');
+  const media = box('mdia', box('hdlr', handlerPayload));
+  const movie = box('moov', Buffer.concat([box('mvhd', movieHeaderPayload), box('trak', media)]));
+  const mediaDataPayload = options.spoofAudioInMediaData
+    ? Buffer.from([
+        0, 0, 0, 32, 0x68, 0x64, 0x6c, 0x72, 0, 0, 0, 0, 0, 0, 0, 0, 0x73, 0x6f, 0x75, 0x6e,
+      ])
+    : Buffer.alloc(4);
+  return Buffer.concat([box('ftyp', fileTypePayload), movie, box('mdat', mediaDataPayload)]);
+}
+
 describe('MediaEvidence validation core', () => {
   it('separates declarations from verified image facts and computes SHA-256 from bytes', async () => {
     const body = png();
@@ -48,6 +75,7 @@ describe('MediaEvidence validation core', () => {
     const verified = await validator.readAndVerify(
       Readable.from(body),
       {
+        businessPurpose: 'EXERCISE_RECORD',
         mediaType: 'IMAGE',
         mimeType: 'image/png',
         fileSizeBytes: body.length,
@@ -79,6 +107,7 @@ describe('MediaEvidence validation core', () => {
         validator.readAndVerify(
           Readable.from(body),
           {
+            businessPurpose: 'EXERCISE_RECORD',
             mediaType: 'IMAGE',
             mimeType,
             fileSizeBytes: size,
@@ -93,12 +122,13 @@ describe('MediaEvidence validation core', () => {
     }
   });
 
-  it('enforces V1 MIME, size, and conditional duration declarations', () => {
+  it('keeps image limits while replacing exercise-video size rules with a fixed 15-second cap', () => {
     const validator = new MediaValidator();
     assert.throws(
       () =>
         validator.validateDeclaration(
           {
+            businessPurpose: 'EXERCISE_RECORD',
             mediaType: 'IMAGE',
             mimeType: 'image/gif',
             fileSizeBytes: 100,
@@ -113,6 +143,7 @@ describe('MediaEvidence validation core', () => {
     assert.throws(() =>
       validator.validateDeclaration(
         {
+          businessPurpose: 'EXERCISE_RECORD',
           mediaType: 'VIDEO',
           mimeType: 'video/mp4',
           fileSizeBytes: 100,
@@ -122,5 +153,106 @@ describe('MediaEvidence validation core', () => {
         config,
       ),
     );
+    assert.doesNotThrow(() =>
+      validator.validateDeclaration(
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/quicktime',
+          fileSizeBytes: 250_000_000,
+          contentSha256: null,
+          durationSeconds: 15,
+        },
+        config,
+      ),
+    );
+    assert.throws(
+      () =>
+        validator.validateDeclaration(
+          {
+            businessPurpose: 'EXERCISE_RECORD',
+            mediaType: 'VIDEO',
+            mimeType: 'video/mp4',
+            fileSizeBytes: 1,
+            contentSha256: null,
+            durationSeconds: 16,
+          },
+          config,
+        ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_VIDEO_DURATION_EXCEEDED',
+    );
+  });
+
+  it('streams video verification and enforces the trusted duration at the exact boundary', async () => {
+    const validator = new MediaValidator();
+    const accepted = mp4(15_000);
+    const verified = await validator.readAndVerify(
+      Readable.from([accepted.subarray(0, 37), accepted.subarray(37)]),
+      {
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'VIDEO',
+        mimeType: 'video/mp4',
+        fileSizeBytes: accepted.length,
+        contentSha256: createHash('sha256').update(accepted).digest('hex'),
+        durationSeconds: 15,
+      },
+      config,
+    );
+    assert.equal(verified.durationSeconds, 15);
+    assert.deepEqual(verified.safeMetadata, { durationSeconds: 15, audioTrackCount: 1 });
+
+    const rejected = mp4(15_001);
+    await assert.rejects(
+      validator.readAndVerify(
+        Readable.from(rejected),
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/mp4',
+          fileSizeBytes: rejected.length,
+          contentSha256: null,
+          durationSeconds: 16,
+        },
+        config,
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_VIDEO_DURATION_EXCEEDED',
+    );
+  });
+
+  it('rejects an exercise video without a trusted audio track', async () => {
+    const validator = new MediaValidator();
+    const silent = mp4(8_000, { hasAudio: false, spoofAudioInMediaData: true });
+    await assert.rejects(
+      validator.readAndVerify(
+        Readable.from([silent.subarray(0, 73), silent.subarray(73)]),
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/mp4',
+          fileSizeBytes: silent.length,
+          contentSha256: createHash('sha256').update(silent).digest('hex'),
+          durationSeconds: 8,
+        },
+        config,
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_AUDIO_TRACK_REQUIRED',
+    );
+
+    const nonExercise = await validator.readAndVerify(
+      Readable.from(silent),
+      {
+        businessPurpose: 'EXEMPTION_APPLICATION',
+        mediaType: 'VIDEO',
+        mimeType: 'video/mp4',
+        fileSizeBytes: silent.length,
+        contentSha256: null,
+        durationSeconds: 8,
+      },
+      config,
+    );
+    assert.deepEqual(nonExercise.safeMetadata, { durationSeconds: 8, audioTrackCount: 0 });
   });
 });

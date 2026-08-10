@@ -259,7 +259,13 @@ for (const line of errorSection.split(/\r?\n/)) {
   const cells = markdownCells(line);
   if (cells.length >= 2 && /^[A-Z][A-Z0-9_]+$/.test(cells[0])) documentedErrorCodes.push(cells[0]);
 }
-const openapiErrorCodes = openapi.components.schemas.ErrorCode?.enum ?? [];
+const baseOpenapiErrorCodes = openapi.components.schemas.ErrorCode?.enum ?? [];
+const operationErrorCodes = Object.values(openapi.paths ?? {}).flatMap((pathItem) =>
+  Object.entries(pathItem ?? {})
+    .filter(([method]) => httpMethods.includes(method.toLowerCase()))
+    .flatMap(([, operation]) => operation?.['x-error-codes'] ?? []),
+);
+const openapiErrorCodes = [...new Set([...baseOpenapiErrorCodes, ...operationErrorCodes])];
 const errorsOnlyInDocs = setDiff(documentedErrorCodes, openapiErrorCodes);
 const errorsOnlyInOpenapi = setDiff(openapiErrorCodes, documentedErrorCodes);
 assert(errorsOnlyInDocs.length === 0, `Error codes only in docs: ${errorsOnlyInDocs.join(', ')}`);

@@ -34,8 +34,7 @@
 
 ## 2. 通用规则语义
 
-- 时间点：API 使用带时区 RFC 3339；数据库保存 UTC；业务日期由服务端按教学班所属组织时区计算，当前 BNBU 固定使用 `Asia/Shanghai`（北京时间）。学生端把时间点换算为学生设备时区展示；教师端和管理员端换算为北京时间展示；`businessDate` 是已冻结的北京业务日期，不做展示时区换算。
-- 打卡日界：新 session 只允许在北京时间 `06:00:00` 至 `22:00:00`（含边界）开始；教学班每日窗口只能收窄、不能放宽该边界。是否允许开始以服务端接收开始请求的时间为准，客户端时间仅用于提示。
+- 时间点：API 使用带时区 RFC 3339；数据库保存 UTC；业务日期由服务端按教学班所属组织时区计算，当前 BNBU 默认 `Asia/Shanghai`。
 - 时长：事实字段均为非负整数秒。`actualDurationSeconds` 是服务端接受的实际运动时长；`creditedDurationSeconds` 是按边界折算后的计入时长。
 - 身份：请求中的 `userId`、`studentId`、`organizationId` 不构成授权依据，后端从认证主体和资源关系解析。
 - 幂等：创建、提交、审核、重算等操作必须接受并持久化幂等键；相同主体、接口和键重复调用返回同一业务结果，不重复产生副作用。
@@ -74,7 +73,7 @@
 |---|---|---|---|---|---|---|---|
 | COURSE-001 | 校验组织、学期、教学班状态；归档/关闭默认拒绝 mutation | 只读查询和历史导出可按权限继续；归档后修正流程未确认，不开放普通写入口 | `COURSE_CLASS_SECTION_NOT_WRITABLE`、`COURSE_SEMESTER_ARCHIVED` | 间接 | 是（拒绝高风险写） | Courses、Class Sections | ClassSection `ACTIVE -> CLOSED`；Semester 归档后相关对象只读 |
 | COURSE-002 | token 使用服务端签名/随机 nonce；校验目标班、有效期、撤销状态和使用策略；不信任二维码内显示字段 | 返回最小教学班预览；轮换后旧 token 立即无效；二维码不是 Enrollment | `COURSE_INVITE_INVALID`、`COURSE_INVITE_EXPIRED`、`COURSE_INVITE_REVOKED` | 否 | 是 | QR Course Joining | 无核心领域对象转换；教学班关闭后 token 必然失效 |
-| COURSE-003 | 开始时必须在允许日期、每日时段且非排除日；服务端按北京时间判断，标准边界为 `06:00:00` 至 `22:00:00`（含边界），教学班配置只能收窄；已在窗内开始的 session 可在越过每日结束时刻后结束/提交，但不得跨学期截止 | 网络恢复不改变原 `startedAt`；例如北京时间 21:50 开始、22:30 结束并提交仍允许；22:00:01 才开始则拒绝；学期截止后草稿不能转正式记录 | `SESSION_OUTSIDE_TIME_WINDOW`、`COURSE_DEADLINE_PASSED` | 间接 | 是（拒绝） | Exercise Sessions、Exercise Records | 无独立状态；影响 Session 创建和 Record 提交 |
+| COURSE-003 | 开始时必须在允许日期、每日时段且非排除日；按服务端时区判断；已在窗内开始的 session 可在越过每日结束时刻后结束/提交，但不得跨学期截止 | 网络恢复不改变原 `startedAt`；学期截止后草稿不能转正式记录 | `SESSION_OUTSIDE_TIME_WINDOW`、`COURSE_DEADLINE_PASSED` | 间接 | 是（拒绝） | Exercise Sessions、Exercise Records | 无独立状态；影响 Session 创建和 Record 提交 |
 | COURSE-004 | organizationId/actor 从 principal 取得；courseCode trim 后大写并按组织唯一；CourseStatus 只接受 ACTIVE/INACTIVE；写入与幂等、AuditLog、Outbox 同事务 | ADMIN 仅管理本组织；TEACHER/STUDENT 写入拒绝且无副作用；INACTIVE 不删除/关闭已有 ClassSection，只阻止新开班 | `COURSE_NOT_FOUND`、`CONFLICT_RESOURCE_ALREADY_EXISTS`、`CONFLICT_VERSION_MISMATCH`、`PERMISSION_RESOURCE_SCOPE_DENIED` | 否 | 是 | Courses | Course `ACTIVE <-> INACTIVE`，历史引用保持 |
 | COURSE-005 | teacherId/organizationId 从 principal 解析；数据库与应用共同验证 Course/Semester/Teacher 同组织；update 仅白名单；关闭保留历史并强制 `isEnrollmentOpen=false` | TEACHER 只读写本人班；ADMIN 只有本组织治理读取；STUDENT 读取依赖 ACTIVE Enrollment；CLOSED/ARCHIVED 拒绝普通写 | `COURSE_CLASS_SECTION_NOT_FOUND`、`COURSE_CLASS_SECTION_NOT_WRITABLE`、`COURSE_SEMESTER_ARCHIVED`、`PERMISSION_COURSE_SCOPE_DENIED` | 间接 | 是 | Class Sections、Teacher Class Sections | 当前学期开班为 ACTIVE、未来学期开班为 UPCOMING；`ACTIVE/UPCOMING -> CLOSED` |
 
@@ -148,8 +147,8 @@
 
 | 编号 | 后端校验与处理 | 输出结果与边界情况 | 错误码 | 影响成绩 | 审计 | 相关接口 | 相关状态转换 |
 |---|---|---|---|---|---|---|---|
-| MEDIA-001 | V1 `businessPurpose` 只接受 `EXERCISE_RECORD` 且 captureSource 只接受 `IN_APP_CAMERA`；最多 6 个 IMAGE、1 个 VIDEO，提交至少 1 项 | 非打卡用途稳定拒绝；运动中和暂停可拍，完成后提交页可继续现场拍；客户端隐藏入口不代替后端检查 | `MEDIA_PURPOSE_MISMATCH`、`MEDIA_CAPTURE_SOURCE_NOT_ALLOWED`、`MEDIA_COUNT_LIMIT_EXCEEDED`、`MEDIA_TYPE_NOT_ALLOWED` | 间接 | 安全异常是 | Media Uploads | 不单独改变 record 状态 |
-| MEDIA-002 | 申请时生成稳定 `mediaId` 并创建 PENDING_UPLOAD；可选 `declaredContentSha256` 仅作不可信声明；客户端直传私有桶；确认继续使用同一 mediaId，服务端校验对象/大小/MIME/hash 后写 `verifiedContentSha256`；API 不返回 storageKey | 确认前不能用于业务；确认阶段不得创建第二个 mediaId；二进制不进入 record JSON；TTL/大小/扫描参数待 ADR-023 | `MEDIA_UPLOAD_SESSION_EXPIRED`、`MEDIA_OBJECT_NOT_FOUND`、`MEDIA_INTEGRITY_MISMATCH` | 否 | 是（不记 token/签名 URL） | Media Uploads initiate/confirm | `PENDING_UPLOAD -> UPLOADED`；校验失败到 `FAILED` |
+| MEDIA-001 | `EXERCISE_RECORD` 只接受 `IN_APP_CAMERA`；最多 6 个 IMAGE、1 个 VIDEO，提交至少 1 项；视频累计实际录制 `1..15` 秒，暂停不计时，可暂停/继续/提前结束并在 15 秒自动结束；录像包含声音 | 视频源格式、分辨率、码率和文件大小由设备与客户端兼容层处理，不构成业务限制；相机或麦克风权限不足时不得开始录像；客户端隐藏入口不代替后端检查 | `MEDIA_PURPOSE_MISMATCH`、`MEDIA_CAPTURE_SOURCE_NOT_ALLOWED`、`MEDIA_COUNT_LIMIT_EXCEEDED`、`MEDIA_VIDEO_DURATION_EXCEEDED` | 间接 | 安全异常是 | Media Uploads | 不单独改变 record 状态 |
+| MEDIA-002 | 申请时生成稳定 `mediaId` 并创建 PENDING_UPLOAD；客户端将录制视频压缩成功后才直传私有桶；确认沿用同一 mediaId，服务端流式校验对象/size/MIME/hash 并探测真实时长；API 不返回 storageKey | `fileSizeBytes/mimeType` 是传输与完整性事实，不是打卡视频业务上限；图片大小规则保持；压缩失败不得上传原文件；确认前不能用于业务 | `MEDIA_UPLOAD_SESSION_EXPIRED`、`MEDIA_OBJECT_NOT_FOUND`、`MEDIA_INTEGRITY_MISMATCH`、`MEDIA_SIZE_EXCEEDED`、`MEDIA_VIDEO_DURATION_EXCEEDED` | 否 | 是（不记 token/签名 URL） | Media Uploads initiate/confirm | `PENDING_UPLOAD -> UPLOADED`；校验失败到 `FAILED` |
 | MEDIA-003 | 校验 media 属本人、同 session/用途；先绑定并完成必需扫描/处理，只有 AVAILABLE 才可随 Record 提交；提交事务写入 recordId；父 Record 授权后才生成短期读链接 | 同一 media 不得跨 record；PROCESSING/FAILED 拒绝提交（ADR-058）；孤立 PENDING_UPLOAD/UPLOADED 按待定 TTL 清理；正式保留期待 ADR-023/032 | `MEDIA_BIND_TARGET_INVALID`、`MEDIA_ALREADY_BOUND`、`MEDIA_NOT_AVAILABLE`、`MEDIA_ACCESS_DENIED` | 间接 | 是 | Media Uploads、Exercise Records | `UPLOADED -> BOUND -> PROCESSING/AVAILABLE`；提交时 AVAILABLE 保持状态并绑定 recordId；孤立对象最终 `DELETED` |
 
 ## 10. 审核规则（REVIEW）
@@ -214,7 +213,7 @@
 | 学生退出/重入 Enrollment | 暂不开放学生 WITHDRAW/REJOIN；教师按权限移出/恢复 | ENROLL-003 学生动作 | ADR-054 |
 | 心跳容差、离线调和与异常 session 超时 | 未确认区间不自动计时，第二设备拒绝并发 | Session 生产级反作弊/恢复 | ADR-021 |
 | Token 生命周期与多设备策略 | 必须可撤销，但不固定时长 | Authentication 实现与客户端刷新 | ADR-022 |
-| 上传/孤立媒体 TTL、大小、扫描、正式保留期 | 私有、短链、未绑定不可提交；不物理清理已绑定证据 | 媒体清理与容量规划 | ADR-023、ADR-032 |
+| 上传/孤立媒体 TTL、图片大小、扫描、正式保留期 | 私有、短链、未绑定不可提交；打卡视频不设业务大小上限；不物理清理已绑定证据 | 媒体清理与容量规划 | ADR-023、ADR-032、ADR-099 |
 | 审核能否覆盖折算时长 | override 固定 null；VALID 沿用 Record，INVALID 为 0 | Review 写入、旧 approvedHours 迁移 | ADR-047 |
 | 历史“提交即有效”迁移 | 不自动重算/发布；冲突项保持 PENDING | Review migration、历史成绩 | ADR-056 |
 | 名单异常是否允许忽略 | 暂不开放 IGNORED，只允许确认/修复 | Roster resolution | ADR-057 |
@@ -238,7 +237,7 @@
 | AUTH/COURSE | 收集凭证、显示系统/时间窗状态 | 验证身份、账户、组织、系统模式、教学班和时间窗 |
 | ENROLL/ROSTER | 扫码与资料录入、展示差异/处置表单 | 防重事务、直接 ACTIVE、名单解析/对齐、处置历史和范围授权 |
 | SESSION | 本地交互计时、重启后恢复 UI、上传观测事件 | 服务端事件时钟、暂停区间、单活动会话、7200 秒封顶和调和结果 |
-| RECORD/MEDIA | 现场拍摄、显示数量/进度、提交 mediaId | MIME/签名/数量/来源、AVAILABLE、时长边界、每日唯一和原子提交 |
+| RECORD/MEDIA | 现场拍摄；视频提供有声录制、暂停/继续、15 秒自动结束和上传前压缩；显示数量/进度、提交 mediaId | 内容签名/数量/来源、视频真实时长、AVAILABLE、运动时长边界、每日唯一和原子提交 |
 | REVIEW | 教师输入 VALID/INVALID、原因和公开/内部意见 | 教学班归属、append-only 版本、override 守卫、Record 状态和重算事件 |
 | SCORE | 展示服务端进度/已发布成绩，可做明确标注的非权威预览 | VALID 来源汇总、72000 秒门槛、ScoreRule 版本、调整、发布和来源快照 |
 | AUDIT | 携带 requestId/幂等键并显示可公开结果 | 不可变审计、脱敏、可靠写入、范围查询和保留守卫 |

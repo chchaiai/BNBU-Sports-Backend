@@ -17,8 +17,6 @@ export interface MediaConfig {
   uploadUrlTtlSeconds: number;
   accessUrlTtlSeconds: number;
   maxImageBytes: number;
-  maxVideoBytes: number;
-  maxVideoDurationSeconds: number;
   maxImagePixels: number;
   scannerMode: 'TEST_SIGNATURE' | 'EXTERNAL_REQUIRED';
   workerEnabled: boolean;
@@ -242,8 +240,6 @@ function mediaConfiguration(
     'MEDIA_UPLOAD_URL_TTL_SECONDS',
     'MEDIA_ACCESS_URL_TTL_SECONDS',
     'MEDIA_MAX_IMAGE_BYTES',
-    'MEDIA_MAX_VIDEO_BYTES',
-    'MEDIA_MAX_VIDEO_DURATION_SECONDS',
     'MEDIA_MAX_IMAGE_PIXELS',
     'MEDIA_SCANNER_MODE',
     'MEDIA_WORKER_ENABLED',
@@ -292,10 +288,6 @@ function mediaConfiguration(
       maximum: 3600,
     }),
     maxImageBytes: integer(raw, 'MEDIA_MAX_IMAGE_BYTES', { minimum: 1024 }),
-    maxVideoBytes: integer(raw, 'MEDIA_MAX_VIDEO_BYTES', { minimum: 1024 }),
-    maxVideoDurationSeconds: integer(raw, 'MEDIA_MAX_VIDEO_DURATION_SECONDS', {
-      minimum: 1,
-    }),
     maxImagePixels: integer(raw, 'MEDIA_MAX_IMAGE_PIXELS', { minimum: 1 }),
     scannerMode,
     workerEnabled: optionalBoolean(raw, 'MEDIA_WORKER_ENABLED', false),

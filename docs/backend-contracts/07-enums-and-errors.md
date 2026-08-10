@@ -528,6 +528,8 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | `MEDIA_EVIDENCE_REQUIRED` | 422 | 缺少必需的媒体证据 | 提交所需 proof 数量为零或缺少指定类型 | 是，补齐后 | 打开证据选择/拍摄步骤 | `error.media.evidenceRequired` |
 | `MEDIA_COUNT_LIMIT_EXCEEDED` | 422 | 媒体数量超过业务上限 | 请求内或目标记录累计数量超过限制 | 是，移除后 | 显示上限并要求用户删除多余项 | `error.media.countLimitExceeded` |
 | `MEDIA_SIZE_EXCEEDED` | 413 | 文件大小超过上限 | 原始或解码后文件超过配置上限 | 是，压缩/重拍后 | 在上传前提示大小，保留其他合格项 | `error.media.sizeExceeded` |
+| `MEDIA_VIDEO_DURATION_EXCEEDED` | 422 | 打卡视频超过 15 秒 | 客户端声明或服务端探测的累计实际录制时长超过 15 秒 | 是，重新录制后 | 提示视频最多录制 15 秒；暂停时间不计入 | `error.media.videoDurationExceeded` |
+| `MEDIA_AUDIO_TRACK_REQUIRED` | 422 | 打卡视频缺少声音 | 服务端未在打卡视频容器中探测到可解析音轨 | 是，重新录制后 | 提示必须开启麦克风并重新录制有声视频 | `error.media.audioTrackRequired` |
 | `MEDIA_TYPE_NOT_ALLOWED` | 415 | 媒体格式不受支持 | MIME、文件签名或 MediaType 不在白名单 | 是，更换文件后 | 展示允许类型；不得只改扩展名 | `error.media.typeNotAllowed` |
 | `MEDIA_CAPTURE_SOURCE_NOT_ALLOWED` | 422 | 当前业务不允许该采集来源 | CaptureSource 不符合端点或课程策略 | 是，更换来源后 | 仅展示允许的拍摄/选择入口 | `error.media.captureSourceNotAllowed` |
 | `MEDIA_UPLOAD_SESSION_EXPIRED` | 410 | 上传会话已过期 | 当前时间超过上传凭证或分片会话有效期 | 是，创建新会话后 | 丢弃旧签名 URL，重新申请上传 | `error.media.uploadSessionExpired` |
@@ -730,6 +732,7 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | 缺少媒体证据 | `MEDIA_EVIDENCE_REQUIRED` | 422 | 返回证据步骤 |
 | 媒体数量超限 | `MEDIA_COUNT_LIMIT_EXCEEDED` | 422 | 删除多余媒体 |
 | 媒体过大 | `MEDIA_SIZE_EXCEEDED` | 413 | 压缩或重拍 |
+| 打卡视频超过 15 秒 | `MEDIA_VIDEO_DURATION_EXCEEDED` | 422 | 重新录制最多 15 秒的视频 |
 | 媒体格式不支持 | `MEDIA_TYPE_NOT_ALLOWED` | 415 | 更换允许格式 |
 | 记录已审核 | `REVIEW_ALREADY_COMPLETED` | 409 | 展示既有结果，不覆盖 |
 | 无审核范围 | `PERMISSION_REVIEW_SCOPE_DENIED` | 403 | 从队列移除并刷新 |

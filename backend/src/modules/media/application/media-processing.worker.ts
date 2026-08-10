@@ -65,6 +65,7 @@ export class MediaProcessingWorker implements OnApplicationBootstrap, OnModuleDe
       verified = await this.validator.readAndVerify(
         await this.storage.getPrivateObject(claimed.media.storageKey),
         {
+          businessPurpose: claimed.media.businessPurpose,
           mediaType: claimed.media.mediaType,
           mimeType: claimed.media.declaredMimeType,
           fileSizeBytes: Number(claimed.media.declaredFileSizeBytes),
