@@ -34,7 +34,8 @@
 
 ## 2. 通用规则语义
 
-- 时间点：API 使用带时区 RFC 3339；数据库保存 UTC；业务日期由服务端按教学班所属组织时区计算，当前 BNBU 默认 `Asia/Shanghai`。
+- 时间点：API 使用带时区 RFC 3339；数据库保存 UTC；业务日期由服务端按教学班所属组织时区计算，当前 BNBU 固定使用 `Asia/Shanghai`（北京时间）。学生端把时间点换算为学生设备时区展示；教师端和管理员端换算为北京时间展示；`businessDate` 是已冻结的北京业务日期，不做展示时区换算。
+- 打卡日界：新 session 只允许在北京时间 `06:00:00` 至 `22:00:00`（含边界）开始；教学班每日窗口只能收窄、不能放宽该边界。是否允许开始以服务端接收开始请求的时间为准，客户端时间仅用于提示。
 - 时长：事实字段均为非负整数秒。`actualDurationSeconds` 是服务端接受的实际运动时长；`creditedDurationSeconds` 是按边界折算后的计入时长。
 - 身份：请求中的 `userId`、`studentId`、`organizationId` 不构成授权依据，后端从认证主体和资源关系解析。
 - 幂等：创建、提交、审核、重算等操作必须接受并持久化幂等键；相同主体、接口和键重复调用返回同一业务结果，不重复产生副作用。
@@ -73,7 +74,7 @@
 |---|---|---|---|---|---|---|---|
 | COURSE-001 | 校验组织、学期、教学班状态；归档/关闭默认拒绝 mutation | 只读查询和历史导出可按权限继续；归档后修正流程未确认，不开放普通写入口 | `COURSE_CLASS_SECTION_NOT_WRITABLE`、`COURSE_SEMESTER_ARCHIVED` | 间接 | 是（拒绝高风险写） | Courses、Class Sections | ClassSection `ACTIVE -> CLOSED`；Semester 归档后相关对象只读 |
 | COURSE-002 | token 使用服务端签名/随机 nonce；校验目标班、有效期、撤销状态和使用策略；不信任二维码内显示字段 | 返回最小教学班预览；轮换后旧 token 立即无效；二维码不是 Enrollment | `COURSE_INVITE_INVALID`、`COURSE_INVITE_EXPIRED`、`COURSE_INVITE_REVOKED` | 否 | 是 | QR Course Joining | 无核心领域对象转换；教学班关闭后 token 必然失效 |
-| COURSE-003 | 开始时必须在允许日期、每日时段且非排除日；按服务端时区判断；已在窗内开始的 session 可在越过每日结束时刻后结束/提交，但不得跨学期截止 | 网络恢复不改变原 `startedAt`；学期截止后草稿不能转正式记录 | `SESSION_OUTSIDE_TIME_WINDOW`、`COURSE_DEADLINE_PASSED` | 间接 | 是（拒绝） | Exercise Sessions、Exercise Records | 无独立状态；影响 Session 创建和 Record 提交 |
+| COURSE-003 | 开始时必须在允许日期、每日时段且非排除日；服务端按北京时间判断，标准边界为 `06:00:00` 至 `22:00:00`（含边界），教学班配置只能收窄；已在窗内开始的 session 可在越过每日结束时刻后结束/提交，但不得跨学期截止 | 网络恢复不改变原 `startedAt`；例如北京时间 21:50 开始、22:30 结束并提交仍允许；22:00:01 才开始则拒绝；学期截止后草稿不能转正式记录 | `SESSION_OUTSIDE_TIME_WINDOW`、`COURSE_DEADLINE_PASSED` | 间接 | 是（拒绝） | Exercise Sessions、Exercise Records | 无独立状态；影响 Session 创建和 Record 提交 |
 | COURSE-004 | organizationId/actor 从 principal 取得；courseCode trim 后大写并按组织唯一；CourseStatus 只接受 ACTIVE/INACTIVE；写入与幂等、AuditLog、Outbox 同事务 | ADMIN 仅管理本组织；TEACHER/STUDENT 写入拒绝且无副作用；INACTIVE 不删除/关闭已有 ClassSection，只阻止新开班 | `COURSE_NOT_FOUND`、`CONFLICT_RESOURCE_ALREADY_EXISTS`、`CONFLICT_VERSION_MISMATCH`、`PERMISSION_RESOURCE_SCOPE_DENIED` | 否 | 是 | Courses | Course `ACTIVE <-> INACTIVE`，历史引用保持 |
 | COURSE-005 | teacherId/organizationId 从 principal 解析；数据库与应用共同验证 Course/Semester/Teacher 同组织；update 仅白名单；关闭保留历史并强制 `isEnrollmentOpen=false` | TEACHER 只读写本人班；ADMIN 只有本组织治理读取；STUDENT 读取依赖 ACTIVE Enrollment；CLOSED/ARCHIVED 拒绝普通写 | `COURSE_CLASS_SECTION_NOT_FOUND`、`COURSE_CLASS_SECTION_NOT_WRITABLE`、`COURSE_SEMESTER_ARCHIVED`、`PERMISSION_COURSE_SCOPE_DENIED` | 间接 | 是 | Class Sections、Teacher Class Sections | 当前学期开班为 ACTIVE、未来学期开班为 UPCOMING；`ACTIVE/UPCOMING -> CLOSED` |
 
