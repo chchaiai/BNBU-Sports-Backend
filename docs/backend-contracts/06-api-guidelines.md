@@ -25,8 +25,9 @@
 | 认证 | 每个 operation 由自身 `x-access-policy.authentication` 决定：`PUBLIC`、`ACCESS_TOKEN` 或 `JOIN_CAPABILITY`；禁止依赖全局 Bearer 推断资源权限 |
 | Token 来源 | 后端验证并从会话解析 `userId/role/organizationId`；请求体中的同名字段不构成授权 |
 | 资源隐藏 | 无权获知资源是否存在时返回 `404 PERMISSION_RESOURCE_NOT_FOUND`；已知资源但无动作权限时返回 403 |
-| 时间 | RFC 3339 带时区，例如 `2026-08-02T09:30:00+08:00`；数据库实现应归一到 UTC |
-| 业务日期 | `YYYY-MM-DD`，由服务端按 Organization.timezone 计算 |
+| 时间 | RFC 3339 带时区，例如 `2026-08-02T09:30:00+08:00`；数据库实现应归一到 UTC；学生端按设备时区展示，教师/管理员端按北京时间展示 |
+| 业务日期 | `YYYY-MM-DD`，由服务端按 Organization.timezone 计算并冻结；BNBU 使用 `Asia/Shanghai`，客户端不得再次做时区换算 |
+| 打卡开始窗口 | 服务端按北京时间 `06:00:00` 至 `22:00:00`（含边界）裁决新 session；教学班窗口只能收窄；窗内开始后允许在 22:00 后结束/提交 |
 | 时长 | 非负整数秒；禁止在新 API 写入小时、分钟或浮点秒 |
 | 枚举 | 稳定英文 `UPPER_SNAKE_CASE`；客户端用 i18n key 显示中文/英文 |
 | 版本策略 | v1 只做向后兼容新增；删除/改名/收紧必填属于破坏性变更，需弃用期、调用遥测和新主版本 |

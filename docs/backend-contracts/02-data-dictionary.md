@@ -67,7 +67,9 @@
 ### 2.2 时间、日期和单位
 
 - 数据库时间点统一按 UTC 保存；API 返回 RFC 3339/ISO 8601 带偏移时间，例如 `2026-08-02T09:30:00+08:00`。
-- `businessDate` 是 `YYYY-MM-DD` 日期，不是时间点。服务端按 `ClassSection.organizationId` 对应组织时区和 `ExerciseSession.startedAt` 计算并冻结；BNBU 当前默认 `Asia/Shanghai`。
+- `startedAt`、`endedAt`、`submittedAt` 等时间点由客户端按角色展示：学生端换算为学生设备时区，教师端和管理员端换算为 `Asia/Shanghai`（北京时间）。这只改变显示文字，不改变 API 时间点事实。
+- `businessDate` 是 `YYYY-MM-DD` 日期，不是时间点。服务端按 `ClassSection.organizationId` 对应组织时区和 `ExerciseSession.startedAt` 计算并冻结；BNBU 当前固定使用 `Asia/Shanghai`。客户端不得把 `businessDate` 当作 UTC 时间再次换算。
+- 每日开始窗口的统一外边界是北京时间 `06:00:00` 至 `22:00:00`（含边界）；教学班 `dailyStartTime`/`dailyEndTime` 只允许收窄该范围。该窗口只裁决新 session 的开始，不裁决已开始 session 的结束/提交。
 - 事实时长全部为 `int64` 秒：`actualDurationSeconds`、`pausedDurationSeconds`、`creditedDurationSeconds`。小时、分钟和 `1h/2h` 只在展示层派生。
 - 按 ADR-009，客户端旧字段换算为秒后必须做整值和范围校验；转换不能静默改变边界或覆盖原始来源。
 
