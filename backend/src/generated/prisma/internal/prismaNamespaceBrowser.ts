@@ -97,6 +97,7 @@ export const ModelName = {
   ScoreRecalculationAttempt: 'ScoreRecalculationAttempt',
   StudentSignInChallenge: 'StudentSignInChallenge',
   AccountRecoveryChallenge: 'AccountRecoveryChallenge',
+  EmailVerificationChallenge: 'EmailVerificationChallenge',
   AuthRateLimitFact: 'AuthRateLimitFact',
   RateLimitWindow: 'RateLimitWindow',
   AppReleasePolicy: 'AppReleasePolicy',
@@ -179,9 +180,6 @@ export const UserScalarFieldEnum = {
   primaryEmail: 'primaryEmail',
   primaryEmailNormalized: 'primaryEmailNormalized',
   emailVerifiedAt: 'emailVerifiedAt',
-  primaryPhone: 'primaryPhone',
-  primaryPhoneNormalized: 'primaryPhoneNormalized',
-  phoneVerifiedAt: 'phoneVerifiedAt',
   passwordHash: 'passwordHash',
   tokenVersion: 'tokenVersion',
   lastAuthenticatedAt: 'lastAuthenticatedAt',
@@ -1089,6 +1087,32 @@ export const AccountRecoveryChallengeScalarFieldEnum = {
 } as const
 
 export type AccountRecoveryChallengeScalarFieldEnum = (typeof AccountRecoveryChallengeScalarFieldEnum)[keyof typeof AccountRecoveryChallengeScalarFieldEnum]
+
+
+export const EmailVerificationChallengeScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  mode: 'mode',
+  locale: 'locale',
+  targetEmail: 'targetEmail',
+  targetEmailNormalized: 'targetEmailNormalized',
+  currentEmailCodeDigest: 'currentEmailCodeDigest',
+  newEmailCodeDigest: 'newEmailCodeDigest',
+  codeKeyVersion: 'codeKeyVersion',
+  status: 'status',
+  failedAttempts: 'failedAttempts',
+  maxAttempts: 'maxAttempts',
+  expectedUserVersion: 'expectedUserVersion',
+  requestedAt: 'requestedAt',
+  deliveredAt: 'deliveredAt',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  requestId: 'requestId',
+  version: 'version'
+} as const
+
+export type EmailVerificationChallengeScalarFieldEnum = (typeof EmailVerificationChallengeScalarFieldEnum)[keyof typeof EmailVerificationChallengeScalarFieldEnum]
 
 
 export const AuthRateLimitFactScalarFieldEnum = {

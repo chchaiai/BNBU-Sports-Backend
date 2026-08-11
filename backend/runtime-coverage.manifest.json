@@ -1,5 +1,5 @@
 {
-  "expectedOperationCount": 122,
+  "expectedOperationCount": 123,
   "implemented": {
     "getHealthLive": {
       "module": "Health",
@@ -100,16 +100,27 @@
       "e2eTest": "test/e2e/auth.e2e.test.ts",
       "dockerSmoke": "docs/backend-contracts/10a-foundation-runtime-validation.md"
     },
-    "updateCurrentUserProfile": {
+    "requestCurrentUserEmailChallenge": {
       "module": "Users",
-      "stage": "Stage 19",
+      "stage": "Email-only Authentication",
       "controller": "src/modules/users/users.controller.ts",
-      "useCase": "UsersService.denyCurrentProfileUpdate",
-      "repository": "PrismaService.user read-only validation; no mutation",
-      "migration": "0001",
-      "contractTest": "test/contract/export-audit-governance-contract.test.ts",
-      "e2eTest": "test/e2e/export-audit-governance.e2e.test.ts",
-      "dockerSmoke": "docs/backend-contracts/19-export-audit-governance-implementation-report.md"
+      "useCase": "EmailVerificationService.requestChallenge",
+      "repository": "PrismaService.emailVerificationChallenge",
+      "migration": "0014_email_only_auth",
+      "contractTest": "test/contract/openapi-contract.test.ts",
+      "e2eTest": "test/e2e/client-capabilities.e2e.test.ts",
+      "dockerSmoke": "docs/backend-contracts/21-client-capabilities-local-integration-report.md"
+    },
+    "verifyCurrentUserEmailChallenge": {
+      "module": "Users",
+      "stage": "Email-only Authentication",
+      "controller": "src/modules/users/users.controller.ts",
+      "useCase": "EmailVerificationService.verifyChallenge",
+      "repository": "PrismaService.emailVerificationChallenge",
+      "migration": "0014_email_only_auth",
+      "contractTest": "test/contract/openapi-contract.test.ts",
+      "e2eTest": "test/e2e/client-capabilities.e2e.test.ts",
+      "dockerSmoke": "docs/backend-contracts/21-client-capabilities-local-integration-report.md"
     },
     "listStudents": {
       "module": "Users",
@@ -1349,7 +1360,6 @@
     "ignoreRosterAlignmentResult",
     "withdrawExerciseRecord",
     "openStudentScoreCorrection",
-    "updateCurrentUserProfile",
     "updateStudent",
     "listExports",
     "createExport",

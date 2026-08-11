@@ -1,7 +1,13 @@
-export const AUTH_CODE_PURPOSES = ['STUDENT_SIGN_IN', 'ACCOUNT_RECOVERY'] as const;
+export const AUTH_CODE_PURPOSES = [
+  'STUDENT_SIGN_IN',
+  'ACCOUNT_RECOVERY',
+  'EMAIL_FIRST_BIND',
+  'EMAIL_REBIND_CURRENT',
+  'EMAIL_REBIND_NEW',
+] as const;
 export type AuthCodePurpose = (typeof AUTH_CODE_PURPOSES)[number];
 
-export const AUTH_CODE_CHANNELS = ['EMAIL', 'PHONE'] as const;
+export const AUTH_CODE_CHANNELS = ['EMAIL'] as const;
 export type AuthCodeChannel = (typeof AUTH_CODE_CHANNELS)[number];
 
 export interface AuthCodeDelivery {

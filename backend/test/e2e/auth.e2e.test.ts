@@ -216,7 +216,7 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
           securityScheme: Object.keys((operation.security ?? document.security)?.[0] ?? {})[0],
         })),
     );
-    assert.equal(secured.length, 108);
+    assert.equal(secured.length, 109);
 
     for (const operation of secured) {
       const result = await request(`/api/v1${operation.path}`, {

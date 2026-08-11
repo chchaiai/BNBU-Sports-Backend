@@ -272,6 +272,11 @@ export type StudentSignInChallenge = Prisma.StudentSignInChallengeModel
  */
 export type AccountRecoveryChallenge = Prisma.AccountRecoveryChallengeModel
 /**
+ * Model EmailVerificationChallenge
+ * 
+ */
+export type EmailVerificationChallenge = Prisma.EmailVerificationChallengeModel
+/**
  * Model AuthRateLimitFact
  * 
  */

@@ -66,6 +66,7 @@ model Organization {
   outboxEvents                   OutboxEvent[]
   studentSignInChallenges        StudentSignInChallenge[]
   accountRecoveryChallenges      AccountRecoveryChallenge[]
+  emailVerificationChallenges    EmailVerificationChallenge[]
   authRateLimitFacts             AuthRateLimitFact[]
   notifications                  Notification[]
   pushDevices                    PushDevice[]
@@ -106,9 +107,9 @@ model User {
   primaryEmail           String?   @map("primary_email") @db.VarChar(254)
   primaryEmailNormalized String?   @map("primary_email_normalized") @db.VarChar(254)
   emailVerifiedAt        DateTime? @map("email_verified_at") @db.Timestamptz(6)
-  primaryPhone           String?   @map("primary_phone") @db.VarChar(32)
-  primaryPhoneNormalized String?   @map("primary_phone_normalized") @db.VarChar(32)
-  phoneVerifiedAt        DateTime? @map("phone_verified_at") @db.Timestamptz(6)
+  retiredPrimaryPhone           String?   @ignore @map("primary_phone") @db.VarChar(32)
+  retiredPrimaryPhoneNormalized String?   @ignore @map("primary_phone_normalized") @db.VarChar(32)
+  retiredPhoneVerifiedAt        DateTime? @ignore @map("phone_verified_at") @db.Timestamptz(6)
   passwordHash           String?   @map("password_hash") @db.VarChar(255)
   tokenVersion           Int       @default(0) @map("token_version")
   lastAuthenticatedAt    DateTime? @map("last_authenticated_at") @db.Timestamptz(6)
@@ -153,6 +154,7 @@ model User {
   scorePublicationEvents    ScorePublicationEvent[]        @relation("ScorePublicationActor")
   studentSignInChallenges   StudentSignInChallenge[]
   accountRecoveryChallenges AccountRecoveryChallenge[]
+  emailVerificationChallenges EmailVerificationChallenge[]
   notifications             Notification[]                 @relation("NotificationRecipient")
   notificationEvents        NotificationEvent[]            @relation("NotificationEventActor")
   pushDevices               PushDevice[]                   @relation("PushDeviceOwner")
@@ -168,7 +170,7 @@ model User {
 
   @@unique([id, organizationId], map: "users_id_organization_id_key")
   @@unique([organizationId, primaryEmailNormalized], map: "users_organization_email_normalized_key")
-  @@unique([organizationId, primaryPhoneNormalized], map: "users_organization_phone_normalized_key")
+  @@unique([organizationId, retiredPrimaryPhoneNormalized], map: "users_organization_phone_normalized_key")
   @@index([organizationId, role, status], map: "users_organization_role_status_idx")
   @@map("users")
 }
@@ -1507,6 +1509,37 @@ model AccountRecoveryChallenge {
   @@index([sourceIpDigest, requestedAt], map: "account_recovery_challenges_source_requested_idx")
   @@index([status, expiresAt], map: "account_recovery_challenges_status_expires_idx")
   @@map("account_recovery_challenges")
+}
+
+model EmailVerificationChallenge {
+  id                         String    @id @db.Uuid
+  organizationId             String    @map("organization_id") @db.Uuid
+  userId                     String    @map("user_id") @db.Uuid
+  mode                       String    @db.VarChar(16)
+  locale                     String    @db.VarChar(16)
+  targetEmail                String    @map("target_email") @db.VarChar(254)
+  targetEmailNormalized      String    @map("target_email_normalized") @db.VarChar(254)
+  currentEmailCodeDigest     String?   @map("current_email_code_digest") @db.Char(64)
+  newEmailCodeDigest         String    @map("new_email_code_digest") @db.Char(64)
+  codeKeyVersion             Int       @map("code_key_version")
+  status                     String    @db.VarChar(24)
+  failedAttempts             Int       @default(0) @map("failed_attempts")
+  maxAttempts                Int       @map("max_attempts")
+  expectedUserVersion        Int       @map("expected_user_version")
+  requestedAt                DateTime  @map("requested_at") @db.Timestamptz(6)
+  deliveredAt                DateTime? @map("delivered_at") @db.Timestamptz(6)
+  expiresAt                  DateTime  @map("expires_at") @db.Timestamptz(6)
+  consumedAt                 DateTime? @map("consumed_at") @db.Timestamptz(6)
+  requestId                  String    @map("request_id") @db.VarChar(64)
+  version                    Int       @default(1)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict, map: "email_verification_challenges_organization_fkey")
+  user         User         @relation(fields: [userId, organizationId], references: [id, organizationId], onDelete: Restrict, map: "email_verification_challenges_user_fkey")
+
+  @@unique([id, organizationId], map: "email_verification_challenges_id_organization_key")
+  @@index([organizationId, userId, requestedAt], map: "email_verification_challenges_user_requested_idx")
+  @@index([status, expiresAt], map: "email_verification_challenges_status_expires_idx")
+  @@map("email_verification_challenges")
 }
 
 model AuthRateLimitFact {

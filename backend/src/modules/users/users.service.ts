@@ -125,11 +125,6 @@ export class UsersService {
     };
   }
 
-  async denyCurrentProfileUpdate(principal: AuthenticatedPrincipal): Promise<never> {
-    await this.current(principal);
-    throw new ApplicationError('SYSTEM_MODE_UNSUPPORTED', 503);
-  }
-
   async listStudents(
     principal: AuthenticatedPrincipal,
     input: StudentListQueryDto,

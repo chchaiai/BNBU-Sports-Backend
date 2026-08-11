@@ -10,21 +10,23 @@ import { operationPolicies } from '../../src/generated/operation-policies.genera
 import { AuditLogListQueryDto } from '../../src/modules/audit-logs/audit-logs.dto.js';
 import { CreateExportRequestDto } from '../../src/modules/exports/exports.dto.js';
 import {
-  UpdateCurrentProfileRequestDto,
+  EmailVerificationChallengeRequestDto,
   UpdateStudentRequestDto,
 } from '../../src/modules/users/users.dto.js';
 
 describe('Stage 19 Export and audit governance security', () => {
   it('strips forged identity and persistence facts from default-deny DTOs', async () => {
-    const current = plainToInstance(UpdateCurrentProfileRequestDto, {
-      primaryEmail: 'synthetic@invalid.test',
+    const current = plainToInstance(EmailVerificationChallengeRequestDto, {
+      email: 'synthetic@invalid.test',
+      locale: 'en',
       expectedVersion: 1,
+      primaryPhone: '+15555555555',
       userId: 'attacker',
       organizationId: 'attacker',
       role: 'ADMIN',
     });
     assert.equal((await validate(current, { whitelist: true })).length, 0);
-    for (const forbidden of ['userId', 'organizationId', 'role']) {
+    for (const forbidden of ['primaryPhone', 'userId', 'organizationId', 'role']) {
       assert.equal(Object.hasOwn(current, forbidden), false);
     }
 
@@ -67,11 +69,10 @@ describe('Stage 19 Export and audit governance security', () => {
     assert.equal(Object.hasOwn(query, 'organizationId'), false);
   });
 
-  it('keeps audit ADMIN-only and all six unresolved mutations fail-closed', () => {
+  it('keeps audit ADMIN-only and all five unresolved mutations fail-closed', () => {
     assert.deepEqual(operationPolicies.listAuditLogs.allowedRoles, ['ADMIN']);
     assert.deepEqual(operationPolicies.getAuditLog.allowedRoles, ['ADMIN']);
     for (const operationId of [
-      'updateCurrentUserProfile',
       'updateStudent',
       'listExports',
       'createExport',

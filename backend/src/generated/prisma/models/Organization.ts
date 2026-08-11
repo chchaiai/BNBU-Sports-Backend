@@ -303,6 +303,7 @@ export type OrganizationWhereInput = {
   outboxEvents?: Prisma.OutboxEventListRelationFilter
   studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeListRelationFilter
   authRateLimitFacts?: Prisma.AuthRateLimitFactListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   pushDevices?: Prisma.PushDeviceListRelationFilter
@@ -376,6 +377,7 @@ export type OrganizationOrderByWithRelationInput = {
   outboxEvents?: Prisma.OutboxEventOrderByRelationAggregateInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeOrderByRelationAggregateInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeOrderByRelationAggregateInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeOrderByRelationAggregateInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   pushDevices?: Prisma.PushDeviceOrderByRelationAggregateInput
@@ -452,6 +454,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   outboxEvents?: Prisma.OutboxEventListRelationFilter
   studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeListRelationFilter
   authRateLimitFacts?: Prisma.AuthRateLimitFactListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   pushDevices?: Prisma.PushDeviceListRelationFilter
@@ -559,6 +562,7 @@ export type OrganizationCreateInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -632,6 +636,7 @@ export type OrganizationUncheckedCreateInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -705,6 +710,7 @@ export type OrganizationUpdateInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -778,6 +784,7 @@ export type OrganizationUncheckedUpdateInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1530,6 +1537,20 @@ export type OrganizationUpdateOneRequiredWithoutAccountRecoveryChallengesNestedI
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAccountRecoveryChallengesInput, Prisma.OrganizationUpdateWithoutAccountRecoveryChallengesInput>, Prisma.OrganizationUncheckedUpdateWithoutAccountRecoveryChallengesInput>
 }
 
+export type OrganizationCreateNestedOneWithoutEmailVerificationChallengesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedCreateWithoutEmailVerificationChallengesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutEmailVerificationChallengesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutEmailVerificationChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedCreateWithoutEmailVerificationChallengesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutEmailVerificationChallengesInput
+  upsert?: Prisma.OrganizationUpsertWithoutEmailVerificationChallengesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutEmailVerificationChallengesInput, Prisma.OrganizationUpdateWithoutEmailVerificationChallengesInput>, Prisma.OrganizationUncheckedUpdateWithoutEmailVerificationChallengesInput>
+}
+
 export type OrganizationCreateNestedOneWithoutAuthRateLimitFactsInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAuthRateLimitFactsInput, Prisma.OrganizationUncheckedCreateWithoutAuthRateLimitFactsInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAuthRateLimitFactsInput
@@ -1797,6 +1818,7 @@ export type OrganizationCreateWithoutSystemPolicyInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -1869,6 +1891,7 @@ export type OrganizationUncheckedCreateWithoutSystemPolicyInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1957,6 +1980,7 @@ export type OrganizationUpdateWithoutSystemPolicyInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -2029,6 +2053,7 @@ export type OrganizationUncheckedUpdateWithoutSystemPolicyInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2101,6 +2126,7 @@ export type OrganizationCreateWithoutUsersInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -2173,6 +2199,7 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2261,6 +2288,7 @@ export type OrganizationUpdateWithoutUsersInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -2333,6 +2361,7 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2405,6 +2434,7 @@ export type OrganizationCreateWithoutStudentProfilesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -2477,6 +2507,7 @@ export type OrganizationUncheckedCreateWithoutStudentProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2565,6 +2596,7 @@ export type OrganizationUpdateWithoutStudentProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -2637,6 +2669,7 @@ export type OrganizationUncheckedUpdateWithoutStudentProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2709,6 +2742,7 @@ export type OrganizationCreateWithoutTeacherProfilesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -2781,6 +2815,7 @@ export type OrganizationUncheckedCreateWithoutTeacherProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2869,6 +2904,7 @@ export type OrganizationUpdateWithoutTeacherProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -2941,6 +2977,7 @@ export type OrganizationUncheckedUpdateWithoutTeacherProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3013,6 +3050,7 @@ export type OrganizationCreateWithoutAdminProfilesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -3085,6 +3123,7 @@ export type OrganizationUncheckedCreateWithoutAdminProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3173,6 +3212,7 @@ export type OrganizationUpdateWithoutAdminProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -3245,6 +3285,7 @@ export type OrganizationUncheckedUpdateWithoutAdminProfilesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3317,6 +3358,7 @@ export type OrganizationCreateWithoutAuthSessionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -3389,6 +3431,7 @@ export type OrganizationUncheckedCreateWithoutAuthSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3477,6 +3520,7 @@ export type OrganizationUpdateWithoutAuthSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -3549,6 +3593,7 @@ export type OrganizationUncheckedUpdateWithoutAuthSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3621,6 +3666,7 @@ export type OrganizationCreateWithoutRefreshTokensInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -3693,6 +3739,7 @@ export type OrganizationUncheckedCreateWithoutRefreshTokensInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3781,6 +3828,7 @@ export type OrganizationUpdateWithoutRefreshTokensInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -3853,6 +3901,7 @@ export type OrganizationUncheckedUpdateWithoutRefreshTokensInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3925,6 +3974,7 @@ export type OrganizationCreateWithoutSemestersInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -3997,6 +4047,7 @@ export type OrganizationUncheckedCreateWithoutSemestersInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4085,6 +4136,7 @@ export type OrganizationUpdateWithoutSemestersInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -4157,6 +4209,7 @@ export type OrganizationUncheckedUpdateWithoutSemestersInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4229,6 +4282,7 @@ export type OrganizationCreateWithoutCoursesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -4301,6 +4355,7 @@ export type OrganizationUncheckedCreateWithoutCoursesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4389,6 +4444,7 @@ export type OrganizationUpdateWithoutCoursesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -4461,6 +4517,7 @@ export type OrganizationUncheckedUpdateWithoutCoursesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4533,6 +4590,7 @@ export type OrganizationCreateWithoutClassSectionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -4605,6 +4663,7 @@ export type OrganizationUncheckedCreateWithoutClassSectionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4693,6 +4752,7 @@ export type OrganizationUpdateWithoutClassSectionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -4765,6 +4825,7 @@ export type OrganizationUncheckedUpdateWithoutClassSectionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4837,6 +4898,7 @@ export type OrganizationCreateWithoutExcludedDatesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -4909,6 +4971,7 @@ export type OrganizationUncheckedCreateWithoutExcludedDatesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4997,6 +5060,7 @@ export type OrganizationUpdateWithoutExcludedDatesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -5069,6 +5133,7 @@ export type OrganizationUncheckedUpdateWithoutExcludedDatesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5141,6 +5206,7 @@ export type OrganizationCreateWithoutCourseInvitesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -5213,6 +5279,7 @@ export type OrganizationUncheckedCreateWithoutCourseInvitesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5301,6 +5368,7 @@ export type OrganizationUpdateWithoutCourseInvitesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -5373,6 +5441,7 @@ export type OrganizationUncheckedUpdateWithoutCourseInvitesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5445,6 +5514,7 @@ export type OrganizationCreateWithoutEnrollmentsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -5517,6 +5587,7 @@ export type OrganizationUncheckedCreateWithoutEnrollmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5605,6 +5676,7 @@ export type OrganizationUpdateWithoutEnrollmentsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -5677,6 +5749,7 @@ export type OrganizationUncheckedUpdateWithoutEnrollmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5749,6 +5822,7 @@ export type OrganizationCreateWithoutEnrollmentEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -5821,6 +5895,7 @@ export type OrganizationUncheckedCreateWithoutEnrollmentEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5909,6 +5984,7 @@ export type OrganizationUpdateWithoutEnrollmentEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -5981,6 +6057,7 @@ export type OrganizationUncheckedUpdateWithoutEnrollmentEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6053,6 +6130,7 @@ export type OrganizationCreateWithoutExerciseSessionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -6125,6 +6203,7 @@ export type OrganizationUncheckedCreateWithoutExerciseSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6213,6 +6292,7 @@ export type OrganizationUpdateWithoutExerciseSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -6285,6 +6365,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6357,6 +6438,7 @@ export type OrganizationCreateWithoutExerciseSessionSegmentsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -6429,6 +6511,7 @@ export type OrganizationUncheckedCreateWithoutExerciseSessionSegmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6517,6 +6600,7 @@ export type OrganizationUpdateWithoutExerciseSessionSegmentsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -6589,6 +6673,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseSessionSegmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6661,6 +6746,7 @@ export type OrganizationCreateWithoutExerciseSessionEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -6733,6 +6819,7 @@ export type OrganizationUncheckedCreateWithoutExerciseSessionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6821,6 +6908,7 @@ export type OrganizationUpdateWithoutExerciseSessionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -6893,6 +6981,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseSessionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6965,6 +7054,7 @@ export type OrganizationCreateWithoutMediaEvidenceInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -7037,6 +7127,7 @@ export type OrganizationUncheckedCreateWithoutMediaEvidenceInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7125,6 +7216,7 @@ export type OrganizationUpdateWithoutMediaEvidenceInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -7197,6 +7289,7 @@ export type OrganizationUncheckedUpdateWithoutMediaEvidenceInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7269,6 +7362,7 @@ export type OrganizationCreateWithoutExerciseRecordsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -7341,6 +7435,7 @@ export type OrganizationUncheckedCreateWithoutExerciseRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7429,6 +7524,7 @@ export type OrganizationUpdateWithoutExerciseRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -7501,6 +7597,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7573,6 +7670,7 @@ export type OrganizationCreateWithoutExerciseRecordMediaInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -7645,6 +7743,7 @@ export type OrganizationUncheckedCreateWithoutExerciseRecordMediaInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7733,6 +7832,7 @@ export type OrganizationUpdateWithoutExerciseRecordMediaInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -7805,6 +7905,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseRecordMediaInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7877,6 +7978,7 @@ export type OrganizationCreateWithoutExerciseRecordDailySlotsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -7949,6 +8051,7 @@ export type OrganizationUncheckedCreateWithoutExerciseRecordDailySlotsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8037,6 +8140,7 @@ export type OrganizationUpdateWithoutExerciseRecordDailySlotsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -8109,6 +8213,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseRecordDailySlotsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8181,6 +8286,7 @@ export type OrganizationCreateWithoutExerciseRecordEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -8253,6 +8359,7 @@ export type OrganizationUncheckedCreateWithoutExerciseRecordEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8341,6 +8448,7 @@ export type OrganizationUpdateWithoutExerciseRecordEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -8413,6 +8521,7 @@ export type OrganizationUncheckedUpdateWithoutExerciseRecordEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8485,6 +8594,7 @@ export type OrganizationCreateWithoutReviewRecordsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -8557,6 +8667,7 @@ export type OrganizationUncheckedCreateWithoutReviewRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8645,6 +8756,7 @@ export type OrganizationUpdateWithoutReviewRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -8717,6 +8829,7 @@ export type OrganizationUncheckedUpdateWithoutReviewRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8789,6 +8902,7 @@ export type OrganizationCreateWithoutMediaUploadSessionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -8861,6 +8975,7 @@ export type OrganizationUncheckedCreateWithoutMediaUploadSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8949,6 +9064,7 @@ export type OrganizationUpdateWithoutMediaUploadSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -9021,6 +9137,7 @@ export type OrganizationUncheckedUpdateWithoutMediaUploadSessionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9093,6 +9210,7 @@ export type OrganizationCreateWithoutMediaStatusEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -9165,6 +9283,7 @@ export type OrganizationUncheckedCreateWithoutMediaStatusEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9253,6 +9372,7 @@ export type OrganizationUpdateWithoutMediaStatusEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -9325,6 +9445,7 @@ export type OrganizationUncheckedUpdateWithoutMediaStatusEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9397,6 +9518,7 @@ export type OrganizationCreateWithoutMediaProcessingAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -9469,6 +9591,7 @@ export type OrganizationUncheckedCreateWithoutMediaProcessingAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9557,6 +9680,7 @@ export type OrganizationUpdateWithoutMediaProcessingAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -9629,6 +9753,7 @@ export type OrganizationUncheckedUpdateWithoutMediaProcessingAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9701,6 +9826,7 @@ export type OrganizationCreateWithoutJoinCapabilitiesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -9773,6 +9899,7 @@ export type OrganizationUncheckedCreateWithoutJoinCapabilitiesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9861,6 +9988,7 @@ export type OrganizationUpdateWithoutJoinCapabilitiesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -9933,6 +10061,7 @@ export type OrganizationUncheckedUpdateWithoutJoinCapabilitiesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10005,6 +10134,7 @@ export type OrganizationCreateWithoutOfficialRosterImportsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -10077,6 +10207,7 @@ export type OrganizationUncheckedCreateWithoutOfficialRosterImportsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10165,6 +10296,7 @@ export type OrganizationUpdateWithoutOfficialRosterImportsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -10237,6 +10369,7 @@ export type OrganizationUncheckedUpdateWithoutOfficialRosterImportsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10309,6 +10442,7 @@ export type OrganizationCreateWithoutOfficialRosterEntriesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -10381,6 +10515,7 @@ export type OrganizationUncheckedCreateWithoutOfficialRosterEntriesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10469,6 +10604,7 @@ export type OrganizationUpdateWithoutOfficialRosterEntriesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -10541,6 +10677,7 @@ export type OrganizationUncheckedUpdateWithoutOfficialRosterEntriesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10613,6 +10750,7 @@ export type OrganizationCreateWithoutRosterAlignmentRunsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -10685,6 +10823,7 @@ export type OrganizationUncheckedCreateWithoutRosterAlignmentRunsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10773,6 +10912,7 @@ export type OrganizationUpdateWithoutRosterAlignmentRunsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -10845,6 +10985,7 @@ export type OrganizationUncheckedUpdateWithoutRosterAlignmentRunsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10917,6 +11058,7 @@ export type OrganizationCreateWithoutRosterAlignmentPlatformEntriesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -10989,6 +11131,7 @@ export type OrganizationUncheckedCreateWithoutRosterAlignmentPlatformEntriesInpu
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11077,6 +11220,7 @@ export type OrganizationUpdateWithoutRosterAlignmentPlatformEntriesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -11149,6 +11293,7 @@ export type OrganizationUncheckedUpdateWithoutRosterAlignmentPlatformEntriesInpu
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11221,6 +11366,7 @@ export type OrganizationCreateWithoutRosterAlignmentResultsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -11293,6 +11439,7 @@ export type OrganizationUncheckedCreateWithoutRosterAlignmentResultsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11381,6 +11528,7 @@ export type OrganizationUpdateWithoutRosterAlignmentResultsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -11453,6 +11601,7 @@ export type OrganizationUncheckedUpdateWithoutRosterAlignmentResultsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11525,6 +11674,7 @@ export type OrganizationCreateWithoutRosterResolutionEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -11597,6 +11747,7 @@ export type OrganizationUncheckedCreateWithoutRosterResolutionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11685,6 +11836,7 @@ export type OrganizationUpdateWithoutRosterResolutionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -11757,6 +11909,7 @@ export type OrganizationUncheckedUpdateWithoutRosterResolutionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11829,6 +11982,7 @@ export type OrganizationCreateWithoutIdempotencyRecordsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -11901,6 +12055,7 @@ export type OrganizationUncheckedCreateWithoutIdempotencyRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11989,6 +12144,7 @@ export type OrganizationUpdateWithoutIdempotencyRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -12061,6 +12217,7 @@ export type OrganizationUncheckedUpdateWithoutIdempotencyRecordsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12133,6 +12290,7 @@ export type OrganizationCreateWithoutScoreRulesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -12205,6 +12363,7 @@ export type OrganizationUncheckedCreateWithoutScoreRulesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12293,6 +12452,7 @@ export type OrganizationUpdateWithoutScoreRulesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -12365,6 +12525,7 @@ export type OrganizationUncheckedUpdateWithoutScoreRulesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12437,6 +12598,7 @@ export type OrganizationCreateWithoutScoreRuleApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -12509,6 +12671,7 @@ export type OrganizationUncheckedCreateWithoutScoreRuleApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12597,6 +12760,7 @@ export type OrganizationUpdateWithoutScoreRuleApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -12669,6 +12833,7 @@ export type OrganizationUncheckedUpdateWithoutScoreRuleApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12741,6 +12906,7 @@ export type OrganizationCreateWithoutStudentScoresInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -12813,6 +12979,7 @@ export type OrganizationUncheckedCreateWithoutStudentScoresInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12901,6 +13068,7 @@ export type OrganizationUpdateWithoutStudentScoresInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -12973,6 +13141,7 @@ export type OrganizationUncheckedUpdateWithoutStudentScoresInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13045,6 +13214,7 @@ export type OrganizationCreateWithoutStudentScoreRevisionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -13117,6 +13287,7 @@ export type OrganizationUncheckedCreateWithoutStudentScoreRevisionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13205,6 +13376,7 @@ export type OrganizationUpdateWithoutStudentScoreRevisionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -13277,6 +13449,7 @@ export type OrganizationUncheckedUpdateWithoutStudentScoreRevisionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13349,6 +13522,7 @@ export type OrganizationCreateWithoutScoreContributionsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -13421,6 +13595,7 @@ export type OrganizationUncheckedCreateWithoutScoreContributionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13509,6 +13684,7 @@ export type OrganizationUpdateWithoutScoreContributionsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -13581,6 +13757,7 @@ export type OrganizationUncheckedUpdateWithoutScoreContributionsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13653,6 +13830,7 @@ export type OrganizationCreateWithoutScoreAdjustmentsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -13725,6 +13903,7 @@ export type OrganizationUncheckedCreateWithoutScoreAdjustmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13813,6 +13992,7 @@ export type OrganizationUpdateWithoutScoreAdjustmentsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -13885,6 +14065,7 @@ export type OrganizationUncheckedUpdateWithoutScoreAdjustmentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13957,6 +14138,7 @@ export type OrganizationCreateWithoutScoreAdjustmentApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -14029,6 +14211,7 @@ export type OrganizationUncheckedCreateWithoutScoreAdjustmentApprovalEventsInput
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14117,6 +14300,7 @@ export type OrganizationUpdateWithoutScoreAdjustmentApprovalEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -14189,6 +14373,7 @@ export type OrganizationUncheckedUpdateWithoutScoreAdjustmentApprovalEventsInput
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14261,6 +14446,7 @@ export type OrganizationCreateWithoutScorePublicationEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -14333,6 +14519,7 @@ export type OrganizationUncheckedCreateWithoutScorePublicationEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14421,6 +14608,7 @@ export type OrganizationUpdateWithoutScorePublicationEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -14493,6 +14681,7 @@ export type OrganizationUncheckedUpdateWithoutScorePublicationEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14565,6 +14754,7 @@ export type OrganizationCreateWithoutScoreRecalculationAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -14637,6 +14827,7 @@ export type OrganizationUncheckedCreateWithoutScoreRecalculationAttemptsInput = 
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14725,6 +14916,7 @@ export type OrganizationUpdateWithoutScoreRecalculationAttemptsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -14797,6 +14989,7 @@ export type OrganizationUncheckedUpdateWithoutScoreRecalculationAttemptsInput = 
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14869,6 +15062,7 @@ export type OrganizationCreateWithoutStudentSignInChallengesInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -14941,6 +15135,7 @@ export type OrganizationUncheckedCreateWithoutStudentSignInChallengesInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15029,6 +15224,7 @@ export type OrganizationUpdateWithoutStudentSignInChallengesInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -15101,6 +15297,7 @@ export type OrganizationUncheckedUpdateWithoutStudentSignInChallengesInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15173,6 +15370,7 @@ export type OrganizationCreateWithoutAccountRecoveryChallengesInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -15245,6 +15443,7 @@ export type OrganizationUncheckedCreateWithoutAccountRecoveryChallengesInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15333,6 +15532,7 @@ export type OrganizationUpdateWithoutAccountRecoveryChallengesInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -15405,6 +15605,315 @@ export type OrganizationUncheckedUpdateWithoutAccountRecoveryChallengesInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
+  userPreferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutOrganizationNestedInput
+  feedback?: Prisma.FeedbackUncheckedUpdateManyWithoutOrganizationNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedUpdateManyWithoutOrganizationNestedInput
+  sportCatalogItems?: Prisma.SportCatalogItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationPrivacyPolicies?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationConsents?: Prisma.LocationConsentUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationTracks?: Prisma.LocationTrackUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationSamples?: Prisma.LocationSampleUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationSummaries?: Prisma.LocationSummaryUncheckedUpdateManyWithoutOrganizationNestedInput
+  locationRetentionEvents?: Prisma.LocationRetentionEventUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutEmailVerificationChallengesInput = {
+  id: string
+  organizationCode: string
+  legalName: string
+  displayName: string
+  timezone: string
+  defaultLocale: string
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  systemPolicy?: Prisma.SystemPolicyCreateNestedOneWithoutOrganizationInput
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  studentProfiles?: Prisma.StudentProfileCreateNestedManyWithoutOrganizationInput
+  teacherProfiles?: Prisma.TeacherProfileCreateNestedManyWithoutOrganizationInput
+  adminProfiles?: Prisma.AdminProfileCreateNestedManyWithoutOrganizationInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutOrganizationInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutOrganizationInput
+  semesters?: Prisma.SemesterCreateNestedManyWithoutOrganizationInput
+  courses?: Prisma.CourseCreateNestedManyWithoutOrganizationInput
+  classSections?: Prisma.ClassSectionCreateNestedManyWithoutOrganizationInput
+  excludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutOrganizationInput
+  courseInvites?: Prisma.CourseInviteCreateNestedManyWithoutOrganizationInput
+  joinCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutOrganizationInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutOrganizationInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutOrganizationInput
+  officialRosterImports?: Prisma.OfficialRosterImportCreateNestedManyWithoutOrganizationInput
+  officialRosterEntries?: Prisma.OfficialRosterEntryCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutOrganizationInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutOrganizationInput
+  exerciseSessions?: Prisma.ExerciseSessionCreateNestedManyWithoutOrganizationInput
+  exerciseSessionSegments?: Prisma.ExerciseSessionSegmentCreateNestedManyWithoutOrganizationInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutOrganizationInput
+  mediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutOrganizationInput
+  exerciseRecords?: Prisma.ExerciseRecordCreateNestedManyWithoutOrganizationInput
+  exerciseRecordMedia?: Prisma.ExerciseRecordMediaCreateNestedManyWithoutOrganizationInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutOrganizationInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotCreateNestedManyWithoutOrganizationInput
+  reviewRecords?: Prisma.ReviewRecordCreateNestedManyWithoutOrganizationInput
+  scoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutOrganizationInput
+  scoreRuleApprovalEvents?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutOrganizationInput
+  studentScores?: Prisma.StudentScoreCreateNestedManyWithoutOrganizationInput
+  studentScoreRevisions?: Prisma.StudentScoreRevisionCreateNestedManyWithoutOrganizationInput
+  scoreContributions?: Prisma.ScoreContributionCreateNestedManyWithoutOrganizationInput
+  scoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutOrganizationInput
+  scoreAdjustmentApprovalEvents?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutOrganizationInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutOrganizationInput
+  scoreRecalculationAttempts?: Prisma.ScoreRecalculationAttemptCreateNestedManyWithoutOrganizationInput
+  mediaUploadSessions?: Prisma.MediaUploadSessionCreateNestedManyWithoutOrganizationInput
+  mediaStatusEvents?: Prisma.MediaStatusEventCreateNestedManyWithoutOrganizationInput
+  mediaProcessingAttempts?: Prisma.MediaProcessingAttemptCreateNestedManyWithoutOrganizationInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
+  outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
+  userPreferences?: Prisma.UserPreferenceCreateNestedManyWithoutOrganizationInput
+  feedback?: Prisma.FeedbackCreateNestedManyWithoutOrganizationInput
+  exemptionApplications?: Prisma.ExemptionApplicationCreateNestedManyWithoutOrganizationInput
+  sportCatalogItems?: Prisma.SportCatalogItemCreateNestedManyWithoutOrganizationInput
+  locationPrivacyPolicies?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutOrganizationInput
+  locationConsents?: Prisma.LocationConsentCreateNestedManyWithoutOrganizationInput
+  locationTracks?: Prisma.LocationTrackCreateNestedManyWithoutOrganizationInput
+  locationSamples?: Prisma.LocationSampleCreateNestedManyWithoutOrganizationInput
+  locationSummaries?: Prisma.LocationSummaryCreateNestedManyWithoutOrganizationInput
+  locationRetentionEvents?: Prisma.LocationRetentionEventCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutEmailVerificationChallengesInput = {
+  id: string
+  organizationCode: string
+  legalName: string
+  displayName: string
+  timezone: string
+  defaultLocale: string
+  status: string
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  systemPolicy?: Prisma.SystemPolicyUncheckedCreateNestedOneWithoutOrganizationInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  studentProfiles?: Prisma.StudentProfileUncheckedCreateNestedManyWithoutOrganizationInput
+  teacherProfiles?: Prisma.TeacherProfileUncheckedCreateNestedManyWithoutOrganizationInput
+  adminProfiles?: Prisma.AdminProfileUncheckedCreateNestedManyWithoutOrganizationInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutOrganizationInput
+  semesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutOrganizationInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutOrganizationInput
+  classSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutOrganizationInput
+  excludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutOrganizationInput
+  courseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutOrganizationInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutOrganizationInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutOrganizationInput
+  officialRosterImports?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutOrganizationInput
+  officialRosterEntries?: Prisma.OfficialRosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  rosterAlignmentResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutOrganizationInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseSessionSegments?: Prisma.ExerciseSessionSegmentUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutOrganizationInput
+  mediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseRecordMedia?: Prisma.ExerciseRecordMediaUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutOrganizationInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedCreateNestedManyWithoutOrganizationInput
+  reviewRecords?: Prisma.ReviewRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreRuleApprovalEvents?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutOrganizationInput
+  studentScores?: Prisma.StudentScoreUncheckedCreateNestedManyWithoutOrganizationInput
+  studentScoreRevisions?: Prisma.StudentScoreRevisionUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreContributions?: Prisma.ScoreContributionUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreAdjustmentApprovalEvents?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutOrganizationInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutOrganizationInput
+  scoreRecalculationAttempts?: Prisma.ScoreRecalculationAttemptUncheckedCreateNestedManyWithoutOrganizationInput
+  mediaUploadSessions?: Prisma.MediaUploadSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  mediaStatusEvents?: Prisma.MediaStatusEventUncheckedCreateNestedManyWithoutOrganizationInput
+  mediaProcessingAttempts?: Prisma.MediaProcessingAttemptUncheckedCreateNestedManyWithoutOrganizationInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
+  userPreferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutOrganizationInput
+  feedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutOrganizationInput
+  exemptionApplications?: Prisma.ExemptionApplicationUncheckedCreateNestedManyWithoutOrganizationInput
+  sportCatalogItems?: Prisma.SportCatalogItemUncheckedCreateNestedManyWithoutOrganizationInput
+  locationPrivacyPolicies?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutOrganizationInput
+  locationConsents?: Prisma.LocationConsentUncheckedCreateNestedManyWithoutOrganizationInput
+  locationTracks?: Prisma.LocationTrackUncheckedCreateNestedManyWithoutOrganizationInput
+  locationSamples?: Prisma.LocationSampleUncheckedCreateNestedManyWithoutOrganizationInput
+  locationSummaries?: Prisma.LocationSummaryUncheckedCreateNestedManyWithoutOrganizationInput
+  locationRetentionEvents?: Prisma.LocationRetentionEventUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutEmailVerificationChallengesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedCreateWithoutEmailVerificationChallengesInput>
+}
+
+export type OrganizationUpsertWithoutEmailVerificationChallengesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedUpdateWithoutEmailVerificationChallengesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedCreateWithoutEmailVerificationChallengesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutEmailVerificationChallengesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutEmailVerificationChallengesInput, Prisma.OrganizationUncheckedUpdateWithoutEmailVerificationChallengesInput>
+}
+
+export type OrganizationUpdateWithoutEmailVerificationChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultLocale?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  systemPolicy?: Prisma.SystemPolicyUpdateOneWithoutOrganizationNestedInput
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  studentProfiles?: Prisma.StudentProfileUpdateManyWithoutOrganizationNestedInput
+  teacherProfiles?: Prisma.TeacherProfileUpdateManyWithoutOrganizationNestedInput
+  adminProfiles?: Prisma.AdminProfileUpdateManyWithoutOrganizationNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutOrganizationNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutOrganizationNestedInput
+  semesters?: Prisma.SemesterUpdateManyWithoutOrganizationNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutOrganizationNestedInput
+  classSections?: Prisma.ClassSectionUpdateManyWithoutOrganizationNestedInput
+  excludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutOrganizationNestedInput
+  courseInvites?: Prisma.CourseInviteUpdateManyWithoutOrganizationNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutOrganizationNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutOrganizationNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutOrganizationNestedInput
+  officialRosterImports?: Prisma.OfficialRosterImportUpdateManyWithoutOrganizationNestedInput
+  officialRosterEntries?: Prisma.OfficialRosterEntryUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentResults?: Prisma.RosterAlignmentResultUpdateManyWithoutOrganizationNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutOrganizationNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUpdateManyWithoutOrganizationNestedInput
+  exerciseSessionSegments?: Prisma.ExerciseSessionSegmentUpdateManyWithoutOrganizationNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutOrganizationNestedInput
+  mediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutOrganizationNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordMedia?: Prisma.ExerciseRecordMediaUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUpdateManyWithoutOrganizationNestedInput
+  reviewRecords?: Prisma.ReviewRecordUpdateManyWithoutOrganizationNestedInput
+  scoreRules?: Prisma.ScoreRuleUpdateManyWithoutOrganizationNestedInput
+  scoreRuleApprovalEvents?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutOrganizationNestedInput
+  studentScores?: Prisma.StudentScoreUpdateManyWithoutOrganizationNestedInput
+  studentScoreRevisions?: Prisma.StudentScoreRevisionUpdateManyWithoutOrganizationNestedInput
+  scoreContributions?: Prisma.ScoreContributionUpdateManyWithoutOrganizationNestedInput
+  scoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutOrganizationNestedInput
+  scoreAdjustmentApprovalEvents?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutOrganizationNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutOrganizationNestedInput
+  scoreRecalculationAttempts?: Prisma.ScoreRecalculationAttemptUpdateManyWithoutOrganizationNestedInput
+  mediaUploadSessions?: Prisma.MediaUploadSessionUpdateManyWithoutOrganizationNestedInput
+  mediaStatusEvents?: Prisma.MediaStatusEventUpdateManyWithoutOrganizationNestedInput
+  mediaProcessingAttempts?: Prisma.MediaProcessingAttemptUpdateManyWithoutOrganizationNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
+  outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
+  userPreferences?: Prisma.UserPreferenceUpdateManyWithoutOrganizationNestedInput
+  feedback?: Prisma.FeedbackUpdateManyWithoutOrganizationNestedInput
+  exemptionApplications?: Prisma.ExemptionApplicationUpdateManyWithoutOrganizationNestedInput
+  sportCatalogItems?: Prisma.SportCatalogItemUpdateManyWithoutOrganizationNestedInput
+  locationPrivacyPolicies?: Prisma.LocationPrivacyPolicyUpdateManyWithoutOrganizationNestedInput
+  locationConsents?: Prisma.LocationConsentUpdateManyWithoutOrganizationNestedInput
+  locationTracks?: Prisma.LocationTrackUpdateManyWithoutOrganizationNestedInput
+  locationSamples?: Prisma.LocationSampleUpdateManyWithoutOrganizationNestedInput
+  locationSummaries?: Prisma.LocationSummaryUpdateManyWithoutOrganizationNestedInput
+  locationRetentionEvents?: Prisma.LocationRetentionEventUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutEmailVerificationChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultLocale?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  systemPolicy?: Prisma.SystemPolicyUncheckedUpdateOneWithoutOrganizationNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  studentProfiles?: Prisma.StudentProfileUncheckedUpdateManyWithoutOrganizationNestedInput
+  teacherProfiles?: Prisma.TeacherProfileUncheckedUpdateManyWithoutOrganizationNestedInput
+  adminProfiles?: Prisma.AdminProfileUncheckedUpdateManyWithoutOrganizationNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutOrganizationNestedInput
+  semesters?: Prisma.SemesterUncheckedUpdateManyWithoutOrganizationNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutOrganizationNestedInput
+  classSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  excludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutOrganizationNestedInput
+  courseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutOrganizationNestedInput
+  joinCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  officialRosterImports?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutOrganizationNestedInput
+  officialRosterEntries?: Prisma.OfficialRosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentRuns?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentPlatformEntries?: Prisma.RosterAlignmentPlatformEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  rosterAlignmentResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutOrganizationNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseSessions?: Prisma.ExerciseSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseSessionSegments?: Prisma.ExerciseSessionSegmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  mediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseRecords?: Prisma.ExerciseRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordMedia?: Prisma.ExerciseRecordMediaUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  exerciseRecordDailySlots?: Prisma.ExerciseRecordDailySlotUncheckedUpdateManyWithoutOrganizationNestedInput
+  reviewRecords?: Prisma.ReviewRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreRuleApprovalEvents?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  studentScores?: Prisma.StudentScoreUncheckedUpdateManyWithoutOrganizationNestedInput
+  studentScoreRevisions?: Prisma.StudentScoreRevisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreContributions?: Prisma.ScoreContributionUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreAdjustmentApprovalEvents?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  scoreRecalculationAttempts?: Prisma.ScoreRecalculationAttemptUncheckedUpdateManyWithoutOrganizationNestedInput
+  mediaUploadSessions?: Prisma.MediaUploadSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  mediaStatusEvents?: Prisma.MediaStatusEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  mediaProcessingAttempts?: Prisma.MediaProcessingAttemptUncheckedUpdateManyWithoutOrganizationNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15478,6 +15987,7 @@ export type OrganizationCreateWithoutAuthRateLimitFactsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceCreateNestedManyWithoutOrganizationInput
@@ -15550,6 +16060,7 @@ export type OrganizationUncheckedCreateWithoutAuthRateLimitFactsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15638,6 +16149,7 @@ export type OrganizationUpdateWithoutAuthRateLimitFactsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUpdateManyWithoutOrganizationNestedInput
@@ -15710,6 +16222,7 @@ export type OrganizationUncheckedUpdateWithoutAuthRateLimitFactsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15782,6 +16295,7 @@ export type OrganizationCreateWithoutNotificationsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceCreateNestedManyWithoutOrganizationInput
@@ -15854,6 +16368,7 @@ export type OrganizationUncheckedCreateWithoutNotificationsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15942,6 +16457,7 @@ export type OrganizationUpdateWithoutNotificationsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUpdateManyWithoutOrganizationNestedInput
@@ -16014,6 +16530,7 @@ export type OrganizationUncheckedUpdateWithoutNotificationsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16086,6 +16603,7 @@ export type OrganizationCreateWithoutPushDevicesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceCreateNestedManyWithoutOrganizationInput
@@ -16158,6 +16676,7 @@ export type OrganizationUncheckedCreateWithoutPushDevicesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   userPreferences?: Prisma.UserPreferenceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16246,6 +16765,7 @@ export type OrganizationUpdateWithoutPushDevicesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUpdateManyWithoutOrganizationNestedInput
@@ -16318,6 +16838,7 @@ export type OrganizationUncheckedUpdateWithoutPushDevicesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   userPreferences?: Prisma.UserPreferenceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16390,6 +16911,7 @@ export type OrganizationCreateWithoutUserPreferencesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -16462,6 +16984,7 @@ export type OrganizationUncheckedCreateWithoutUserPreferencesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16550,6 +17073,7 @@ export type OrganizationUpdateWithoutUserPreferencesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -16622,6 +17146,7 @@ export type OrganizationUncheckedUpdateWithoutUserPreferencesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16694,6 +17219,7 @@ export type OrganizationCreateWithoutFeedbackInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -16766,6 +17292,7 @@ export type OrganizationUncheckedCreateWithoutFeedbackInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16854,6 +17381,7 @@ export type OrganizationUpdateWithoutFeedbackInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -16926,6 +17454,7 @@ export type OrganizationUncheckedUpdateWithoutFeedbackInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16998,6 +17527,7 @@ export type OrganizationCreateWithoutExemptionApplicationsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -17070,6 +17600,7 @@ export type OrganizationUncheckedCreateWithoutExemptionApplicationsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17158,6 +17689,7 @@ export type OrganizationUpdateWithoutExemptionApplicationsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -17230,6 +17762,7 @@ export type OrganizationUncheckedUpdateWithoutExemptionApplicationsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17302,6 +17835,7 @@ export type OrganizationCreateWithoutSportCatalogItemsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -17374,6 +17908,7 @@ export type OrganizationUncheckedCreateWithoutSportCatalogItemsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17462,6 +17997,7 @@ export type OrganizationUpdateWithoutSportCatalogItemsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -17534,6 +18070,7 @@ export type OrganizationUncheckedUpdateWithoutSportCatalogItemsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17606,6 +18143,7 @@ export type OrganizationCreateWithoutLocationPrivacyPoliciesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -17678,6 +18216,7 @@ export type OrganizationUncheckedCreateWithoutLocationPrivacyPoliciesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17766,6 +18305,7 @@ export type OrganizationUpdateWithoutLocationPrivacyPoliciesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -17838,6 +18378,7 @@ export type OrganizationUncheckedUpdateWithoutLocationPrivacyPoliciesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17910,6 +18451,7 @@ export type OrganizationCreateWithoutLocationConsentsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -17982,6 +18524,7 @@ export type OrganizationUncheckedCreateWithoutLocationConsentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18070,6 +18613,7 @@ export type OrganizationUpdateWithoutLocationConsentsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -18142,6 +18686,7 @@ export type OrganizationUncheckedUpdateWithoutLocationConsentsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18214,6 +18759,7 @@ export type OrganizationCreateWithoutLocationTracksInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -18286,6 +18832,7 @@ export type OrganizationUncheckedCreateWithoutLocationTracksInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18374,6 +18921,7 @@ export type OrganizationUpdateWithoutLocationTracksInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -18446,6 +18994,7 @@ export type OrganizationUncheckedUpdateWithoutLocationTracksInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18518,6 +19067,7 @@ export type OrganizationCreateWithoutLocationSamplesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -18590,6 +19140,7 @@ export type OrganizationUncheckedCreateWithoutLocationSamplesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18678,6 +19229,7 @@ export type OrganizationUpdateWithoutLocationSamplesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -18750,6 +19302,7 @@ export type OrganizationUncheckedUpdateWithoutLocationSamplesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18822,6 +19375,7 @@ export type OrganizationCreateWithoutLocationSummariesInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -18894,6 +19448,7 @@ export type OrganizationUncheckedCreateWithoutLocationSummariesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18982,6 +19537,7 @@ export type OrganizationUpdateWithoutLocationSummariesInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -19054,6 +19610,7 @@ export type OrganizationUncheckedUpdateWithoutLocationSummariesInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19126,6 +19683,7 @@ export type OrganizationCreateWithoutLocationRetentionEventsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -19198,6 +19756,7 @@ export type OrganizationUncheckedCreateWithoutLocationRetentionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19286,6 +19845,7 @@ export type OrganizationUpdateWithoutLocationRetentionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -19358,6 +19918,7 @@ export type OrganizationUncheckedUpdateWithoutLocationRetentionEventsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19429,6 +19990,7 @@ export type OrganizationCreateWithoutAuditLogsInput = {
   outboxEvents?: Prisma.OutboxEventCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -19501,6 +20063,7 @@ export type OrganizationUncheckedCreateWithoutAuditLogsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19589,6 +20152,7 @@ export type OrganizationUpdateWithoutAuditLogsInput = {
   outboxEvents?: Prisma.OutboxEventUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -19661,6 +20225,7 @@ export type OrganizationUncheckedUpdateWithoutAuditLogsInput = {
   outboxEvents?: Prisma.OutboxEventUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19733,6 +20298,7 @@ export type OrganizationCreateWithoutOutboxEventsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOrganizationInput
@@ -19805,6 +20371,7 @@ export type OrganizationUncheckedCreateWithoutOutboxEventsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutOrganizationInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutOrganizationInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19893,6 +20460,7 @@ export type OrganizationUpdateWithoutOutboxEventsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOrganizationNestedInput
@@ -19965,6 +20533,7 @@ export type OrganizationUncheckedUpdateWithoutOutboxEventsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutOrganizationNestedInput
   authRateLimitFacts?: Prisma.AuthRateLimitFactUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20032,6 +20601,7 @@ export type OrganizationCountOutputType = {
   outboxEvents: number
   studentSignInChallenges: number
   accountRecoveryChallenges: number
+  emailVerificationChallenges: number
   authRateLimitFacts: number
   notifications: number
   pushDevices: number
@@ -20094,6 +20664,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   outboxEvents?: boolean | OrganizationCountOutputTypeCountOutboxEventsArgs
   studentSignInChallenges?: boolean | OrganizationCountOutputTypeCountStudentSignInChallengesArgs
   accountRecoveryChallenges?: boolean | OrganizationCountOutputTypeCountAccountRecoveryChallengesArgs
+  emailVerificationChallenges?: boolean | OrganizationCountOutputTypeCountEmailVerificationChallengesArgs
   authRateLimitFacts?: boolean | OrganizationCountOutputTypeCountAuthRateLimitFactsArgs
   notifications?: boolean | OrganizationCountOutputTypeCountNotificationsArgs
   pushDevices?: boolean | OrganizationCountOutputTypeCountPushDevicesArgs
@@ -20444,6 +21015,13 @@ export type OrganizationCountOutputTypeCountAccountRecoveryChallengesArgs<ExtArg
 /**
  * OrganizationCountOutputType without action
  */
+export type OrganizationCountOutputTypeCountEmailVerificationChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmailVerificationChallengeWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
 export type OrganizationCountOutputTypeCountAuthRateLimitFactsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuthRateLimitFactWhereInput
 }
@@ -20591,6 +21169,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   outboxEvents?: boolean | Prisma.Organization$outboxEventsArgs<ExtArgs>
   studentSignInChallenges?: boolean | Prisma.Organization$studentSignInChallengesArgs<ExtArgs>
   accountRecoveryChallenges?: boolean | Prisma.Organization$accountRecoveryChallengesArgs<ExtArgs>
+  emailVerificationChallenges?: boolean | Prisma.Organization$emailVerificationChallengesArgs<ExtArgs>
   authRateLimitFacts?: boolean | Prisma.Organization$authRateLimitFactsArgs<ExtArgs>
   notifications?: boolean | Prisma.Organization$notificationsArgs<ExtArgs>
   pushDevices?: boolean | Prisma.Organization$pushDevicesArgs<ExtArgs>
@@ -20695,6 +21274,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   outboxEvents?: boolean | Prisma.Organization$outboxEventsArgs<ExtArgs>
   studentSignInChallenges?: boolean | Prisma.Organization$studentSignInChallengesArgs<ExtArgs>
   accountRecoveryChallenges?: boolean | Prisma.Organization$accountRecoveryChallengesArgs<ExtArgs>
+  emailVerificationChallenges?: boolean | Prisma.Organization$emailVerificationChallengesArgs<ExtArgs>
   authRateLimitFacts?: boolean | Prisma.Organization$authRateLimitFactsArgs<ExtArgs>
   notifications?: boolean | Prisma.Organization$notificationsArgs<ExtArgs>
   pushDevices?: boolean | Prisma.Organization$pushDevicesArgs<ExtArgs>
@@ -20763,6 +21343,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     outboxEvents: Prisma.$OutboxEventPayload<ExtArgs>[]
     studentSignInChallenges: Prisma.$StudentSignInChallengePayload<ExtArgs>[]
     accountRecoveryChallenges: Prisma.$AccountRecoveryChallengePayload<ExtArgs>[]
+    emailVerificationChallenges: Prisma.$EmailVerificationChallengePayload<ExtArgs>[]
     authRateLimitFacts: Prisma.$AuthRateLimitFactPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     pushDevices: Prisma.$PushDevicePayload<ExtArgs>[]
@@ -21229,6 +21810,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   outboxEvents<T extends Prisma.Organization$outboxEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$outboxEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutboxEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentSignInChallenges<T extends Prisma.Organization$studentSignInChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$studentSignInChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentSignInChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accountRecoveryChallenges<T extends Prisma.Organization$accountRecoveryChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$accountRecoveryChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountRecoveryChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  emailVerificationChallenges<T extends Prisma.Organization$emailVerificationChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$emailVerificationChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailVerificationChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   authRateLimitFacts<T extends Prisma.Organization$authRateLimitFactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$authRateLimitFactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthRateLimitFactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.Organization$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushDevices<T extends Prisma.Organization$pushDevicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$pushDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -22794,6 +23376,30 @@ export type Organization$accountRecoveryChallengesArgs<ExtArgs extends runtime.T
   take?: number
   skip?: number
   distinct?: Prisma.AccountRecoveryChallengeScalarFieldEnum | Prisma.AccountRecoveryChallengeScalarFieldEnum[]
+}
+
+/**
+ * Organization.emailVerificationChallenges
+ */
+export type Organization$emailVerificationChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmailVerificationChallenge
+   */
+  select?: Prisma.EmailVerificationChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmailVerificationChallenge
+   */
+  omit?: Prisma.EmailVerificationChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmailVerificationChallengeInclude<ExtArgs> | null
+  where?: Prisma.EmailVerificationChallengeWhereInput
+  orderBy?: Prisma.EmailVerificationChallengeOrderByWithRelationInput | Prisma.EmailVerificationChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.EmailVerificationChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EmailVerificationChallengeScalarFieldEnum | Prisma.EmailVerificationChallengeScalarFieldEnum[]
 }
 
 /**

@@ -80,7 +80,7 @@
 | 是否核心实体 | 是，身份子域聚合根 |
 | 唯一标识 | `id`（opaque string）；学校编号不是 User ID |
 | 所属组织范围 | 必须有 `organizationId`；一个 User 只属于一个组织 |
-| 主要字段概览 | `id`、`organizationId`、`role`、`status`、`primaryEmail`、`primaryPhone`、`emailVerifiedAt`、`phoneVerifiedAt`、`passwordHash`、`tokenVersion`、`createdAt`、`updatedAt`、`deletedAt`、`version` |
+| 主要字段概览 | `id`、`organizationId`、`role`、`status`、`primaryEmail`、`emailVerifiedAt`、`passwordHash`、`tokenVersion`、`createdAt`、`updatedAt`、`deletedAt`、`version`；历史手机号列仅作不可读写遗留事实保留 |
 | 与其他对象关系 | 与恰好一种角色 Profile 一对零或一；作为创建者、调整者、导入者、审计 actor 被其他对象引用 |
 | 创建来源 | 学生扫码直加入班事务；教师/管理员受控开户；学校系统同步 |
 | 生命周期 | 创建/待完成联系方式 → 可用 → 禁用或恢复中 → 按获批保留策略注销；具体认证状态在后续状态/安全阶段冻结 |
@@ -741,7 +741,7 @@ erDiagram
 |---|---|---|
 | 全部实体 | `id` 全局唯一 opaque string | 任何客户端不得从格式推导角色或学号 |
 | Organization | `organizationCode` | 当前 `BNBU` 仅一个实例 |
-| User | 同组织已验证 `primaryEmail`、已验证 `primaryPhone` 各自条件唯一 | 可空模型与迁移待 ADR-028；未验证联系方式不能抢占已验证账号 |
+| User | 同组织已验证 `primaryEmail` 条件唯一 | 学生初始邮箱可空；手机号仅以不可读写历史列保留，不再参与认证或新业务唯一性裁决 |
 | StudentProfile | `(organizationId, studentNumber)`；`userId` | `studentNumber` 保留前导零并按字符串比较 |
 | TeacherProfile/AdminProfile | 各表 `userId`；非空 `(organizationId, employeeNumber)` | 跨两种 Profile 的 employeeNumber 冲突策略需另行决定 |
 | Semester | `(organizationId, academicYear, termCode)`；同组织最多一个 CURRENT | 日期范围不可倒置 |
@@ -852,7 +852,7 @@ erDiagram
 | ADR-025 | Greenfield 权威后端、PostgreSQL 18 和部署基线 | 已接受；本文件是不变量输入，实际落库证据仍以版本化 migration 与集成测试为准 |
 | ADR-026 | 归档成绩修正职责 | ScoreAdjustment 预留 authorizationReference；角色流未冻结 |
 | ADR-027 | 切换 current 学期是否自动归档旧学期 | Semester 聚合需单事务，但动作语义未冻结 |
-| ADR-028 | 学生无密码、primaryEmail/primaryPhone 可空及迁移 | User 联系方式条件唯一；凭据对象留到认证阶段 |
+| ADR-028 / ADR-101 | 学生无密码、primaryEmail 可空；手机号能力下线 | 已验证邮箱条件唯一；历史手机号列不可读写，凭据与邮箱 challenge 属于认证子域 |
 | ADR-029 | GPS 上传、用途和保留 | 本模型不新增位置实体/字段；确认前不收集新位置事实 |
 | ADR-030 | 各附件用途 captureSource 白名单 | MediaEvidence 保存来源；打卡规则暂遵循 App 内拍摄基线 |
 | ADR-032 | 教学记录、成绩、媒体保留/归档/清理 | 核心事实默认不可物理删除，待 retention matrix |
@@ -896,3 +896,10 @@ erDiagram
 - `ScoreAdjustment` 与其审批事件 append-only；教师提出申请，不同的同组织 ACTIVE ADMIN 批准或拒绝。批准后创建新 working revision，不能改写旧修订。
 - `ScorePublicationEvent` 和 `ScoreRuleApprovalEvent` append-only；发布切换 published pointer，但输入变化只生成新 working revision，不静默覆盖学生正在看到的发布快照。
 - `ScoreRecalculationAttempt` 是持久化重算领取和重试事实；Outbox 是触发事实，进程内队列不得成为唯一来源。
+
+## 15. ADR-101 邮箱唯一认证补充模型（2026-08-11）
+
+- `User.status=PENDING_CONTACT_BINDING` 表示新学生尚未完成邮箱验证；此状态只允许读取本人、申请/验证邮箱 challenge、刷新会话和退出，不能进入运动业务。
+- `EmailVerificationChallenge` 属于认证子域，不塞入 `StudentProfile`。它按 `organizationId + userId` 归属本人，记录 `FIRST_BIND/REBIND`、验证码摘要、到期时间、尝试次数、期望 User 版本和一次性消费状态。
+- 首次绑定只验证目标邮箱；换绑必须分别验证当前已验证邮箱和目标邮箱。成功后原子更新 `User.primaryEmail/emailVerifiedAt/version/tokenVersion`，并撤销发起会话之外的其他设备会话。
+- 历史手机号列和历史 `PHONE` challenge 只作为遗留审计事实保留，应用层不可读写，不进入公共投影，也不参与任何新认证裁决。

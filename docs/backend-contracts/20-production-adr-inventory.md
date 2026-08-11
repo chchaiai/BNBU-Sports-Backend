@@ -13,7 +13,7 @@
 ## 关联但不在本阶段自动关闭的决策
 
 - ADR-032、045、068：身份/教学/名单/媒体的数据保留与访问审批仍影响 PROD-DEC-12。
-- ADR-096：Student/Profile 写字段治理继续 `PROPOSED`；`updateCurrentUserProfile`、`updateStudent` 继续 exact default-deny。
+- ADR-096：Student/Profile 一般写字段治理继续 `PROPOSED`，`updateStudent` 继续 exact default-deny；邮箱绑定已由 ADR-101 的专用 challenge 接口独立批准，不恢复通用 `PATCH /me`。
 - Export 尚无 ACCEPTED ADR。EXP-DEC-01–12 全部批准后，必须先新增正式 Export ADR，再修改 OpenAPI 或创建 0011。
 
 ## 环境边界

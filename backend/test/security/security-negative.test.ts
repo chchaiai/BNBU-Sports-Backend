@@ -49,6 +49,51 @@ describe('security negative gates', () => {
     assert.throws(() => validateEnvironment(raw), /PEM-encoded private key/);
   });
 
+  it('fails closed when staging email delivery is absent or unauthenticated', () => {
+    const raw = foundationEnvironment(
+      'postgresql://synthetic:synthetic@127.0.0.1:1/bnbu_security_test',
+      3000,
+    );
+    raw.APP_ENV = 'staging';
+    delete raw.SMTP_HOST;
+    delete raw.SMTP_PORT;
+    delete raw.SMTP_FROM_ADDRESS;
+    delete raw.SMTP_USERNAME;
+    delete raw.SMTP_PASSWORD;
+    assert.throws(() => validateEnvironment(raw), /SMTP email delivery configuration/);
+
+    raw.SMTP_HOST = 'smtp.example.test';
+    raw.SMTP_PORT = '587';
+    raw.SMTP_SECURE = 'false';
+    raw.SMTP_FROM_ADDRESS = 'no-reply@example.test';
+    assert.throws(() => validateEnvironment(raw), /SMTP credentials are required/);
+  });
+
+  it('allows an isolated unauthenticated SMTP sink only for local development', () => {
+    const raw = foundationEnvironment(
+      'postgresql://synthetic:synthetic@127.0.0.1:1/bnbu_security_test',
+      3000,
+    );
+    raw.APP_ENV = 'local';
+    raw.SMTP_HOST = '127.0.0.1';
+    raw.SMTP_PORT = '1025';
+    raw.SMTP_SECURE = 'false';
+    raw.SMTP_FROM_ADDRESS = 'no-reply@local.bnbu.invalid';
+    delete raw.SMTP_USERNAME;
+    delete raw.SMTP_PASSWORD;
+    const config = validateEnvironment(raw).RUNTIME_CONFIG as {
+      emailDelivery: { username: string | null; password: string | null } | null;
+    };
+    assert.deepEqual(config.emailDelivery, {
+      host: '127.0.0.1',
+      port: 1025,
+      secure: false,
+      username: null,
+      password: null,
+      fromAddress: 'no-reply@local.bnbu.invalid',
+    });
+  });
+
   it('rejects a forged role or organization even when token verification succeeds', async () => {
     const handler = (): void => undefined;
     Reflect.defineMetadata(OPERATION_ID_METADATA, 'getCurrentUser', handler);

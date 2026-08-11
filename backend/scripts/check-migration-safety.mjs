@@ -25,6 +25,8 @@ const expectedMigrationDirectories = [
   '0011_client_capabilities',
   '0012_ios_auth_release_exemption',
   '0013_production_rate_limits',
+  '0014_email_only_auth',
+  '0015_email_verification_fk_alignment',
 ];
 
 if (
@@ -95,6 +97,23 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
       .replace(
         'ALTER COLUMN "session_id" DROP NOT NULL',
         'ALTER COLUMN "session_id" REMOVE NOT NULL',
+      );
+  }
+  if (migrationId === '0014_email_only_auth') {
+    destructiveScanSql = destructiveScanSql.replace(
+      'DROP CONSTRAINT "users_status_check"',
+      'REPLACE CONSTRAINT "users_status_check"',
+    );
+  }
+  if (migrationId === '0015_email_verification_fk_alignment') {
+    destructiveScanSql = destructiveScanSql
+      .replace(
+        'DROP CONSTRAINT "email_verification_challenges_organization_fkey"',
+        'REPLACE CONSTRAINT "email_verification_challenges_organization_fkey"',
+      )
+      .replace(
+        'DROP CONSTRAINT "email_verification_challenges_user_fkey"',
+        'REPLACE CONSTRAINT "email_verification_challenges_user_fkey"',
       );
   }
   if (migrationId === '0008_review_core') {
@@ -184,6 +203,8 @@ const exportAuditGovernance = migrations[9];
 const clientCapabilities = migrations[10];
 const iosAuthReleaseExemption = migrations[11];
 const productionRateLimits = migrations[12];
+const emailOnlyAuth = migrations[13];
+const emailVerificationFkAlignment = migrations[14];
 const immutableFoundationChecksum =
   '0573e3d13018e0db103ef4b605eb35278723174507b37379425a489b10e1462d';
 if (foundation.checksum !== immutableFoundationChecksum) {
@@ -554,6 +575,36 @@ for (const invariant of productionRateLimitInvariants) {
   }
 }
 
+const emailOnlyAuthInvariants = [
+  'email_verification_challenges_pkey',
+  'email_verification_challenges_id_organization_key',
+  'email_verification_challenges_organization_fkey',
+  'email_verification_challenges_user_fkey',
+  'email_verification_challenges_mode_check',
+  'email_verification_challenges_mode_code_check',
+  'email_verification_challenges_status_check',
+  'email_verification_challenges_user_requested_idx',
+  'email_verification_challenges_status_expires_idx',
+  "'PENDING_CONTACT_BINDING'",
+];
+for (const invariant of emailOnlyAuthInvariants) {
+  if (!emailOnlyAuth.sql.includes(invariant)) {
+    throw new Error(`0014_email_only_auth: missing invariant ${invariant}`);
+  }
+}
+if (/"(?:primary_phone|phone_verified_at)"|'PHONE'/i.test(emailOnlyAuth.sql)) {
+  throw new Error('0014_email_only_auth: legacy phone data must remain untouched');
+}
+for (const invariant of [
+  'email_verification_challenges_organization_fkey',
+  'email_verification_challenges_user_fkey',
+  'ON DELETE RESTRICT ON UPDATE CASCADE',
+]) {
+  if (!emailVerificationFkAlignment.sql.includes(invariant)) {
+    throw new Error(`0015_email_verification_fk_alignment: missing invariant ${invariant}`);
+  }
+}
+
 for (const migration of migrations) {
   const foreignKeyCount = (migration.sql.match(/\bFOREIGN KEY\b/g) ?? []).length;
   const uniqueCount = (migration.sql.match(/CREATE UNIQUE INDEX/g) ?? []).length;
@@ -564,5 +615,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through production rate limits)\n',
+  'Migration safety: PASS (forward-only Foundation through email verification FK alignment)\n',
 );

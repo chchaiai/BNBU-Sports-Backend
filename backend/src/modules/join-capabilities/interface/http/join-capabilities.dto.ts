@@ -1,7 +1,7 @@
 import { Transform, Type } from 'class-transformer';
 import { IsIn, IsInt, IsString, Length, Max, Min } from 'class-validator';
 
-import { STUDENT_GENDERS } from '../../../users/application/student-identity.js';
+const COURSE_JOIN_GENDERS = ['MALE', 'FEMALE'] as const;
 
 const trim = ({ value }: { value: unknown }): unknown =>
   typeof value === 'string' ? value.trim() : value;
@@ -17,12 +17,12 @@ export class IssueJoinCapabilityRequestDto {
   @Length(1, 32)
   studentNumber!: string;
 
-  @IsIn(STUDENT_GENDERS)
+  @IsIn(COURSE_JOIN_GENDERS)
   gender!: string;
 
   @Type(() => Number)
   @IsInt()
-  @Min(2000)
-  @Max(2027)
+  @Min(1000)
+  @Max(9999)
   gradeYear!: number;
 }

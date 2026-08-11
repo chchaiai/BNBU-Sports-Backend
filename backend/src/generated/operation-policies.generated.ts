@@ -117,10 +117,25 @@ export const operationPolicies = {
     "resourceResolver": "PRINCIPAL_USER",
     "defaultDeny": true
   },
-  "updateCurrentUserProfile": {
-    "method": "PATCH",
-    "route": "/me",
-    "policyId": "USER-SELF-UPDATE",
+  "requestCurrentUserEmailChallenge": {
+    "method": "POST",
+    "route": "/me/email-verification-challenges",
+    "policyId": "USER-EMAIL-VERIFY-REQUEST",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "SELF",
+    "resourceResolver": "PRINCIPAL_USER",
+    "defaultDeny": true
+  },
+  "verifyCurrentUserEmailChallenge": {
+    "method": "POST",
+    "route": "/me/email-verification-challenges/{challengeId}/verify",
+    "policyId": "USER-EMAIL-VERIFY-COMPLETE",
     "authentication": "ACCESS_TOKEN",
     "allowedRoles": [
       "STUDENT",

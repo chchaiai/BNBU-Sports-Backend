@@ -184,7 +184,6 @@ export type ErrorCodeLifecycle = 'runtime' | 'reserved' | 'future' | 'deprecated
 // They are not deleted or silently repurposed because clients may already
 // generate the stable vocabulary from Contract 1.3.
 const RESERVED_ERROR_CODES = [
-  'USER_STATUS_NOT_ACTIVE',
   'VALIDATION_DURATION_INVALID',
   'PERMISSION_DENIED',
   'COURSE_TEACHER_ASSIGNMENT_CONFLICT',

@@ -102,6 +102,28 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     });
   };
 
+  const studentAccessToken = async (
+    userId: string,
+    sessionId: string,
+    tokenVersion = 0,
+  ): Promise<string> => {
+    const seconds = Math.floor(Date.now() / 1000);
+    return new SignJWT({
+      organizationId: fixture.organizationId,
+      role: 'STUDENT',
+      sessionId,
+      tokenVersion,
+    })
+      .setProtectedHeader({ alg: 'EdDSA', typ: 'JWT' })
+      .setSubject(userId)
+      .setJti(uuidv7())
+      .setIssuer('bnbu-sports-test')
+      .setAudience('bnbu-sports-test-clients')
+      .setIssuedAt(seconds)
+      .setExpirationTime(seconds + 600)
+      .sign(await importPKCS8(TEST_PRIVATE_KEY, 'EdDSA'));
+  };
+
   before(async () => {
     const databaseUrl = requireTestDatabaseUrl();
     prisma = createTestPrisma(databaseUrl);
@@ -166,6 +188,194 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     const release = await request('/api/v1/app-release-policy?platform=IOS');
     assert.equal(release.status, 503);
     assert.equal(release.body.code, 'SYSTEM_MODE_UNSUPPORTED');
+  });
+
+  it('rejects PHONE without creating a challenge and activates a pending student through first email binding', async () => {
+    const phoneAttempt = await request('/api/v1/auth/student-sign-in-codes', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'idempotency-key': uuidv7() },
+      body: JSON.stringify({
+        organizationCode: 'BNBU-TEST',
+        account: 'synthetic@invalid.test',
+        channel: 'PHONE',
+        locale: 'zh-CN',
+      }),
+    });
+    assert.equal(phoneAttempt.status, 422);
+    assert.equal(await prisma.studentSignInChallenge.count(), 0);
+
+    const student = await seedExerciseSessionStudent(prisma, fixture, 'EMAIL-FIRST-BIND');
+    await prisma.user.update({
+      where: { id: student.userId },
+      data: {
+        status: 'PENDING_CONTACT_BINDING',
+        primaryEmail: null,
+        primaryEmailNormalized: null,
+        emailVerifiedAt: null,
+      },
+    });
+    const accessToken = await studentAccessToken(student.userId, student.authSessionId);
+    const meBefore = await request('/api/v1/me', {
+      headers: authorization(accessToken),
+    });
+    assert.equal(meBefore.status, 200);
+    const beforeUser = object(object(meBefore.body.data).user);
+    assert.equal(beforeUser.status, 'PENDING_CONTACT_BINDING');
+    assert.equal('primaryPhoneMasked' in beforeUser, false);
+    assert.equal('phoneVerified' in beforeUser, false);
+
+    const blocked = await request('/api/v1/me/preferences', {
+      headers: authorization(accessToken),
+    });
+    assert.equal(blocked.status, 409);
+    assert.equal(blocked.body.code, 'USER_STATUS_NOT_ACTIVE');
+
+    const targetEmail = 'pending.student@invalid.test';
+    const requested = await request('/api/v1/me/email-verification-challenges', {
+      method: 'POST',
+      headers: {
+        ...authorization(accessToken),
+        'content-type': 'application/json',
+        'idempotency-key': uuidv7(),
+      },
+      body: JSON.stringify({
+        email: targetEmail,
+        locale: 'en',
+        expectedVersion: beforeUser.version,
+      }),
+    });
+    assert.equal(requested.status, 202, JSON.stringify(requested.body));
+    const challenge = object(requested.body.data);
+    assert.equal(challenge.mode, 'FIRST_BIND');
+
+    const newCode = '246810';
+    const challengeId = String(challenge.challengeId);
+    await prisma.emailVerificationChallenge.update({
+      where: { id: challengeId },
+      data: {
+        newEmailCodeDigest: authCodeCrypto().digestCode(
+          `EMAIL_VERIFICATION:NEW:${challengeId}`,
+          newCode,
+        ),
+      },
+    });
+    const otherSessionId = uuidv7();
+    const now = new Date();
+    await prisma.authSession.create({
+      data: {
+        id: otherSessionId,
+        organizationId: fixture.organizationId,
+        userId: student.userId,
+        status: 'ACTIVE',
+        tokenFamilyId: uuidv7(),
+        createdAt: now,
+        lastSeenAt: now,
+        absoluteExpiresAt: new Date(now.getTime() + 3_600_000),
+        idleExpiresAt: new Date(now.getTime() + 3_600_000),
+      },
+    });
+    const verified = await request(
+      `/api/v1/me/email-verification-challenges/${challengeId}/verify`,
+      {
+        method: 'POST',
+        headers: {
+          ...authorization(accessToken),
+          'content-type': 'application/json',
+          'idempotency-key': uuidv7(),
+        },
+        body: JSON.stringify({ newEmailCode: newCode }),
+      },
+    );
+    assert.equal(verified.status, 200, JSON.stringify(verified.body));
+    const afterUser = object(object(verified.body.data).user);
+    assert.equal(afterUser.status, 'ACTIVE');
+    assert.equal(afterUser.emailVerified, true);
+    assert.equal('primaryPhoneMasked' in afterUser, false);
+    assert.equal(
+      (await prisma.authSession.findUniqueOrThrow({ where: { id: otherSessionId } })).status,
+      'REVOKED',
+    );
+    const stored = await prisma.user.findUniqueOrThrow({ where: { id: student.userId } });
+    assert.equal(stored.primaryEmailNormalized, targetEmail);
+    const audit = await prisma.auditLog.findFirst({ where: { targetId: student.userId } });
+    assert.equal(JSON.stringify(audit).includes(targetEmail), false);
+  });
+
+  it('requires both current and new mailbox codes for email rebinding', async () => {
+    const student = await seedExerciseSessionStudent(prisma, fixture, 'EMAIL-REBIND');
+    const accessToken = await studentAccessToken(student.userId, student.authSessionId);
+    const current = await request('/api/v1/me', { headers: authorization(accessToken) });
+    const user = object(object(current.body.data).user);
+    const targetEmail = 'rebound.student@invalid.test';
+    const requested = await request('/api/v1/me/email-verification-challenges', {
+      method: 'POST',
+      headers: {
+        ...authorization(accessToken),
+        'content-type': 'application/json',
+        'idempotency-key': uuidv7(),
+      },
+      body: JSON.stringify({
+        email: targetEmail,
+        locale: 'zh-CN',
+        expectedVersion: user.version,
+      }),
+    });
+    assert.equal(requested.status, 202, JSON.stringify(requested.body));
+    const challenge = object(requested.body.data);
+    assert.equal(challenge.mode, 'REBIND');
+    const challengeId = String(challenge.challengeId);
+    const currentCode = '135791';
+    const newCode = '864209';
+    await prisma.emailVerificationChallenge.update({
+      where: { id: challengeId },
+      data: {
+        currentEmailCodeDigest: authCodeCrypto().digestCode(
+          `EMAIL_VERIFICATION:CURRENT:${challengeId}`,
+          currentCode,
+        ),
+        newEmailCodeDigest: authCodeCrypto().digestCode(
+          `EMAIL_VERIFICATION:NEW:${challengeId}`,
+          newCode,
+        ),
+      },
+    });
+
+    const missingCurrent = await request(
+      `/api/v1/me/email-verification-challenges/${challengeId}/verify`,
+      {
+        method: 'POST',
+        headers: {
+          ...authorization(accessToken),
+          'content-type': 'application/json',
+          'idempotency-key': uuidv7(),
+        },
+        body: JSON.stringify({ newEmailCode: newCode }),
+      },
+    );
+    assert.equal(missingCurrent.status, 401);
+    assert.equal(missingCurrent.body.code, 'AUTH_VERIFICATION_CODE_INVALID');
+
+    const verified = await request(
+      `/api/v1/me/email-verification-challenges/${challengeId}/verify`,
+      {
+        method: 'POST',
+        headers: {
+          ...authorization(accessToken),
+          'content-type': 'application/json',
+          'idempotency-key': uuidv7(),
+        },
+        body: JSON.stringify({ currentEmailCode: currentCode, newEmailCode: newCode }),
+      },
+    );
+    assert.equal(verified.status, 200, JSON.stringify(verified.body));
+    const rebound = object(object(verified.body.data).user);
+    assert.equal(rebound.emailVerified, true);
+    assert.notEqual(rebound.primaryEmailMasked, student.email);
+    assert.equal(
+      (await prisma.user.findUniqueOrThrow({ where: { id: student.userId } }))
+        .primaryEmailNormalized,
+      targetEmail,
+    );
   });
 
   it('uses the numeric iOS build number for enforcement and keeps marketing version display-only', async () => {

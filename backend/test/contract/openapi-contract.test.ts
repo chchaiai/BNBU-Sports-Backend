@@ -85,12 +85,12 @@ describe('authoritative OpenAPI contract', () => {
       }
     };
     visit(contract);
-    assert.equal(referenceCount, 1_715);
+    assert.equal(referenceCount, 1_732);
 
     const operations = collectOperations(contract);
-    assert.equal(operations.length, 122);
-    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 122);
-    assert.equal(Object.keys(operationPolicies).length, 122);
+    assert.equal(operations.length, 123);
+    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 123);
+    assert.equal(Object.keys(operationPolicies).length, 123);
     for (const { operationId, policy } of operations) {
       assert.equal(policy.defaultDeny, true);
       assert.equal(typeof policy.policyId, 'string');
@@ -109,6 +109,8 @@ describe('authoritative OpenAPI contract', () => {
       [AuthController.prototype, 'refresh', 'refreshSession'],
       [AuthController.prototype, 'logout', 'logoutSession'],
       [UsersController.prototype, 'current', 'getCurrentUser'],
+      [UsersController.prototype, 'requestEmailVerification', 'requestCurrentUserEmailChallenge'],
+      [UsersController.prototype, 'verifyEmail', 'verifyCurrentUserEmailChallenge'],
       [CoursesController.prototype, 'list', 'listCourses'],
       [CoursesController.prototype, 'create', 'createCourse'],
       [CoursesController.prototype, 'get', 'getCourse'],

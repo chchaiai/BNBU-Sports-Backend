@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { ApplicationError } from '../../../common/errors/application-error.js';
-import { Clock } from '../../../common/time/clock.js';
 import {
   STUDENT_GENDERS,
   type NormalizedStudentIdentity,
@@ -13,19 +12,16 @@ const STUDENT_NUMBER_PATTERN = /^[A-Z0-9._-]{1,32}$/;
 
 @Injectable()
 export class StudentIdentityNormalizer {
-  constructor(private readonly clock: Clock) {}
-
   normalize(input: StudentIdentityInput): NormalizedStudentIdentity {
     const studentNumber = input.studentNumber.trim().toUpperCase();
     const fullName = input.fullName.trim().normalize('NFC');
-    const currentYear = this.clock.now().getUTCFullYear();
     if (!STUDENT_NUMBER_PATTERN.test(studentNumber)) this.invalid('studentNumber');
     if (fullName.length < 1 || fullName.length > 100) this.invalid('fullName');
     if (!STUDENT_GENDERS.includes(input.gender as StudentGender)) this.invalid('gender');
     if (
       !Number.isSafeInteger(input.gradeYear) ||
-      input.gradeYear < 2000 ||
-      input.gradeYear > currentYear + 1
+      input.gradeYear < 1000 ||
+      input.gradeYear > 9999
     ) {
       this.invalid('gradeYear');
     }

@@ -58,9 +58,7 @@ interface StudentSessionUser {
   role: string;
   status: string;
   primaryEmail: string | null;
-  primaryPhone: string | null;
   emailVerifiedAt: Date | null;
-  phoneVerifiedAt: Date | null;
   tokenVersion: number;
   version: number;
 }
@@ -86,7 +84,7 @@ export class AuthService {
     user: StudentSessionUser,
     facts: EstablishStudentSessionFacts,
   ): Promise<AuthProjection> {
-    if (user.role !== 'STUDENT' || user.status !== 'ACTIVE') {
+    if (user.role !== 'STUDENT' || !['PENDING_CONTACT_BINDING', 'ACTIVE'].includes(user.status)) {
       throw new ApplicationError('USER_IDENTITY_CONFLICT', 409);
     }
     const now = this.clock.now();
@@ -174,7 +172,7 @@ export class AuthService {
     const candidates = await this.prisma.user.findMany({
       where: {
         deletedAt: null,
-        OR: [{ primaryEmailNormalized: account }, { primaryPhoneNormalized: account }],
+        primaryEmailNormalized: account,
       },
       take: 2,
     });
@@ -531,7 +529,10 @@ export class AuthService {
         references,
       );
     }
-    if (user.status !== 'ACTIVE' || session.organization.status !== 'ACTIVE') {
+    if (
+      !['PENDING_CONTACT_BINDING', 'ACTIVE'].includes(user.status) ||
+      session.organization.status !== 'ACTIVE'
+    ) {
       return this.idempotency.failure(
         new ApplicationError('AUTH_CREDENTIAL_INVALID', 401),
         references,

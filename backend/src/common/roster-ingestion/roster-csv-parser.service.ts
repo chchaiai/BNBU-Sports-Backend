@@ -6,7 +6,6 @@ import {
   OBJECT_STORAGE_PORT,
   type ObjectStoragePort,
 } from '../object-storage/object-storage.port.js';
-import { Clock } from '../time/clock.js';
 import {
   ROSTER_CANONICAL_FIELDS,
   type ParsedRosterCsv,
@@ -27,10 +26,7 @@ type SafeSnapshot = Record<RosterCanonicalField, string | null>;
 
 @Injectable()
 export class RosterCsvParserService {
-  constructor(
-    @Inject(OBJECT_STORAGE_PORT) private readonly objectStorage: ObjectStoragePort,
-    private readonly clock: Clock,
-  ) {}
+  constructor(@Inject(OBJECT_STORAGE_PORT) private readonly objectStorage: ObjectStoragePort) {}
 
   async parseStoredCsv(input: {
     sourceFileStorageKey: string;
@@ -172,8 +168,8 @@ export class RosterCsvParserService {
     const gradeYearValid =
       gradeYear !== null &&
       Number.isSafeInteger(gradeYear) &&
-      gradeYear >= 2000 &&
-      gradeYear <= this.clock.now().getUTCFullYear() + 1;
+      gradeYear >= 1000 &&
+      gradeYear <= 9999;
     if (gradeYearText !== null && this.formulaLike(gradeYearText)) errors.add('FORMULA_LIKE_VALUE');
     if (
       gradeYearText !== null &&

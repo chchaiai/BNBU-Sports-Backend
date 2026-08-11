@@ -29,14 +29,14 @@ interface HttpResult {
 interface SyntheticIdentity {
   fullName: string;
   studentNumber: string;
-  gender: 'MALE' | 'FEMALE' | 'OTHER';
+  gender: string;
   gradeYear: number;
 }
 
 const IDENTITY: SyntheticIdentity = {
   fullName: 'Synthetic QR Student',
   studentNumber: '00001234',
-  gender: 'OTHER',
+  gender: 'MALE',
   gradeYear: 2026,
 };
 
@@ -319,6 +319,32 @@ describe('Student identity, Enrollment, and QR Join HTTP E2E', () => {
     assert.equal((await request('/api/v1/course-invites/not-a-token/preview')).status, 400);
   });
 
+  it('rejects non-binary QR join genders and malformed cohort years before issuing a capability', async () => {
+    const teacher = await login(fixture.teacherEmail);
+    const invite = await createInvite(teacher);
+    const inviteToken = String(object(invite.body.data).inviteToken);
+
+    for (const identity of [
+      { ...IDENTITY, gender: 'OTHER' },
+      { ...IDENTITY, gender: 'UNKNOWN' },
+      { ...IDENTITY, gradeYear: 999 },
+      { ...IDENTITY, gradeYear: 10_000 },
+      { ...IDENTITY, gradeYear: 2026.5 },
+    ]) {
+      const rejected = await issueCapability(inviteToken, identity);
+      assert.equal(rejected.status, 422);
+    }
+    assert.equal(await prisma.joinCapability.count(), 0);
+
+    const accepted = await issueCapability(inviteToken, {
+      ...IDENTITY,
+      studentNumber: '00009999',
+      gender: 'FEMALE',
+      gradeYear: 9999,
+    });
+    assert.equal(accepted.status, 201);
+  });
+
   it('joins atomically, replays the exact encrypted result, and grants only Enrollment projections', async () => {
     const teacher = await login(fixture.teacherEmail);
     const invite = await createInvite(teacher);
@@ -341,6 +367,7 @@ describe('Student identity, Enrollment, and QR Join HTTP E2E', () => {
     const profile = object(data.studentProfile);
     const enrollment = object(data.enrollment);
     const auth = object(data.authSession);
+    assert.equal(object(auth.user).status, 'PENDING_CONTACT_BINDING');
     assert.equal(profile.studentNumber, '00001234');
     assert.equal(enrollment.status, 'ACTIVE');
     assert.equal(object(data.course).id, fixture.activeCourseId);
@@ -362,21 +389,10 @@ describe('Student identity, Enrollment, and QR Join HTTP E2E', () => {
     const me = await request('/api/v1/me', authenticated(studentToken));
     assert.equal(me.status, 200);
     assert.equal(object(object(me.body.data).studentProfile).studentNumber, '00001234');
-    const courses = await request('/api/v1/courses', authenticated(studentToken));
-    const sections = await request('/api/v1/class-sections', authenticated(studentToken));
-    const ownEnrollments = await request('/api/v1/enrollments', authenticated(studentToken));
-    assert.equal(array(courses.body.data).length, 1);
-    assert.equal(array(sections.body.data).length, 1);
-    assert.equal(array(ownEnrollments.body.data).length, 1);
-    assert.equal(
-      (
-        await request(
-          `/api/v1/enrollments?studentId=${String(enrollment.studentId)}`,
-          authenticated(studentToken),
-        )
-      ).status,
-      403,
-    );
+    assert.equal(object(object(me.body.data).user).status, 'PENDING_CONTACT_BINDING');
+    const blockedPreferences = await request('/api/v1/me/preferences', authenticated(studentToken));
+    assert.equal(blockedPreferences.status, 409);
+    assert.equal(blockedPreferences.body.code, 'USER_STATUS_NOT_ACTIVE');
     assert.equal(childOutput.includes(firstSecret(capability)), false);
     assert.equal(childOutput.includes(String(auth.refreshToken)), false);
   });
@@ -410,6 +426,9 @@ describe('Student identity, Enrollment, and QR Join HTTP E2E', () => {
       (await request(`/api/v1/enrollments/${enrollmentId}`, authenticated(admin))).status,
       200,
     );
+    const listed = await request('/api/v1/enrollments?limit=20', authenticated(admin));
+    assert.equal(listed.status, 200);
+    assert.equal(array(listed.body.data).length, 1);
     assert.equal(
       (
         await request(

@@ -111,7 +111,7 @@ local seed 使用全虚构 fixture，连续执行两次成功且无重复插入�
 
 ### 4.1 无密码学生身份
 
-- QR Join 不创建学生密码、不要求邮箱或手机号；User 与 StudentProfile 保持分离。
+- QR Join 不创建学生密码，也不在入班请求中接收邮箱或手机号；新 User 进入 `PENDING_CONTACT_BINDING`，必须通过专用邮箱 challenge 验证学校邮箱后才能进入运动业务。User 与 StudentProfile 保持分离。
 - `studentNumber` trim 后保持字符串与前导零；姓名执行 trim + Unicode NFC；gender/gradeYear 严格枚举和范围校验。
 - 不按姓名、拼音、联系方式或相似度合并身份；已有身份字段不一致时返回稳定冲突，不静默覆盖。
 - 并发创建由 PostgreSQL 唯一约束、Serializable 事务和可识别冲突处理共同防重。

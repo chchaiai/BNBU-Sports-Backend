@@ -9,7 +9,6 @@ import { operationPolicies } from '../../src/generated/operation-policies.genera
 import { AuditLogsController } from '../../src/modules/audit-logs/audit-logs.controller.js';
 import { ExportsController } from '../../src/modules/exports/exports.controller.js';
 import { ProfilesController } from '../../src/modules/users/profiles.controller.js';
-import { UsersController } from '../../src/modules/users/users.controller.js';
 
 type JsonObject = Record<string, unknown>;
 
@@ -29,7 +28,6 @@ const contract = object(
 
 describe('Stage 19 Export, Audit Read, and governance contract', () => {
   const operations = [
-    ['/me', 'patch', 'updateCurrentUserProfile', UsersController, 'update'],
     ['/students', 'get', 'listStudents', ProfilesController, 'listStudents'],
     ['/students/{studentId}', 'get', 'getStudent', ProfilesController, 'getStudent'],
     ['/students/{studentId}', 'patch', 'updateStudent', ProfilesController, 'updateStudent'],
@@ -48,7 +46,7 @@ describe('Stage 19 Export, Audit Read, and governance contract', () => {
     ['/audit-logs/{auditLogId}', 'get', 'getAuditLog', AuditLogsController, 'get'],
   ] as const;
 
-  it('binds all eleven remaining operations to real handlers and generated policy', () => {
+  it('binds all ten remaining operations to real handlers and generated policy', () => {
     const paths = object(contract.paths, 'paths');
     for (const [path, method, operationId, controller, handlerName] of operations) {
       const operation = object(object(paths[path], path)[method], operationId);
@@ -64,11 +62,10 @@ describe('Stage 19 Export, Audit Read, and governance contract', () => {
     }
   });
 
-  it('freezes the six exact default-deny operations without fake Export persistence', () => {
+  it('freezes the five exact default-deny operations without fake Export persistence', () => {
     const paths = object(contract.paths, 'paths');
     for (const [path, method, operationId] of operations.filter(([, , operationId]) =>
       [
-        'updateCurrentUserProfile',
         'updateStudent',
         'listExports',
         'createExport',
@@ -87,8 +84,8 @@ describe('Stage 19 Export, Audit Read, and governance contract', () => {
     const coverage = JSON.parse(
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as { implemented: Record<string, unknown>; implementedDefaultDeny: string[] };
-    assert.equal(Object.keys(coverage.implemented).length, 122);
-    assert.equal(coverage.implementedDefaultDeny.length, 18);
+    assert.equal(Object.keys(coverage.implemented).length, 123);
+    assert.equal(coverage.implementedDefaultDeny.length, 17);
     for (const operationId of Object.keys(operationPolicies)) {
       assert.ok(coverage.implemented[operationId]);
     }

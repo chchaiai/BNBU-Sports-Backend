@@ -179,7 +179,7 @@ describe('Stage 21 client capability contract', () => {
     ]);
   });
 
-  it('closes all 122 operations and reports the persisted subset separately from default deny', () => {
+  it('closes all 123 operations and reports the persisted subset separately from default deny', () => {
     const coverage = JSON.parse(
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as {
@@ -187,9 +187,9 @@ describe('Stage 21 client capability contract', () => {
       implemented: JsonObject;
       implementedDefaultDeny: string[];
     };
-    assert.equal(coverage.expectedOperationCount, 122);
-    assert.equal(Object.keys(coverage.implemented).length, 122);
-    assert.equal(coverage.implementedDefaultDeny.length, 18);
+    assert.equal(coverage.expectedOperationCount, 123);
+    assert.equal(Object.keys(coverage.implemented).length, 123);
+    assert.equal(coverage.implementedDefaultDeny.length, 17);
     for (const [, , operationId] of bindings) {
       assert.equal(
         coverage.implementedDefaultDeny.includes(operationId),

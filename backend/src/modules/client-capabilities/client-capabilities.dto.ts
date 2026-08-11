@@ -4,6 +4,7 @@ import {
   ArrayMinSize,
   ArrayUnique,
   IsBoolean,
+  IsEmail,
   IsIn,
   IsInt,
   IsLatitude,
@@ -31,11 +32,11 @@ export class StudentSignInCodeRequestDto {
   organizationCode!: string;
 
   @Transform(trim)
-  @IsString()
-  @Length(1, 254)
+  @IsEmail()
+  @Length(3, 254)
   account!: string;
 
-  @IsIn(['EMAIL', 'PHONE'])
+  @IsIn(['EMAIL'])
   channel!: string;
 
   @IsIn(['zh-CN', 'en'])
@@ -62,14 +63,14 @@ export class AccountRecoveryRequestDto {
   organizationCode!: string;
 
   @Transform(trim)
-  @IsString()
-  @Length(1, 254)
+  @IsEmail()
+  @Length(3, 254)
   account!: string;
 
   @IsIn(['TEACHER', 'ADMIN'])
   requestedRole!: string;
 
-  @IsIn(['EMAIL', 'PHONE'])
+  @IsIn(['EMAIL'])
   channel!: string;
 
   @IsIn(['zh-CN', 'en'])

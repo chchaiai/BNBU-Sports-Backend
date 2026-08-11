@@ -98,9 +98,9 @@ export class ClientAuthenticationService {
     context: PublicRequestContext,
   ): Promise<StudentSignInCodeAcceptedProjection> {
     const organization = await this.resolveOrganization(input.organizationCode);
-    const normalized = this.normalizeAccount(input.account, input.channel);
+    const normalized = this.normalizeAccount(input.account);
     const accountDigest = this.accountDigest(input.channel, normalized);
-    const user = await this.findUser(organization.id, normalized, input.channel, 'STUDENT');
+    const user = await this.findUser(organization.id, normalized, 'STUDENT');
     const reservation = await this.reserveChallenge(
       'STUDENT_SIGN_IN',
       organization.id,
@@ -158,7 +158,7 @@ export class ClientAuthenticationService {
         if (
           !attempted.accepted ||
           challenge.user?.role !== 'STUDENT' ||
-          challenge.user.status !== 'ACTIVE'
+          !['PENDING_CONTACT_BINDING', 'ACTIVE'].includes(challenge.user.status)
         ) {
           await this.updateStudentChallengeAttempt(transaction, challenge, attempted.next);
           return this.idempotency.failure(this.invalidCode());
@@ -204,10 +204,10 @@ export class ClientAuthenticationService {
     context: PublicRequestContext,
   ): Promise<AccountRecoveryAcceptedProjection> {
     const organization = await this.resolveOrganization(input.organizationCode);
-    const normalized = this.normalizeAccount(input.account, input.channel);
+    const normalized = this.normalizeAccount(input.account);
     const accountDigest = this.accountDigest(input.channel, normalized);
     const role = input.requestedRole as 'TEACHER' | 'ADMIN';
-    const user = await this.findUser(organization.id, normalized, input.channel, role);
+    const user = await this.findUser(organization.id, normalized, role);
     const reservation = await this.reserveRecoveryChallenge(
       organization.id,
       user?.id ?? null,
@@ -730,24 +730,22 @@ export class ClientAuthenticationService {
   private findUser(
     organizationId: string,
     account: string,
-    channel: string,
     role: 'STUDENT' | 'TEACHER' | 'ADMIN',
   ): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: {
         organizationId,
         role,
-        status: 'ACTIVE',
+        status: role === 'STUDENT' ? { in: ['PENDING_CONTACT_BINDING', 'ACTIVE'] } : 'ACTIVE',
         deletedAt: null,
-        ...(channel === 'EMAIL'
-          ? { primaryEmailNormalized: account, emailVerifiedAt: { not: null } }
-          : { primaryPhoneNormalized: account, phoneVerifiedAt: { not: null } }),
+        primaryEmailNormalized: account,
+        emailVerifiedAt: { not: null },
       },
     });
   }
 
-  private normalizeAccount(account: string, channel: string): string {
-    const normalized = channel === 'EMAIL' ? account.trim().toLowerCase() : account.trim();
+  private normalizeAccount(account: string): string {
+    const normalized = account.trim().toLowerCase();
     if (normalized.length < 1 || normalized.length > 254)
       throw new ApplicationError('VALIDATION_FORMAT_INVALID', 422);
     return normalized;

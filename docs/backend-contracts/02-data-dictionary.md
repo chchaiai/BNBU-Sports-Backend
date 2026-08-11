@@ -134,9 +134,9 @@
 | User | `role` | `role` | enum / varchar | 16 | 是 | 否 | — | — | `STUDENT/TEACHER/ADMIN` | `STUDENT` | 注册/管理员 | INTERNAL | 只允许 ADR-001 三角色 |
 | User | `status` | `status` | enum / varchar | 32 | 是 | 否 | — | — | 阶段 3 冻结；未知值 fail closed | `ACTIVE` | 后端账户流程 | SENSITIVE | 不与 Profile/Enrollment 状态复用 |
 | User | `primaryEmail` | `primary_email` | string / varchar | 254 | 创建否 | 是 | `null` | — | 小写规范化；验证后组织范围/全局唯一策略待 ADR-028 | `student@example.edu` | 本人验证/管理员恢复 | HIGHLY_SENSITIVE | 学生直接入班时允许空；响应只返回 masked projection |
-| User | `primaryPhone` | `primary_phone` | string / varchar | 32 | 创建否 | 是 | `null` | — | E.164 规范化；验证后唯一策略待 ADR-028 | `+8613800000000` | 本人验证/管理员恢复 | HIGHLY_SENSITIVE | 公共 API 不返回明文 |
+| User | `retiredPrimaryPhone` | `primary_phone` | string / varchar | 32 | 否 | 是 | 历史值 | — | ADR-101 后不可读写，仅保留历史列与唯一索引 | 不提供 | 无应用写入者 | HIGHLY_SENSITIVE | Prisma `@ignore`；待未来破坏性迁移审批后物理删除 |
 | User | `emailVerifiedAt` | `email_verified_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 仅验证服务在成功验证当前 primaryEmail 后写入；邮箱改变时清空 | `2026-08-02T01:20:00Z` | 联系方式验证服务 | HIGHLY_SENSITIVE | null 表示当前邮箱未验证，不等于账户不可用 |
-| User | `phoneVerifiedAt` | `phone_verified_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 仅验证服务在成功验证当前 primaryPhone 后写入；号码改变时清空 | `2026-08-02T01:25:00Z` | 联系方式验证服务 | HIGHLY_SENSITIVE | null 表示当前号码未验证 |
+| User | `retiredPhoneVerifiedAt` | `phone_verified_at` | date-time / timestamp | 微秒精度 | 否 | 是 | 历史值 | UTC 时间点 | ADR-101 后不可读写 | 不提供 | 无应用写入者 | HIGHLY_SENSITIVE | Prisma `@ignore`；不进入任何公共投影 |
 | User | `passwordHash` | `password_hash` | string / varchar | 255 | 否 | 是 | `null` | — | 只保存获批算法输出；禁止明文 | `$argon2id$...` | 认证服务 | HIGHLY_SENSITIVE | **不进入任何公共 API**；学生无密码时为空 |
 | User | `tokenVersion` | `token_version` | integer / bigint | 64-bit | 是 | 否 | `0` | 修订号 | `>=0`；禁用/强制退出按认证策略递增 | `3` | 认证服务 | HIGHLY_SENSITIVE | 内部认证字段；公共 API 不返回 |
 | User | `lastAuthenticatedAt` | `last_authenticated_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 成功建立会话后由服务端写入 | `2026-08-02T01:30:00Z` | 认证服务 | HIGHLY_SENSITIVE | 不用于业务并发控制 |
@@ -150,8 +150,8 @@
 | StudentProfile | `organizationId` | `organization_id` | string / varchar | 64 | 是 | 否 | — | — | 引用 `Organization.id`；与 User 一致 | `org_bnbu` | 账户创建 | INTERNAL | 用于学号唯一范围 |
 | StudentProfile | `studentNumber` | `student_number` | string / varchar | 32 | 是 | 否 | — | — | trim/大写规范化；组织内唯一；不得等于/替代 `id` | `2024010836` | 官方名单/学生填写后核验 | SENSITIVE | 学校学号；允许前导零 |
 | StudentProfile | `fullName` | `full_name` | string / varchar | 100 | 是 | 否 | — | — | trim；1–100 字符；禁止作为关联键 | `林若晴` | 官方名单/学生确认 | SENSITIVE | 展示名称 |
-| StudentProfile | `gender` | `gender` | enum / varchar | 32 | 是 | 否 | — | — | 仅统一 Gender；不保存中文标签 | `FEMALE` | 官方名单/学生确认 | SENSITIVE | i18n 在客户端完成 |
-| StudentProfile | `gradeYear` | `grade_year` | integer / smallint | 4 位 | 是 | 否 | — | 公历年 | `2000..当前年+1`；具体学校范围可配置 | `2024` | 官方名单/学生确认 | SENSITIVE | ADR-050：四位入学/年级 cohort 年份；`freshman` 等相对年级只按 Semester 派生 |
+| StudentProfile | `gender` | `gender` | enum / varchar | 32 | 是 | 否 | — | — | 全局 Gender 保留 `MALE/FEMALE/OTHER`；扫码加入只接受 `MALE/FEMALE` | `FEMALE` | 官方名单/学生确认 | SENSITIVE | 历史与名单数据可继续使用 `OTHER`；i18n 在客户端完成 |
+| StudentProfile | `gradeYear` | `grade_year` | integer / smallint | 4 位 | 是 | 否 | — | 公历年 | `1000..9999`；只做稳定的四位年份校验，不受当前时间影响 | `2024` | 官方名单/学生确认 | SENSITIVE | ADR-050：四位入学/年级 cohort 年份；`freshman` 等相对年级只按 Semester 派生 |
 | StudentProfile | `collegeName` | `college_name` | string / varchar | 200 | 否 | 是 | `null` | — | trim；最大 200 | `工商与管理学院` | 官方名单/管理员 | SENSITIVE | 未有学院主数据实体前保存名称快照 |
 | StudentProfile | `majorName` | `major_name` | string / varchar | 200 | 否 | 是 | `null` | — | trim；最大 200 | `工商管理` | 官方名单/管理员 | SENSITIVE | 不用泛化 `major` |
 | StudentProfile | `administrativeClassName` | `administrative_class_name` | string / varchar | 200 | 否 | 是 | `null` | — | trim；最大 200 | `2024级工商管理1班` | 官方名单/管理员 | SENSITIVE | 行政班，不是体育教学班 |
@@ -679,7 +679,7 @@
 | `admissionYear` | Android/AdminUser | 入学年份 | `StudentProfile.gradeYear` | ADR-050：数值范围与来源核验后回填；若与已有 gradeYear 冲突则隔离核对，不静默覆盖 | F5 |
 | `gender` 中文值 `男/女/其他`、小写 `male/female` | Android/Web | 性别 | `StudentProfile.gender` 等统一 Gender enum | adapter 映射到 UPPER_SNAKE_CASE；未知值不默认 | F5/F6 |
 | `accountStatus`、`account_status` | Android | 联系方式绑定/账户可用状态 | `User.status` 或后续独立 ContactBinding 状态 | 阶段 3 前不自动压入 ACTIVE；旧值映射表 fail closed | F5/F6 |
-| `email`、`phone` 明文 | Android/Web | 登录/联系信息 | `User.primaryEmail`、`User.primaryPhone` | 规范化、验证状态和唯一性核对；普通响应仅 masked | F5/F6 |
+| `email` 明文 | Android/Web | 登录/联系信息 | `User.primaryEmail` | 小写规范化、验证状态和唯一性核对；普通响应仅 masked；手机号不再进入认证适配 | F5/F6 |
 | `tokenVersion` | Web AdminUser | 会话撤销版本 | `User.tokenVersion` | 后端认证实现存在时迁移；Mock 值不能作为生产数据 | 保留（内部标准名） |
 | `assignedCourseCount` | Web AdminUser | UI 汇总 | 派生字段，不落 User/Profile | 从 ClassSection 责任关系聚合 | F5 |
 
@@ -811,7 +811,7 @@
 | 旧字段 | 所在位置 | 旧含义 | 新字段 | 兼容策略 | 移除阶段 |
 |---|---|---|---|---|---|
 | `CourseInvite.code/expiresAt/status` | Android/Web invite | 入班凭证与生命周期 | 待新增 CourseInvite 对象 | 保留旧只读/调用；阶段 1/6 补对象与字段后再迁移 | 待模型 |
-| `ContactStatusResponse.email/phone`、send/verify code DTO | Android | 联系方式绑定/验证码流程 | 待认证 ContactMethod/VerificationChallenge 对象 | 明文最小化；不塞入 StudentProfile | 待模型 |
+| 旧 `ContactStatusResponse` 与 send/verify code DTO | Android | 已退役联系方式绑定流程 | `EmailVerificationChallenge` 与 `/me/email-verification-challenges` | Android 迁移到正式邮箱 challenge；旧手机号 DTO 删除 | ADR-101 已落地 |
 | `LoginResponse.token`、CourseJoin session/token | Android | 登录会话凭证 | 待 DeviceSession/Token 对象或认证服务合同 | token 永不落业务表/普通日志；阶段 8 冻结 | 待模型 |
 | `RecoveryRequest*` | Android/Web admin | 联系方式失效后的账户恢复申请 | 待 AccountRecoveryRequest 对象 | 保留申请/审核历史；不得转成 AuditLog 代替领域状态 | 待模型 |
 | `Exemption.*`、`ExemptionStatus/Type` | Android/Web teacher | 免测、校队/社团认证混合 | 待 ExemptionApplication/OrganizationCertification 对象 | 按用途拆分；proofFiles 迁 MediaEvidence；当前状态不丢失 | 待模型 |
@@ -828,7 +828,7 @@
 |---|---|---|---|---|---|
 | 内部 `id`/关系 ID | 只返回本人业务导航必需值 | 只返回授权教学班范围必需值 | 只返回组织范围必需值 | 可用 | opaque ID 不是秘密，但仍需最小化 |
 | `studentNumber/fullName` | 本人可读 | 本教学班可读 | 组织范围按权限可读 | 可用 | SENSITIVE；禁止普通日志全文输出 |
-| email/phone | 仅本人 masked；修改流程单独验证 | 默认不可读 | 恢复流程按权限 masked/受控读取 | 认证服务可用 | HIGHLY_SENSITIVE |
+| primaryEmail | 仅本人 masked；首次绑定验证新邮箱，换绑同时验证当前和新邮箱 | 默认不可读 | 恢复流程按权限 masked/受控读取 | 认证服务可用 | HIGHLY_SENSITIVE；手机号不进入公共投影 |
 | `passwordHash`、验证码 hash、refresh token | 永不返回 | 永不返回 | 永不返回 | 仅认证服务 | 认证秘密 |
 | `storageKey/thumbnailStorageKey` | 永不返回 | 永不返回 | 默认不返回 | 存储/媒体任务 | 防止绕过授权访问对象 |
 | 媒体访问 URL | 短期、按单对象授权生成 | 短期、按教学班/记录授权生成 | 仅必要调查范围 | 可生成 | URL 不落库，不长期缓存 |
@@ -852,7 +852,7 @@
 | ADR-023 媒体保留/TTL/扫描 | MediaEvidence 生命周期字段 | 定义状态和时间，不填保留默认值 | 是 |
 | ADR-025/086/087 Greenfield 物理基线 | 所有物理类型/索引/枚举 | PostgreSQL uuid + 应用层 UUIDv7；枚举统一为 varchar/text + 命名 CHECK | 否（Foundation 已获准） |
 | ADR-067 Course 目录治理 | `Course.status/createdBy/updatedBy`、`ClassSection.teacherId` | 已接受；CourseStatus=`ACTIVE/INACTIVE`，ADMIN 管目录，TEACHER 身份由 principal 派生 | 否（阶段 11 实施） |
-| ADR-028 学生无密码与联系方式可空 | User credential/contact 字段 | Student password/email/phone 允许 null；规范化非空联系方式组织内唯一 | 否（V1 已接受） |
+| ADR-028 / ADR-101 学生无密码与邮箱可空 | User credential/contact 字段 | Student password/email 允许 null；已验证邮箱唯一；历史手机号字段不可读写 | 否（V1 已接受） |
 | ADR-029 GPS | 位置字段 | 核心对象不新增坐标；旧 locationExpired 保留待模型 | 是（位置功能） |
 | ADR-030 capture source 白名单 | `businessPurpose/captureSource` | 定义字段，不替业务决定白名单 | 是（不同用途） |
 | ADR-032 数据保留 | `deletedAt`、媒体/名单/成绩保留 | 不写固定 TTL，不允许普通物理清理 | 是（清理） |
@@ -897,3 +897,16 @@
 - 修订字段至少包含 `totalValidCreditedSeconds`、`scoringSeconds`、`excessSeconds`、`qualificationStatus`、`calculatedScore`、`adjustedScore`、`finalScore`、`sourceFingerprint`、`calculationRevision`。
 - `sourceFingerprint` 为 64 位小写 SHA-256；客户端不得提交。`evidenceReference` 为内部 opaque reference，必须匹配 `^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$`，不得是 URL、storageKey、signed URL 或自由文本证据。
 - 学生投影不含 working revision、Contribution、Adjustment、审批人、内部理由、证据引用或内部备注；未发布时只返回安全进度，已发布时只返回 published revision 安全摘要。
+
+## 16. ADR-101 邮箱验证 Challenge 字段（2026-08-11）
+
+| 对象 | 关键字段 | 数据库存储 | 规则 | 公共投影 |
+|---|---|---|---|---|
+| `User` | `status` | `users.status` | 新学生可为 `PENDING_CONTACT_BINDING`；邮箱首次验证成功原子转为 `ACTIVE` | 返回状态，不返回手机号字段 |
+| `EmailVerificationChallenge` | `mode` | `email_verification_challenges.mode` | `FIRST_BIND` 或 `REBIND` | 申请响应只返回 mode、challengeId、expiresAt |
+| `EmailVerificationChallenge` | `targetEmailNormalized` | `target_email_normalized` | 小写规范化；仅投递与唯一性检查使用 | 永不返回明文 |
+| `EmailVerificationChallenge` | `currentEmailCodeDigest/newEmailCodeDigest` | SHA-256/HMAC 摘要列 | 首次绑定只需要新邮箱摘要；换绑两份摘要均必需 | 永不返回 |
+| `EmailVerificationChallenge` | `status` | `PENDING_DELIVERY/ACTIVE/FAILED/CONSUMED/EXPIRED/LOCKED` | 只允许一次成功消费；错误尝试有上限 | 不提供内部状态详情 |
+| `EmailVerificationChallenge` | `expectedUserVersion` | integer | 验证时必须仍匹配 User 版本，否则 `CONFLICT_VERSION_MISMATCH` | 请求事实，不进入 User 投影 |
+
+历史 `primary_phone`、`phone_verified_at` 和旧 `PHONE` challenge 保持原值且不执行 DROP/清空；Prisma 使用 `@ignore` 阻止应用读写，未来物理删除需单独破坏性迁移审批。

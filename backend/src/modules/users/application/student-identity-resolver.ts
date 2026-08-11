@@ -54,11 +54,9 @@ export class StudentIdentityResolver {
         id: userId,
         organizationId,
         role: 'STUDENT',
-        status: 'ACTIVE',
+        status: 'PENDING_CONTACT_BINDING',
         primaryEmail: null,
         primaryEmailNormalized: null,
-        primaryPhone: null,
-        primaryPhoneNormalized: null,
         passwordHash: null,
         createdAt: now,
         updatedAt: now,
@@ -90,7 +88,7 @@ export class StudentIdentityResolver {
       row.status !== 'ACTIVE' ||
       row.user.deletedAt !== null ||
       row.user.role !== 'STUDENT' ||
-      row.user.status !== 'ACTIVE' ||
+      !['PENDING_CONTACT_BINDING', 'ACTIVE'].includes(row.user.status) ||
       row.studentNumber.trim().toUpperCase() !== identity.studentNumber ||
       row.fullName.trim().normalize('NFC') !== identity.fullName ||
       row.gender !== identity.gender ||

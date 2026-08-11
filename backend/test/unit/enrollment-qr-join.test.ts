@@ -1,13 +1,16 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import { plainToInstance } from 'class-transformer';
+import { validateSync } from 'class-validator';
+
 import type { RuntimeConfig } from '../../src/common/config/environment.js';
 import { ApplicationError } from '../../src/common/errors/application-error.js';
 import { QrJoinCryptoService } from '../../src/common/security/qr-join-crypto.service.js';
-import { FixedClock } from '../../src/common/time/clock.js';
 import { CourseInviteEntity } from '../../src/modules/course-invites/domain/course-invite.js';
 import { EnrollmentEntity } from '../../src/modules/enrollments/domain/enrollment.js';
 import { JoinCapabilityEntity } from '../../src/modules/join-capabilities/domain/join-capability.js';
+import { IssueJoinCapabilityRequestDto } from '../../src/modules/join-capabilities/interface/http/join-capabilities.dto.js';
 import { StudentIdentityNormalizer } from '../../src/modules/users/application/student-identity-normalizer.js';
 
 const NOW = new Date('2026-08-03T12:00:00.000Z');
@@ -22,28 +25,80 @@ function qrCrypto(): QrJoinCryptoService {
 
 describe('Stage 12 student identity and QR security', () => {
   it('normalizes the student number without losing leading zeros and applies NFC', () => {
-    const normalizer = new StudentIdentityNormalizer(new FixedClock(NOW));
+    const normalizer = new StudentIdentityNormalizer();
     assert.deepEqual(
       normalizer.normalize({
         fullName: ' Jose\u0301 Synthetic ',
         studentNumber: ' 00ab-12 ',
         gender: 'OTHER',
-        gradeYear: 2027,
+        gradeYear: 9999,
       }),
       {
         fullName: 'José Synthetic',
         studentNumber: '00AB-12',
         gender: 'OTHER',
-        gradeYear: 2027,
+        gradeYear: 9999,
       },
     );
   });
 
-  it('rejects unsupported gender, future grade year, and malformed student number', () => {
-    const normalizer = new StudentIdentityNormalizer(new FixedClock(NOW));
+  it('narrows QR join gender while accepting the full four-digit cohort range', () => {
+    for (const [gender, gradeYear] of [
+      ['MALE', 1000],
+      ['FEMALE', 2028],
+      ['FEMALE', 9999],
+    ] as const) {
+      const dto = plainToInstance(IssueJoinCapabilityRequestDto, {
+        fullName: 'Synthetic',
+        studentNumber: '0001',
+        gender,
+        gradeYear,
+      });
+      assert.deepEqual(validateSync(dto), []);
+    }
+
+    for (const [gender, gradeYear] of [
+      ['OTHER', 2026],
+      ['UNKNOWN', 2026],
+      ['MALE', 999],
+      ['FEMALE', 10_000],
+      ['MALE', 2026.5],
+    ] as const) {
+      const dto = plainToInstance(IssueJoinCapabilityRequestDto, {
+        fullName: 'Synthetic',
+        studentNumber: '0001',
+        gender,
+        gradeYear,
+      });
+      assert.notEqual(validateSync(dto).length, 0);
+    }
+  });
+
+  it('accepts any four-digit cohort year and rejects malformed identity fields', () => {
+    const normalizer = new StudentIdentityNormalizer();
+    assert.equal(
+      normalizer.normalize({
+        fullName: 'Synthetic',
+        studentNumber: '0001',
+        gender: 'MALE',
+        gradeYear: 1000,
+      }).gradeYear,
+      1000,
+    );
+    assert.equal(
+      normalizer.normalize({
+        fullName: 'Synthetic',
+        studentNumber: '0001',
+        gender: 'FEMALE',
+        gradeYear: 2028,
+      }).gradeYear,
+      2028,
+    );
     for (const input of [
       { fullName: 'Synthetic', studentNumber: '0001', gender: 'UNKNOWN', gradeYear: 2026 },
-      { fullName: 'Synthetic', studentNumber: '0001', gender: 'MALE', gradeYear: 2028 },
+      { fullName: 'Synthetic', studentNumber: '0001', gender: 'MALE', gradeYear: 999 },
+      { fullName: 'Synthetic', studentNumber: '0001', gender: 'MALE', gradeYear: 10_000 },
+      { fullName: 'Synthetic', studentNumber: '0001', gender: 'MALE', gradeYear: 2026.5 },
       { fullName: 'Synthetic', studentNumber: '0001 bad', gender: 'MALE', gradeYear: 2026 },
     ]) {
       assert.throws(

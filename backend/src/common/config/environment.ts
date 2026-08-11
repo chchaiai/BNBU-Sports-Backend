@@ -29,6 +29,15 @@ export interface PushConfig {
   encryptionKeyVersion: number;
 }
 
+export interface EmailDeliveryConfig {
+  host: string;
+  port: number;
+  secure: boolean;
+  username: string | null;
+  password: string | null;
+  fromAddress: string;
+}
+
 export interface RuntimeConfig {
   appEnvironment: AppEnvironment;
   appVersion: string;
@@ -63,6 +72,7 @@ export interface RuntimeConfig {
   objectStorage: ObjectStorageConfig | null;
   media: MediaConfig | null;
   push: PushConfig | null;
+  emailDelivery: EmailDeliveryConfig | null;
 }
 
 function required(raw: Record<string, unknown>, name: string): string {
@@ -319,6 +329,53 @@ function pushConfiguration(raw: Record<string, unknown>): PushConfig | null {
   };
 }
 
+function emailDeliveryConfiguration(
+  raw: Record<string, unknown>,
+  appEnvironment: AppEnvironment,
+): EmailDeliveryConfig | null {
+  const coreNames = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_FROM_ADDRESS'] as const;
+  const requiredForEnvironment =
+    appEnvironment === 'staging' ||
+    appEnvironment === 'production' ||
+    optionalBoolean(raw, 'EMAIL_DELIVERY_REQUIRED', false);
+  const presentCount = coreNames.filter((name) => {
+    const value = raw[name];
+    return typeof value === 'string' && value.trim().length > 0;
+  }).length;
+  if (presentCount === 0 && !requiredForEnvironment) return null;
+  if (presentCount !== coreNames.length) {
+    throw new Error('SMTP email delivery configuration must be either complete or omitted');
+  }
+  const rawUsername = raw.SMTP_USERNAME;
+  const rawPassword = raw.SMTP_PASSWORD;
+  const username =
+    typeof rawUsername === 'string' && rawUsername.trim().length > 0
+      ? required(raw, 'SMTP_USERNAME')
+      : null;
+  const password =
+    typeof rawPassword === 'string' && rawPassword.trim().length > 0
+      ? required(raw, 'SMTP_PASSWORD')
+      : null;
+  if ((username === null) !== (password === null)) {
+    throw new Error('SMTP_USERNAME and SMTP_PASSWORD must be configured together');
+  }
+  if ((appEnvironment === 'staging' || appEnvironment === 'production') && username === null) {
+    throw new Error('SMTP credentials are required outside local and test environments');
+  }
+  const fromAddress = required(raw, 'SMTP_FROM_ADDRESS').toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fromAddress)) {
+    throw new Error('SMTP_FROM_ADDRESS must be a valid email address');
+  }
+  return {
+    host: required(raw, 'SMTP_HOST'),
+    port: integer(raw, 'SMTP_PORT', { minimum: 1, maximum: 65_535 }),
+    secure: optionalBoolean(raw, 'SMTP_SECURE', true),
+    username,
+    password,
+    fromAddress,
+  };
+}
+
 export function validateEnvironment(raw: Record<string, unknown>): Record<string, unknown> {
   const appEnvironment = required(raw, 'APP_ENV');
   if (!APP_ENVIRONMENTS.includes(appEnvironment as AppEnvironment)) {
@@ -427,6 +484,7 @@ export function validateEnvironment(raw: Record<string, unknown>): Record<string
     objectStorage: objectStorage(raw, appEnvironment as AppEnvironment),
     media: mediaConfiguration(raw, appEnvironment as AppEnvironment),
     push: pushConfiguration(raw),
+    emailDelivery: emailDeliveryConfiguration(raw, appEnvironment as AppEnvironment),
   };
 
   return { ...raw, RUNTIME_CONFIG: runtimeConfig };

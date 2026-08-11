@@ -286,7 +286,8 @@ AuditLog 精确记录：`id`、`organizationId`、`actorUserId`、`actorRoleSnap
 | `POST` | `/auth/refresh` | `refreshSession` | `AUTH-REFRESH` | `PUBLIC` | `-` | `NONE` | `SESSION` | `REFRESH_TOKEN` | `true` |
 | `POST` | `/auth/logout` | `logoutSession` | `AUTH-LOGOUT` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SESSION` | `AUTHENTICATED_SESSION` | `true` |
 | `GET` | `/me` | `getCurrentUser` | `USER-SELF-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_USER` | `true` |
-| `PATCH` | `/me` | `updateCurrentUserProfile` | `USER-SELF-UPDATE` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_USER` | `true` |
+| `POST` | `/me/email-verification-challenges` | `requestCurrentUserEmailChallenge` | `USER-EMAIL-VERIFY-REQUEST` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_USER` | `true` |
+| `POST` | `/me/email-verification-challenges/{challengeId}/verify` | `verifyCurrentUserEmailChallenge` | `USER-EMAIL-VERIFY-COMPLETE` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_USER` | `true` |
 | `GET` | `/students` | `listStudents` | `STUDENT-LIST` | `ACCESS_TOKEN` | `TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `STUDENT_LIST_SCOPE` | `true` |
 | `GET` | `/students/{studentId}` | `getStudent` | `STUDENT-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `STUDENT_FROM_PATH` | `true` |
 | `PATCH` | `/students/{studentId}` | `updateStudent` | `STUDENT-UPDATE` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `STUDENT_FROM_PATH` | `true` |

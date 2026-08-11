@@ -1,14 +1,14 @@
 # Stage 21 客户端能力本地集成报告
 
-日期：2026-08-06。
+日期：2026-08-11（邮箱唯一认证更新）。
 
 ## 结论
 
-ADR-097 与 ADR-098 将 Stage 21 新增 30 个 operation 中的 22 个从合同级 default deny 提升为 `Stage 21 Local Integration`。当前 OpenAPI 为 `1.3.0-contract`、122 operations、275 schemas；runtime coverage 为 104 `IMPLEMENTED_VERIFIED`、18 `IMPLEMENTED_DEFAULT_DENY`、0 `NOT_IMPLEMENTED`、0 `BLOCKED_BY_ADR`。当前工作树 OpenAPI SHA-256 为 `914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9`。
+ADR-097、ADR-098 与 ADR-101 将 Stage 21 客户端能力中的 24 个 operation 提升为 `Stage 21 Local Integration`。当前 OpenAPI 为 `1.4.0-contract`、123 operations；runtime coverage 为 106 `IMPLEMENTED_VERIFIED`、17 `IMPLEMENTED_DEFAULT_DENY`、0 `NOT_IMPLEMENTED`、0 `BLOCKED_BY_ADR`。当前工作树 OpenAPI SHA-256 为 `42965df623cab184522a573d2289538fd4a2b847e74d971b7fedd064c45c2273`。
 
 “本地集成”只证明当前工作树的真实 Controller → Service → Prisma/PostgreSQL 路径及其本地测试与 Docker Synthetic Staging 边界。它不证明 Staging HTTPS、iOS 二进制、APNs/FCM 或 Production Gate 已通过。
 
-## 22 个本地实现 operation
+## 24 个本地实现 operation
 
 | 能力 | operation | 本地闭合边界 | 明确未完成 |
 |---|---|---|---|
@@ -18,20 +18,21 @@ ADR-097 与 ADR-098 将 Stage 21 新增 30 个 operation 中的 22 个从合同�
 | 帮助中心 | `listHelpArticles`、`getHelpArticle` | 公开只读 `PUBLISHED` 且已到发布时间的安全 Markdown 投影 | 没有管理端发布/编辑 operation、内容签审或生产内容 |
 | 意见反馈 | `createFeedback`、`listFeedback`、`getFeedback` | 三角色可创建；`STUDENT/TEACHER` 只读本人，`ADMIN` 只读本组织；创建幂等并追加 event/审计/outbox | 没有处理、回复、关闭、SLA、附件或完整工单线程 |
 | App 版本政策 | `getAppReleasePolicy` | 公开按 `ANDROID/IOS/WEB` 读取当前生效、未过期的持久化政策；无政策返回稳定 503；下载地址只允许 HTTPS | 没有管理端发布 operation、签名、灰度、生产政策或跨平台版本比较规则 |
-| 学生 OTP 登录 | `requestStudentSignInCode`、`verifyStudentSignInCode` | 请求显式携带 `organizationCode`，202 响应返回 `challengeId`；验证成功建立既有 `AuthSession`、access token 与 refresh token；未知账号采用枚举安全响应，验证码只存摘要 | 非测试环境尚未配置获批的短信/邮件 provider，因此请求会稳定返回 503，不存在生产通用验证码 |
+| 学生邮箱 OTP 登录 | `requestStudentSignInCode`、`verifyStudentSignInCode` | 请求显式携带 `organizationCode`，`channel` 固定 `EMAIL`，202 响应返回 `challengeId`；验证成功建立既有 `AuthSession`、access token 与 refresh token；未知账号采用枚举安全响应，验证码只存摘要 | 已实现 SMTP 适配器；Staging/Production 未配置 SMTP 必须 fail fast，`PHONE` 稳定 422 且不创建 challenge |
+| 本人邮箱首次绑定/换绑 | `requestCurrentUserEmailChallenge`、`verifyCurrentUserEmailChallenge` | `PENDING_CONTACT_BINDING` 首次绑定只验证新邮箱；换绑分别验证当前和新邮箱；邮箱唯一、版本冲突、验证码过期/重放均由服务端裁决；成功后撤销其他设备会话 | 历史手机号列与历史 `PHONE` challenge 只读保留；本阶段不执行物理删除 |
 | 教师/管理员账号找回 | `requestAccountRecovery`、`completeAccountRecovery` | 仅允许 `TEACHER/ADMIN`；202 响应返回 `recoveryId`；完成后更新 Argon2 密码、提升 `tokenVersion` 并撤销旧会话与 refresh token | 学生不走密码找回；非测试环境的真实投递 provider 尚未配置 |
 | 免测申请 | `listExemptionApplications`、`createExemptionApplication`、`getExemptionApplication`、`updateExemptionApplication`、`submitExemptionApplication`、`reviewExemptionApplication` | 学生仅管理本人申请；责任教师审核本人班级；管理员仅本组织只读；状态迁移、expectedVersion、append-only event、审计/outbox 均在事务内；附件必须是同组织、同学生、同 enrollment 的私有 `EXEMPTION_APPLICATION` 媒体 | 尚无远程 Staging 对象存储与 iOS 真机上传闭环 |
 
 这些 mutation 复用既有 requestId、authentication、PolicyEngine、organization/self scope、SystemMode、Idempotency-Key、PostgreSQL transaction、domain history、AuditLog、Outbox 和稳定 ErrorCode；没有建立模块私有的第二套权限、幂等或错误 envelope。
 
-## 8 个仍 default deny 的 Stage 21 operation
+## 7 个仍 default deny 的 Stage 21 operation
 
 | 能力 | 数量 | 当前原因 |
 |---|---:|---|
 | 运动目录、活动折算 | 2 | 目录治理、公式字段与 ScoreRule/ClassSection 范围尚未批准，不建立第二套成绩事实 |
 | GPS/位置 | 6 | 生产政策参数、同意撤回、采样/精度、原始/粗化保留、删除、密钥与可见范围尚未批准 |
 
-上述 8 个 operation 保留真实路由、权限先行和稳定 `SYSTEM_MODE_UNSUPPORTED`，不会用通用 404 或空成功伪装实现。拒绝路径不产生业务状态迁移、成功 AuditLog 或业务 Outbox。
+上述 7 个 operation 保留真实路由、权限先行和稳定 `SYSTEM_MODE_UNSUPPORTED`，不会用通用 404 或空成功伪装实现。拒绝路径不产生业务状态迁移、成功 AuditLog 或业务 Outbox。
 
 ## 客户端迁移规则
 

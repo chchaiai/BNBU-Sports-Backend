@@ -10,9 +10,11 @@ import { REDACTED_VALUE, redactSensitive } from '../../src/common/logging/redact
 import { operationPolicies } from '../../src/generated/operation-policies.generated.js';
 import {
   AppendLocationSamplesRequestDto,
+  AccountRecoveryRequestDto,
   ClientPlatformQueryDto,
   FeedbackClientContextDto,
   PushDeviceRegistrationRequestDto,
+  StudentSignInCodeRequestDto,
 } from '../../src/modules/client-capabilities/client-capabilities.dto.js';
 
 describe('Stage 21 client capability security', () => {
@@ -82,6 +84,32 @@ describe('Stage 21 client capability security', () => {
     assert.equal(redacted.registrationTokenCiphertext, REDACTED_VALUE);
     assert.equal(redacted.samples, REDACTED_VALUE);
     assert.equal(redacted.safe, 'visible');
+  });
+
+  it('accepts only EMAIL for student sign-in and staff recovery requests', async () => {
+    const studentPhone = plainToInstance(StudentSignInCodeRequestDto, {
+      organizationCode: 'BNBU',
+      account: 'student@example.edu',
+      channel: 'PHONE',
+      locale: 'zh-CN',
+    });
+    const recoveryPhone = plainToInstance(AccountRecoveryRequestDto, {
+      organizationCode: 'BNBU',
+      account: 'teacher@example.edu',
+      requestedRole: 'TEACHER',
+      channel: 'PHONE',
+      locale: 'en',
+    });
+    assert.ok((await validate(studentPhone)).length > 0);
+    assert.ok((await validate(recoveryPhone)).length > 0);
+
+    const studentEmail = plainToInstance(StudentSignInCodeRequestDto, {
+      organizationCode: 'BNBU',
+      account: 'student@example.edu',
+      channel: 'EMAIL',
+      locale: 'zh-CN',
+    });
+    assert.deepEqual(await validate(studentEmail), []);
   });
 
   it('binds every GPS mutation to a student-owned existing ExerciseSession', () => {

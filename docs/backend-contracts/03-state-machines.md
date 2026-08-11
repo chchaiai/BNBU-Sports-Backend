@@ -808,3 +808,33 @@ flowchart LR
 - ScoreAdjustment：`PENDING_APPROVAL -> APPROVED|REJECTED`；只有 APPROVED 创建新 working revision。终态不可回退或覆盖。
 - 发布要求 ACTIVE 规则、当前指纹一致、无 PENDING Review、完整 Contribution、无待批 Adjustment 和匹配 `expectedVersion`。ClassSection 归档后相关发布修订锁定。
 - `openStudentScoreCorrection` 永久拒绝且无副作用；V1 不存在 correction-window 状态机。
+
+## 14. ADR-101 邮箱绑定状态机（2026-08-11）
+
+### 14.1 User 激活
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING_CONTACT_BINDING: 新学生加入
+    PENDING_CONTACT_BINDING --> ACTIVE: 首次邮箱验证成功
+    ACTIVE --> ACTIVE: 当前邮箱和新邮箱双验证码换绑成功
+    ACTIVE --> LOCKED: 安全锁定
+    ACTIVE --> DISABLED: 管理停用
+```
+
+- `PENDING_CONTACT_BINDING` 仅允许 `/me`、邮箱 challenge 请求/验证、refresh 和 logout；其他受保护业务稳定拒绝。
+- 首次绑定成功将 User 激活；换绑保持 `ACTIVE`，同时提升 `tokenVersion` 并撤销其他设备会话。
+
+### 14.2 EmailVerificationChallenge
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING_DELIVERY
+    PENDING_DELIVERY --> ACTIVE: 所需邮件全部投递成功
+    PENDING_DELIVERY --> FAILED: 投递失败且重试耗尽
+    ACTIVE --> CONSUMED: 所需验证码全部正确
+    ACTIVE --> LOCKED: 错误尝试达到上限
+    ACTIVE --> EXPIRED: 超过 expiresAt
+```
+
+验证码摘要按用途绑定，不可跨 challenge 或跨邮箱复用；`PHONE` 在创建 challenge 前即被拒绝。

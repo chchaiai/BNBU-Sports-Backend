@@ -183,7 +183,7 @@
 |---:|---|---|---|
 | 0 | Foundation Status | `/health/live`、`/health/ready`、`/system-mode`、`/organizations/current`、`/semesters/current` | 健康/系统模式公开安全投影；组织和当前学期使用 Access Token 与本人组织范围 |
 | 1 | Authentication | `/auth/password-login`、`/auth/refresh`、`/auth/logout` | 教师/管理员 seed 密码登录；短 Access + 可轮换 Refresh；TTL/密钥来自配置；学生密码登录不在本轮 |
-| 2 | Current User | `GET/PATCH /me` | 三角色本人；Profile 白名单更新 |
+| 2 | Current User | `GET /me`、`POST /me/email-verification-challenges`、`POST /me/email-verification-challenges/{challengeId}/verify` | 三角色读取本人；首次邮箱绑定验证新邮箱，邮箱换绑同时验证当前和新邮箱 |
 | 3 | Students | `GET /students`、`GET/PATCH /students/{studentId}` | 学生本人；教师本人班；管理员本组织治理 |
 | 4 | Teachers | `GET /teachers/{teacherId}`、`GET /teachers/{teacherId}/class-sections` | 教师本人或管理员组织范围；学生只经班级投影看公开名称 |
 | 5 | Courses | `GET/POST /courses`、`GET/PATCH /courses/{courseId}` | ADR-067 已接受：ADMIN 管本组织目录；TEACHER 只读 ACTIVE Course；STUDENT 读取依赖 ACTIVE Enrollment |
@@ -265,7 +265,7 @@
 
 | 现有接口 | 新接口 | 影响客户端 | 是否破坏兼容 | 兼容方式 | 迁移阶段 |
 |---|---|---|---|---|---|
-| `/auth/login`、`/auth/login/email`、`/v1/auth/login/phone` | `/api/v1/auth/password-login` 与后续获批验证码 transport | Android/Web | 是 | 旧 gateway adapter 转新认证服务；响应统一 envelope；统计各入口调用 | F1–F6 |
+| `/auth/login`、`/auth/login/email`、`/v1/auth/login/phone` | `/api/v1/auth/password-login`（教师/管理员邮箱）与 `/api/v1/auth/student-sign-in-codes`（学生邮箱 OTP） | Android/Web | 是 | Android 删除手机入口；旧 `PHONE` channel 稳定 422 且不创建 challenge；响应统一 envelope | F1–F6 |
 | `/sport/summary` | `/api/v1/student-scores?enrollmentId=...` | Android | 是 | 旧 summary 由 StudentScore/Enrollment projection 生成，不保存第二套汇总 | F1–F6 |
 | `/sport/identity` | `/api/v1/me` | Android | 是 | 旧字段 alias 只读；显式返回 User 与 StudentProfile 投影 | F1–F6 |
 | `GET/POST /sport/records` | `GET /api/v1/exercise-records` + draft/submit 动作 | Android | 是 | 旧 POST adapter 拆 draft/submit；小时严格转整数秒；新记录一律 PENDING Review | F1–F6 |

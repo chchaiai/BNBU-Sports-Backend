@@ -341,7 +341,6 @@ assert(
 );
 
 const defaultClosedOperations = new Map([
-  ['updateCurrentUserProfile', 'SYSTEM_MODE_UNSUPPORTED'],
   ['withdrawEnrollment', 'ENROLLMENT_WITHDRAWAL_DISABLED'],
   ['ignoreRosterAlignmentResult', 'ROSTER_IGNORE_NOT_ALLOWED'],
   ['withdrawExerciseRecord', 'EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED'],

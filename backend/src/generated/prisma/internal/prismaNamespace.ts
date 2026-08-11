@@ -443,6 +443,7 @@ export const ModelName = {
   ScoreRecalculationAttempt: 'ScoreRecalculationAttempt',
   StudentSignInChallenge: 'StudentSignInChallenge',
   AccountRecoveryChallenge: 'AccountRecoveryChallenge',
+  EmailVerificationChallenge: 'EmailVerificationChallenge',
   AuthRateLimitFact: 'AuthRateLimitFact',
   RateLimitWindow: 'RateLimitWindow',
   AppReleasePolicy: 'AppReleasePolicy',
@@ -486,7 +487,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "systemPolicy" | "user" | "studentProfile" | "teacherProfile" | "adminProfile" | "authSession" | "refreshToken" | "semester" | "course" | "classSection" | "classSectionExcludedDate" | "courseInvite" | "enrollment" | "enrollmentStatusEvent" | "exerciseSession" | "exerciseSessionSegment" | "exerciseSessionEvent" | "mediaEvidence" | "exerciseRecord" | "exerciseRecordMedia" | "exerciseRecordDailySlot" | "exerciseRecordEvent" | "reviewRecord" | "mediaUploadSession" | "mediaStatusEvent" | "mediaProcessingAttempt" | "joinCapability" | "officialRosterImport" | "officialRosterEntry" | "rosterAlignmentRun" | "rosterAlignmentPlatformEntry" | "rosterAlignmentResult" | "rosterResolutionEvent" | "idempotencyRecord" | "scoreRule" | "scoreRuleApprovalEvent" | "studentScore" | "studentScoreRevision" | "scoreContribution" | "scoreAdjustment" | "scoreAdjustmentApprovalEvent" | "scorePublicationEvent" | "scoreRecalculationAttempt" | "studentSignInChallenge" | "accountRecoveryChallenge" | "authRateLimitFact" | "rateLimitWindow" | "appReleasePolicy" | "notification" | "notificationEvent" | "pushDevice" | "pushDeviceEvent" | "userPreference" | "userPreferenceEvent" | "helpArticle" | "feedback" | "feedbackEvent" | "exemptionApplication" | "exemptionApplicationEvent" | "exemptionReviewRecord" | "exemptionApplicationMedia" | "sportCatalogItem" | "locationPrivacyPolicy" | "locationConsent" | "locationConsentEvent" | "locationTrack" | "locationTrackEvent" | "locationSample" | "locationSampleSecret" | "locationSummary" | "locationRetentionEvent" | "auditLog" | "outboxEvent"
+    modelProps: "organization" | "systemPolicy" | "user" | "studentProfile" | "teacherProfile" | "adminProfile" | "authSession" | "refreshToken" | "semester" | "course" | "classSection" | "classSectionExcludedDate" | "courseInvite" | "enrollment" | "enrollmentStatusEvent" | "exerciseSession" | "exerciseSessionSegment" | "exerciseSessionEvent" | "mediaEvidence" | "exerciseRecord" | "exerciseRecordMedia" | "exerciseRecordDailySlot" | "exerciseRecordEvent" | "reviewRecord" | "mediaUploadSession" | "mediaStatusEvent" | "mediaProcessingAttempt" | "joinCapability" | "officialRosterImport" | "officialRosterEntry" | "rosterAlignmentRun" | "rosterAlignmentPlatformEntry" | "rosterAlignmentResult" | "rosterResolutionEvent" | "idempotencyRecord" | "scoreRule" | "scoreRuleApprovalEvent" | "studentScore" | "studentScoreRevision" | "scoreContribution" | "scoreAdjustment" | "scoreAdjustmentApprovalEvent" | "scorePublicationEvent" | "scoreRecalculationAttempt" | "studentSignInChallenge" | "accountRecoveryChallenge" | "emailVerificationChallenge" | "authRateLimitFact" | "rateLimitWindow" | "appReleasePolicy" | "notification" | "notificationEvent" | "pushDevice" | "pushDeviceEvent" | "userPreference" | "userPreferenceEvent" | "helpArticle" | "feedback" | "feedbackEvent" | "exemptionApplication" | "exemptionApplicationEvent" | "exemptionReviewRecord" | "exemptionApplicationMedia" | "sportCatalogItem" | "locationPrivacyPolicy" | "locationConsent" | "locationConsentEvent" | "locationTrack" | "locationTrackEvent" | "locationSample" | "locationSampleSecret" | "locationSummary" | "locationRetentionEvent" | "auditLog" | "outboxEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3894,6 +3895,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmailVerificationChallenge: {
+      payload: Prisma.$EmailVerificationChallengePayload<ExtArgs>
+      fields: Prisma.EmailVerificationChallengeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmailVerificationChallengeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmailVerificationChallengeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        findFirst: {
+          args: Prisma.EmailVerificationChallengeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmailVerificationChallengeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        findMany: {
+          args: Prisma.EmailVerificationChallengeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>[]
+        }
+        create: {
+          args: Prisma.EmailVerificationChallengeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        createMany: {
+          args: Prisma.EmailVerificationChallengeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmailVerificationChallengeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>[]
+        }
+        delete: {
+          args: Prisma.EmailVerificationChallengeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        update: {
+          args: Prisma.EmailVerificationChallengeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        deleteMany: {
+          args: Prisma.EmailVerificationChallengeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmailVerificationChallengeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmailVerificationChallengeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>[]
+        }
+        upsert: {
+          args: Prisma.EmailVerificationChallengeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationChallengePayload>
+        }
+        aggregate: {
+          args: Prisma.EmailVerificationChallengeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmailVerificationChallenge>
+        }
+        groupBy: {
+          args: Prisma.EmailVerificationChallengeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailVerificationChallengeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmailVerificationChallengeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailVerificationChallengeCountAggregateOutputType> | number
+        }
+      }
+    }
     AuthRateLimitFact: {
       payload: Prisma.$AuthRateLimitFactPayload<ExtArgs>
       fields: Prisma.AuthRateLimitFactFieldRefs
@@ -6041,9 +6116,6 @@ export const UserScalarFieldEnum = {
   primaryEmail: 'primaryEmail',
   primaryEmailNormalized: 'primaryEmailNormalized',
   emailVerifiedAt: 'emailVerifiedAt',
-  primaryPhone: 'primaryPhone',
-  primaryPhoneNormalized: 'primaryPhoneNormalized',
-  phoneVerifiedAt: 'phoneVerifiedAt',
   passwordHash: 'passwordHash',
   tokenVersion: 'tokenVersion',
   lastAuthenticatedAt: 'lastAuthenticatedAt',
@@ -6953,6 +7025,32 @@ export const AccountRecoveryChallengeScalarFieldEnum = {
 export type AccountRecoveryChallengeScalarFieldEnum = (typeof AccountRecoveryChallengeScalarFieldEnum)[keyof typeof AccountRecoveryChallengeScalarFieldEnum]
 
 
+export const EmailVerificationChallengeScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  mode: 'mode',
+  locale: 'locale',
+  targetEmail: 'targetEmail',
+  targetEmailNormalized: 'targetEmailNormalized',
+  currentEmailCodeDigest: 'currentEmailCodeDigest',
+  newEmailCodeDigest: 'newEmailCodeDigest',
+  codeKeyVersion: 'codeKeyVersion',
+  status: 'status',
+  failedAttempts: 'failedAttempts',
+  maxAttempts: 'maxAttempts',
+  expectedUserVersion: 'expectedUserVersion',
+  requestedAt: 'requestedAt',
+  deliveredAt: 'deliveredAt',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  requestId: 'requestId',
+  version: 'version'
+} as const
+
+export type EmailVerificationChallengeScalarFieldEnum = (typeof EmailVerificationChallengeScalarFieldEnum)[keyof typeof EmailVerificationChallengeScalarFieldEnum]
+
+
 export const AuthRateLimitFactScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -7792,6 +7890,7 @@ export type GlobalOmitConfig = {
   scoreRecalculationAttempt?: Prisma.ScoreRecalculationAttemptOmit
   studentSignInChallenge?: Prisma.StudentSignInChallengeOmit
   accountRecoveryChallenge?: Prisma.AccountRecoveryChallengeOmit
+  emailVerificationChallenge?: Prisma.EmailVerificationChallengeOmit
   authRateLimitFact?: Prisma.AuthRateLimitFactOmit
   rateLimitWindow?: Prisma.RateLimitWindowOmit
   appReleasePolicy?: Prisma.AppReleasePolicyOmit

@@ -53,6 +53,7 @@ describe('Contract 1.3 parity regression gate', () => {
     });
     assert.equal(restored.status, 403);
     assert.equal(ERROR_CODE_LIFECYCLE.AUTH_ACCOUNT_DISABLED, 'runtime');
+    assert.equal(ERROR_CODE_LIFECYCLE.USER_STATUS_NOT_ACTIVE, 'runtime');
     assert.equal(ERROR_CODE_LIFECYCLE.AUDIT_RETENTION_POLICY_REQUIRED, 'reserved');
     assert.equal(Object.keys(ERROR_CODE_LIFECYCLE).length, 153);
   });

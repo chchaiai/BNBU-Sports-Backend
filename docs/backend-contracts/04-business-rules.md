@@ -8,12 +8,12 @@
 
 ## Stage 21 客户端能力与 GPS 规则
 
-1. Stage 21 共 30 个客户端支持 operation；其中 12 个仅在本地集成路径实现，18 个继续真实 default deny。`IMPLEMENTED_VERIFIED` 只说明本地代码/数据库路径已闭合，不表示 Staging、iOS 二进制或生产验收已完成。
-2. 本地实现范围固定为：通知列表/已读、推送设备注册/注销、本人偏好读写、帮助文章读取、反馈创建/列表/详情和 App 版本政策读取。mutation 必须复用 requestId、认证/范围、幂等、事务、历史事件、AuditLog 与 Outbox。
+1. Stage 21 当前共 31 个客户端支持 operation；其中 24 个进入本地集成路径，7 个继续真实 default deny。`IMPLEMENTED_VERIFIED` 只说明本地代码/数据库路径已闭合，不表示 Staging、iOS 二进制或生产验收已完成。
+2. 本地实现范围包含通知、推送设备、本人偏好、帮助、反馈、App 版本政策、邮箱 OTP/找回、本人邮箱绑定/换绑和免测申请。mutation 必须复用 requestId、认证/范围、幂等、事务、历史事件、AuditLog 与 Outbox。
 3. 通知读取严格限制为本人；当前没有业务通知生产者。设备注册只保存带用途绑定的加密 token，显式注销清除密文；当前没有 APNs/FCM provider、投递 worker、自动会话撤销 hook 或生产密钥轮换证据。
 4. 帮助只返回 `PUBLISHED` 且 `publishedAt <= serverNow` 的安全内容；反馈非管理员只读本人、管理员只读本组织；当前没有帮助发布、反馈处理/回复 operation。
 5. App 版本政策只读取当前生效且未过期的持久化政策；无政策稳定返回 `SYSTEM_MODE_UNSUPPORTED`。版本字符串保持 opaque，读取路径不得自行发明 iOS/Android 版本比较、签名、灰度或发布规则。
-6. 验证码/找回 4 与免测 6 个 operation 已按 ADR-098 进入本地真实实现；运动目录/折算 2 与 GPS 6 个 operation 继续 stable default deny。验证码的真实外部投递仍取决于显式 provider 配置。
+6. 邮箱验证码/找回 4、本人邮箱绑定/换绑 2 与免测 6 个 operation 已按 ADR-098/101 进入本地真实实现；运动目录/折算 2 与 GPS 6 个 operation 继续 stable default deny。SMTP 适配器已实现，但 Staging/Production 仍必须显式配置邮件服务，不能把本地 Mailpit 视为生产投递证据。
 7. 未来 GPS 写入只能使用学生本人既有 ExerciseSession；`clientObservedAt` 和坐标是设备观测，不能改变服务端权威时长、`businessDate`、Record 或 Score。
 8. GPS 原始经纬度只允许进入用途绑定的加密存储，不得进入公共 projection、日志、AuditLog、Outbox、通知或成绩事实；轨迹摘要必须按 ExerciseRecord 校验学生本人、责任教师或本组织管理员范围，并且只返回同一粗化投影。
 9. 只有本组织 ADMIN 具备未来位置政策 mutation 的角色资格；当前 6 个位置 HTTP route 均 default deny。管理员不能据此代行教师审核。
@@ -51,11 +51,14 @@
 | AUTH-001 | 建立认证主体 | 让后端获得不可伪造的用户、角色和组织范围 | 登录或验证码验证 | 凭证/验证码、设备摘要、requestId | User 存在；认证方式适用于该角色 |
 | AUTH-002 | 刷新与撤销会话 | 在不扩大权限的前提下延续或终止登录 | 刷新、退出、禁用账户、凭证变更 | refresh token/device session、requestId | 会话属于本人且未撤销 |
 | AUTH-003 | 写操作系统守卫 | 在只读或维护状态统一拒绝业务写 | 任一 mutation | 已认证主体、systemMode | 请求不是明确允许的健康检查/恢复操作 |
+| AUTH-004 | 邮箱验证码登录与找回 | 用邮箱作为唯一外部认证联系方式 | 学生登录；教师/管理员找回 | organizationCode、email、channel=EMAIL、验证码 | 邮箱已验证；角色与流程匹配 |
+| AUTH-005 | 本人邮箱首次绑定与换绑 | 激活新学生或安全更换登录邮箱 | 待绑定学生验证；已激活用户换绑 | 新邮箱、当前/新邮箱验证码、expectedVersion | 本人会话有效；目标邮箱未占用 |
 
 | 编号 | 后端校验与处理 | 输出结果与边界情况 | 错误码 | 影响成绩 | 审计 | 相关接口 | 相关状态转换 |
 |---|---|---|---|---|---|---|---|
 | AUTH-001 | 校验凭证、速率、账户状态；由服务端装载 role/organization claims；未知安全枚举 fail closed | 返回访问会话及最小本人投影；学生验证码完成后必须真正安装可用会话；Token 期限与多设备策略仍见 ADR-022 | `AUTH_CREDENTIAL_INVALID`、`AUTH_VERIFICATION_CODE_INVALID`、`AUTH_ACCOUNT_DISABLED`、`AUTH_RATE_LIMITED` | 否 | 是（成功/失败摘要） | Authentication、Current User | User `ACTIVE -> LOCKED/DISABLED` 仅由相应管理流程触发 |
-| AUTH-002 | 验证码/找回先用 `organizationCode` 确定组织，再按验证过的邮箱或手机号创建单次 challenge；响应只返回 challenge/recovery ID 与到期时间 | STUDENT 仅 OTP；密码找回仅 TEACHER/ADMIN。找回完成后增加 tokenVersion 并撤销旧会话/刷新令牌 | `AUTH_VERIFICATION_CODE_INVALID`、`AUTH_RATE_LIMITED`、`SYSTEM_SERVICE_UNAVAILABLE` | 否 | 是（不含账号、验证码、密码） | Authentication | `PENDING_DELIVERY -> ACTIVE -> CONSUMED/LOCKED/EXPIRED/DELIVERY_FAILED` |
+| AUTH-004 | 验证码/找回先用 `organizationCode` 确定组织，仅按已验证邮箱创建单次 challenge；`channel` 闭集固定为 `EMAIL`，`PHONE` 稳定拒绝且不创建挑战 | STUDENT 仅邮箱 OTP；密码找回仅 TEACHER/ADMIN。找回完成后增加 tokenVersion 并撤销旧会话/刷新令牌 | `AUTH_VERIFICATION_CODE_INVALID`、`AUTH_RATE_LIMITED`、`SYSTEM_SERVICE_UNAVAILABLE` | 否 | 是（不含账号、验证码、密码、邮箱明文） | Authentication | `PENDING_DELIVERY -> ACTIVE -> CONSUMED/LOCKED/EXPIRED/DELIVERY_FAILED` |
+| AUTH-005 | 新学生为 `PENDING_CONTACT_BINDING`；首次绑定验证新邮箱，换绑同时验证当前邮箱与新邮箱，成功后撤销其他设备会话 | 待绑定状态只允许 `/me`、邮箱验证、refresh、logout；成功验证后进入 `ACTIVE` | `AUTH_VERIFICATION_CODE_INVALID`、`CONFLICT_VERSION_MISMATCH`、`USER_STATUS_NOT_ACTIVE` | 是 | 是（仅安全状态与 challengeId） | Authentication | `PENDING_CONTACT_BINDING -> ACTIVE` |
 | AUTH-002 | 校验 token family、设备会话和账户版本；刷新时轮换；退出/禁用时撤销 | 重放旧 refresh token 必须拒绝；具体 Access/Refresh 时长待定，但“可撤销”不可省略 | `AUTH_TOKEN_INVALID`、`AUTH_TOKEN_EXPIRED`、`AUTH_SESSION_REVOKED` | 否 | 是 | Authentication | 无核心领域对象转换；更新认证会话撤销事实 |
 | AUTH-003 | 从服务端配置读取模式；`READ_ONLY` 拒绝业务写，`MAINTENANCE` 仅允许白名单运维/认证能力 | 前端即使漏隐藏按钮，后端仍拒绝；未知模式按最严格状态处理 | `SYSTEM_READ_ONLY`、`SYSTEM_MAINTENANCE`、`SYSTEM_MODE_UNSUPPORTED` | 间接 | 是（拒绝可采样） | 所有 mutation | 无业务对象转换 |
 
@@ -81,13 +84,13 @@
 
 | 编号 | 名称 | 业务目的 | 触发条件 | 输入数据 | 前置条件 |
 |---|---|---|---|---|---|
-| ENROLL-001 | 扫码直接入班 | 完成必要身份校验后直接建立课程关系，不恢复教师审批 | 学生确认二维码预览并提交资料 | invite token、姓名、studentNumber、gender、grade、idempotencyKey | 学生已认证或完成允许的验证流程；教学班可加入 |
+| ENROLL-001 | 扫码直接入班 | 完成必要身份校验后直接建立课程关系，不恢复教师审批 | 学生确认二维码预览并提交资料 | invite token、姓名、studentNumber、`MALE/FEMALE`、四位 gradeYear、idempotencyKey | 学生已认证或完成允许的验证流程；教学班可加入 |
 | ENROLL-002 | 防重与幂等 | 保证同一学生对同一教学班只有一条可追溯关系 | 新增、恢复或重复加入 | studentId、classSectionId、source | 相关对象同组织 |
 | ENROLL-003 | 退出、移除与恢复 | 保留历史同时控制后续业务权限 | 学生退出、教师移除/恢复 | enrollmentId、reason、expectedVersion | 操作者有资源权限；Enrollment 存在 |
 
 | 编号 | 后端校验与处理 | 输出结果与边界情况 | 错误码 | 影响成绩 | 审计 | 相关接口 | 相关状态转换 |
 |---|---|---|---|---|---|---|---|
-| ENROLL-001 | 验证 invite 与教学班；规范化但不混淆内部 ID/学号；校验姓名、学号、性别、年级和学期冲突；事务内创建 `ACTIVE` Enrollment 并记录 `QR/INVITE` 来源 | 不进入 `PENDING_APPROVAL`；名单不一致另建 alignment exception；重试返回原 Enrollment | `USER_PROFILE_INVALID`、`ENROLLMENT_ALREADY_ACTIVE`、`ENROLLMENT_SEMESTER_CONFLICT` | 间接 | 是 | QR Course Joining、Enrollments | 新建 `ACTIVE` |
+| ENROLL-001 | 验证 invite 与教学班；规范化但不混淆内部 ID/学号；扫码性别只接受 `MALE/FEMALE`；gradeYear 只按静态四位年份 `1000..9999` 校验，不使用当前时间上限；校验学期冲突；事务内创建 `ACTIVE` Enrollment 并记录 `QR/INVITE` 来源 | 不进入 `PENDING_APPROVAL`；全局 Gender 的 `OTHER` 仅保留给历史资料、官方名单及其他既有投影；名单不一致另建 alignment exception；重试返回原 Enrollment | `USER_PROFILE_INVALID`、`ENROLLMENT_ALREADY_ACTIVE`、`ENROLLMENT_SEMESTER_CONFLICT` | 间接 | 是 | QR Course Joining、Enrollments | 新建 `ACTIVE` |
 | ENROLL-002 | 数据库唯一约束 + 幂等记录共同防重；已有 ACTIVE 直接返回；已有终态不得静默新建第二条 | 同一 idempotencyKey 不重复；学号相同不代表内部身份相同，身份冲突进入人工处理 | `ENROLLMENT_ALREADY_ACTIVE`、`USER_IDENTITY_CONFLICT`、`CONFLICT_IDEMPOTENCY_KEY_REUSED` | 间接 | 是 | Enrollments | 不产生重复转换 |
 | ENROLL-003 | 校验本人或 `classSection.teacherId`、当前状态和未决退出条件；状态化而非物理删除；恢复前重新做冲突校验 | 学生自助退出/重入受 ADR-054 阻塞；历史 record 保持只读；教师恢复保留同一 enrollmentId | `ENROLLMENT_TRANSITION_NOT_ALLOWED`、`PERMISSION_RESOURCE_SCOPE_DENIED` | 间接 | 是 | Enrollments actions | `ACTIVE -> WITHDRAWN/REMOVED`；`WITHDRAWN/REMOVED -> ACTIVE` |
 

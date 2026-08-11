@@ -17,6 +17,13 @@ import {
 } from '../../generated/operation-policies.generated.js';
 import { TokenService } from './token.service.js';
 
+const PENDING_CONTACT_ALLOWED_OPERATIONS = new Set<OperationId>([
+  'getCurrentUser',
+  'requestCurrentUserEmailChallenge',
+  'verifyCurrentUserEmailChallenge',
+  'logoutSession',
+]);
+
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
@@ -120,7 +127,16 @@ export class AccessTokenGuard implements CanActivate {
     if (session.user.status === 'LOCKED') {
       throw new ApplicationError('AUTH_CREDENTIAL_INVALID', 401);
     }
-    if (session.user.status !== 'ACTIVE') {
+    if (
+      session.user.status === 'PENDING_CONTACT_BINDING' &&
+      !PENDING_CONTACT_ALLOWED_OPERATIONS.has(operationId)
+    ) {
+      throw new ApplicationError('USER_STATUS_NOT_ACTIVE', 409, {
+        currentState: session.user.status,
+        requiredStatus: 'ACTIVE',
+      });
+    }
+    if (!['PENDING_CONTACT_BINDING', 'ACTIVE'].includes(session.user.status)) {
       throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500, {
         invariant: 'USER_STATUS_UNSUPPORTED',
       });

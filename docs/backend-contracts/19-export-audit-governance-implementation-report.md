@@ -14,7 +14,7 @@ Export 的持久化、快照、worker、artifact 格式/保留期和下载授权
 
 | operationId | Stage 19 disposition | 结果 |
 | --- | --- | --- |
-| `updateCurrentUserProfile` | IMPLEMENT_DEFAULT_DENY | `SYSTEM_MODE_UNSUPPORTED`，零 User/Profile/Audit/Outbox 成功副作用 |
+| `requestCurrentUserEmailChallenge` / `verifyCurrentUserEmailChallenge` | IMPLEMENT_VERIFIED（ADR-101 后续替换） | 邮箱唯一认证；首次绑定/双邮箱换绑；验证码、邮箱明文不进入 AuditLog/Outbox |
 | `listStudents` | IMPLEMENT_VERIFIED | ADMIN 本组织；TEACHER 仅本人 ACTIVE ClassSection；稳定分页与过滤 |
 | `getStudent` | IMPLEMENT_VERIFIED | STUDENT 本人、责任 TEACHER、同组织 ADMIN；越权安全 404 |
 | `updateStudent` | IMPLEMENT_DEFAULT_DENY | ADR-096 仍为 PROPOSED；`SYSTEM_MODE_UNSUPPORTED`，零副作用 |

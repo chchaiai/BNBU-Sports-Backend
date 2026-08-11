@@ -44,9 +44,6 @@ export type UserMinAggregateOutputType = {
   primaryEmail: string | null
   primaryEmailNormalized: string | null
   emailVerifiedAt: Date | null
-  primaryPhone: string | null
-  primaryPhoneNormalized: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   tokenVersion: number | null
   lastAuthenticatedAt: Date | null
@@ -64,9 +61,6 @@ export type UserMaxAggregateOutputType = {
   primaryEmail: string | null
   primaryEmailNormalized: string | null
   emailVerifiedAt: Date | null
-  primaryPhone: string | null
-  primaryPhoneNormalized: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   tokenVersion: number | null
   lastAuthenticatedAt: Date | null
@@ -84,9 +78,6 @@ export type UserCountAggregateOutputType = {
   primaryEmail: number
   primaryEmailNormalized: number
   emailVerifiedAt: number
-  primaryPhone: number
-  primaryPhoneNormalized: number
-  phoneVerifiedAt: number
   passwordHash: number
   tokenVersion: number
   lastAuthenticatedAt: number
@@ -116,9 +107,6 @@ export type UserMinAggregateInputType = {
   primaryEmail?: true
   primaryEmailNormalized?: true
   emailVerifiedAt?: true
-  primaryPhone?: true
-  primaryPhoneNormalized?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   tokenVersion?: true
   lastAuthenticatedAt?: true
@@ -136,9 +124,6 @@ export type UserMaxAggregateInputType = {
   primaryEmail?: true
   primaryEmailNormalized?: true
   emailVerifiedAt?: true
-  primaryPhone?: true
-  primaryPhoneNormalized?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   tokenVersion?: true
   lastAuthenticatedAt?: true
@@ -156,9 +141,6 @@ export type UserCountAggregateInputType = {
   primaryEmail?: true
   primaryEmailNormalized?: true
   emailVerifiedAt?: true
-  primaryPhone?: true
-  primaryPhoneNormalized?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   tokenVersion?: true
   lastAuthenticatedAt?: true
@@ -263,9 +245,6 @@ export type UserGroupByOutputType = {
   primaryEmail: string | null
   primaryEmailNormalized: string | null
   emailVerifiedAt: Date | null
-  primaryPhone: string | null
-  primaryPhoneNormalized: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   tokenVersion: number
   lastAuthenticatedAt: Date | null
@@ -306,9 +285,6 @@ export type UserWhereInput = {
   primaryEmail?: Prisma.StringNullableFilter<"User"> | string | null
   primaryEmailNormalized?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  primaryPhone?: Prisma.StringNullableFilter<"User"> | string | null
-  primaryPhoneNormalized?: Prisma.StringNullableFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
   lastAuthenticatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -352,6 +328,7 @@ export type UserWhereInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventListRelationFilter
   studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   notificationEvents?: Prisma.NotificationEventListRelationFilter
   pushDevices?: Prisma.PushDeviceListRelationFilter
@@ -374,9 +351,6 @@ export type UserOrderByWithRelationInput = {
   primaryEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryEmailNormalized?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  primaryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
-  primaryPhoneNormalized?: Prisma.SortOrderInput | Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   lastAuthenticatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -420,6 +394,7 @@ export type UserOrderByWithRelationInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventOrderByRelationAggregateInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeOrderByRelationAggregateInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeOrderByRelationAggregateInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   notificationEvents?: Prisma.NotificationEventOrderByRelationAggregateInput
   pushDevices?: Prisma.PushDeviceOrderByRelationAggregateInput
@@ -438,7 +413,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   id_organizationId?: Prisma.UserIdOrganizationIdCompoundUniqueInput
   organizationId_primaryEmailNormalized?: Prisma.UserOrganizationIdPrimaryEmailNormalizedCompoundUniqueInput
-  organizationId_primaryPhoneNormalized?: Prisma.UserOrganizationIdPrimaryPhoneNormalizedCompoundUniqueInput
+  organizationId_retiredPrimaryPhoneNormalized?: Prisma.UserOrganizationIdRetiredPrimaryPhoneNormalizedCompoundUniqueInput
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -448,9 +423,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   primaryEmail?: Prisma.StringNullableFilter<"User"> | string | null
   primaryEmailNormalized?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  primaryPhone?: Prisma.StringNullableFilter<"User"> | string | null
-  primaryPhoneNormalized?: Prisma.StringNullableFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
   lastAuthenticatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -494,6 +466,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   scorePublicationEvents?: Prisma.ScorePublicationEventListRelationFilter
   studentSignInChallenges?: Prisma.StudentSignInChallengeListRelationFilter
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeListRelationFilter
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   notificationEvents?: Prisma.NotificationEventListRelationFilter
   pushDevices?: Prisma.PushDeviceListRelationFilter
@@ -506,7 +479,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   locationPoliciesCreated?: Prisma.LocationPrivacyPolicyListRelationFilter
   locationConsentEvents?: Prisma.LocationConsentEventListRelationFilter
   locationTrackEvents?: Prisma.LocationTrackEventListRelationFilter
-}, "id" | "id_organizationId" | "organizationId_primaryEmailNormalized" | "organizationId_primaryPhoneNormalized">
+}, "id" | "id_organizationId" | "organizationId_primaryEmailNormalized" | "organizationId_retiredPrimaryPhoneNormalized">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -516,9 +489,6 @@ export type UserOrderByWithAggregationInput = {
   primaryEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryEmailNormalized?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  primaryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
-  primaryPhoneNormalized?: Prisma.SortOrderInput | Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   lastAuthenticatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -544,9 +514,6 @@ export type UserScalarWhereWithAggregatesInput = {
   primaryEmail?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   primaryEmailNormalized?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  primaryPhone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  primaryPhoneNormalized?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   tokenVersion?: Prisma.IntWithAggregatesFilter<"User"> | number
   lastAuthenticatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -563,9 +530,6 @@ export type UserCreateInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -609,6 +573,7 @@ export type UserCreateInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -631,9 +596,6 @@ export type UserUncheckedCreateInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -676,6 +638,7 @@ export type UserUncheckedCreateInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -697,9 +660,6 @@ export type UserUpdateInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -743,6 +703,7 @@ export type UserUpdateInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -765,9 +726,6 @@ export type UserUncheckedUpdateInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -810,6 +768,7 @@ export type UserUncheckedUpdateInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -832,9 +791,6 @@ export type UserCreateManyInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -851,9 +807,6 @@ export type UserUpdateManyMutationInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -871,9 +824,6 @@ export type UserUncheckedUpdateManyInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -908,9 +858,9 @@ export type UserOrganizationIdPrimaryEmailNormalizedCompoundUniqueInput = {
   primaryEmailNormalized: string
 }
 
-export type UserOrganizationIdPrimaryPhoneNormalizedCompoundUniqueInput = {
+export type UserOrganizationIdRetiredPrimaryPhoneNormalizedCompoundUniqueInput = {
   organizationId: string
-  primaryPhoneNormalized: string
+  retiredPrimaryPhoneNormalized: string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -921,9 +871,6 @@ export type UserCountOrderByAggregateInput = {
   primaryEmail?: Prisma.SortOrder
   primaryEmailNormalized?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
-  primaryPhone?: Prisma.SortOrder
-  primaryPhoneNormalized?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   lastAuthenticatedAt?: Prisma.SortOrder
@@ -946,9 +893,6 @@ export type UserMaxOrderByAggregateInput = {
   primaryEmail?: Prisma.SortOrder
   primaryEmailNormalized?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
-  primaryPhone?: Prisma.SortOrder
-  primaryPhoneNormalized?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   lastAuthenticatedAt?: Prisma.SortOrder
@@ -966,9 +910,6 @@ export type UserMinOrderByAggregateInput = {
   primaryEmail?: Prisma.SortOrder
   primaryEmailNormalized?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
-  primaryPhone?: Prisma.SortOrder
-  primaryPhoneNormalized?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   lastAuthenticatedAt?: Prisma.SortOrder
@@ -1532,6 +1473,20 @@ export type UserUpdateOneWithoutAccountRecoveryChallengesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountRecoveryChallengesInput, Prisma.UserUpdateWithoutAccountRecoveryChallengesInput>, Prisma.UserUncheckedUpdateWithoutAccountRecoveryChallengesInput>
 }
 
+export type UserCreateNestedOneWithoutEmailVerificationChallengesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedCreateWithoutEmailVerificationChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailVerificationChallengesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEmailVerificationChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedCreateWithoutEmailVerificationChallengesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailVerificationChallengesInput
+  upsert?: Prisma.UserUpsertWithoutEmailVerificationChallengesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmailVerificationChallengesInput, Prisma.UserUpdateWithoutEmailVerificationChallengesInput>, Prisma.UserUncheckedUpdateWithoutEmailVerificationChallengesInput>
+}
+
 export type UserCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
@@ -1723,9 +1678,6 @@ export type UserCreateWithoutOrganizationInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -1768,6 +1720,7 @@ export type UserCreateWithoutOrganizationInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -1789,9 +1742,6 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -1834,6 +1784,7 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -1885,9 +1836,6 @@ export type UserScalarWhereInput = {
   primaryEmail?: Prisma.StringNullableFilter<"User"> | string | null
   primaryEmailNormalized?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  primaryPhone?: Prisma.StringNullableFilter<"User"> | string | null
-  primaryPhoneNormalized?: Prisma.StringNullableFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   tokenVersion?: Prisma.IntFilter<"User"> | number
   lastAuthenticatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -1904,9 +1852,6 @@ export type UserCreateWithoutSystemPolicyChangesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -1949,6 +1894,7 @@ export type UserCreateWithoutSystemPolicyChangesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -1971,9 +1917,6 @@ export type UserUncheckedCreateWithoutSystemPolicyChangesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2015,6 +1958,7 @@ export type UserUncheckedCreateWithoutSystemPolicyChangesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -2052,9 +1996,6 @@ export type UserUpdateWithoutSystemPolicyChangesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2097,6 +2038,7 @@ export type UserUpdateWithoutSystemPolicyChangesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -2119,9 +2061,6 @@ export type UserUncheckedUpdateWithoutSystemPolicyChangesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2163,6 +2102,7 @@ export type UserUncheckedUpdateWithoutSystemPolicyChangesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -2184,9 +2124,6 @@ export type UserCreateWithoutStudentProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2229,6 +2166,7 @@ export type UserCreateWithoutStudentProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -2251,9 +2189,6 @@ export type UserUncheckedCreateWithoutStudentProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2295,6 +2230,7 @@ export type UserUncheckedCreateWithoutStudentProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -2332,9 +2268,6 @@ export type UserUpdateWithoutStudentProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2377,6 +2310,7 @@ export type UserUpdateWithoutStudentProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -2399,9 +2333,6 @@ export type UserUncheckedUpdateWithoutStudentProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2443,6 +2374,7 @@ export type UserUncheckedUpdateWithoutStudentProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -2464,9 +2396,6 @@ export type UserCreateWithoutTeacherProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2509,6 +2438,7 @@ export type UserCreateWithoutTeacherProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -2531,9 +2461,6 @@ export type UserUncheckedCreateWithoutTeacherProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2575,6 +2502,7 @@ export type UserUncheckedCreateWithoutTeacherProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -2612,9 +2540,6 @@ export type UserUpdateWithoutTeacherProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2657,6 +2582,7 @@ export type UserUpdateWithoutTeacherProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -2679,9 +2605,6 @@ export type UserUncheckedUpdateWithoutTeacherProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2723,6 +2646,7 @@ export type UserUncheckedUpdateWithoutTeacherProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -2744,9 +2668,6 @@ export type UserCreateWithoutAdminProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2789,6 +2710,7 @@ export type UserCreateWithoutAdminProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -2811,9 +2733,6 @@ export type UserUncheckedCreateWithoutAdminProfileInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -2855,6 +2774,7 @@ export type UserUncheckedCreateWithoutAdminProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -2892,9 +2812,6 @@ export type UserUpdateWithoutAdminProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2937,6 +2854,7 @@ export type UserUpdateWithoutAdminProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -2959,9 +2877,6 @@ export type UserUncheckedUpdateWithoutAdminProfileInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3003,6 +2918,7 @@ export type UserUncheckedUpdateWithoutAdminProfileInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -3024,9 +2940,6 @@ export type UserCreateWithoutAuthSessionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3069,6 +2982,7 @@ export type UserCreateWithoutAuthSessionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -3091,9 +3005,6 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3135,6 +3046,7 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -3172,9 +3084,6 @@ export type UserUpdateWithoutAuthSessionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3217,6 +3126,7 @@ export type UserUpdateWithoutAuthSessionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -3239,9 +3149,6 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3283,6 +3190,7 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -3304,9 +3212,6 @@ export type UserCreateWithoutCreatedSemestersInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3349,6 +3254,7 @@ export type UserCreateWithoutCreatedSemestersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -3371,9 +3277,6 @@ export type UserUncheckedCreateWithoutCreatedSemestersInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3415,6 +3318,7 @@ export type UserUncheckedCreateWithoutCreatedSemestersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -3452,9 +3356,6 @@ export type UserUpdateWithoutCreatedSemestersInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3497,6 +3398,7 @@ export type UserUpdateWithoutCreatedSemestersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -3519,9 +3421,6 @@ export type UserUncheckedUpdateWithoutCreatedSemestersInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3563,6 +3462,7 @@ export type UserUncheckedUpdateWithoutCreatedSemestersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -3584,9 +3484,6 @@ export type UserCreateWithoutCreatedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3629,6 +3526,7 @@ export type UserCreateWithoutCreatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -3651,9 +3549,6 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3695,6 +3590,7 @@ export type UserUncheckedCreateWithoutCreatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -3721,9 +3617,6 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3766,6 +3659,7 @@ export type UserCreateWithoutUpdatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -3788,9 +3682,6 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3832,6 +3723,7 @@ export type UserUncheckedCreateWithoutUpdatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -3858,9 +3750,6 @@ export type UserCreateWithoutDeletedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3903,6 +3792,7 @@ export type UserCreateWithoutDeletedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -3925,9 +3815,6 @@ export type UserUncheckedCreateWithoutDeletedCoursesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -3969,6 +3856,7 @@ export type UserUncheckedCreateWithoutDeletedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -4006,9 +3894,6 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4051,6 +3936,7 @@ export type UserUpdateWithoutCreatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -4073,9 +3959,6 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4117,6 +4000,7 @@ export type UserUncheckedUpdateWithoutCreatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -4149,9 +4033,6 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4194,6 +4075,7 @@ export type UserUpdateWithoutUpdatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -4216,9 +4098,6 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4260,6 +4139,7 @@ export type UserUncheckedUpdateWithoutUpdatedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -4292,9 +4172,6 @@ export type UserUpdateWithoutDeletedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4337,6 +4214,7 @@ export type UserUpdateWithoutDeletedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -4359,9 +4237,6 @@ export type UserUncheckedUpdateWithoutDeletedCoursesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4403,6 +4278,7 @@ export type UserUncheckedUpdateWithoutDeletedCoursesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -4424,9 +4300,6 @@ export type UserCreateWithoutCreatedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4469,6 +4342,7 @@ export type UserCreateWithoutCreatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -4491,9 +4365,6 @@ export type UserUncheckedCreateWithoutCreatedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4535,6 +4406,7 @@ export type UserUncheckedCreateWithoutCreatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -4561,9 +4433,6 @@ export type UserCreateWithoutUpdatedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4606,6 +4475,7 @@ export type UserCreateWithoutUpdatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -4628,9 +4498,6 @@ export type UserUncheckedCreateWithoutUpdatedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4672,6 +4539,7 @@ export type UserUncheckedCreateWithoutUpdatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -4698,9 +4566,6 @@ export type UserCreateWithoutClosedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4743,6 +4608,7 @@ export type UserCreateWithoutClosedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -4765,9 +4631,6 @@ export type UserUncheckedCreateWithoutClosedClassSectionsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -4809,6 +4672,7 @@ export type UserUncheckedCreateWithoutClosedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -4846,9 +4710,6 @@ export type UserUpdateWithoutCreatedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4891,6 +4752,7 @@ export type UserUpdateWithoutCreatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -4913,9 +4775,6 @@ export type UserUncheckedUpdateWithoutCreatedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4957,6 +4816,7 @@ export type UserUncheckedUpdateWithoutCreatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -4989,9 +4849,6 @@ export type UserUpdateWithoutUpdatedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5034,6 +4891,7 @@ export type UserUpdateWithoutUpdatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -5056,9 +4914,6 @@ export type UserUncheckedUpdateWithoutUpdatedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5100,6 +4955,7 @@ export type UserUncheckedUpdateWithoutUpdatedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -5132,9 +4988,6 @@ export type UserUpdateWithoutClosedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5177,6 +5030,7 @@ export type UserUpdateWithoutClosedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -5199,9 +5053,6 @@ export type UserUncheckedUpdateWithoutClosedClassSectionsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5243,6 +5094,7 @@ export type UserUncheckedUpdateWithoutClosedClassSectionsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -5264,9 +5116,6 @@ export type UserCreateWithoutCreatedExcludedDatesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5309,6 +5158,7 @@ export type UserCreateWithoutCreatedExcludedDatesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -5331,9 +5181,6 @@ export type UserUncheckedCreateWithoutCreatedExcludedDatesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5375,6 +5222,7 @@ export type UserUncheckedCreateWithoutCreatedExcludedDatesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -5412,9 +5260,6 @@ export type UserUpdateWithoutCreatedExcludedDatesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5457,6 +5302,7 @@ export type UserUpdateWithoutCreatedExcludedDatesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -5479,9 +5325,6 @@ export type UserUncheckedUpdateWithoutCreatedExcludedDatesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5523,6 +5366,7 @@ export type UserUncheckedUpdateWithoutCreatedExcludedDatesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -5544,9 +5388,6 @@ export type UserCreateWithoutCreatedCourseInvitesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5589,6 +5430,7 @@ export type UserCreateWithoutCreatedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -5611,9 +5453,6 @@ export type UserUncheckedCreateWithoutCreatedCourseInvitesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5655,6 +5494,7 @@ export type UserUncheckedCreateWithoutCreatedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -5681,9 +5521,6 @@ export type UserCreateWithoutRevokedCourseInvitesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5726,6 +5563,7 @@ export type UserCreateWithoutRevokedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -5748,9 +5586,6 @@ export type UserUncheckedCreateWithoutRevokedCourseInvitesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -5792,6 +5627,7 @@ export type UserUncheckedCreateWithoutRevokedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -5829,9 +5665,6 @@ export type UserUpdateWithoutCreatedCourseInvitesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5874,6 +5707,7 @@ export type UserUpdateWithoutCreatedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -5896,9 +5730,6 @@ export type UserUncheckedUpdateWithoutCreatedCourseInvitesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5940,6 +5771,7 @@ export type UserUncheckedUpdateWithoutCreatedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -5972,9 +5804,6 @@ export type UserUpdateWithoutRevokedCourseInvitesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6017,6 +5846,7 @@ export type UserUpdateWithoutRevokedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -6039,9 +5869,6 @@ export type UserUncheckedUpdateWithoutRevokedCourseInvitesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6083,6 +5910,7 @@ export type UserUncheckedUpdateWithoutRevokedCourseInvitesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -6104,9 +5932,6 @@ export type UserCreateWithoutCreatedEnrollmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6149,6 +5974,7 @@ export type UserCreateWithoutCreatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -6171,9 +5997,6 @@ export type UserUncheckedCreateWithoutCreatedEnrollmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6215,6 +6038,7 @@ export type UserUncheckedCreateWithoutCreatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -6241,9 +6065,6 @@ export type UserCreateWithoutUpdatedEnrollmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6286,6 +6107,7 @@ export type UserCreateWithoutUpdatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -6308,9 +6130,6 @@ export type UserUncheckedCreateWithoutUpdatedEnrollmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6352,6 +6171,7 @@ export type UserUncheckedCreateWithoutUpdatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -6389,9 +6209,6 @@ export type UserUpdateWithoutCreatedEnrollmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6434,6 +6251,7 @@ export type UserUpdateWithoutCreatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -6456,9 +6274,6 @@ export type UserUncheckedUpdateWithoutCreatedEnrollmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6500,6 +6315,7 @@ export type UserUncheckedUpdateWithoutCreatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -6532,9 +6348,6 @@ export type UserUpdateWithoutUpdatedEnrollmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6577,6 +6390,7 @@ export type UserUpdateWithoutUpdatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -6599,9 +6413,6 @@ export type UserUncheckedUpdateWithoutUpdatedEnrollmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6643,6 +6454,7 @@ export type UserUncheckedUpdateWithoutUpdatedEnrollmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -6664,9 +6476,6 @@ export type UserCreateWithoutEnrollmentEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6709,6 +6518,7 @@ export type UserCreateWithoutEnrollmentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -6731,9 +6541,6 @@ export type UserUncheckedCreateWithoutEnrollmentEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6775,6 +6582,7 @@ export type UserUncheckedCreateWithoutEnrollmentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -6812,9 +6620,6 @@ export type UserUpdateWithoutEnrollmentEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6857,6 +6662,7 @@ export type UserUpdateWithoutEnrollmentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -6879,9 +6685,6 @@ export type UserUncheckedUpdateWithoutEnrollmentEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6923,6 +6726,7 @@ export type UserUncheckedUpdateWithoutEnrollmentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -6944,9 +6748,6 @@ export type UserCreateWithoutExerciseSessionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -6989,6 +6790,7 @@ export type UserCreateWithoutExerciseSessionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -7011,9 +6813,6 @@ export type UserUncheckedCreateWithoutExerciseSessionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7055,6 +6854,7 @@ export type UserUncheckedCreateWithoutExerciseSessionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -7092,9 +6892,6 @@ export type UserUpdateWithoutExerciseSessionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7137,6 +6934,7 @@ export type UserUpdateWithoutExerciseSessionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -7159,9 +6957,6 @@ export type UserUncheckedUpdateWithoutExerciseSessionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7203,6 +6998,7 @@ export type UserUncheckedUpdateWithoutExerciseSessionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -7224,9 +7020,6 @@ export type UserCreateWithoutInitiatedMediaEvidenceInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7269,6 +7062,7 @@ export type UserCreateWithoutInitiatedMediaEvidenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -7291,9 +7085,6 @@ export type UserUncheckedCreateWithoutInitiatedMediaEvidenceInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7335,6 +7126,7 @@ export type UserUncheckedCreateWithoutInitiatedMediaEvidenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -7372,9 +7164,6 @@ export type UserUpdateWithoutInitiatedMediaEvidenceInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7417,6 +7206,7 @@ export type UserUpdateWithoutInitiatedMediaEvidenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -7439,9 +7229,6 @@ export type UserUncheckedUpdateWithoutInitiatedMediaEvidenceInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7483,6 +7270,7 @@ export type UserUncheckedUpdateWithoutInitiatedMediaEvidenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -7504,9 +7292,6 @@ export type UserCreateWithoutExerciseRecordEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7549,6 +7334,7 @@ export type UserCreateWithoutExerciseRecordEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -7571,9 +7357,6 @@ export type UserUncheckedCreateWithoutExerciseRecordEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7615,6 +7398,7 @@ export type UserUncheckedCreateWithoutExerciseRecordEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -7652,9 +7436,6 @@ export type UserUpdateWithoutExerciseRecordEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7697,6 +7478,7 @@ export type UserUpdateWithoutExerciseRecordEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -7719,9 +7501,6 @@ export type UserUncheckedUpdateWithoutExerciseRecordEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7763,6 +7542,7 @@ export type UserUncheckedUpdateWithoutExerciseRecordEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -7784,9 +7564,6 @@ export type UserCreateWithoutConsumedCapabilitiesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7829,6 +7606,7 @@ export type UserCreateWithoutConsumedCapabilitiesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -7851,9 +7629,6 @@ export type UserUncheckedCreateWithoutConsumedCapabilitiesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -7895,6 +7670,7 @@ export type UserUncheckedCreateWithoutConsumedCapabilitiesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -7932,9 +7708,6 @@ export type UserUpdateWithoutConsumedCapabilitiesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7977,6 +7750,7 @@ export type UserUpdateWithoutConsumedCapabilitiesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -7999,9 +7773,6 @@ export type UserUncheckedUpdateWithoutConsumedCapabilitiesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8043,6 +7814,7 @@ export type UserUncheckedUpdateWithoutConsumedCapabilitiesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -8064,9 +7836,6 @@ export type UserCreateWithoutImportedOfficialRostersInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8109,6 +7878,7 @@ export type UserCreateWithoutImportedOfficialRostersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -8131,9 +7901,6 @@ export type UserUncheckedCreateWithoutImportedOfficialRostersInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8175,6 +7942,7 @@ export type UserUncheckedCreateWithoutImportedOfficialRostersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -8212,9 +7980,6 @@ export type UserUpdateWithoutImportedOfficialRostersInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8257,6 +8022,7 @@ export type UserUpdateWithoutImportedOfficialRostersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -8279,9 +8045,6 @@ export type UserUncheckedUpdateWithoutImportedOfficialRostersInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8323,6 +8086,7 @@ export type UserUncheckedUpdateWithoutImportedOfficialRostersInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -8344,9 +8108,6 @@ export type UserCreateWithoutStartedRosterAlignmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8389,6 +8150,7 @@ export type UserCreateWithoutStartedRosterAlignmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -8411,9 +8173,6 @@ export type UserUncheckedCreateWithoutStartedRosterAlignmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8455,6 +8214,7 @@ export type UserUncheckedCreateWithoutStartedRosterAlignmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -8492,9 +8252,6 @@ export type UserUpdateWithoutStartedRosterAlignmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8537,6 +8294,7 @@ export type UserUpdateWithoutStartedRosterAlignmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -8559,9 +8317,6 @@ export type UserUncheckedUpdateWithoutStartedRosterAlignmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8603,6 +8358,7 @@ export type UserUncheckedUpdateWithoutStartedRosterAlignmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -8624,9 +8380,6 @@ export type UserCreateWithoutResolvedRosterResultsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8669,6 +8422,7 @@ export type UserCreateWithoutResolvedRosterResultsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -8691,9 +8445,6 @@ export type UserUncheckedCreateWithoutResolvedRosterResultsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8735,6 +8486,7 @@ export type UserUncheckedCreateWithoutResolvedRosterResultsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -8772,9 +8524,6 @@ export type UserUpdateWithoutResolvedRosterResultsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8817,6 +8566,7 @@ export type UserUpdateWithoutResolvedRosterResultsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -8839,9 +8589,6 @@ export type UserUncheckedUpdateWithoutResolvedRosterResultsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8883,6 +8630,7 @@ export type UserUncheckedUpdateWithoutResolvedRosterResultsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -8904,9 +8652,6 @@ export type UserCreateWithoutRosterResolutionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -8949,6 +8694,7 @@ export type UserCreateWithoutRosterResolutionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -8971,9 +8717,6 @@ export type UserUncheckedCreateWithoutRosterResolutionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9015,6 +8758,7 @@ export type UserUncheckedCreateWithoutRosterResolutionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -9052,9 +8796,6 @@ export type UserUpdateWithoutRosterResolutionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9097,6 +8838,7 @@ export type UserUpdateWithoutRosterResolutionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -9119,9 +8861,6 @@ export type UserUncheckedUpdateWithoutRosterResolutionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9163,6 +8902,7 @@ export type UserUncheckedUpdateWithoutRosterResolutionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -9184,9 +8924,6 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9229,6 +8966,7 @@ export type UserCreateWithoutIdempotencyRecordsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -9251,9 +8989,6 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9295,6 +9030,7 @@ export type UserUncheckedCreateWithoutIdempotencyRecordsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -9332,9 +9068,6 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9377,6 +9110,7 @@ export type UserUpdateWithoutIdempotencyRecordsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -9399,9 +9133,6 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9443,6 +9174,7 @@ export type UserUncheckedUpdateWithoutIdempotencyRecordsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -9464,9 +9196,6 @@ export type UserCreateWithoutCreatedScoreRulesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9509,6 +9238,7 @@ export type UserCreateWithoutCreatedScoreRulesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -9531,9 +9261,6 @@ export type UserUncheckedCreateWithoutCreatedScoreRulesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9575,6 +9302,7 @@ export type UserUncheckedCreateWithoutCreatedScoreRulesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -9612,9 +9340,6 @@ export type UserUpdateWithoutCreatedScoreRulesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9657,6 +9382,7 @@ export type UserUpdateWithoutCreatedScoreRulesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -9679,9 +9405,6 @@ export type UserUncheckedUpdateWithoutCreatedScoreRulesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9723,6 +9446,7 @@ export type UserUncheckedUpdateWithoutCreatedScoreRulesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -9744,9 +9468,6 @@ export type UserCreateWithoutScoreRuleApprovalsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9789,6 +9510,7 @@ export type UserCreateWithoutScoreRuleApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -9811,9 +9533,6 @@ export type UserUncheckedCreateWithoutScoreRuleApprovalsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -9855,6 +9574,7 @@ export type UserUncheckedCreateWithoutScoreRuleApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -9892,9 +9612,6 @@ export type UserUpdateWithoutScoreRuleApprovalsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9937,6 +9654,7 @@ export type UserUpdateWithoutScoreRuleApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -9959,9 +9677,6 @@ export type UserUncheckedUpdateWithoutScoreRuleApprovalsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10003,6 +9718,7 @@ export type UserUncheckedUpdateWithoutScoreRuleApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -10024,9 +9740,6 @@ export type UserCreateWithoutRequestedScoreAdjustmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10069,6 +9782,7 @@ export type UserCreateWithoutRequestedScoreAdjustmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -10091,9 +9805,6 @@ export type UserUncheckedCreateWithoutRequestedScoreAdjustmentsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10135,6 +9846,7 @@ export type UserUncheckedCreateWithoutRequestedScoreAdjustmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -10172,9 +9884,6 @@ export type UserUpdateWithoutRequestedScoreAdjustmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10217,6 +9926,7 @@ export type UserUpdateWithoutRequestedScoreAdjustmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -10239,9 +9949,6 @@ export type UserUncheckedUpdateWithoutRequestedScoreAdjustmentsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10283,6 +9990,7 @@ export type UserUncheckedUpdateWithoutRequestedScoreAdjustmentsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -10304,9 +10012,6 @@ export type UserCreateWithoutScoreAdjustmentApprovalsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10349,6 +10054,7 @@ export type UserCreateWithoutScoreAdjustmentApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -10371,9 +10077,6 @@ export type UserUncheckedCreateWithoutScoreAdjustmentApprovalsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10415,6 +10118,7 @@ export type UserUncheckedCreateWithoutScoreAdjustmentApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -10452,9 +10156,6 @@ export type UserUpdateWithoutScoreAdjustmentApprovalsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10497,6 +10198,7 @@ export type UserUpdateWithoutScoreAdjustmentApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -10519,9 +10221,6 @@ export type UserUncheckedUpdateWithoutScoreAdjustmentApprovalsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10563,6 +10262,7 @@ export type UserUncheckedUpdateWithoutScoreAdjustmentApprovalsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -10584,9 +10284,6 @@ export type UserCreateWithoutScorePublicationEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10629,6 +10326,7 @@ export type UserCreateWithoutScorePublicationEventsInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -10651,9 +10349,6 @@ export type UserUncheckedCreateWithoutScorePublicationEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10695,6 +10390,7 @@ export type UserUncheckedCreateWithoutScorePublicationEventsInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -10732,9 +10428,6 @@ export type UserUpdateWithoutScorePublicationEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10777,6 +10470,7 @@ export type UserUpdateWithoutScorePublicationEventsInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -10799,9 +10493,6 @@ export type UserUncheckedUpdateWithoutScorePublicationEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10843,6 +10534,7 @@ export type UserUncheckedUpdateWithoutScorePublicationEventsInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -10864,9 +10556,6 @@ export type UserCreateWithoutStudentSignInChallengesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10909,6 +10598,7 @@ export type UserCreateWithoutStudentSignInChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -10931,9 +10621,6 @@ export type UserUncheckedCreateWithoutStudentSignInChallengesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -10975,6 +10662,7 @@ export type UserUncheckedCreateWithoutStudentSignInChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -11012,9 +10700,6 @@ export type UserUpdateWithoutStudentSignInChallengesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11057,6 +10742,7 @@ export type UserUpdateWithoutStudentSignInChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -11079,9 +10765,6 @@ export type UserUncheckedUpdateWithoutStudentSignInChallengesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11123,6 +10806,7 @@ export type UserUncheckedUpdateWithoutStudentSignInChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -11144,9 +10828,6 @@ export type UserCreateWithoutAccountRecoveryChallengesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11189,6 +10870,7 @@ export type UserCreateWithoutAccountRecoveryChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -11211,9 +10893,6 @@ export type UserUncheckedCreateWithoutAccountRecoveryChallengesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11255,6 +10934,7 @@ export type UserUncheckedCreateWithoutAccountRecoveryChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -11292,9 +10972,6 @@ export type UserUpdateWithoutAccountRecoveryChallengesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11337,6 +11014,7 @@ export type UserUpdateWithoutAccountRecoveryChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -11359,9 +11037,6 @@ export type UserUncheckedUpdateWithoutAccountRecoveryChallengesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11403,6 +11078,7 @@ export type UserUncheckedUpdateWithoutAccountRecoveryChallengesInput = {
   scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -11417,16 +11093,13 @@ export type UserUncheckedUpdateWithoutAccountRecoveryChallengesInput = {
   locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
-export type UserCreateWithoutNotificationsInput = {
+export type UserCreateWithoutEmailVerificationChallengesInput = {
   id: string
   role: string
   status: string
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11470,6 +11143,7 @@ export type UserCreateWithoutNotificationsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
   pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
@@ -11483,7 +11157,7 @@ export type UserCreateWithoutNotificationsInput = {
   locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
 }
 
-export type UserUncheckedCreateWithoutNotificationsInput = {
+export type UserUncheckedCreateWithoutEmailVerificationChallengesInput = {
   id: string
   organizationId: string
   role: string
@@ -11491,9 +11165,6 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11536,6 +11207,279 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackUncheckedCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutEmailVerificationChallengesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedCreateWithoutEmailVerificationChallengesInput>
+}
+
+export type UserUpsertWithoutEmailVerificationChallengesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedUpdateWithoutEmailVerificationChallengesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedCreateWithoutEmailVerificationChallengesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEmailVerificationChallengesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEmailVerificationChallengesInput, Prisma.UserUncheckedUpdateWithoutEmailVerificationChallengesInput>
+}
+
+export type UserUpdateWithoutEmailVerificationChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  studentProfile?: Prisma.StudentProfileUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEmailVerificationChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedUpdateOneWithoutUserNestedInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedUpdateOneWithoutUserNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedUpdateManyWithoutPrincipalNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedUpdateManyWithoutChangedByUserNestedInput
+  createdSemesters?: Prisma.SemesterUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourses?: Prisma.CourseUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCourses?: Prisma.CourseUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  deletedCourses?: Prisma.CourseUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  createdClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  closedClassSections?: Prisma.ClassSectionUncheckedUpdateManyWithoutClosedByUserNestedInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedUpdateManyWithoutRevokedByUserNestedInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedUpdateManyWithoutConsumedByUserNestedInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedUpdateManyWithoutActorNestedInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedUpdateManyWithoutImportedByUserNestedInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedUpdateManyWithoutStartedByUserNestedInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedUpdateManyWithoutResolvedByUserNestedInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedUpdateManyWithoutActorNestedInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedUpdateManyWithoutActorNestedInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedUpdateManyWithoutInitiatedByUserNestedInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedUpdateManyWithoutActorNestedInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedUpdateManyWithoutCreatorNestedInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedUpdateManyWithoutRequesterNestedInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedUpdateManyWithoutActorNestedInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
+  pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
+  pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
+  userPreference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventUncheckedUpdateManyWithoutActorNestedInput
+  createdFeedback?: Prisma.FeedbackUncheckedUpdateManyWithoutCreatorNestedInput
+  feedbackEvents?: Prisma.FeedbackEventUncheckedUpdateManyWithoutActorNestedInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventUncheckedUpdateManyWithoutActorNestedInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyUncheckedUpdateManyWithoutCreatedByNestedInput
+  locationConsentEvents?: Prisma.LocationConsentEventUncheckedUpdateManyWithoutActorNestedInput
+  locationTrackEvents?: Prisma.LocationTrackEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  studentProfile?: Prisma.StudentProfileCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
+  notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
+  pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
+  pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
+  userPreference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userPreferenceEvents?: Prisma.UserPreferenceEventCreateNestedManyWithoutActorInput
+  createdFeedback?: Prisma.FeedbackCreateNestedManyWithoutCreatorInput
+  feedbackEvents?: Prisma.FeedbackEventCreateNestedManyWithoutActorInput
+  exemptionEvents?: Prisma.ExemptionApplicationEventCreateNestedManyWithoutActorInput
+  locationPoliciesCreated?: Prisma.LocationPrivacyPolicyCreateNestedManyWithoutCreatedByInput
+  locationConsentEvents?: Prisma.LocationConsentEventCreateNestedManyWithoutActorInput
+  locationTrackEvents?: Prisma.LocationTrackEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id: string
+  organizationId: string
+  role: string
+  status: string
+  primaryEmail?: string | null
+  primaryEmailNormalized?: string | null
+  emailVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  tokenVersion?: number
+  lastAuthenticatedAt?: Date | string | null
+  version?: number
+  createdAt: Date | string
+  updatedAt: Date | string
+  deletedAt?: Date | string | null
+  studentProfile?: Prisma.StudentProfileUncheckedCreateNestedOneWithoutUserInput
+  teacherProfile?: Prisma.TeacherProfileUncheckedCreateNestedOneWithoutUserInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  idempotencyRecords?: Prisma.IdempotencyRecordUncheckedCreateNestedManyWithoutPrincipalInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  systemPolicyChanges?: Prisma.SystemPolicyUncheckedCreateNestedManyWithoutChangedByUserInput
+  createdSemesters?: Prisma.SemesterUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  deletedCourses?: Prisma.CourseUncheckedCreateNestedManyWithoutDeletedByUserInput
+  createdClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  closedClassSections?: Prisma.ClassSectionUncheckedCreateNestedManyWithoutClosedByUserInput
+  createdExcludedDates?: Prisma.ClassSectionExcludedDateUncheckedCreateNestedManyWithoutCreatedByUserInput
+  createdCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  revokedCourseInvites?: Prisma.CourseInviteUncheckedCreateNestedManyWithoutRevokedByUserInput
+  consumedCapabilities?: Prisma.JoinCapabilityUncheckedCreateNestedManyWithoutConsumedByUserInput
+  createdEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedEnrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  enrollmentEvents?: Prisma.EnrollmentStatusEventUncheckedCreateNestedManyWithoutActorInput
+  importedOfficialRosters?: Prisma.OfficialRosterImportUncheckedCreateNestedManyWithoutImportedByUserInput
+  startedRosterAlignments?: Prisma.RosterAlignmentRunUncheckedCreateNestedManyWithoutStartedByUserInput
+  resolvedRosterResults?: Prisma.RosterAlignmentResultUncheckedCreateNestedManyWithoutResolvedByUserInput
+  rosterResolutionEvents?: Prisma.RosterResolutionEventUncheckedCreateNestedManyWithoutActorInput
+  exerciseSessionEvents?: Prisma.ExerciseSessionEventUncheckedCreateNestedManyWithoutActorInput
+  initiatedMediaEvidence?: Prisma.MediaEvidenceUncheckedCreateNestedManyWithoutInitiatedByUserInput
+  exerciseRecordEvents?: Prisma.ExerciseRecordEventUncheckedCreateNestedManyWithoutActorInput
+  createdScoreRules?: Prisma.ScoreRuleUncheckedCreateNestedManyWithoutCreatorInput
+  scoreRuleApprovals?: Prisma.ScoreRuleApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  requestedScoreAdjustments?: Prisma.ScoreAdjustmentUncheckedCreateNestedManyWithoutRequesterInput
+  scoreAdjustmentApprovals?: Prisma.ScoreAdjustmentApprovalEventUncheckedCreateNestedManyWithoutActorInput
+  scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
+  studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
+  accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
@@ -11572,9 +11516,6 @@ export type UserUpdateWithoutNotificationsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11618,6 +11559,7 @@ export type UserUpdateWithoutNotificationsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
@@ -11639,9 +11581,6 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11684,6 +11623,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
@@ -11704,9 +11644,6 @@ export type UserCreateWithoutNotificationEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11750,6 +11687,7 @@ export type UserCreateWithoutNotificationEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
   pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
@@ -11771,9 +11709,6 @@ export type UserUncheckedCreateWithoutNotificationEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -11816,6 +11751,7 @@ export type UserUncheckedCreateWithoutNotificationEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
@@ -11852,9 +11788,6 @@ export type UserUpdateWithoutNotificationEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11898,6 +11831,7 @@ export type UserUpdateWithoutNotificationEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
@@ -11919,9 +11853,6 @@ export type UserUncheckedUpdateWithoutNotificationEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11964,6 +11895,7 @@ export type UserUncheckedUpdateWithoutNotificationEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
@@ -11984,9 +11916,6 @@ export type UserCreateWithoutPushDevicesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12030,6 +11959,7 @@ export type UserCreateWithoutPushDevicesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDeviceEvents?: Prisma.PushDeviceEventCreateNestedManyWithoutActorInput
@@ -12051,9 +11981,6 @@ export type UserUncheckedCreateWithoutPushDevicesInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12096,6 +12023,7 @@ export type UserUncheckedCreateWithoutPushDevicesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedCreateNestedManyWithoutActorInput
@@ -12132,9 +12060,6 @@ export type UserUpdateWithoutPushDevicesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12178,6 +12103,7 @@ export type UserUpdateWithoutPushDevicesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUpdateManyWithoutActorNestedInput
@@ -12199,9 +12125,6 @@ export type UserUncheckedUpdateWithoutPushDevicesInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12244,6 +12167,7 @@ export type UserUncheckedUpdateWithoutPushDevicesInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDeviceEvents?: Prisma.PushDeviceEventUncheckedUpdateManyWithoutActorNestedInput
@@ -12264,9 +12188,6 @@ export type UserCreateWithoutPushDeviceEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12310,6 +12231,7 @@ export type UserCreateWithoutPushDeviceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -12331,9 +12253,6 @@ export type UserUncheckedCreateWithoutPushDeviceEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12376,6 +12295,7 @@ export type UserUncheckedCreateWithoutPushDeviceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -12412,9 +12332,6 @@ export type UserUpdateWithoutPushDeviceEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12458,6 +12375,7 @@ export type UserUpdateWithoutPushDeviceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -12479,9 +12397,6 @@ export type UserUncheckedUpdateWithoutPushDeviceEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12524,6 +12439,7 @@ export type UserUncheckedUpdateWithoutPushDeviceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -12544,9 +12460,6 @@ export type UserCreateWithoutUserPreferenceInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12590,6 +12503,7 @@ export type UserCreateWithoutUserPreferenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -12611,9 +12525,6 @@ export type UserUncheckedCreateWithoutUserPreferenceInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12656,6 +12567,7 @@ export type UserUncheckedCreateWithoutUserPreferenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -12692,9 +12604,6 @@ export type UserUpdateWithoutUserPreferenceInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12738,6 +12647,7 @@ export type UserUpdateWithoutUserPreferenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -12759,9 +12669,6 @@ export type UserUncheckedUpdateWithoutUserPreferenceInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12804,6 +12711,7 @@ export type UserUncheckedUpdateWithoutUserPreferenceInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -12824,9 +12732,6 @@ export type UserCreateWithoutUserPreferenceEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12870,6 +12775,7 @@ export type UserCreateWithoutUserPreferenceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -12891,9 +12797,6 @@ export type UserUncheckedCreateWithoutUserPreferenceEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -12936,6 +12839,7 @@ export type UserUncheckedCreateWithoutUserPreferenceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -12972,9 +12876,6 @@ export type UserUpdateWithoutUserPreferenceEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13018,6 +12919,7 @@ export type UserUpdateWithoutUserPreferenceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -13039,9 +12941,6 @@ export type UserUncheckedUpdateWithoutUserPreferenceEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13084,6 +12983,7 @@ export type UserUncheckedUpdateWithoutUserPreferenceEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -13104,9 +13004,6 @@ export type UserCreateWithoutCreatedFeedbackInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13150,6 +13047,7 @@ export type UserCreateWithoutCreatedFeedbackInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -13171,9 +13069,6 @@ export type UserUncheckedCreateWithoutCreatedFeedbackInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13216,6 +13111,7 @@ export type UserUncheckedCreateWithoutCreatedFeedbackInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -13252,9 +13148,6 @@ export type UserUpdateWithoutCreatedFeedbackInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13298,6 +13191,7 @@ export type UserUpdateWithoutCreatedFeedbackInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -13319,9 +13213,6 @@ export type UserUncheckedUpdateWithoutCreatedFeedbackInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13364,6 +13255,7 @@ export type UserUncheckedUpdateWithoutCreatedFeedbackInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -13384,9 +13276,6 @@ export type UserCreateWithoutFeedbackEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13430,6 +13319,7 @@ export type UserCreateWithoutFeedbackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -13451,9 +13341,6 @@ export type UserUncheckedCreateWithoutFeedbackEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13496,6 +13383,7 @@ export type UserUncheckedCreateWithoutFeedbackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -13532,9 +13420,6 @@ export type UserUpdateWithoutFeedbackEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13578,6 +13463,7 @@ export type UserUpdateWithoutFeedbackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -13599,9 +13485,6 @@ export type UserUncheckedUpdateWithoutFeedbackEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13644,6 +13527,7 @@ export type UserUncheckedUpdateWithoutFeedbackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -13664,9 +13548,6 @@ export type UserCreateWithoutExemptionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13710,6 +13591,7 @@ export type UserCreateWithoutExemptionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -13731,9 +13613,6 @@ export type UserUncheckedCreateWithoutExemptionEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13776,6 +13655,7 @@ export type UserUncheckedCreateWithoutExemptionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -13812,9 +13692,6 @@ export type UserUpdateWithoutExemptionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13858,6 +13735,7 @@ export type UserUpdateWithoutExemptionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -13879,9 +13757,6 @@ export type UserUncheckedUpdateWithoutExemptionEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13924,6 +13799,7 @@ export type UserUncheckedUpdateWithoutExemptionEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -13944,9 +13820,6 @@ export type UserCreateWithoutLocationPoliciesCreatedInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -13990,6 +13863,7 @@ export type UserCreateWithoutLocationPoliciesCreatedInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -14011,9 +13885,6 @@ export type UserUncheckedCreateWithoutLocationPoliciesCreatedInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14056,6 +13927,7 @@ export type UserUncheckedCreateWithoutLocationPoliciesCreatedInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -14092,9 +13964,6 @@ export type UserUpdateWithoutLocationPoliciesCreatedInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14138,6 +14007,7 @@ export type UserUpdateWithoutLocationPoliciesCreatedInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -14159,9 +14029,6 @@ export type UserUncheckedUpdateWithoutLocationPoliciesCreatedInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14204,6 +14071,7 @@ export type UserUncheckedUpdateWithoutLocationPoliciesCreatedInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -14224,9 +14092,6 @@ export type UserCreateWithoutLocationConsentEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14270,6 +14135,7 @@ export type UserCreateWithoutLocationConsentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -14291,9 +14157,6 @@ export type UserUncheckedCreateWithoutLocationConsentEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14336,6 +14199,7 @@ export type UserUncheckedCreateWithoutLocationConsentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -14372,9 +14236,6 @@ export type UserUpdateWithoutLocationConsentEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14418,6 +14279,7 @@ export type UserUpdateWithoutLocationConsentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -14439,9 +14301,6 @@ export type UserUncheckedUpdateWithoutLocationConsentEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14484,6 +14343,7 @@ export type UserUncheckedUpdateWithoutLocationConsentEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -14504,9 +14364,6 @@ export type UserCreateWithoutLocationTrackEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14550,6 +14407,7 @@ export type UserCreateWithoutLocationTrackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -14571,9 +14429,6 @@ export type UserUncheckedCreateWithoutLocationTrackEventsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14616,6 +14471,7 @@ export type UserUncheckedCreateWithoutLocationTrackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -14652,9 +14508,6 @@ export type UserUpdateWithoutLocationTrackEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14698,6 +14551,7 @@ export type UserUpdateWithoutLocationTrackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -14719,9 +14573,6 @@ export type UserUncheckedUpdateWithoutLocationTrackEventsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14764,6 +14615,7 @@ export type UserUncheckedUpdateWithoutLocationTrackEventsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -14784,9 +14636,6 @@ export type UserCreateWithoutAuditLogsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14829,6 +14678,7 @@ export type UserCreateWithoutAuditLogsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceCreateNestedManyWithoutOwnerInput
@@ -14851,9 +14701,6 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -14895,6 +14742,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedCreateNestedManyWithoutActorInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedCreateNestedManyWithoutUserInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationEvents?: Prisma.NotificationEventUncheckedCreateNestedManyWithoutActorInput
   pushDevices?: Prisma.PushDeviceUncheckedCreateNestedManyWithoutOwnerInput
@@ -14932,9 +14780,6 @@ export type UserUpdateWithoutAuditLogsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14977,6 +14822,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -14999,9 +14845,6 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15043,6 +14886,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -15064,9 +14908,6 @@ export type UserCreateManyOrganizationInput = {
   primaryEmail?: string | null
   primaryEmailNormalized?: string | null
   emailVerifiedAt?: Date | string | null
-  primaryPhone?: string | null
-  primaryPhoneNormalized?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   tokenVersion?: number
   lastAuthenticatedAt?: Date | string | null
@@ -15083,9 +14924,6 @@ export type UserUpdateWithoutOrganizationInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15128,6 +14966,7 @@ export type UserUpdateWithoutOrganizationInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUpdateManyWithoutOwnerNestedInput
@@ -15149,9 +14988,6 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15194,6 +15030,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   scorePublicationEvents?: Prisma.ScorePublicationEventUncheckedUpdateManyWithoutActorNestedInput
   studentSignInChallenges?: Prisma.StudentSignInChallengeUncheckedUpdateManyWithoutUserNestedInput
   accountRecoveryChallenges?: Prisma.AccountRecoveryChallengeUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationChallenges?: Prisma.EmailVerificationChallengeUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationEvents?: Prisma.NotificationEventUncheckedUpdateManyWithoutActorNestedInput
   pushDevices?: Prisma.PushDeviceUncheckedUpdateManyWithoutOwnerNestedInput
@@ -15215,9 +15052,6 @@ export type UserUncheckedUpdateManyWithoutOrganizationInput = {
   primaryEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryEmailNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  primaryPhoneNormalized?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   lastAuthenticatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15265,6 +15099,7 @@ export type UserCountOutputType = {
   scorePublicationEvents: number
   studentSignInChallenges: number
   accountRecoveryChallenges: number
+  emailVerificationChallenges: number
   notifications: number
   notificationEvents: number
   pushDevices: number
@@ -15311,6 +15146,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   scorePublicationEvents?: boolean | UserCountOutputTypeCountScorePublicationEventsArgs
   studentSignInChallenges?: boolean | UserCountOutputTypeCountStudentSignInChallengesArgs
   accountRecoveryChallenges?: boolean | UserCountOutputTypeCountAccountRecoveryChallengesArgs
+  emailVerificationChallenges?: boolean | UserCountOutputTypeCountEmailVerificationChallengesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   notificationEvents?: boolean | UserCountOutputTypeCountNotificationEventsArgs
   pushDevices?: boolean | UserCountOutputTypeCountPushDevicesArgs
@@ -15561,6 +15397,13 @@ export type UserCountOutputTypeCountAccountRecoveryChallengesArgs<ExtArgs extend
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountEmailVerificationChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmailVerificationChallengeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput
 }
@@ -15644,9 +15487,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   primaryEmail?: boolean
   primaryEmailNormalized?: boolean
   emailVerifiedAt?: boolean
-  primaryPhone?: boolean
-  primaryPhoneNormalized?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   tokenVersion?: boolean
   lastAuthenticatedAt?: boolean
@@ -15690,6 +15530,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   scorePublicationEvents?: boolean | Prisma.User$scorePublicationEventsArgs<ExtArgs>
   studentSignInChallenges?: boolean | Prisma.User$studentSignInChallengesArgs<ExtArgs>
   accountRecoveryChallenges?: boolean | Prisma.User$accountRecoveryChallengesArgs<ExtArgs>
+  emailVerificationChallenges?: boolean | Prisma.User$emailVerificationChallengesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   notificationEvents?: boolean | Prisma.User$notificationEventsArgs<ExtArgs>
   pushDevices?: boolean | Prisma.User$pushDevicesArgs<ExtArgs>
@@ -15713,9 +15554,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   primaryEmail?: boolean
   primaryEmailNormalized?: boolean
   emailVerifiedAt?: boolean
-  primaryPhone?: boolean
-  primaryPhoneNormalized?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   tokenVersion?: boolean
   lastAuthenticatedAt?: boolean
@@ -15734,9 +15572,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   primaryEmail?: boolean
   primaryEmailNormalized?: boolean
   emailVerifiedAt?: boolean
-  primaryPhone?: boolean
-  primaryPhoneNormalized?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   tokenVersion?: boolean
   lastAuthenticatedAt?: boolean
@@ -15755,9 +15590,6 @@ export type UserSelectScalar = {
   primaryEmail?: boolean
   primaryEmailNormalized?: boolean
   emailVerifiedAt?: boolean
-  primaryPhone?: boolean
-  primaryPhoneNormalized?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   tokenVersion?: boolean
   lastAuthenticatedAt?: boolean
@@ -15767,7 +15599,7 @@ export type UserSelectScalar = {
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "role" | "status" | "primaryEmail" | "primaryEmailNormalized" | "emailVerifiedAt" | "primaryPhone" | "primaryPhoneNormalized" | "phoneVerifiedAt" | "passwordHash" | "tokenVersion" | "lastAuthenticatedAt" | "version" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "role" | "status" | "primaryEmail" | "primaryEmailNormalized" | "emailVerifiedAt" | "passwordHash" | "tokenVersion" | "lastAuthenticatedAt" | "version" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   studentProfile?: boolean | Prisma.User$studentProfileArgs<ExtArgs>
@@ -15805,6 +15637,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   scorePublicationEvents?: boolean | Prisma.User$scorePublicationEventsArgs<ExtArgs>
   studentSignInChallenges?: boolean | Prisma.User$studentSignInChallengesArgs<ExtArgs>
   accountRecoveryChallenges?: boolean | Prisma.User$accountRecoveryChallengesArgs<ExtArgs>
+  emailVerificationChallenges?: boolean | Prisma.User$emailVerificationChallengesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   notificationEvents?: boolean | Prisma.User$notificationEventsArgs<ExtArgs>
   pushDevices?: boolean | Prisma.User$pushDevicesArgs<ExtArgs>
@@ -15865,6 +15698,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     scorePublicationEvents: Prisma.$ScorePublicationEventPayload<ExtArgs>[]
     studentSignInChallenges: Prisma.$StudentSignInChallengePayload<ExtArgs>[]
     accountRecoveryChallenges: Prisma.$AccountRecoveryChallengePayload<ExtArgs>[]
+    emailVerificationChallenges: Prisma.$EmailVerificationChallengePayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     notificationEvents: Prisma.$NotificationEventPayload<ExtArgs>[]
     pushDevices: Prisma.$PushDevicePayload<ExtArgs>[]
@@ -15886,9 +15720,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     primaryEmail: string | null
     primaryEmailNormalized: string | null
     emailVerifiedAt: Date | null
-    primaryPhone: string | null
-    primaryPhoneNormalized: string | null
-    phoneVerifiedAt: Date | null
     passwordHash: string | null
     tokenVersion: number
     lastAuthenticatedAt: Date | null
@@ -16326,6 +16157,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   scorePublicationEvents<T extends Prisma.User$scorePublicationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scorePublicationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScorePublicationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentSignInChallenges<T extends Prisma.User$studentSignInChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentSignInChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentSignInChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accountRecoveryChallenges<T extends Prisma.User$accountRecoveryChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountRecoveryChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountRecoveryChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  emailVerificationChallenges<T extends Prisma.User$emailVerificationChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailVerificationChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailVerificationChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notificationEvents<T extends Prisma.User$notificationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushDevices<T extends Prisma.User$pushDevicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pushDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -16374,9 +16206,6 @@ export interface UserFieldRefs {
   readonly primaryEmail: Prisma.FieldRef<"User", 'String'>
   readonly primaryEmailNormalized: Prisma.FieldRef<"User", 'String'>
   readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly primaryPhone: Prisma.FieldRef<"User", 'String'>
-  readonly primaryPhoneNormalized: Prisma.FieldRef<"User", 'String'>
-  readonly phoneVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly tokenVersion: Prisma.FieldRef<"User", 'Int'>
   readonly lastAuthenticatedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -17607,6 +17436,30 @@ export type User$accountRecoveryChallengesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.AccountRecoveryChallengeScalarFieldEnum | Prisma.AccountRecoveryChallengeScalarFieldEnum[]
+}
+
+/**
+ * User.emailVerificationChallenges
+ */
+export type User$emailVerificationChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmailVerificationChallenge
+   */
+  select?: Prisma.EmailVerificationChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmailVerificationChallenge
+   */
+  omit?: Prisma.EmailVerificationChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmailVerificationChallengeInclude<ExtArgs> | null
+  where?: Prisma.EmailVerificationChallengeWhereInput
+  orderBy?: Prisma.EmailVerificationChallengeOrderByWithRelationInput | Prisma.EmailVerificationChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.EmailVerificationChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EmailVerificationChallengeScalarFieldEnum | Prisma.EmailVerificationChallengeScalarFieldEnum[]
 }
 
 /**

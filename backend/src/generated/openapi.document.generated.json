@@ -383,9 +383,7 @@
                       "role": "TEACHER",
                       "status": "ACTIVE",
                       "primaryEmailMasked": "t***@example.edu",
-                      "primaryPhoneMasked": null,
                       "emailVerified": true,
-                      "phoneVerified": false,
                       "version": 4
                     }
                   },
@@ -576,14 +574,17 @@
             "$ref": "#/components/responses/InternalError"
           }
         }
-      },
-      "patch": {
+      }
+    },
+    "/me/email-verification-challenges": {
+      "post": {
         "tags": [
-          "Current User"
+          "Current User",
+          "Authentication"
         ],
-        "operationId": "updateCurrentUserProfile",
+        "operationId": "requestCurrentUserEmailChallenge",
         "x-access-policy": {
-          "policyId": "USER-SELF-UPDATE",
+          "policyId": "USER-EMAIL-VERIFY-REQUEST",
           "authentication": "ACCESS_TOKEN",
           "allowedRoles": [
             "STUDENT",
@@ -595,11 +596,8 @@
           "resourceResolver": "PRINCIPAL_USER",
           "defaultDeny": true
         },
-        "summary": "Request a verified change to the authenticated user's contact method",
-        "description": "Transport placeholder only; always returns SYSTEM_MODE_UNSUPPORTED until a verified contact-change flow is approved.",
-        "x-enabled-by-default": false,
-        "x-business-blocker": "CONTACT_VERIFICATION_GATE",
-        "x-default-deny-error": "SYSTEM_MODE_UNSUPPORTED",
+        "summary": "Request first email binding or a verified email change",
+        "description": "First binding sends one code to the new email. Rebinding sends separate codes to both the currently verified email and the new email. No phone or SMS channel is accepted.",
         "parameters": [
           {
             "$ref": "#/components/parameters/RequestIdHeader"
@@ -613,7 +611,77 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateCurrentProfileRequest"
+                "$ref": "#/components/schemas/EmailVerificationChallengeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/EmailVerificationChallengeAcceptedSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          }
+        }
+      }
+    },
+    "/me/email-verification-challenges/{challengeId}/verify": {
+      "post": {
+        "tags": [
+          "Current User",
+          "Authentication"
+        ],
+        "operationId": "verifyCurrentUserEmailChallenge",
+        "x-access-policy": {
+          "policyId": "USER-EMAIL-VERIFY-COMPLETE",
+          "authentication": "ACCESS_TOKEN",
+          "allowedRoles": [
+            "STUDENT",
+            "TEACHER",
+            "ADMIN"
+          ],
+          "organizationScope": "PRINCIPAL_ORGANIZATION",
+          "resourceScope": "SELF",
+          "resourceResolver": "PRINCIPAL_USER",
+          "defaultDeny": true
+        },
+        "summary": "Verify and bind the requested email",
+        "description": "Rebinding requires both the current-email code and new-email code. Success revokes the user's other active sessions while preserving the calling session.",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/OpaqueId"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/RequestIdHeader"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKeyHeader"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyEmailChallengeRequest"
               }
             }
           }
@@ -627,6 +695,9 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
@@ -6237,6 +6308,9 @@
           "401": {
             "$ref": "#/components/responses/Unauthorized"
           },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
           "503": {
             "$ref": "#/components/responses/ServiceUnavailable"
           }
@@ -7732,6 +7806,21 @@
           }
         }
       },
+      "EmailVerificationChallengeAcceptedSuccess": {
+        "description": "Email verification challenge acceptance",
+        "headers": {
+          "X-Request-ID": {
+            "$ref": "#/components/headers/RequestIdResponseHeader"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EmailVerificationChallengeAcceptedEnvelope"
+            }
+          }
+        }
+      },
       "HealthSuccess": {
         "description": "Foundation health status",
         "headers": {
@@ -8836,6 +8925,7 @@
       "UserStatus": {
         "type": "string",
         "enum": [
+          "PENDING_CONTACT_BINDING",
           "ACTIVE",
           "LOCKED",
           "DISABLED"
@@ -8887,6 +8977,14 @@
           "FEMALE",
           "OTHER"
         ]
+      },
+      "CourseJoinGender": {
+        "type": "string",
+        "enum": [
+          "MALE",
+          "FEMALE"
+        ],
+        "description": "Gender values accepted when a student joins a course by QR invite; OTHER remains available only in the broader historical profile and roster model."
       },
       "EnrollmentStatus": {
         "type": "string",
@@ -9867,21 +9965,7 @@
             "readOnly": true,
             "description": "Masked projection only; plaintext email is never returned."
           },
-          "primaryPhoneMasked": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "maxLength": 32,
-            "readOnly": true,
-            "description": "Masked projection only; plaintext phone is never returned."
-          },
           "emailVerified": {
-            "type": "boolean",
-            "readOnly": true,
-            "description": "Derived from the current contact verification fact; the verification timestamp is not exposed."
-          },
-          "phoneVerified": {
             "type": "boolean",
             "readOnly": true,
             "description": "Derived from the current contact verification fact; the verification timestamp is not exposed."
@@ -9896,9 +9980,7 @@
           "role",
           "status",
           "primaryEmailMasked",
-          "primaryPhoneMasked",
           "emailVerified",
-          "phoneVerified",
           "version"
         ]
       },
@@ -9930,9 +10012,9 @@
           },
           "gradeYear": {
             "type": "integer",
-            "minimum": 2000,
-            "maximum": 2027,
-            "description": "Contract-year bound; update annually and enforce the current-year-plus-one rule at runtime."
+            "minimum": 1000,
+            "maximum": 9999,
+            "description": "Four-digit cohort year with stable format-only bounds; it is not restricted by the current date."
           },
           "collegeName": {
             "type": [
@@ -10638,9 +10720,9 @@
               "integer",
               "null"
             ],
-            "minimum": 2000,
-            "maximum": 2027,
-            "description": "Contract-year bound; update annually and enforce the current-year-plus-one rule at runtime."
+            "minimum": 1000,
+            "maximum": 9999,
+            "description": "Four-digit cohort year with stable format-only bounds; it is not restricted by the current date."
           },
           "collegeName": {
             "type": [
@@ -12415,7 +12497,8 @@
         "properties": {
           "account": {
             "type": "string",
-            "minLength": 1,
+            "format": "email",
+            "minLength": 3,
             "maxLength": 254
           },
           "password": {
@@ -12454,45 +12537,54 @@
           }
         }
       },
-      "UpdateCurrentProfileRequest": {
+      "EmailVerificationChallengeRequest": {
         "type": "object",
         "additionalProperties": false,
-        "anyOf": [
-          {
-            "required": [
-              "primaryEmail"
-            ]
-          },
-          {
-            "required": [
-              "primaryPhone"
-            ]
-          }
+        "required": [
+          "email",
+          "locale",
+          "expectedVersion"
         ],
         "properties": {
-          "primaryEmail": {
-            "type": [
-              "string",
-              "null"
-            ],
+          "email": {
+            "type": "string",
             "format": "email",
-            "maxLength": 254
+            "minLength": 3,
+            "maxLength": 254,
+            "writeOnly": true
           },
-          "primaryPhone": {
-            "type": [
-              "string",
-              "null"
+          "locale": {
+            "type": "string",
+            "enum": [
+              "zh-CN",
+              "en"
             ],
-            "maxLength": 32
+            "x-transport-constraint": true
           },
           "expectedVersion": {
             "$ref": "#/components/schemas/PositiveVersion"
           }
-        },
+        }
+      },
+      "VerifyEmailChallengeRequest": {
+        "type": "object",
+        "additionalProperties": false,
         "required": [
-          "expectedVersion"
+          "newEmailCode"
         ],
-        "description": "Contact-change transport placeholder; it must fail closed with SYSTEM_MODE_UNSUPPORTED until a verified contact-change flow is approved."
+        "properties": {
+          "currentEmailCode": {
+            "type": "string",
+            "pattern": "^\\d{4,10}$",
+            "writeOnly": true
+          },
+          "newEmailCode": {
+            "type": "string",
+            "pattern": "^\\d{4,10}$",
+            "writeOnly": true
+          }
+        },
+        "description": "currentEmailCode is required only when changing an already verified email."
       },
       "UpdateStudentRequest": {
         "type": "object",
@@ -12511,9 +12603,9 @@
           },
           "gradeYear": {
             "type": "integer",
-            "minimum": 2000,
-            "maximum": 2027,
-            "description": "Contract-year bound; update annually and enforce the current-year-plus-one rule at runtime."
+            "minimum": 1000,
+            "maximum": 9999,
+            "description": "Four-digit cohort year with stable format-only bounds; it is not restricted by the current date."
           },
           "collegeName": {
             "type": [
@@ -12795,13 +12887,13 @@
             "maxLength": 32
           },
           "gender": {
-            "$ref": "#/components/schemas/Gender"
+            "$ref": "#/components/schemas/CourseJoinGender"
           },
           "gradeYear": {
             "type": "integer",
-            "minimum": 2000,
-            "maximum": 2027,
-            "description": "Contract-year bound; update annually and enforce the current-year-plus-one rule at runtime."
+            "minimum": 1000,
+            "maximum": 9999,
+            "description": "Four-digit cohort year with stable format-only bounds; it is not restricted by the current date."
           }
         }
       },
@@ -14576,15 +14668,15 @@
           },
           "account": {
             "type": "string",
-            "minLength": 1,
+            "format": "email",
+            "minLength": 3,
             "maxLength": 254,
             "writeOnly": true
           },
           "channel": {
             "type": "string",
             "enum": [
-              "EMAIL",
-              "PHONE"
+              "EMAIL"
             ],
             "x-transport-constraint": true
           },
@@ -14659,7 +14751,8 @@
           },
           "account": {
             "type": "string",
-            "minLength": 1,
+            "format": "email",
+            "minLength": 3,
             "maxLength": 254,
             "writeOnly": true
           },
@@ -14674,8 +14767,7 @@
           "channel": {
             "type": "string",
             "enum": [
-              "EMAIL",
-              "PHONE"
+              "EMAIL"
             ],
             "x-transport-constraint": true
           },
@@ -14730,6 +14822,32 @@
             "minLength": 12,
             "maxLength": 256,
             "writeOnly": true
+          }
+        }
+      },
+      "EmailVerificationChallengeAccepted": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "challengeId",
+          "mode",
+          "expiresAt"
+        ],
+        "properties": {
+          "challengeId": {
+            "$ref": "#/components/schemas/OpaqueId"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "FIRST_BIND",
+              "REBIND"
+            ],
+            "x-transport-constraint": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -15987,6 +16105,22 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/AccountRecoveryAccepted"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/SuccessMeta"
+          }
+        }
+      },
+      "EmailVerificationChallengeAcceptedEnvelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/EmailVerificationChallengeAccepted"
           },
           "meta": {
             "$ref": "#/components/schemas/SuccessMeta"

@@ -13,18 +13,18 @@ This inventory preserves the initial findings and records their final production
 | backend-ci | 1 |
 | backend-config-doc | 22 |
 | backend-contract-doc | 91 |
-| backend-generated | 87 |
+| backend-generated | 88 |
 | backend-script | 10 |
-| backend-source | 214 |
-| backend-test | 70 |
+| backend-source | 216 |
+| backend-test | 71 |
 | client-handoff | 36 |
 | contract-tool | 12 |
-| database | 29 |
+| database | 33 |
 | docker | 2 |
 | repository-doc | 1 |
 | repository-tool | 1 |
 | root-governance | 6 |
-| **Total** | **582** |
+| **Total** | **590** |
 
 Excluded from mutation: Android, Web, iOS, and all client implementation files. `AGENTS.md` is audited as a root governance file but its user-owned modification is protected from editing, staging, commit, and PR inclusion.
 
@@ -39,29 +39,29 @@ Every requested lexical category is retained with a contextual disposition; coun
 | HACK | 1 | 1 | INTENTIONAL_DESIGN | RESOLVED |
 | TEMP | 1 | 1 | INTENTIONAL_DESIGN | RESOLVED |
 | temporary | 3 | 3 | INTENTIONAL_DESIGN | RESOLVED |
-| placeholder | 45 | 10 | INTENTIONAL_DESIGN | RESOLVED |
+| placeholder | 44 | 15 | INTENTIONAL_DESIGN | RESOLVED |
 | mock | 242 | 55 | INTENTIONAL_DESIGN | RESOLVED |
 | stub | 3 | 3 | INTENTIONAL_DESIGN | RESOLVED |
 | not implemented | 16 | 11 | INTENTIONAL_DESIGN | RESOLVED |
 | NotImplementedException | 1 | 1 | INTENTIONAL_DESIGN | RESOLVED |
-| throw new Error | 180 | 41 | INTENTIONAL_DESIGN | RESOLVED |
+| throw new Error | 187 | 41 | INTENTIONAL_DESIGN | RESOLVED |
 | console.log | 14 | 8 | INTENTIONAL_DESIGN | RESOLVED |
 | console.error | 11 | 6 | INTENTIONAL_DESIGN | RESOLVED |
 | debugger | 2 | 1 | FALSE_POSITIVE | RESOLVED |
 | @ts-ignore | 3 | 1 | INTENTIONAL_DESIGN | RESOLVED |
-| @ts-nocheck | 87 | 83 | INTENTIONAL_DESIGN | RESOLVED |
-| eslint-disable | 87 | 85 | INTENTIONAL_DESIGN | RESOLVED |
-| any | 286 | 93 | INTENTIONAL_DESIGN | RESOLVED |
-| unknown as | 54 | 25 | INTENTIONAL_DESIGN | RESOLVED |
-| skip | 1136 | 93 | FALSE_POSITIVE | RESOLVED |
+| @ts-nocheck | 88 | 84 | INTENTIONAL_DESIGN | RESOLVED |
+| eslint-disable | 88 | 86 | INTENTIONAL_DESIGN | RESOLVED |
+| any | 302 | 97 | INTENTIONAL_DESIGN | RESOLVED |
+| unknown as | 56 | 26 | INTENTIONAL_DESIGN | RESOLVED |
+| skip | 1150 | 94 | FALSE_POSITIVE | RESOLVED |
 | only | 3 | 1 | FALSE_POSITIVE | RESOLVED |
 | empty catch | 0 | 0 | FALSE_POSITIVE | RESOLVED |
-| hard-coded secret | 36 | 15 | FALSE_POSITIVE | RESOLVED |
-| hard-coded URL | 3390 | 121 | FALSE_POSITIVE | RESOLVED |
-| default deny | 412 | 74 | INTENTIONAL_DESIGN | RESOLVED |
-| deprecated | 69 | 19 | INTENTIONAL_DESIGN | RESOLVED |
-| legacy | 52 | 24 | INTENTIONAL_DESIGN | RESOLVED |
-| compatibility | 202 | 47 | INTENTIONAL_DESIGN | RESOLVED |
+| hard-coded secret | 37 | 16 | FALSE_POSITIVE | RESOLVED |
+| hard-coded URL | 3426 | 122 | FALSE_POSITIVE | RESOLVED |
+| default deny | 407 | 73 | INTENTIONAL_DESIGN | RESOLVED |
+| deprecated | 67 | 19 | INTENTIONAL_DESIGN | RESOLVED |
+| legacy | 70 | 28 | INTENTIONAL_DESIGN | RESOLVED |
+| compatibility | 204 | 47 | INTENTIONAL_DESIGN | RESOLVED |
 
 Promise-without-await analysis: RESOLVED — Type-aware ESLint no-floating-promises applies to production TypeScript; node:test registration promises have one explicit test-only exception.
 

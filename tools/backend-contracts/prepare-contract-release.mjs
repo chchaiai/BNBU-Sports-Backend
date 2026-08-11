@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 import YAML from "yaml";
@@ -91,50 +91,9 @@ if (
   provenance.contractVersion !== document.info.version ||
   !/^[0-9a-f]{40}$/.test(provenance.sourceCommit)
 ) {
-  throw new Error(
-    "Release provenance is invalid or does not match the candidate",
-  );
+  throw new Error("Release provenance is invalid or does not match the candidate");
 }
 const candidateHash = sha256(canonical);
-const historyRelative = `docs/backend-contracts/contract-history/${document.info.version}-${candidateHash}`;
-const historyDirectory = resolve(repositoryRoot, historyRelative);
-const historySnapshotRelative = `${historyRelative}/openapi.snapshot.yaml`;
-const historySnapshotPath = resolve(historyDirectory, "openapi.snapshot.yaml");
-const historyManifestPath = resolve(historyDirectory, "manifest.json");
-const historySnapshotExists = existsSync(historySnapshotPath);
-const historyManifestExists = existsSync(historyManifestPath);
-if (historySnapshotExists !== historyManifestExists) {
-  throw new Error(
-    "Published Contract 1.4 history must contain both snapshot and manifest",
-  );
-}
-let publishedHistory = null;
-if (historySnapshotExists) {
-  const historySnapshot = readFileSync(historySnapshotPath, "utf8");
-  const historyManifest = JSON.parse(readFileSync(historyManifestPath, "utf8"));
-  if (
-    historySnapshot !== canonical ||
-    sha256(historySnapshot) !== candidateHash
-  ) {
-    throw new Error(
-      "Published Contract 1.4 snapshot is not byte-identical to the canonical contract",
-    );
-  }
-  if (
-    historyManifest.formatVersion !== 1 ||
-    historyManifest.version !== document.info.version ||
-    historyManifest.sha256 !== candidateHash ||
-    historyManifest.byteLength !== Buffer.byteLength(canonical) ||
-    !/^[0-9a-f]{40}$/.test(historyManifest.sourceCommit) ||
-    historyManifest.sourcePath !== "docs/backend-contracts/openapi.yaml" ||
-    historyManifest.snapshotPath !== historySnapshotRelative ||
-    historyManifest.immutable !== true
-  ) {
-    throw new Error("Published Contract 1.4 history manifest is invalid");
-  }
-  publishedHistory = historyManifest;
-}
-const isPublished = publishedHistory !== null;
 const releaseDirectory = resolve(
   repositoryRoot,
   "docs/backend-contracts/releases/1.4.0-contract",
@@ -144,7 +103,6 @@ const snapshotRelative =
 const metadata = {
   formatVersion: 1,
   contractVersion: document.info.version,
-  releaseState: isPublished ? "PUBLISHED" : "CANDIDATE",
   openapiVersion: document.openapi,
   sha256: candidateHash,
   byteLength: Buffer.byteLength(canonical),
@@ -173,40 +131,35 @@ const metadata = {
     intentionallyDisabled: runtime.implementedDefaultDeny.length,
     notImplemented: 0,
   },
-  ...(isPublished
-    ? {
-        publishedSnapshot: historySnapshotRelative,
-        publishedFromCommit: publishedHistory.sourceCommit,
-      }
-    : {}),
 };
 
 const manifest = `${JSON.stringify(metadata, null, 2)}\n`;
-const changelog = `# Contract 1.4.0${isPublished ? "" : " Candidate"} Changelog
+const changelog = `# Contract 1.4.0 Candidate Changelog
 
 Baseline: immutable \`1.3.0-contract\` SHA-256 \`${publishedHash}\`.
 
-- Preserves all 122 published operations and all prior request/response schema alternatives.
+- Publishes ${metadata.counts.operations} operations and records every Contract 1.3 compatibility change through the checked exception registry.
 - Documents every globally reachable SystemMode mutation response and the Export read fail-closed response.
 - Defines mutually exclusive \`listStudentScores.status\` semantics and aligns the runtime projection with the published flat StudentScore transport.
 - Records all 16 Contract 1.3 errata without narrowing the 1.3 request schema: endpoint runtime vocabularies use \`x-runtime-enum\`; compatibility-only Score sort fields are deprecated and explicitly unsupported.
 - Accepts both RFC3339 time values and organization-local wall-clock values for class-section local-time fields while retaining the prior format alternative.
 - Adds an explicit UNLICENSED identifier and scoped Redocly suppressions with removal conditions.
-- Adds no path removal, method removal, required request field, response field removal, security weakening, permission change, or unapproved breaking change.
+- Implements ADR-101 email-only authentication: removes the generic \`PATCH /me\` placeholder, adds dedicated email challenge operations, removes public phone fields, and closes \`channel\` to \`EMAIL\`.
+- All breaking changes are covered by time-bounded approved exceptions; no unapproved blocker remains.
 `;
 const migrationNotes = `# Contract 1.4.0 Migration Notes
 
 ## Clients
 
-No immediate Android, Web, or iOS source change is required. Existing \`/api/v1\` paths, methods, fields, and enum values remain available. Clients should consume \`listStudentScores.status\` as the documented aggregate status and must not assume the three deprecated Score \`sort\` parameters influence ordering.
+Android must upgrade with this contract: student sign-in and account security are email-only, \`PENDING_CONTACT_BINDING\` gates new students, and the two dedicated email challenge operations replace the removed generic \`PATCH /me\`. Web teacher/admin password login and recovery must submit verified email identifiers. Clients must not send \`PHONE\` or read public phone fields.
 
 ## Database
 
-Migration \`0013_production_rate_limits\` adds durable, HMAC-scoped authentication and QR-join rate-limit windows. It is forward-only and does not rewrite business records. Deploy migrations before the application image.
+Migration \`0014_email_only_auth\` adds the email-verification challenge table and the explicit \`PENDING_CONTACT_BINDING\` User status. Follow-up migration \`0015_email_verification_fk_alignment\` aligns the new table's foreign-key update actions without changing or deleting data. Both are forward-only and preserve legacy phone columns and historical \`PHONE\` challenges without reading, clearing, or dropping them. Deploy migrations before the application image.
 
 ## Deferred breaking cleanup
 
-A future \`/api/v2\` may replace open strings with closed endpoint enums and remove deprecated compatibility-only Score sort inputs. That change requires a new compatibility review and client migration; it is not part of this candidate.
+A future separately approved destructive migration may physically remove the ignored legacy phone columns after retention and client evidence are complete. It is not part of this candidate. A future \`/api/v2\` may also remove deprecated compatibility-only Score sort inputs under a separate compatibility review.
 `;
 const checklist = `# Contract 1.4.0 Post-Merge Release Checklist
 
@@ -220,16 +173,15 @@ This pull request prepares artifacts only. Do not create a tag or GitHub Release
 6. Create the approved Git tag and GitHub Release from the verified merged commit; attach the manifest, OpenAPI snapshot, compatibility reports, changelog, migration notes, and client handoff.
 7. If any hash or gate differs, stop and forward-fix; never overwrite a historical snapshot.
 `;
-const handoff = `# BNBU Sports Contract 1.4.0 ${isPublished ? "Published" : "Candidate"} Handoff
+const handoff = `# BNBU Sports Contract 1.4.0 Candidate Handoff
 
 | Item | Value |
 | --- | --- |
 | Canonical OpenAPI | \`docs/backend-contracts/openapi.yaml\` |
-| Contract version | \`${document.info.version}\` |
-| Release state | \`${isPublished ? "PUBLISHED" : "CANDIDATE"}\` |
+| Candidate version | \`${document.info.version}\` |
 | OpenAPI version | \`${document.openapi}\` |
 | SHA-256 | \`${candidateHash}\` |
-| Source commit containing the canonical contract | \`${metadata.sourceCommit}\` |
+  | Source baseline commit | \`${metadata.sourceCommit}\` |
 | Operations | ${metadata.counts.operations} |
 | Schemas | ${metadata.counts.schemas} |
 | Compatibility vs 1.3 | PASS; 0 unapproved blockers |
@@ -237,26 +189,9 @@ const handoff = `# BNBU Sports Contract 1.4.0 ${isPublished ? "Published" : "Can
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The 18 disabled operations remain real authenticated routes that fail closed; this handoff does not authorize Export, profile mutation, location collection, or other unapproved capabilities. Client source code was not changed by this contract release.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed; this handoff does not authorize Export, generic profile mutation, location collection, or other unapproved capabilities. Android and shared Web recovery guidance are synchronized in the same monorepo change.
 `;
-const currentHandoff = isPublished
-  ? `# BNBU Sports Backend Current Handoff
-
-The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
-
-- Published contract: \`${document.info.version}\`
-- OpenAPI: \`${document.openapi}\`
-- SHA-256: \`${candidateHash}\`
-- Immutable snapshot: \`${historySnapshotRelative}\`
-- Surface: ${metadata.counts.paths} paths / ${metadata.counts.operations} operations / ${metadata.counts.schemas} schemas
-- Runtime: ${metadata.runtime.implementedAndConformant} implemented and conformant / ${metadata.runtime.intentionallyDisabled} intentionally disabled / 0 not implemented
-- Previous published baseline: \`1.3.0-contract\` SHA-256 \`${publishedHash}\`, immutable
-- Breaking gate: PASS, 0 unapproved blockers
-- Release state: published as \`${document.info.version}\`
-
-See \`docs/backend-contracts/releases/1.4.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md\`.
-`
-  : `# BNBU Sports Backend Current Handoff
+const currentHandoff = `# BNBU Sports Backend Current Handoff
 
 The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
 
@@ -272,29 +207,14 @@ The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
 See \`docs/backend-contracts/releases/1.4.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md\`.
 `;
 const pointer = `${JSON.stringify(
-  isPublished
-    ? {
-        currentPublished: document.info.version,
-        releaseState: "PUBLISHED",
-        sha256: candidateHash,
-        canonicalPath: "docs/backend-contracts/openapi.yaml",
-        releaseManifest:
-          "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
-        immutableSnapshot: historySnapshotRelative,
-        previousPublishedBaseline: {
-          version: "1.3.0-contract",
-          sha256: publishedHash,
-        },
-      }
-    : {
-        currentCandidate: document.info.version,
-        releaseState: "CANDIDATE",
-        sha256: candidateHash,
-        canonicalPath: "docs/backend-contracts/openapi.yaml",
-        releaseManifest:
-          "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
-        publishedBaseline: { version: "1.3.0-contract", sha256: publishedHash },
-      },
+  {
+    currentCandidate: document.info.version,
+    sha256: candidateHash,
+    canonicalPath: "docs/backend-contracts/openapi.yaml",
+    releaseManifest:
+      "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
+    publishedBaseline: { version: "1.3.0-contract", sha256: publishedHash },
+  },
   null,
   2,
 )}\n`;

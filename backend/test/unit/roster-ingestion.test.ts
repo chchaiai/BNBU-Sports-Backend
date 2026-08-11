@@ -11,7 +11,6 @@ import type {
 } from '../../src/common/object-storage/object-storage.port.js';
 import { RosterCsvParserService } from '../../src/common/roster-ingestion/roster-csv-parser.service.js';
 import { RosterMultipartUploadService } from '../../src/common/roster-ingestion/roster-multipart-upload.service.js';
-import { FixedClock } from '../../src/common/time/clock.js';
 import { foundationEnvironment } from '../helpers/test-environment.js';
 
 class MemoryObjectStorage implements ObjectStoragePort {
@@ -151,10 +150,7 @@ describe('Stage 13 private roster ingestion', () => {
         ].join('\n'),
       ),
     );
-    const parsed = await new RosterCsvParserService(
-      storage,
-      new FixedClock(new Date('2026-08-04T00:00:00.000Z')),
-    ).parseStoredCsv({
+    const parsed = await new RosterCsvParserService(storage).parseStoredCsv({
       sourceFileStorageKey: 'roster-sources/a/test.csv',
       fieldMappingSnapshot: FIELD_MAPPING,
     });
@@ -167,5 +163,35 @@ describe('Stage 13 private roster ingestion', () => {
     assert.equal(parsed.rows[0]?.normalizedStudentNumber, '0007A');
     assert.ok(parsed.rows[1]?.rowErrorCodes.includes('FORMULA_LIKE_VALUE'));
     assert.equal(parsed.rows[1]?.fullName?.startsWith("'="), true);
+  });
+
+  it('uses static four-digit grade-year bounds for roster rows', async () => {
+    const storage = new MemoryObjectStorage();
+    storage.objects.set(
+      'roster-sources/a/grade-years.csv',
+      Buffer.from(
+        [
+          'studentNumber,fullName,gender,gradeYear',
+          '0001A,Lower Boundary,MALE,1000',
+          '0002A,Future Cohort,FEMALE,2028',
+          '0003A,Upper Boundary,OTHER,9999',
+          '0004A,Too Short,MALE,999',
+          '0005A,Too Long,FEMALE,10000',
+        ].join('\n'),
+      ),
+    );
+    const parsed = await new RosterCsvParserService(storage).parseStoredCsv({
+      sourceFileStorageKey: 'roster-sources/a/grade-years.csv',
+      fieldMappingSnapshot: FIELD_MAPPING,
+    });
+
+    assert.deepEqual(
+      parsed.rows.map((row) => row.gradeYear),
+      [1000, 2028, 9999, null, null],
+    );
+    assert.deepEqual(
+      parsed.rows.map((row) => row.rowValidationStatus),
+      ['VALID', 'VALID', 'VALID', 'INVALID', 'INVALID'],
+    );
   });
 });

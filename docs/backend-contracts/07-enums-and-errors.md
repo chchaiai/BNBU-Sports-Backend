@@ -42,6 +42,7 @@
 
 | 枚举类型 | 枚举值 | 业务含义 | 是否终态 | 客户端国际化 Key | 是否已废弃 |
 |---|---|---|---|---|---|
+| `UserStatus` | `PENDING_CONTACT_BINDING` | 新学生尚未验证邮箱；仅允许本人信息、邮箱验证、刷新和退出 | 否；邮箱验证成功后进入 `ACTIVE` | `enum.userStatus.pendingContactBinding` | 否 |
 | `UserStatus` | `ACTIVE` | 账户可按角色和资源范围建立/使用会话 | 否 | `enum.userStatus.active` | 否 |
 | `UserStatus` | `LOCKED` | 因安全策略临时锁定；不得建立新会话 | 否 | `enum.userStatus.locked` | 否 |
 | `UserStatus` | `DISABLED` | 组织治理流程已禁用账户，所有既有会话应撤销 | 静止态；受控恢复需独立治理流程 | `enum.userStatus.disabled` | 否 |
@@ -55,6 +56,15 @@
 | `Gender` | `OTHER` | 其他经业务允许的性别值 | 不适用 | `enum.gender.other` | 否 |
 
 缺失值使用字段的 `null` 语义，不新增 `UNKNOWN` 来掩盖未采集、未核验或迁移失败。
+
+### 3.3a CourseJoinGender
+
+| 枚举类型 | 枚举值 | 业务含义 | 是否终态 | 客户端国际化 Key | 是否已废弃 |
+|---|---|---|---|---|---|
+| `CourseJoinGender` | `MALE` | 扫码加入课程时选择男性 | 不适用 | `enum.courseJoinGender.male` | 否 |
+| `CourseJoinGender` | `FEMALE` | 扫码加入课程时选择女性 | 不适用 | `enum.courseJoinGender.female` | 否 |
+
+该专用请求枚举只收窄二维码入班资料，不替代全局 `Gender`；历史资料和官方名单中的 `Gender.OTHER` 继续有效。
 
 ### 3.4 EnrollmentSource
 

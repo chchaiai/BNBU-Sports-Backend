@@ -84,8 +84,8 @@ if (Object.keys(runtime.implemented).length !== operations.length) {
     `runtime manifest count ${Object.keys(runtime.implemented).length} does not match OpenAPI ${operations.length}`,
   );
 }
-if (defaultDeny.size !== 18)
-  failures.push(`intentionally disabled count is ${defaultDeny.size}, expected 18`);
+if (defaultDeny.size !== 17)
+  failures.push(`intentionally disabled count is ${defaultDeny.size}, expected 17`);
 
 const summary = {
   operationCount: coverage.length,

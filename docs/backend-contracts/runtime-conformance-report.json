@@ -1,12 +1,12 @@
 {
   "contractVersion": "1.4.0-contract",
   "summary": {
-    "operationCount": 122,
-    "enabledCount": 104,
-    "intentionallyDisabledCount": 18,
-    "successCoveredCount": 104,
-    "errorCoveredCount": 122,
-    "conformantEventCount": 463,
+    "operationCount": 123,
+    "enabledCount": 106,
+    "intentionallyDisabledCount": 17,
+    "successCoveredCount": 106,
+    "errorCoveredCount": 123,
+    "conformantEventCount": 478,
     "invalidEventCount": 0
   },
   "operations": [
@@ -140,16 +140,31 @@
       ]
     },
     {
-      "operationId": "updateCurrentUserProfile",
-      "method": "PATCH",
-      "path": "/me",
-      "disabled": true,
-      "completionStatus": "INTENTIONALLY_DISABLED",
-      "conformanceStatus": "INTENTIONALLY_DISABLED_VALIDATED",
-      "successStatuses": [],
+      "operationId": "requestCurrentUserEmailChallenge",
+      "method": "POST",
+      "path": "/me/email-verification-challenges",
+      "disabled": false,
+      "completionStatus": "IMPLEMENTED_AND_CONFORMANT",
+      "conformanceStatus": "BOTH_VALIDATED",
+      "successStatuses": [
+        202
+      ],
       "errorStatuses": [
-        401,
-        503
+        401
+      ]
+    },
+    {
+      "operationId": "verifyCurrentUserEmailChallenge",
+      "method": "POST",
+      "path": "/me/email-verification-challenges/{challengeId}/verify",
+      "disabled": false,
+      "completionStatus": "IMPLEMENTED_AND_CONFORMANT",
+      "conformanceStatus": "BOTH_VALIDATED",
+      "successStatuses": [
+        200
+      ],
+      "errorStatuses": [
+        401
       ]
     },
     {
@@ -376,8 +391,7 @@
         200
       ],
       "errorStatuses": [
-        401,
-        403
+        401
       ]
     },
     {
@@ -923,7 +937,8 @@
         201
       ],
       "errorStatuses": [
-        401
+        401,
+        422
       ]
     },
     {
@@ -1462,7 +1477,8 @@
         200
       ],
       "errorStatuses": [
-        401
+        401,
+        409
       ]
     },
     {

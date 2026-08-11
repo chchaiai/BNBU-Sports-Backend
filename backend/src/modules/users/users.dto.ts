@@ -4,7 +4,6 @@ import {
   IsIn,
   IsInt,
   IsOptional,
-  IsPhoneNumber,
   IsString,
   IsUUID,
   Length,
@@ -60,25 +59,35 @@ export class StudentListQueryDto {
   status?: string;
 }
 
-export class UpdateCurrentProfileRequestDto {
-  @IsOptional()
-  @ValidateIf((_object, value: unknown) => value !== null)
+export class EmailVerificationChallengeRequestDto {
   @Transform(trim)
   @IsEmail()
-  @MaxLength(254)
-  primaryEmail?: string | null;
+  @Length(3, 254)
+  email!: string;
 
-  @IsOptional()
-  @ValidateIf((_object, value: unknown) => value !== null)
-  @Transform(trim)
-  @IsPhoneNumber()
-  @MaxLength(32)
-  primaryPhone?: string | null;
+  @IsIn(['zh-CN', 'en'])
+  locale!: string;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   expectedVersion!: number;
+}
+
+export class EmailVerificationChallengePathDto {
+  @IsUUID()
+  challengeId!: string;
+}
+
+export class VerifyEmailChallengeRequestDto {
+  @ValidateIf((_object, value: unknown) => value !== undefined)
+  @Transform(trim)
+  @Matches(/^\d{4,10}$/)
+  currentEmailCode?: string;
+
+  @Transform(trim)
+  @Matches(/^\d{4,10}$/)
+  newEmailCode!: string;
 }
 
 export class UpdateStudentRequestDto {
@@ -95,8 +104,8 @@ export class UpdateStudentRequestDto {
   @ValidateIf((_object, value: unknown) => value !== undefined)
   @Type(() => Number)
   @IsInt()
-  @Min(2000)
-  @Max(2027)
+  @Min(1000)
+  @Max(9999)
   gradeYear?: number;
 
   @IsOptional()

@@ -18,6 +18,7 @@ import {
   InMemoryTestAuthCodeDeliveryAdapter,
 } from './auth-code-delivery.port.js';
 import { ExemptionApplicationsService } from './exemption-applications.service.js';
+import { SmtpAuthCodeDeliveryAdapter } from './smtp-auth-code-delivery.adapter.js';
 
 @Module({
   imports: [AuthModule],
@@ -47,7 +48,9 @@ import { ExemptionApplicationsService } from './exemption-applications.service.j
       useFactory: (config: RuntimeConfig): AuthCodeDeliveryPort =>
         config.appEnvironment === 'test'
           ? new InMemoryTestAuthCodeDeliveryAdapter('test')
-          : new DisabledAuthCodeDeliveryAdapter(),
+          : config.emailDelivery === null
+            ? new DisabledAuthCodeDeliveryAdapter()
+            : new SmtpAuthCodeDeliveryAdapter(config.emailDelivery),
     },
     {
       provide: PUSH_TOKEN_CIPHER,
@@ -61,5 +64,6 @@ import { ExemptionApplicationsService } from './exemption-applications.service.j
             ),
     },
   ],
+  exports: [AuthCodeCrypto, AuthCodeDeliveryPort],
 })
 export class ClientCapabilitiesModule {}

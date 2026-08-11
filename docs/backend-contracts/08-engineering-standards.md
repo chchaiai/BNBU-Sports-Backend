@@ -38,7 +38,7 @@
 - `User.id` 是唯一认证主体；`StudentProfile.id`、`TeacherProfile.id`、`AdminProfile.id` 和 `studentNumber/employeeNumber` 都不能替代 `sub`。
 - 基础角色只允许 `STUDENT/TEACHER/ADMIN`（ADR-001）。角色认证成功后，权限中间件仍必须查询组织、本人/教学班归属及资源状态。
 - Access Token、Refresh Token、设备会话、密码凭据、验证码等属于认证子域，不得塞进业务 Profile；Foundation 只在 `users`、`auth_sessions`、`refresh_tokens` 建立已冻结的最小持久化边界。
-- ADR-028 已允许学生 password hash、email、phone 为空；教师和管理员密码流程不能反向强迫学生设置密码。本轮 password-login 只服务于预置 TEACHER/ADMIN 测试账户。
+- ADR-028/101 允许学生 password hash 和 email 为空；手机号仅作不可读写历史事实。教师和管理员密码流程不能反向强迫学生设置密码，password-login 只接受已验证邮箱并服务 TEACHER/ADMIN。
 
 ### 2.2 Access Token
 
@@ -84,7 +84,7 @@ Access Token 必须：
 ### 2.6 密码、验证码和滥用防护
 
 - 密码只保存 Argon2id hash（库生成独立盐）；参数通过显式配置并在启动时校验，未来参数升级使用登录后 rehash。禁止自研加密、可逆“加密密码”或明文回传。
-- 邮箱/短信验证码只保存摘要、用途、过期时间、尝试计数和使用状态；验证成功后立即失效，不得跨用途复用。
+- 邮箱验证码只保存摘要、用途、过期时间、尝试计数和使用状态；验证成功后立即失效，不得跨用途复用。`PHONE` 请求在 DTO 校验层拒绝，不得创建 challenge 或投递消息。
 - 登录、发送验证码、刷新、恢复、邀请码解析必须有组织/账号/IP/设备等多维滥用控制；具体阈值待运营与安全决策，不在客户端硬编码为权威规则。
 - 认证失败响应不得泄露账号是否存在、联系方式全文或内部锁定细节；安全团队可在受控日志中查看原因码。
 
@@ -422,7 +422,7 @@ production 数据禁止直接复制到 local/development/test/staging。确需�
 - Token issuer/audience/signing key reference、Access/Refresh 时长、session/revocation参数；
 - 幂等 retention/lease、队列/outbox 参数；
 - 对象存储 endpoint/region/bucket/credential reference、上传/访问 TTL、大小/MIME/扫描/清理参数；
-- 邮件/短信/Push sandbox 与生产凭据；
+- 邮件/Push sandbox 与生产凭据；
 - 日志、trace、metrics、错误追踪、采样和告警路由；
 - 加密/key reference、备份目标和恢复配置；
 - 业务已批准的 system mode/feature rollout，但 feature flag 不能绕过权限和状态机。
@@ -462,7 +462,7 @@ production 数据禁止直接复制到 local/development/test/staging。确需�
 ### 11.3 普通日志绝对禁止字段
 
 - Authorization、Cookie、Access/Refresh Token、Token hash、验证码、密码、passwordHash、签名 key/secret、完整 DSN。
-- `studentNumber`、`employeeNumber`、`fullName`、primaryEmail/primaryPhone、原始 IP/User-Agent（除独立受控安全流）。
+- `studentNumber`、`employeeNumber`、`fullName`、primaryEmail、历史手机号字段、原始 IP/User-Agent（除独立受控安全流）。
 - 原始请求/响应 body、官方名单行/文件、导出内容、Review `internalNote`/自由文本理由、反馈/工单正文。
 - 成绩明细/分数、Enrollment 明细列表、媒体二进制、`storageKey`、sourceFileStorageKey、signed/upload URL、checksum。
 - SQL 全文及 bind 参数、异常中嵌入的 header/body、secret manager 响应。

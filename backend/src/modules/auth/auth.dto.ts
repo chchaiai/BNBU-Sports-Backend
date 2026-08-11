@@ -1,8 +1,8 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class PasswordLoginRequest {
-  @IsString()
-  @Length(1, 254)
+  @IsEmail()
+  @Length(3, 254)
   account!: string;
 
   @IsString()

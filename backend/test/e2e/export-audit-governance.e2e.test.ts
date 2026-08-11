@@ -215,26 +215,14 @@ describe('Stage 19 Export, Audit Read, and governance HTTP E2E', () => {
     );
   });
 
-  it('returns exact profile default-deny errors without mutation side effects', async () => {
+  it('returns exact student-profile default-deny errors without mutation side effects', async () => {
     const admin = await login(fixture.adminEmail);
-    const ownStudent = await studentToken();
     const before = {
       audit: await prisma.auditLog.count(),
       outbox: await prisma.outboxEvent.count(),
       version: (await prisma.studentProfile.findUniqueOrThrow({ where: { id: student.studentId } }))
         .version,
     };
-    const me = await request(
-      '/api/v1/me',
-      authenticated(
-        ownStudent,
-        'PATCH',
-        { primaryEmail: 'changed.synthetic@invalid.test', expectedVersion: 1 },
-        uuidv7(),
-      ),
-    );
-    assert.equal(me.status, 503);
-    assert.equal(me.body.code, 'SYSTEM_MODE_UNSUPPORTED');
     const update = await request(
       `/api/v1/students/${student.studentId}`,
       authenticated(

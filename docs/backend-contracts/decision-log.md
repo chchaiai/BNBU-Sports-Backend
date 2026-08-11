@@ -344,3 +344,21 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - 后端以同一学生、同一 session、`EXERCISE_RECORD`、`IN_APP_CAMERA` 为范围裁决完整集合；任何处理中媒体都阻止提交，任何 AVAILABLE 媒体被遗漏或额外 mediaId 被加入都拒绝提交。
 - 媒体申请、绑定和 Record 提交共同锁定 session；Record 不再是可编辑草稿后，不得为该 session 新增或绑定媒体。
 - `student_remark` 先从业务合同、投影和读写代码移除，数据库遗留列保持不可访问；物理删除必须等待破坏性迁移审批和兼容窗口。
+
+### ADR-101：邮箱唯一认证与短信能力下线（2026-08-11，ACCEPTED）
+
+- 学生仅使用组织范围内已验证邮箱的一次性验证码登录；教师与管理员的密码登录和账户找回也只按已验证邮箱查找。请求中的 `channel` 为兼容邮箱客户端继续保留，但闭集固定为 `EMAIL`，`PHONE` 必须在校验层稳定拒绝且不得创建挑战或投递消息。
+- 新建学生账户进入 `PENDING_CONTACT_BINDING`。该状态只允许读取本人信息、请求/验证邮箱、刷新会话和退出；邮箱验证成功后原子进入 `ACTIVE`，才能访问其余业务能力。
+- 本人邮箱首次绑定只验证新邮箱；更换已验证邮箱必须分别验证当前邮箱和新邮箱。成功换绑保留当前调用会话并撤销其他设备会话。验证码、邮箱明文和凭据不得进入日志、AuditLog 或 Outbox。
+- `/me` 联系方式占位 PATCH 删除，改为 `POST /me/email-verification-challenges` 与 `POST /me/email-verification-challenges/{challengeId}/verify`。公共 User 投影不再包含任何手机号或手机号验证字段。
+- 既有手机号数据库列、唯一索引和历史 `PHONE` challenge 作为遗留审计事实保留，Prisma 应用映射标记为不可读写；本阶段不 DROP、不清空、不修改历史 Migration。未来物理删除需独立破坏性迁移审批。
+- 非测试环境验证码投递仅允许显式 SMTP 邮件适配器；Staging/Production 缺少完整 SMTP 配置时启动失败。仓库不得保存 SMTP 密码，本地与测试使用隔离邮件服务或内存捕获适配器。
+- Android 登录页和“账户与安全”只保留邮箱流程；删除手机号输入、短信验证码、短信绑定和手机号恢复入口。无法使用邮箱时仅提示联系管理员核验并补录邮箱。
+
+### ADR-102：扫码入班资料的性别与年级稳定校验（2026-08-11，ACCEPTED）
+
+- 学生通过二维码加入课程时，性别只接受 `MALE` 或 `FEMALE`；Android 仅展示“男/女”二选一，后端在加入能力 DTO 层稳定拒绝 `OTHER`、未知值和缺失值。
+- 全局 `Gender.OTHER` 继续保留给历史学生资料、官方名单和其他既有投影，不迁移、不清空存量数据，也不借本决策收窄全局枚举。
+- `gradeYear` 表示四位 cohort 年份，统一按整数 `1000..9999` 校验；不再使用当前年份、课程年份、固定 `2027` 或“当前年 + 1”作为上限。
+- OpenAPI 为加入课程请求使用专用 `CourseJoinGender`，Android 与后端在同一 monorepo 变更中同步升级；旧客户端若继续提交 `OTHER` 将收到稳定校验失败。
+- 本决策不改变邮箱绑定、验证码、会话激活、名单历史数据或数据库结构，不需要 Migration。

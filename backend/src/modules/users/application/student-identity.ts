@@ -23,9 +23,7 @@ export interface ResolvedStudentIdentity {
     role: string;
     status: string;
     primaryEmail: string | null;
-    primaryPhone: string | null;
     emailVerifiedAt: Date | null;
-    phoneVerifiedAt: Date | null;
     tokenVersion: number;
     version: number;
   };

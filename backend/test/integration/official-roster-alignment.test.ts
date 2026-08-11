@@ -141,7 +141,7 @@ describe('Official Roster Import and Alignment PostgreSQL integration', () => {
       clock,
       ids,
       new RosterMultipartUploadService(config, storage),
-      new RosterCsvParserService(storage, clock),
+      new RosterCsvParserService(storage),
       storage,
     );
     alignment = new RosterAlignmentService(

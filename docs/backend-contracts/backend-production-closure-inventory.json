@@ -7,22 +7,22 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "de0640c26925d74b6c958ecbb905afe2a9f23bedfd396f9deaf704f070eb5ebe",
+    "currentContractSha256": "079781c04ac201b91026df0b1d391a9abd33d50caee8a7f70b32fc4432553597",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 582,
+    "fileCount": 590,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
       "backend-contract-doc": 91,
-      "backend-generated": 87,
+      "backend-generated": 88,
       "backend-script": 10,
-      "backend-source": 214,
-      "backend-test": 70,
+      "backend-source": 216,
+      "backend-test": 71,
       "client-handoff": 36,
       "contract-tool": 12,
-      "database": 29,
+      "database": 33,
       "docker": 2,
       "repository-doc": 1,
       "repository-tool": 1,
@@ -231,6 +231,22 @@
       },
       {
         "path": "backend/prisma/migrations/0013_production_rate_limits/migration.sql",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0014_email_only_auth/manifest.json",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0014_email_only_auth/migration.sql",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0015_email_verification_fk_alignment/manifest.json",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0015_email_verification_fk_alignment/migration.sql",
         "category": "database"
       },
       {
@@ -603,6 +619,10 @@
       },
       {
         "path": "backend/src/generated/prisma/models/CourseInvite.ts",
+        "category": "backend-generated"
+      },
+      {
+        "path": "backend/src/generated/prisma/models/EmailVerificationChallenge.ts",
         "category": "backend-generated"
       },
       {
@@ -1015,6 +1035,10 @@
       },
       {
         "path": "backend/src/modules/client-capabilities/push-token-cipher.ts",
+        "category": "backend-source"
+      },
+      {
+        "path": "backend/src/modules/client-capabilities/smtp-auth-code-delivery.adapter.ts",
         "category": "backend-source"
       },
       {
@@ -1474,6 +1498,10 @@
         "category": "backend-source"
       },
       {
+        "path": "backend/src/modules/users/email-verification.service.ts",
+        "category": "backend-source"
+      },
+      {
         "path": "backend/src/modules/users/profiles.controller.ts",
         "category": "backend-source"
       },
@@ -1771,6 +1799,10 @@
       },
       {
         "path": "backend/test/unit/score.test.ts",
+        "category": "backend-test"
+      },
+      {
+        "path": "backend/test/unit/smtp-auth-code-delivery.test.ts",
         "category": "backend-test"
       },
       {
@@ -2389,8 +2421,8 @@
       "files": 3
     },
     "placeholder": {
-      "matches": 45,
-      "files": 10
+      "matches": 44,
+      "files": 15
     },
     "mock": {
       "matches": 242,
@@ -2409,7 +2441,7 @@
       "files": 1
     },
     "throw new Error": {
-      "matches": 180,
+      "matches": 187,
       "files": 41
     },
     "console.log": {
@@ -2429,24 +2461,24 @@
       "files": 1
     },
     "@ts-nocheck": {
-      "matches": 87,
-      "files": 83
+      "matches": 88,
+      "files": 84
     },
     "eslint-disable": {
-      "matches": 87,
-      "files": 85
+      "matches": 88,
+      "files": 86
     },
     "any": {
-      "matches": 286,
-      "files": 93
+      "matches": 302,
+      "files": 97
     },
     "unknown as": {
-      "matches": 54,
-      "files": 25
+      "matches": 56,
+      "files": 26
     },
     "skip": {
-      "matches": 1136,
-      "files": 93
+      "matches": 1150,
+      "files": 94
     },
     "only": {
       "matches": 3,
@@ -2457,27 +2489,27 @@
       "files": 0
     },
     "hard-coded secret": {
-      "matches": 36,
-      "files": 15
+      "matches": 37,
+      "files": 16
     },
     "hard-coded URL": {
-      "matches": 3390,
-      "files": 121
+      "matches": 3426,
+      "files": 122
     },
     "default deny": {
-      "matches": 412,
-      "files": 74
+      "matches": 407,
+      "files": 73
     },
     "deprecated": {
-      "matches": 69,
+      "matches": 67,
       "files": 19
     },
     "legacy": {
-      "matches": 52,
-      "files": 24
+      "matches": 70,
+      "files": 28
     },
     "compatibility": {
-      "matches": 202,
+      "matches": 204,
       "files": 47
     }
   },

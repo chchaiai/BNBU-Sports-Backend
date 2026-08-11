@@ -66,6 +66,16 @@ export const foundationMigrations = [
     sha256: 'e6333720a29643af6d6eddef0a67710b742c76348060e9eef89a35c5c2b6abae',
     destructive: false,
   },
+  {
+    migrationId: '0014_email_only_auth',
+    sha256: 'c0ce94ec0551f293453839ff19d361dd1da109c69eed308f3dc92176de916927',
+    destructive: false,
+  },
+  {
+    migrationId: '0015_email_verification_fk_alignment',
+    sha256: 'f96b84e50b1510c340c54eea8e7a99301c8db7185362c1db47540b2c43065b95',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -81,3 +91,5 @@ export const exportAuditGovernanceMigration = foundationMigrations[9];
 export const clientCapabilitiesMigration = foundationMigrations[10];
 export const iosAuthReleaseExemptionMigration = foundationMigrations[11];
 export const productionRateLimitsMigration = foundationMigrations[12];
+export const emailOnlyAuthMigration = foundationMigrations[13];
+export const emailVerificationFkAlignmentMigration = foundationMigrations[14];

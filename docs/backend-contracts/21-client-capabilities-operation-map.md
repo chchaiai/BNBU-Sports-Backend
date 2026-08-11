@@ -16,7 +16,7 @@ Android 学生端与 Web 教师/管理端此前只有界面、Mock 或本地状�
 - `backend/src/modules/location-evidence/`：GPS 持久化/应用层基础，尚未接入 HTTP；
 - `backend/runtime-coverage.manifest.json`：运行覆盖状态与测试证据。
 
-当前 22 个 operation 是“仅本地集成”：版本政策 1、通知 2、推送设备 2、本人偏好 2、帮助 2、反馈 3、学生 OTP 登录 2、教师/管理员账号找回 2、免测 6；其余 8 个继续“合同存在、路由存在、权限先执行、业务稳定拒绝”。`0011_client_capabilities` 与 forward-only `0012_ios_auth_release_exemption` 已提供真实 persistence，但这不是 Staging、iOS 二进制、真实短信/邮件、APNs/FCM、GPS HTTP 或生产启用证据。
+当前 24 个 operation 是“仅本地集成”：版本政策 1、通知 2、推送设备 2、本人偏好 2、帮助 2、反馈 3、学生邮箱 OTP 登录 2、教师/管理员邮箱找回 2、本人邮箱绑定/换绑 2、免测 6；其余 7 个继续“合同存在、路由存在、权限先执行、业务稳定拒绝”。`0011_client_capabilities`、`0012_ios_auth_release_exemption` 与 forward-only `0014_email_only_auth` 已提供真实 persistence，但这不是 Staging、iOS 二进制、真实 SMTP、APNs/FCM、GPS HTTP 或生产启用证据。
 
 ## 2. Android 学生端对应关系
 
@@ -70,7 +70,7 @@ GPS 真正启用前必须另行批准并完成：明示同意与撤回、iOS/And
 
 | 原确认项 | 已有权威 operation/字段 | 结论 |
 |---|---|---|
-| 邮箱/手机号绑定 | `updateCurrentUserProfile`（`UsersController.update`） | 已有真实默认拒绝路由；验证挑战、唯一性和换绑规则未批准，不再创建语义重叠接口 |
+| 邮箱首次绑定/换绑 | `requestCurrentUserEmailChallenge`、`verifyCurrentUserEmailChallenge` | 首次绑定只验证新邮箱；换绑分别验证当前和新邮箱；成功后撤销其他设备会话；通用 `PATCH /me` 已删除 |
 | 打卡时间窗口查询 | `getClassSection` / `listClassSections` 返回 `checkInWindowMode`、日期、每日起止时间、截止时间和排除日期 | 已由 ClassSection 提供；服务端开始 Session 时仍作最终裁决，不新建第二套窗口查询事实 |
 | 学生审核结果 | `getExerciseRecord` 的学生安全 `currentReview` projection | 只含结果、原因码和公开意见；不返回教师 `internalNote` 或完整内部历史 |
 | 学生成绩 | `listStudentScores` / `getStudentScore` | 服务器发布结果权威；Android 本地计算不能替代该结果 |

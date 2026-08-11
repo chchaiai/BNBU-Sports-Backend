@@ -66,6 +66,7 @@ export async function resetFoundationDatabase(prisma: PrismaClient): Promise<voi
       notifications,
       app_release_policies,
       auth_rate_limit_facts,
+      email_verification_challenges,
       account_recovery_challenges,
       student_sign_in_challenges,
       review_records,
