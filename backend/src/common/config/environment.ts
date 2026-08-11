@@ -18,6 +18,7 @@ export interface MediaConfig {
   accessUrlTtlSeconds: number;
   maxImageBytes: number;
   maxImagePixels: number;
+  maxVideoTransportBytes: number;
   scannerMode: 'TEST_SIGNATURE' | 'EXTERNAL_REQUIRED';
   workerEnabled: boolean;
   workerPollMs: number;
@@ -241,6 +242,7 @@ function mediaConfiguration(
     'MEDIA_ACCESS_URL_TTL_SECONDS',
     'MEDIA_MAX_IMAGE_BYTES',
     'MEDIA_MAX_IMAGE_PIXELS',
+    'MEDIA_MAX_VIDEO_TRANSPORT_BYTES',
     'MEDIA_SCANNER_MODE',
     'MEDIA_WORKER_ENABLED',
     'MEDIA_WORKER_POLL_MS',
@@ -289,6 +291,10 @@ function mediaConfiguration(
     }),
     maxImageBytes: integer(raw, 'MEDIA_MAX_IMAGE_BYTES', { minimum: 1024 }),
     maxImagePixels: integer(raw, 'MEDIA_MAX_IMAGE_PIXELS', { minimum: 1 }),
+    maxVideoTransportBytes: integer(raw, 'MEDIA_MAX_VIDEO_TRANSPORT_BYTES', {
+      minimum: 1024,
+      maximum: Number.MAX_SAFE_INTEGER,
+    }),
     scannerMode,
     workerEnabled: optionalBoolean(raw, 'MEDIA_WORKER_ENABLED', false),
     workerPollMs: integer(raw, 'MEDIA_WORKER_POLL_MS', { minimum: 100, maximum: 60_000 }),

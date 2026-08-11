@@ -20,6 +20,7 @@ const config: MediaConfig = {
   accessUrlTtlSeconds: 300,
   maxImageBytes: 10_000,
   maxImagePixels: 1_000_000,
+  maxVideoTransportBytes: 536_870_912,
   scannerMode: 'TEST_SIGNATURE',
   workerEnabled: false,
   workerPollMs: 500,
@@ -38,9 +39,48 @@ function png(width = 2, height = 3): Buffer {
   return Buffer.concat([header, Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 0, 0, 0, 0])]);
 }
 
+function jpeg(options: { hasGps?: boolean; entropyContainsGpsTagBytes?: boolean } = {}): Buffer {
+  const segment = (marker: number, payload: Buffer): Buffer => {
+    const value = Buffer.alloc(4 + payload.length);
+    value[0] = 0xff;
+    value[1] = marker;
+    value.writeUInt16BE(payload.length + 2, 2);
+    payload.copy(value, 4);
+    return value;
+  };
+  const frame = Buffer.from([8, 0, 3, 0, 2, 1, 1, 0]);
+  const parts: Buffer[] = [Buffer.from([0xff, 0xd8])];
+  if (options.hasGps === true) {
+    const tiff = Buffer.alloc(26);
+    tiff.write('II', 0, 'ascii');
+    tiff.writeUInt16LE(42, 2);
+    tiff.writeUInt32LE(8, 4);
+    tiff.writeUInt16LE(1, 8);
+    tiff.writeUInt16LE(0x8825, 10);
+    tiff.writeUInt16LE(4, 12);
+    tiff.writeUInt32LE(1, 14);
+    tiff.writeUInt32LE(0, 18);
+    tiff.writeUInt32LE(0, 22);
+    parts.push(segment(0xe1, Buffer.concat([Buffer.from('Exif\0\0', 'binary'), tiff])));
+  }
+  parts.push(segment(0xc0, frame), Buffer.from([0xff, 0xda, 0, 2]));
+  parts.push(
+    options.entropyContainsGpsTagBytes === true
+      ? Buffer.from([0x10, 0x25, 0x88, 0x20])
+      : Buffer.from([0x10, 0x20]),
+  );
+  parts.push(Buffer.from([0xff, 0xd9]));
+  return Buffer.concat(parts);
+}
+
 function mp4(
   durationMilliseconds: number,
-  options: { hasAudio?: boolean; spoofAudioInMediaData?: boolean } = {},
+  options: {
+    hasAudio?: boolean;
+    spoofAudioInMediaData?: boolean;
+    hasLocationMetadata?: boolean;
+    locationTextInMediaData?: boolean;
+  } = {},
 ): Buffer {
   const box = (type: string, payload: Buffer): Buffer => {
     const value = Buffer.alloc(8 + payload.length);
@@ -55,15 +95,26 @@ function mp4(
   const movieHeaderPayload = Buffer.alloc(36);
   movieHeaderPayload.writeUInt32BE(1_000, 12);
   movieHeaderPayload.writeUInt32BE(durationMilliseconds, 16);
-  const handlerPayload = Buffer.alloc(24);
-  handlerPayload.write(options.hasAudio === false ? 'vide' : 'soun', 8, 'ascii');
-  const media = box('mdia', box('hdlr', handlerPayload));
-  const movie = box('moov', Buffer.concat([box('mvhd', movieHeaderPayload), box('trak', media)]));
+  const track = (handlerType: 'vide' | 'soun'): Buffer => {
+    const handlerPayload = Buffer.alloc(24);
+    handlerPayload.write(handlerType, 8, 'ascii');
+    return box('trak', box('mdia', box('hdlr', handlerPayload)));
+  };
+  const tracks = [track('vide')];
+  if (options.hasAudio !== false) tracks.push(track('soun'));
+  const metadata =
+    options.hasLocationMetadata === true ? [box('\xa9xyz', Buffer.from('+39.9+116.4/'))] : [];
+  const movie = box(
+    'moov',
+    Buffer.concat([box('mvhd', movieHeaderPayload), ...tracks, ...metadata]),
+  );
   const mediaDataPayload = options.spoofAudioInMediaData
     ? Buffer.from([
         0, 0, 0, 32, 0x68, 0x64, 0x6c, 0x72, 0, 0, 0, 0, 0, 0, 0, 0, 0x73, 0x6f, 0x75, 0x6e,
       ])
-    : Buffer.alloc(4);
+    : options.locationTextInMediaData === true
+      ? Buffer.from('location')
+      : Buffer.alloc(4);
   return Buffer.concat([box('ftyp', fileTypePayload), movie, box('mdat', mediaDataPayload)]);
 }
 
@@ -89,6 +140,42 @@ describe('MediaEvidence validation core', () => {
     assert.equal(verified.contentSha256, digest);
     assert.equal(verified.durationSeconds, null);
     assert.deepEqual(verified.safeMetadata, { width: 2, height: 3 });
+  });
+
+  it('accepts JPEG entropy bytes that resemble a GPS tag but rejects a real GPS IFD', async () => {
+    const validator = new MediaValidator();
+    const ordinary = jpeg({ entropyContainsGpsTagBytes: true });
+    const verified = await validator.readAndVerify(
+      Readable.from(ordinary),
+      {
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'IMAGE',
+        mimeType: 'image/jpeg',
+        fileSizeBytes: ordinary.length,
+        contentSha256: null,
+        durationSeconds: null,
+      },
+      config,
+    );
+    assert.deepEqual(verified.safeMetadata, { width: 2, height: 3 });
+
+    const located = jpeg({ hasGps: true });
+    await assert.rejects(
+      validator.readAndVerify(
+        Readable.from(located),
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'IMAGE',
+          mimeType: 'image/jpeg',
+          fileSizeBytes: located.length,
+          contentSha256: null,
+          durationSeconds: null,
+        },
+        config,
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_INTEGRITY_MISMATCH',
+    );
   });
 
   it('rejects MIME spoofing, byte-size mismatches, location metadata, and the test signature', async () => {
@@ -173,6 +260,37 @@ describe('MediaEvidence validation core', () => {
             businessPurpose: 'EXERCISE_RECORD',
             mediaType: 'VIDEO',
             mimeType: 'video/mp4',
+            fileSizeBytes: config.maxVideoTransportBytes + 1,
+            contentSha256: null,
+            durationSeconds: 15,
+          },
+          config,
+        ),
+      (error: unknown) => error instanceof ApplicationError && error.code === 'MEDIA_SIZE_EXCEEDED',
+    );
+    assert.throws(
+      () =>
+        validator.validateDeclaration(
+          {
+            businessPurpose: 'EXERCISE_RECORD',
+            mediaType: 'VIDEO',
+            mimeType: 'video/webm',
+            fileSizeBytes: 100,
+            contentSha256: null,
+            durationSeconds: 15,
+          },
+          config,
+        ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_TYPE_NOT_ALLOWED',
+    );
+    assert.throws(
+      () =>
+        validator.validateDeclaration(
+          {
+            businessPurpose: 'EXERCISE_RECORD',
+            mediaType: 'VIDEO',
+            mimeType: 'video/mp4',
             fileSizeBytes: 1,
             contentSha256: null,
             durationSeconds: 16,
@@ -200,7 +318,11 @@ describe('MediaEvidence validation core', () => {
       config,
     );
     assert.equal(verified.durationSeconds, 15);
-    assert.deepEqual(verified.safeMetadata, { durationSeconds: 15, audioTrackCount: 1 });
+    assert.deepEqual(verified.safeMetadata, {
+      durationSeconds: 15,
+      audioTrackCount: 1,
+      videoTrackCount: 1,
+    });
 
     const rejected = mp4(15_001);
     await assert.rejects(
@@ -253,6 +375,67 @@ describe('MediaEvidence validation core', () => {
       },
       config,
     );
-    assert.deepEqual(nonExercise.safeMetadata, { durationSeconds: 8, audioTrackCount: 0 });
+    assert.deepEqual(nonExercise.safeMetadata, {
+      durationSeconds: 8,
+      audioTrackCount: 0,
+      videoTrackCount: 1,
+    });
+  });
+
+  it('rejects an audio-only ISO media container even when it has a trusted audio handler', async () => {
+    const body = mp4(8_000);
+    const audioOnly = Buffer.from(body);
+    audioOnly.write('soun', audioOnly.indexOf(Buffer.from('vide', 'ascii')), 'ascii');
+    await assert.rejects(
+      new MediaValidator().readAndVerify(
+        Readable.from(audioOnly),
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/mp4',
+          fileSizeBytes: audioOnly.length,
+          contentSha256: null,
+          durationSeconds: 8,
+        },
+        config,
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_INTEGRITY_MISMATCH',
+    );
+  });
+
+  it('rejects ISO location metadata without scanning random media payload bytes', async () => {
+    const located = mp4(8_000, { hasLocationMetadata: true });
+    await assert.rejects(
+      new MediaValidator().readAndVerify(
+        Readable.from(located),
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/mp4',
+          fileSizeBytes: located.length,
+          contentSha256: null,
+          durationSeconds: 8,
+        },
+        config,
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'MEDIA_INTEGRITY_MISMATCH',
+    );
+
+    const payloadText = mp4(8_000, { locationTextInMediaData: true });
+    const verified = await new MediaValidator().readAndVerify(
+      Readable.from(payloadText),
+      {
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'VIDEO',
+        mimeType: 'video/mp4',
+        fileSizeBytes: payloadText.length,
+        contentSha256: null,
+        durationSeconds: 8,
+      },
+      config,
+    );
+    assert.equal(verified.durationSeconds, 8);
   });
 });

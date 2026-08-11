@@ -46,6 +46,12 @@ interface InitiationStage {
   capabilityExpiresAt: Date;
 }
 
+interface ConfirmationStage {
+  uploadSessionId: string;
+  mediaId: string;
+  capabilityExpiresAt: Date;
+}
+
 type ResolvedInitiationTarget =
   | {
       kind: 'TARGET';
@@ -202,7 +208,7 @@ export class MediaService {
   ): Promise<MediaEvidenceProjection> {
     const config = this.configuration();
     const reservation = await this.idempotency.reserveStage<
-      { uploadSessionId: string; mediaId: string },
+      ConfirmationStage,
       MediaEvidenceProjection
     >(
       {
@@ -228,13 +234,12 @@ export class MediaService {
             new ApplicationError('MEDIA_TRANSITION_NOT_ALLOWED', 409),
           );
         }
-        if (upload.capabilityExpiresAt <= this.clock.now()) {
-          return this.idempotency.failure(
-            new ApplicationError('MEDIA_UPLOAD_SESSION_EXPIRED', 410),
-          );
-        }
         return this.idempotency.stage(
-          { uploadSessionId: upload.id, mediaId: upload.mediaId },
+          {
+            uploadSessionId: upload.id,
+            mediaId: upload.mediaId,
+            capabilityExpiresAt: upload.capabilityExpiresAt,
+          },
           { resourceType: 'MEDIA_UPLOAD_SESSION', resourceId: upload.id },
         );
       },
@@ -244,6 +249,15 @@ export class MediaService {
     const media = await this.prisma.mediaEvidence.findUniqueOrThrow({
       where: { id: reservation.value.mediaId },
     });
+    if (reservation.value.capabilityExpiresAt <= this.clock.now()) {
+      return this.completeFailedConfirmation(
+        reservation,
+        principal,
+        media,
+        context.requestId,
+        new ApplicationError('MEDIA_UPLOAD_SESSION_EXPIRED', 410),
+      );
+    }
     let verified: VerifiedMediaFacts;
     let observedEntityTag: string | null = null;
     try {
@@ -531,6 +545,15 @@ export class MediaService {
   ): Promise<IdempotentStage<InitiationStage> | IdempotentFailure> {
     const target = await this.resolveInitiationTarget(transaction, principal, input);
     if (target.kind === 'FAILURE') return target.failure;
+    const now = this.clock.now();
+    await this.expirePendingUploads(
+      transaction,
+      target,
+      input.mediaType,
+      principal.userId,
+      requestId,
+      now,
+    );
     const activeCount = await transaction.mediaEvidence.count({
       where: {
         ...(target.sessionId === null
@@ -550,7 +573,6 @@ export class MediaService {
     if (activeCount >= allowedCount) {
       return this.idempotency.failure(new ApplicationError('MEDIA_COUNT_LIMIT_EXCEEDED', 422));
     }
-    const now = this.clock.now();
     const mediaId = this.idGenerator.next();
     const uploadSessionId = this.idGenerator.next();
     const capabilityExpiresAt = new Date(now.getTime() + config.uploadUrlTtlSeconds * 1000);
@@ -624,6 +646,59 @@ export class MediaService {
       },
       { resourceType: 'MEDIA_EVIDENCE', resourceId: mediaId },
     );
+  }
+
+  private async expirePendingUploads(
+    transaction: Prisma.TransactionClient,
+    target: Extract<ResolvedInitiationTarget, { kind: 'TARGET' }>,
+    mediaType: string,
+    actorUserId: string,
+    requestId: string,
+    now: Date,
+  ): Promise<void> {
+    const expired = await transaction.mediaEvidence.findMany({
+      where: {
+        ...(target.sessionId === null
+          ? {
+              enrollmentId: target.enrollmentId,
+              businessPurpose: 'EXEMPTION_APPLICATION',
+            }
+          : {
+              sessionId: target.sessionId,
+              businessPurpose: 'EXERCISE_RECORD',
+              mediaType,
+            }),
+        uploadStatus: 'PENDING_UPLOAD',
+        uploadSession: {
+          is: { status: 'ACTIVE', capabilityExpiresAt: { lte: now } },
+        },
+      },
+    });
+    for (const media of expired) {
+      const updated = await transaction.mediaEvidence.update({
+        where: { id: media.id, version: media.version, uploadStatus: 'PENDING_UPLOAD' },
+        data: {
+          uploadStatus: 'FAILED',
+          failedAt: now,
+          failureCode: 'MEDIA_UPLOAD_SESSION_EXPIRED',
+          updatedAt: now,
+          version: { increment: 1 },
+        },
+      });
+      await transaction.mediaUploadSession.update({
+        where: {
+          mediaId_organizationId: { mediaId: media.id, organizationId: media.organizationId },
+        },
+        data: { status: 'FAILED', updatedAt: now, version: { increment: 1 } },
+      });
+      await this.appendStatusEvent(transaction, updated, 'FAILED', 'PENDING_UPLOAD', {
+        actorType: 'USER',
+        actorUserId,
+        requestId,
+        safeMetadata: { resultCode: 'MEDIA_UPLOAD_SESSION_EXPIRED' },
+      });
+      await this.appendOutbox(transaction, updated, 'MEDIA_UPLOAD_FAILED');
+    }
   }
 
   private async completeFailedConfirmation(
