@@ -420,4 +420,86 @@ describe('MediaEvidence HTTP E2E', () => {
     );
     assert.equal(bind.status, 422);
   });
+
+  it('rejects new or newly bound evidence after the session record is submitted', async () => {
+    const token = await studentToken();
+    const now = new Date();
+    await prisma.exerciseRecord.create({
+      data: {
+        id: uuidv7(),
+        organizationId: fixture.organizationId,
+        semesterId: fixture.semesterId,
+        studentId: student.studentId,
+        enrollmentId: student.enrollmentId,
+        classSectionId: fixture.teacherAActiveSectionId,
+        courseId: fixture.activeCourseId,
+        teacherId: fixture.teacherProfileId,
+        sessionId,
+        businessDate: new Date(`${now.toISOString().slice(0, 10)}T00:00:00.000Z`),
+        creditType: 'GENERAL',
+        sportType: 'RUNNING',
+        description: 'Submitted record closes its proof set',
+        actualDurationSeconds: 3600n,
+        pausedDurationSeconds: 0n,
+        creditedDurationSeconds: 3600n,
+        status: 'SUBMITTED',
+        submittedAt: now,
+        clientRequestId: `submitted-${uuidv7()}`,
+        version: 2,
+        createdAt: now,
+        updatedAt: now,
+      },
+    });
+
+    const initiated = await request(
+      '/api/v1/media-uploads',
+      authenticated(
+        token,
+        'POST',
+        {
+          sessionId,
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'IMAGE',
+          mimeType: 'image/png',
+          fileSizeBytes: png().length,
+          captureSource: 'IN_APP_CAMERA',
+          durationSeconds: null,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(initiated.status, 422);
+    assert.equal(initiated.body.code, 'MEDIA_BIND_TARGET_INVALID');
+
+    const mediaId = uuidv7();
+    await prisma.mediaEvidence.create({
+      data: {
+        id: mediaId,
+        organizationId: fixture.organizationId,
+        ownerStudentId: student.studentId,
+        sessionId,
+        initiatedByUserId: student.userId,
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'IMAGE',
+        captureSource: 'IN_APP_CAMERA',
+        declaredMimeType: 'image/png',
+        verifiedMimeType: 'image/png',
+        declaredFileSizeBytes: 45n,
+        verifiedFileSizeBytes: 45n,
+        verifiedContentSha256: 'f'.repeat(64),
+        uploadStatus: 'UPLOADED',
+        storageKey: `media/${fixture.organizationId}/${mediaId}/image`,
+        uploadedAt: now,
+        createdAt: now,
+        updatedAt: now,
+        version: 2,
+      },
+    });
+    const bound = await request(
+      `/api/v1/media/${mediaId}/bind`,
+      authenticated(token, 'POST', { sessionId, expectedVersion: 2 }, uuidv7()),
+    );
+    assert.equal(bound.status, 422);
+    assert.equal(bound.body.code, 'MEDIA_BIND_TARGET_INVALID');
+  });
 });

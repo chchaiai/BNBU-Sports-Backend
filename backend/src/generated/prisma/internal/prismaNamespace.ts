@@ -6404,7 +6404,6 @@ export const ExerciseRecordScalarFieldEnum = {
   sportType: 'sportType',
   sportName: 'sportName',
   description: 'description',
-  studentRemark: 'studentRemark',
   actualDurationSeconds: 'actualDurationSeconds',
   pausedDurationSeconds: 'pausedDurationSeconds',
   creditedDurationSeconds: 'creditedDurationSeconds',

@@ -333,7 +333,7 @@ Stage 13 物理化两个不可变支持事实：`RosterAlignmentRun` 冻结 rost
 | 是否核心实体 | 是，打卡聚合根 |
 | 唯一标识 | `id`；`sessionId` 唯一，保证一个 Session 最多一个 Record |
 | 所属组织范围 | `organizationId`；`semesterId/courseId/classSectionId/enrollmentId/studentId` 必须形成一致链 |
-| 主要字段概览 | `id`、`organizationId`、`semesterId`、`courseId`、`classSectionId`、`enrollmentId`、`studentId`、`teacherId`、`sessionId`、`businessDate`、`creditType`、`sportType`、`sportName`、`description`、`studentRemark`、`actualDurationSeconds`、`pausedDurationSeconds`、`creditedDurationSeconds`、`status`、`submittedAt`、`cancelledAt`、`clientRequestId`、`createdAt`、`updatedAt`、`version` |
+| 主要字段概览 | `id`、`organizationId`、`semesterId`、`courseId`、`classSectionId`、`enrollmentId`、`studentId`、`teacherId`、`sessionId`、`businessDate`、`creditType`、`sportType`、`sportName`、`description`、`actualDurationSeconds`、`pausedDurationSeconds`、`creditedDurationSeconds`、`status`、`submittedAt`、`cancelledAt`、`clientRequestId`、`createdAt`、`updatedAt`、`version` |
 | 与其他对象关系 | 一对一来源于 Session；绑定 1..7 个可用 MediaEvidence 才可提交；拥有 ReviewRecord 历史；可出现在多个 ScoreContribution 计算修订中 |
 | 创建来源 | 学生确认提交命令；后端重新计算时长、businessDate、关系链和媒体条件后幂等创建 |
 | 生命周期 | `DRAFT` → `SUBMITTED` → `REVIEWED`；`REVIEWED` 重开时追加 PENDING ReviewRecord 并回到 `SUBMITTED`，再次裁决后回到 `REVIEWED`；`CANCELLED` 保留为闭集值但学生撤回能力关闭。流程状态不含 VALID/INVALID。旧 `NEEDS_REVISION` 迁移为 Record=`SUBMITTED` 且最新 Review=`PENDING`，v1 不保留可执行的“要求补正”状态 |

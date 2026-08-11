@@ -313,8 +313,6 @@ export class ExerciseRecordsService {
           sportType: input.sportType ?? current.sportType,
           sportName: input.sportName === undefined ? current.sportName : input.sportName,
           description: input.description ?? current.description,
-          studentRemark:
-            input.studentRemark === undefined ? current.studentRemark : input.studentRemark,
         });
         const changedFields = Object.entries(content)
           .filter(([key, value]) => current[key as keyof ExerciseRecord] !== value)
@@ -405,12 +403,42 @@ export class ExerciseRecordsService {
               new ApplicationError('EXERCISE_RECORD_DURATION_NOT_CREDITABLE', 422),
             );
           }
-          for (const mediaId of mediaIds) await this.lock(transaction, 'media_evidence', mediaId);
-          const media = await transaction.mediaEvidence.findMany({
-            where: { id: { in: mediaIds }, organizationId: principal.organizationId },
+          const activeStatuses = ['PENDING_UPLOAD', 'UPLOADED', 'BOUND', 'PROCESSING', 'AVAILABLE'];
+          const discoveredMedia = await transaction.mediaEvidence.findMany({
+            where: {
+              organizationId: principal.organizationId,
+              ownerStudentId: current.studentId,
+              sessionId: current.sessionId,
+              businessPurpose: 'EXERCISE_RECORD',
+              captureSource: 'IN_APP_CAMERA',
+              uploadStatus: { in: activeStatuses },
+            },
+            select: { id: true },
             orderBy: { id: 'asc' },
           });
-          if (media.length !== mediaIds.length) {
+          const lockedMediaIds = [
+            ...new Set([...mediaIds, ...discoveredMedia.map(({ id }) => id)]),
+          ].sort();
+          for (const mediaId of lockedMediaIds)
+            await this.lock(transaction, 'media_evidence', mediaId);
+          const media = await transaction.mediaEvidence.findMany({
+            where: {
+              organizationId: principal.organizationId,
+              ownerStudentId: current.studentId,
+              sessionId: current.sessionId,
+              businessPurpose: 'EXERCISE_RECORD',
+              captureSource: 'IN_APP_CAMERA',
+              uploadStatus: { in: activeStatuses },
+            },
+            orderBy: { id: 'asc' },
+          });
+          if (media.some(({ uploadStatus }) => uploadStatus !== 'AVAILABLE')) {
+            return this.idempotency.failure(new ApplicationError('MEDIA_NOT_AVAILABLE', 409));
+          }
+          if (
+            media.length !== mediaIds.length ||
+            media.some((item, index) => item.id !== mediaIds[index])
+          ) {
             return this.idempotency.failure(
               new ApplicationError('EXERCISE_RECORD_MEDIA_INCOMPLETE', 422),
             );
@@ -418,19 +446,6 @@ export class ExerciseRecordsService {
           let imageCount = 0;
           let videoCount = 0;
           for (const item of media) {
-            if (
-              item.ownerStudentId !== current.studentId ||
-              item.sessionId !== current.sessionId ||
-              item.businessPurpose !== 'EXERCISE_RECORD' ||
-              item.captureSource !== 'IN_APP_CAMERA'
-            ) {
-              return this.idempotency.failure(
-                new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422),
-              );
-            }
-            if (item.uploadStatus !== 'AVAILABLE') {
-              return this.idempotency.failure(new ApplicationError('MEDIA_NOT_AVAILABLE', 409));
-            }
             if (item.mediaType === 'IMAGE') imageCount += 1;
             if (item.mediaType === 'VIDEO') videoCount += 1;
           }

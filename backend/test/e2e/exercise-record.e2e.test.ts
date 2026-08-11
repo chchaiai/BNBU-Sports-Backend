@@ -282,7 +282,6 @@ describe('ExerciseRecord HTTP E2E', () => {
       creditType: 'GENERAL',
       sportType: 'RUNNING',
       description: 'Synthetic full record chain',
-      studentRemark: null,
       clientRequestId: `android-${uuidv7()}`,
     };
     const createKey = uuidv7();
@@ -322,6 +321,7 @@ describe('ExerciseRecord HTTP E2E', () => {
     assert.equal(submitted.status, 200);
     const record = object(submitted.body.data);
     assert.equal(record.status, 'SUBMITTED');
+    assert.equal(Object.hasOwn(record, 'studentRemark'), false);
     assert.deepEqual(record.currentReview, {
       result: 'PENDING',
       reasonCode: null,
@@ -339,6 +339,132 @@ describe('ExerciseRecord HTTP E2E', () => {
     const listed = await request('/api/v1/exercise-records?limit=20', authenticated(token));
     assert.equal(listed.status, 200);
     assert.equal((listed.body.data as unknown[]).length, 1);
+  });
+
+  it('requires the exact complete set of available session media', async () => {
+    const token = await studentToken();
+    const secondMediaId = uuidv7();
+    const now = new Date();
+    await prisma.mediaEvidence.create({
+      data: {
+        id: secondMediaId,
+        organizationId: fixture.organizationId,
+        ownerStudentId: student.studentId,
+        sessionId,
+        initiatedByUserId: student.userId,
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'IMAGE',
+        captureSource: 'IN_APP_CAMERA',
+        declaredMimeType: 'image/png',
+        verifiedMimeType: 'image/png',
+        declaredFileSizeBytes: 45n,
+        verifiedFileSizeBytes: 45n,
+        verifiedContentSha256: 'd'.repeat(64),
+        uploadStatus: 'AVAILABLE',
+        storageKey: `media/${fixture.organizationId}/${secondMediaId}/image`,
+        uploadedAt: now,
+        boundAt: now,
+        processingStartedAt: now,
+        availableAt: now,
+        createdAt: now,
+        updatedAt: now,
+        version: 5,
+      },
+    });
+    const created = await request(
+      '/api/v1/exercise-records',
+      authenticated(
+        token,
+        'POST',
+        {
+          sessionId,
+          creditType: 'COURSE_RELATED',
+          sportType: 'RUNNING',
+          description: 'Course running session',
+          clientRequestId: `android-${uuidv7()}`,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(created.status, 201);
+    const recordId = String(object(created.body.data).id);
+    const incomplete = await request(
+      `/api/v1/exercise-records/${recordId}/submit`,
+      authenticated(token, 'POST', { mediaIds: [mediaId], expectedVersion: 1 }, uuidv7()),
+    );
+    assert.equal(incomplete.status, 422);
+    assert.equal(incomplete.body.code, 'EXERCISE_RECORD_MEDIA_INCOMPLETE');
+
+    const submitted = await request(
+      `/api/v1/exercise-records/${recordId}/submit`,
+      authenticated(
+        token,
+        'POST',
+        { mediaIds: [mediaId, secondMediaId].sort(), expectedVersion: 1 },
+        uuidv7(),
+      ),
+    );
+    assert.equal(submitted.status, 200);
+    assert.equal(await prisma.exerciseRecordMedia.count({ where: { recordId } }), 2);
+  });
+
+  it('blocks submission while any retained session media is still processing', async () => {
+    const token = await studentToken();
+    const processingMediaId = uuidv7();
+    const now = new Date();
+    await prisma.mediaEvidence.create({
+      data: {
+        id: processingMediaId,
+        organizationId: fixture.organizationId,
+        ownerStudentId: student.studentId,
+        sessionId,
+        initiatedByUserId: student.userId,
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'IMAGE',
+        captureSource: 'IN_APP_CAMERA',
+        declaredMimeType: 'image/png',
+        verifiedMimeType: 'image/png',
+        declaredFileSizeBytes: 45n,
+        verifiedFileSizeBytes: 45n,
+        verifiedContentSha256: 'e'.repeat(64),
+        uploadStatus: 'PROCESSING',
+        storageKey: `media/${fixture.organizationId}/${processingMediaId}/image`,
+        uploadedAt: now,
+        boundAt: now,
+        processingStartedAt: now,
+        createdAt: now,
+        updatedAt: now,
+        version: 4,
+      },
+    });
+    const created = await request(
+      '/api/v1/exercise-records',
+      authenticated(
+        token,
+        'POST',
+        {
+          sessionId,
+          creditType: 'GENERAL',
+          sportType: 'RUNNING',
+          description: 'Processing proof session',
+          clientRequestId: `android-${uuidv7()}`,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(created.status, 201);
+    const recordId = String(object(created.body.data).id);
+    const denied = await request(
+      `/api/v1/exercise-records/${recordId}/submit`,
+      authenticated(
+        token,
+        'POST',
+        { mediaIds: [mediaId, processingMediaId].sort(), expectedVersion: 1 },
+        uuidv7(),
+      ),
+    );
+    assert.equal(denied.status, 409);
+    assert.equal(denied.body.code, 'MEDIA_NOT_AVAILABLE');
   });
 
   it('discards a draft atomically with append-only evidence', async () => {

@@ -95,12 +95,6 @@ class RecordContentDto {
   @MaxLength(200)
   @Matches(/\S/u)
   description!: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(200)
-  @Matches(/\S/u)
-  studentRemark?: string | null;
 }
 
 export class CreateExerciseRecordRequestDto extends RecordContentDto {
@@ -137,12 +131,6 @@ export class UpdateExerciseRecordRequestDto {
   @MaxLength(200)
   @Matches(/\S/u)
   description?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(200)
-  @Matches(/\S/u)
-  studentRemark?: string | null;
 
   @Type(() => Number)
   @IsInt()

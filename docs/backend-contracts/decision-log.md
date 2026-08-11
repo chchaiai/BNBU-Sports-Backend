@@ -107,6 +107,7 @@
 | ADR-097  | Stage 21 将 12 个客户端能力 operation 提升为仅本地集成，并为其余能力建立结构基础；不提升 Staging、iOS 或 Production Gate                                                                                                     | 2026-08-05 的 30 项统一 default deny 已不能描述当前实现；又必须防止把本地 PostgreSQL 证据误报为推送、GPS 或生产已开放                                                       | Notification、PushDevice、UserPreference、Help、Feedback、AppReleasePolicy、Auth/Exemption/Sport/GPS 结构、OpenAPI、Migration、runtime coverage | 是 | 12 个 operation 记为 `IMPLEMENTED_VERIFIED` 且仅作本地集成；18 个继续 `IMPLEMENTED_DEFAULT_DENY`；GPS 仅持久化/应用层基础且 6 个 HTTP operation 关闭；无 APNs/FCM、Staging、iOS 二进制或生产 GPS 完成声明 | ACCEPTED   |
 | ADR-098  | iOS 认证、版本与免测附件规则：请求显式携带 `organizationCode`；学生仅 OTP 登录，密码找回仅 TEACHER/ADMIN；iOS 强制升级只比较数字 `buildNumber`；免测附件使用私有 `EXEMPTION_APPLICATION` 媒体用途 | 负责人已于 2026-08-06 明确三项客户端阻塞决策；必须避免跨组织账号歧义、营销版本字符串误判、学生密码流和免测附件复用运动记录媒体语义 | Auth challenge/recovery、AuthSession、AppReleasePolicy、MediaEvidence、ExemptionApplication、OpenAPI、0012 migration | 是 | 认证/找回 4、免测 6 与版本读取 1 个 operation 进入本地真实实现；学生无密码找回；版本文本仅展示；运动媒体仍只允许相机，免测媒体允许相机或文件选择器；无短信/邮件生产 provider、Staging 或生产开放声明 | ACCEPTED   |
 | ADR-099  | 学生打卡视频固定为 App 内有声录制，单条记录最多 1 个，累计实际录制最多 15 秒；暂停不计时；不设文件大小、分辨率、码率或源格式业务限制 | 负责人于 2026-08-09 明确以短时现场凭证替代旧 300 秒及视频大小/格式规则，并要求客户端压缩后上传 | MediaEvidence、Android 采集/压缩、OpenAPI、媒体校验 | 是 | 学生可暂停/继续或提前结束，达到 15 秒自动结束；相机和麦克风权限均为录像前置；客户端压缩成功后才上传；后端以真实媒体时长最终裁决，超过 15 秒返回 `MEDIA_VIDEO_DURATION_EXCEEDED`；图片、免测、反馈规则不变 | ACCEPTED   |
+| ADR-100  | 完成记录只收集必填运动说明；完成后仍可补拍照片或视频；当前保留的全部现场素材自动作为凭证，不提供勾选排除 | 负责人于 2026-08-11 要求统一课程相关与自主运动完成页，并消除客户端漏选已拍凭证的风险 | ExerciseRecord、MediaEvidence、Android 完成记录、OpenAPI | 是 | `description` 对两类运动均为 1..200 字；移除 `studentRemark`；提交的 `mediaIds` 必须精确等于同会话全部 AVAILABLE 现场媒体；处理中媒体阻止提交；提交后禁止继续申请或绑定媒体 | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -334,3 +335,12 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - 后端不信任客户端声明时长，确认与处理阶段均以媒体字节探测的真实时长裁决；超过 15 秒进入 FAILED 并返回 `MEDIA_VIDEO_DURATION_EXCEEDED`。Record 仍必须等待媒体 AVAILABLE 才能提交。
 - ADR-099 只替换 ExerciseRecord 视频规则；图片数量/大小、免测附件、反馈附件、媒体权限、保留和访问控制均不改变。
 - 新错误只登记在实际可能返回它的媒体 operation `x-error-codes` 中，不扩散到所有 API 的公共 `ErrorCode` 枚举；合同门禁以基础枚举与 operation 扩展的并集校验后端唯一错误词表。
+
+### ADR-100：统一完成说明与全量现场凭证（2026-08-11，ACCEPTED）
+
+- 课程相关运动与自主运动在完成记录阶段都只收集一个必填 `description`，长度为 1..200 字；不再提供或写入学生补充备注。
+- 运动结束后仍可在 App 内补拍照片或有声视频；视频继续遵守 ADR-099 的 15 秒、暂停不计时和压缩后上传规则。
+- Android 不再展示凭证勾选框。上传前仍可删除或重拍错误素材，但提交时仍保留的全部 Ready 草稿都必须上传并进入凭证集合。
+- 后端以同一学生、同一 session、`EXERCISE_RECORD`、`IN_APP_CAMERA` 为范围裁决完整集合；任何处理中媒体都阻止提交，任何 AVAILABLE 媒体被遗漏或额外 mediaId 被加入都拒绝提交。
+- 媒体申请、绑定和 Record 提交共同锁定 session；Record 不再是可编辑草稿后，不得为该 session 新增或绑定媒体。
+- `student_remark` 先从业务合同、投影和读写代码移除，数据库遗留列保持不可访问；物理删除必须等待破坏性迁移审批和兼容窗口。

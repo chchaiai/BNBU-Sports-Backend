@@ -15,7 +15,6 @@ export interface ExerciseRecordProjection {
   sportType: string;
   sportName: string | null;
   description: string;
-  studentRemark: string | null;
   actualDurationSeconds: number;
   pausedDurationSeconds: number;
   creditedDurationSeconds: number;
@@ -58,7 +57,6 @@ export function projectExerciseRecord(record: ExerciseRecordWithReview): Exercis
     sportType: record.sportType,
     sportName: record.sportName,
     description: record.description,
-    studentRemark: record.studentRemark,
     actualDurationSeconds: safeSeconds(record.actualDurationSeconds),
     pausedDurationSeconds: safeSeconds(record.pausedDurationSeconds),
     creditedDurationSeconds: safeSeconds(record.creditedDurationSeconds),

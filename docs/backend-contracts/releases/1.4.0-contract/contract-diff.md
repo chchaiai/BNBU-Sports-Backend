@@ -5,20 +5,29 @@ Result: **COMPATIBLE**.
 | Source | Version | SHA-256 | Operations |
 | --- | --- | --- | ---: |
 | Published baseline | 1.3.0-contract | `914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9` | 122 |
-| Candidate | 1.4.0-contract | `d004ccb34b3e2bbf2958a34afba0cb64f820c0a1e610be1581d5ad1b3bf42ca1` | 122 |
+| Candidate | 1.4.0-contract | `de0640c26925d74b6c958ecbb905afe2a9f23bedfd396f9deaf704f070eb5ebe` | 122 |
 
 | Classification | Count |
 | --- | ---: |
-| Breaking | 0 |
+| Breaking | 9 |
 | Review required | 0 |
 | Non-breaking | 74 |
-| Approved exceptions | 0 |
+| Approved exceptions | 9 |
 | Unapproved blockers | 0 |
 
 ## Direction-aware changes
 
 | Change ID | Classification | Direction | Kind | Location | Approved exception |
 | --- | --- | --- | --- | --- | --- |
+| property-removed-41dce74b825ec16c | BREAKING | response | PROPERTY_REMOVED | `POST /exercise-records/{recordId}/withdraw/responses/200/application/json/properties/data/properties/studentRemark` | YES |
+| property-removed-77effd74e4a9b2f4 | BREAKING | response | PROPERTY_REMOVED | `POST /exercise-records/{recordId}/discard/responses/200/application/json/properties/data/properties/studentRemark` | YES |
+| property-removed-901462e082bf0322 | BREAKING | response | PROPERTY_REMOVED | `POST /exercise-records/responses/201/application/json/properties/data/properties/studentRemark` | YES |
+| property-removed-a30c4329d74e9af8 | BREAKING | response | PROPERTY_REMOVED | `POST /exercise-records/{recordId}/submit/responses/200/application/json/properties/data/properties/studentRemark` | YES |
+| property-removed-aa2a15ac1f6d11b0 | BREAKING | response | PROPERTY_REMOVED | `GET /exercise-records/{recordId}/responses/200/application/json/properties/data/properties/studentRemark` | YES |
+| property-removed-ad6d840d5a61623c | BREAKING | request | PROPERTY_REMOVED | `POST /exercise-records/requestBody/application/json/properties/studentRemark` | YES |
+| property-removed-b00f908f804e6e87 | BREAKING | request | PROPERTY_REMOVED | `PATCH /exercise-records/{recordId}/requestBody/application/json/properties/studentRemark` | YES |
+| property-removed-c2bd2df6aee70f40 | BREAKING | response | PROPERTY_REMOVED | `GET /exercise-records/responses/200/application/json/properties/data/items/properties/studentRemark` | YES |
+| property-removed-f926b518920a8cea | BREAKING | response | PROPERTY_REMOVED | `PATCH /exercise-records/{recordId}/responses/200/application/json/properties/data/properties/studentRemark` | YES |
 | response-status-added-0759e0d10a444243 | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `POST /exercise-sessions/{sessionId}/reconcile/responses/503` | NO |
 | response-status-added-0c7d2fc3aac6570c | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `POST /media/{mediaId}/bind/responses/503` | NO |
 | response-status-added-0d6eab27ce9e92ac | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `POST /media-uploads/{uploadSessionId}/confirm/responses/503` | NO |

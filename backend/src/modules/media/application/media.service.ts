@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import type { MediaEvidence, Prisma } from '../../../generated/prisma/client.js';
+import { Prisma, type MediaEvidence } from '../../../generated/prisma/client.js';
 import { AuditService } from '../../../common/audit/audit.service.js';
 import type { MediaConfig, RuntimeConfig } from '../../../common/config/environment.js';
 import { RUNTIME_CONFIG } from '../../../common/config/runtime-config.module.js';
@@ -384,11 +384,17 @@ export class MediaService {
         requestId: context.requestId,
       },
       async (transaction) => {
+        await this.lockExerciseSession(transaction, input.sessionId);
         const media = await transaction.mediaEvidence.findFirst({
           where: { id: mediaId, organizationId: principal.organizationId },
           include: {
             ownerStudent: { select: { userId: true } },
-            session: { include: { enrollment: { select: { status: true } } } },
+            session: {
+              include: {
+                enrollment: { select: { status: true } },
+                exerciseRecord: { select: { status: true } },
+              },
+            },
           },
         });
         if (media?.ownerStudent.userId !== principal.userId) {
@@ -411,7 +417,8 @@ export class MediaService {
         }
         if (
           !['IN_PROGRESS', 'PAUSED', 'COMPLETED'].includes(media.session.status) ||
-          media.session.enrollment.status !== 'ACTIVE'
+          media.session.enrollment.status !== 'ACTIVE' ||
+          (media.session.exerciseRecord !== null && media.session.exerciseRecord.status !== 'DRAFT')
         ) {
           return this.idempotency.failure(new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422));
         }
@@ -792,11 +799,13 @@ export class MediaService {
     if (input.businessPurpose === 'EXERCISE_RECORD') {
       const sessionId = input.sessionId;
       if (sessionId === undefined) throw new ApplicationError('MEDIA_BIND_TARGET_INVALID', 422);
+      await this.lockExerciseSession(transaction, sessionId);
       const session = await transaction.exerciseSession.findFirst({
         where: { id: sessionId, organizationId: principal.organizationId },
         include: {
           student: { select: { userId: true } },
           enrollment: { select: { status: true } },
+          exerciseRecord: { select: { status: true } },
         },
       });
       if (session?.student.userId !== principal.userId) {
@@ -807,7 +816,8 @@ export class MediaService {
       }
       if (
         !['IN_PROGRESS', 'PAUSED', 'COMPLETED'].includes(session.status) ||
-        session.enrollment.status !== 'ACTIVE'
+        session.enrollment.status !== 'ACTIVE' ||
+        (session.exerciseRecord !== null && session.exerciseRecord.status !== 'DRAFT')
       ) {
         return {
           kind: 'FAILURE',
@@ -846,6 +856,15 @@ export class MediaService {
       sessionId: null,
       enrollmentId: enrollment.id,
     };
+  }
+
+  private async lockExerciseSession(
+    transaction: Prisma.TransactionClient,
+    sessionId: string,
+  ): Promise<void> {
+    await transaction.$queryRaw(
+      Prisma.sql`SELECT id FROM exercise_sessions WHERE id = ${sessionId}::uuid FOR UPDATE`,
+    );
   }
 
   private async loadAuthorizedMedia(

@@ -7,19 +7,19 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b",
+    "currentContractSha256": "de0640c26925d74b6c958ecbb905afe2a9f23bedfd396f9deaf704f070eb5ebe",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 579,
+    "fileCount": 582,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
       "backend-contract-doc": 91,
       "backend-generated": 87,
       "backend-script": 10,
-      "backend-source": 213,
-      "backend-test": 68,
+      "backend-source": 214,
+      "backend-test": 70,
       "client-handoff": 36,
       "contract-tool": 12,
       "database": 29,
@@ -1406,6 +1406,10 @@
         "category": "backend-source"
       },
       {
+        "path": "backend/src/modules/scores/application/score-source.ts",
+        "category": "backend-source"
+      },
+      {
         "path": "backend/src/modules/scores/application/scores.service.ts",
         "category": "backend-source"
       },
@@ -1734,6 +1738,10 @@
         "category": "backend-test"
       },
       {
+        "path": "backend/test/unit/media-service-expiry.test.ts",
+        "category": "backend-test"
+      },
+      {
         "path": "backend/test/unit/media.test.ts",
         "category": "backend-test"
       },
@@ -1751,6 +1759,10 @@
       },
       {
         "path": "backend/test/unit/roster-ingestion.test.ts",
+        "category": "backend-test"
+      },
+      {
+        "path": "backend/test/unit/s3-media-storage-adapter.test.ts",
         "category": "backend-test"
       },
       {
@@ -2425,12 +2437,12 @@
       "files": 85
     },
     "any": {
-      "matches": 282,
-      "files": 92
+      "matches": 286,
+      "files": 93
     },
     "unknown as": {
-      "matches": 53,
-      "files": 24
+      "matches": 54,
+      "files": 25
     },
     "skip": {
       "matches": 1136,
@@ -2449,8 +2461,8 @@
       "files": 15
     },
     "hard-coded URL": {
-      "matches": 3389,
-      "files": 120
+      "matches": 3390,
+      "files": 121
     },
     "default deny": {
       "matches": 412,
@@ -2461,12 +2473,12 @@
       "files": 19
     },
     "legacy": {
-      "matches": 23,
-      "files": 19
+      "matches": 52,
+      "files": 24
     },
     "compatibility": {
-      "matches": 200,
-      "files": 45
+      "matches": 202,
+      "files": 47
     }
   },
   "keywordDispositions": {

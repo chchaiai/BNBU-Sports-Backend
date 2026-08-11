@@ -3434,7 +3434,6 @@
                       "sportType": "RUNNING",
                       "sportName": null,
                       "description": "晨跑 5 公里",
-                      "studentRemark": "操场内圈",
                       "actualDurationSeconds": 5400,
                       "pausedDurationSeconds": 600,
                       "creditedDurationSeconds": 3600,
@@ -11034,13 +11033,6 @@
             "minLength": 1,
             "maxLength": 200
           },
-          "studentRemark": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "maxLength": 200
-          },
           "actualDurationSeconds": {
             "$ref": "#/components/schemas/NonNegativeSeconds"
           },
@@ -11101,7 +11093,6 @@
           "sportType",
           "sportName",
           "description",
-          "studentRemark",
           "actualDurationSeconds",
           "pausedDurationSeconds",
           "creditedDurationSeconds",
@@ -13082,13 +13073,6 @@
             "minLength": 1,
             "maxLength": 200
           },
-          "studentRemark": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "maxLength": 200
-          },
           "clientRequestId": {
             "type": "string",
             "minLength": 1,
@@ -13122,13 +13106,6 @@
             "minLength": 1,
             "maxLength": 200
           },
-          "studentRemark": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "maxLength": 200
-          },
           "expectedVersion": {
             "$ref": "#/components/schemas/PositiveVersion"
           }
@@ -13148,7 +13125,8 @@
             "uniqueItems": true,
             "items": {
               "$ref": "#/components/schemas/OpaqueId"
-            }
+            },
+            "description": "Complete set of AVAILABLE EXERCISE_RECORD media captured in-app for this session. Omitting any eligible item is rejected."
           },
           "expectedVersion": {
             "$ref": "#/components/schemas/PositiveVersion"

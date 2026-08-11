@@ -28,29 +28,22 @@ export function normalizeRecordContent(input: {
   sportType: string;
   sportName?: string | null;
   description: string;
-  studentRemark?: string | null;
 }): {
   creditType: CreditType;
   sportType: string;
   sportName: string | null;
   description: string;
-  studentRemark: string | null;
 } {
   const sportType = input.sportType.trim();
   const normalizedSportName = input.sportName?.trim();
   const sportName =
     normalizedSportName === undefined || normalizedSportName === '' ? null : normalizedSportName;
   const description = input.description.trim();
-  const normalizedStudentRemark = input.studentRemark?.trim();
-  const studentRemark =
-    normalizedStudentRemark === undefined || normalizedStudentRemark === ''
-      ? null
-      : normalizedStudentRemark;
   if (!/^[A-Z][A-Z0-9_]*$/.test(sportType) || description.length === 0) {
     throw new ApplicationError('VALIDATION_FAILED', 422);
   }
   if ((sportType === 'OTHER') !== (sportName !== null)) {
     throw new ApplicationError('VALIDATION_FAILED', 422);
   }
-  return { creditType: input.creditType, sportType, sportName, description, studentRemark };
+  return { creditType: input.creditType, sportType, sportName, description };
 }

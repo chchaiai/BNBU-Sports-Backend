@@ -231,7 +231,7 @@
 | `POST /exercise-sessions/{id}/finish` | IN_PROGRESS/PAUSED → COMPLETED | STUDENT | 同上 | 服务端冻结整数秒；不自动提交 Record | `SESSION_TIMELINE_INVALID`, `CONFLICT_VERSION_MISMATCH` |
 | `POST /exercise-sessions/{id}/cancel` | IN_PROGRESS/PAUSED → CANCELLED | STUDENT | `reason, expectedVersion` | 保留可信时长；处理孤立媒体 | `SESSION_ALREADY_USED`, `PERMISSION_RESOURCE_SCOPE_DENIED` |
 | `POST /exercise-sessions/{id}/reconcile` | 保持当前或由 SYSTEM 过期 | STUDENT | `expectedVersion, clientEvents[]` | 只接纳可验证事件；不创建平行 session | `SESSION_EVENT_OUT_OF_ORDER`, `SESSION_RECONCILIATION_REQUIRED` |
-| `POST /exercise-records` | 无 Record → DRAFT | STUDENT | `sessionId, creditType, sportType, sportName, description, studentRemark` | sessionId 唯一；注入身份/班级/时长 | `SESSION_NOT_COMPLETED`, `EXERCISE_RECORD_ALREADY_EXISTS_FOR_SESSION` |
+| `POST /exercise-records` | 无 Record → DRAFT | STUDENT | `sessionId, creditType, sportType, sportName, description` | sessionId 唯一；注入身份/班级/时长 | `SESSION_NOT_COMPLETED`, `EXERCISE_RECORD_ALREADY_EXISTS_FOR_SESSION` |
 | `POST /exercise-records/{id}/submit` | DRAFT → SUBMITTED + Review v1 PENDING | STUDENT | `mediaIds, expectedVersion` | 原子冻结、创建 PENDING Review、占用每日提交、通知 | `EXERCISE_RECORD_MEDIA_INCOMPLETE`, `MEDIA_NOT_AVAILABLE`, `EXERCISE_RECORD_DAILY_LIMIT_REACHED` |
 | `POST /exercise-records/{id}/discard` | DRAFT → CANCELLED | STUDENT | `reason, expectedVersion` | 不删除事实；安全清理/解绑媒体 | `PERMISSION_RESOURCE_SCOPE_DENIED`, `CONFLICT_STATE_TRANSITION` |
 | `POST /exercise-records/{id}/withdraw` | 无转换（V1 关闭） | STUDENT | `reason, expectedVersion` | 在写入前拒绝；不取消、不解绑、不释放每日槽位 | `EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED` |

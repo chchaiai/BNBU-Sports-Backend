@@ -2,8 +2,8 @@
   "formatVersion": 1,
   "contractVersion": "1.4.0-contract",
   "openapiVersion": "3.1.0",
-  "sha256": "d004ccb34b3e2bbf2958a34afba0cb64f820c0a1e610be1581d5ad1b3bf42ca1",
-  "byteLength": 307997,
+  "sha256": "de0640c26925d74b6c958ecbb905afe2a9f23bedfd396f9deaf704f070eb5ebe",
+  "byteLength": 307872,
   "sourceCommit": "d368aea5671f7507ca7b1cf61bfa05173855db68",
   "canonicalPath": "docs/backend-contracts/openapi.yaml",
   "immutableCandidateSnapshot": "docs/backend-contracts/releases/1.4.0-contract/openapi.candidate.yaml",
@@ -19,7 +19,7 @@
   },
   "compatibility": {
     "result": "PASS",
-    "classifiedChanges": 74,
+    "classifiedChanges": 83,
     "unapprovedBlockers": 0
   },
   "runtime": {

@@ -125,9 +125,18 @@ describe('Stage 16 ExerciseRecord contract', () => {
       'actualDurationSeconds',
       'creditedDurationSeconds',
       'status',
+      'studentRemark',
     ]) {
       assert.equal(createFields.includes(forbidden), false);
     }
+    const updateFields = Object.keys(
+      object(object(schemas.UpdateExerciseRecordRequest, 'update').properties, 'update fields'),
+    );
+    const projectionFields = Object.keys(
+      object(object(schemas.ExerciseRecord, 'record').properties, 'record fields'),
+    );
+    assert.equal(updateFields.includes('studentRemark'), false);
+    assert.equal(projectionFields.includes('studentRemark'), false);
     const reviewFields = Object.keys(
       object(object(schemas.StudentCurrentReview, 'review').properties, 'review fields'),
     );

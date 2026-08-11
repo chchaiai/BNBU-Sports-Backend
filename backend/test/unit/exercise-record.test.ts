@@ -38,14 +38,12 @@ describe('ExerciseRecord domain rules', () => {
         sportType: 'RUNNING',
         sportName: null,
         description: '  Synthetic run  ',
-        studentRemark: '   ',
       }),
       {
         creditType: 'GENERAL',
         sportType: 'RUNNING',
         sportName: null,
         description: 'Synthetic run',
-        studentRemark: null,
       },
     );
     assert.throws(

@@ -181,7 +181,6 @@ describe('Stage 16 ExerciseRecord security', () => {
       sportType: 'RUNNING',
       sportName: null,
       description: 'Synthetic record',
-      studentRemark: null,
       actualDurationSeconds: 3600n,
       pausedDurationSeconds: 0n,
       creditedDurationSeconds: 3600n,

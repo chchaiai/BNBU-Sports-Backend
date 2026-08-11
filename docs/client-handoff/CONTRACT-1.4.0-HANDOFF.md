@@ -5,7 +5,7 @@
 | Canonical OpenAPI | `docs/backend-contracts/openapi.yaml` |
 | Candidate version | `1.4.0-contract` |
 | OpenAPI version | `3.1.0` |
-| SHA-256 | `d004ccb34b3e2bbf2958a34afba0cb64f820c0a1e610be1581d5ad1b3bf42ca1` |
+| SHA-256 | `de0640c26925d74b6c958ecbb905afe2a9f23bedfd396f9deaf704f070eb5ebe` |
 | Source commit containing the canonical contract | `d368aea5671f7507ca7b1cf61bfa05173855db68` |
 | Operations | 122 |
 | Schemas | 275 |
