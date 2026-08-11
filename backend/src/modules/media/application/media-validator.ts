@@ -24,8 +24,13 @@ export interface VerifiedMediaFacts {
 }
 
 const IMAGE_MIME = new Set(['image/jpeg', 'image/png']);
+const VIDEO_MIME = new Set(['video/mp4', 'video/quicktime', 'video/3gpp']);
 const EICAR = Buffer.from('EICAR-STANDARD-ANTIVIRUS-TEST-FILE', 'ascii');
 const MAX_VIDEO_METADATA_BYTES = 8 * 1024 * 1024;
+const JPEG_START_OF_FRAME_MARKERS = new Set([
+  0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb,
+]);
+const LOCATION_METADATA_TERMS = ['gpslatitude', 'gpslongitude', 'exif:gps', 'location'];
 
 export const MAX_EXERCISE_VIDEO_DURATION_SECONDS = 15;
 const MAX_NON_EXERCISE_VIDEO_DURATION_SECONDS = 300;
@@ -36,7 +41,7 @@ export class MediaValidator {
     const mimeType = facts.mimeType.toLowerCase();
     if (
       (facts.mediaType === 'IMAGE' && !IMAGE_MIME.has(mimeType)) ||
-      (facts.mediaType === 'VIDEO' && !mimeType.startsWith('video/'))
+      (facts.mediaType === 'VIDEO' && !VIDEO_MIME.has(mimeType))
     ) {
       throw new ApplicationError('MEDIA_TYPE_NOT_ALLOWED', 415);
     }
@@ -44,6 +49,9 @@ export class MediaValidator {
       throw new ApplicationError('VALIDATION_FAILED', 422);
     }
     if (facts.mediaType === 'IMAGE' && facts.fileSizeBytes > config.maxImageBytes) {
+      throw new ApplicationError('MEDIA_SIZE_EXCEEDED', 413);
+    }
+    if (facts.mediaType === 'VIDEO' && facts.fileSizeBytes > config.maxVideoTransportBytes) {
       throw new ApplicationError('MEDIA_SIZE_EXCEEDED', 413);
     }
     if (facts.mediaType === 'IMAGE' && facts.durationSeconds !== null) {
@@ -112,13 +120,15 @@ export class MediaValidator {
     for await (const chunk of stream) {
       const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as Uint8Array);
       length += buffer.length;
+      if (length > config.maxVideoTransportBytes) {
+        throw new ApplicationError('MEDIA_SIZE_EXCEEDED', 413);
+      }
       digest.update(buffer);
       if (prefix.length < 32) {
         prefix = Buffer.concat([prefix, buffer.subarray(0, 32 - prefix.length)]);
       }
       const scan = Buffer.concat([scanTail, buffer]);
-      const lowercase = scan.toString('latin1').toLowerCase();
-      unsafeContent ||= scan.includes(EICAR) || lowercase.includes('location');
+      unsafeContent ||= scan.includes(EICAR);
       containerProbe.push(buffer);
       scanTail = Buffer.from(scan.subarray(Math.max(0, scan.length - 64)));
     }
@@ -135,12 +145,14 @@ export class MediaValidator {
     if (prefix.subarray(4, 8).toString('ascii') !== 'ftyp') {
       return this.integrityFailure();
     }
-    const { movieHeader, hasAudioTrack } = containerProbe.finish();
+    const { movieHeader, audioTrackCount, videoTrackCount, hasLocationMetadata } =
+      containerProbe.finish();
+    if (hasLocationMetadata || videoTrackCount < 1) this.integrityFailure();
     const mimeType = this.isoBaseMediaMimeType(prefix.subarray(8, 12).toString('ascii'));
     if (mimeType !== declared.mimeType.toLowerCase()) this.integrityFailure();
     const timing = this.parseMovieHeader(movieHeader);
     this.enforceVideoDuration(declared.businessPurpose, timing.duration, timing.timescale);
-    if (declared.businessPurpose === 'EXERCISE_RECORD' && !hasAudioTrack) {
+    if (declared.businessPurpose === 'EXERCISE_RECORD' && audioTrackCount < 1) {
       throw new ApplicationError('MEDIA_AUDIO_TRACK_REQUIRED', 422);
     }
     const durationSeconds = Math.ceil(timing.duration / timing.timescale);
@@ -152,7 +164,7 @@ export class MediaValidator {
       fileSizeBytes: length,
       contentSha256,
       durationSeconds,
-      safeMetadata: { durationSeconds, audioTrackCount: hasAudioTrack ? 1 : 0 },
+      safeMetadata: { durationSeconds, audioTrackCount, videoTrackCount },
     };
   }
 
@@ -160,9 +172,6 @@ export class MediaValidator {
     body: Buffer,
     maximumPixels: number,
   ): { mimeType: string; durationSeconds: null; safeMetadata: Record<string, number> } {
-    if (body.includes(Buffer.from('GPS', 'ascii')) || body.includes(Buffer.from([0x25, 0x88]))) {
-      this.integrityFailure();
-    }
     let width = 0;
     let height = 0;
     let mimeType: string;
@@ -173,6 +182,7 @@ export class MediaValidator {
       body.subarray(body.length - 8, body.length - 4).toString('ascii') === 'IEND'
     ) {
       mimeType = 'image/png';
+      if (this.pngContainsLocationMetadata(body)) this.integrityFailure();
       width = body.readUInt32BE(16);
       height = body.readUInt32BE(20);
     } else if (
@@ -183,7 +193,9 @@ export class MediaValidator {
       body[body.length - 1] === 0xd9
     ) {
       mimeType = 'image/jpeg';
-      ({ width, height } = this.jpegDimensions(body));
+      const parsed = this.jpegInfo(body);
+      if (parsed.hasLocationMetadata) this.integrityFailure();
+      ({ width, height } = parsed);
     } else {
       return this.integrityFailure();
     }
@@ -191,21 +203,115 @@ export class MediaValidator {
     return { mimeType, durationSeconds: null, safeMetadata: { width, height } };
   }
 
-  private jpegDimensions(body: Buffer): { width: number; height: number } {
+  private jpegInfo(body: Buffer): {
+    width: number;
+    height: number;
+    hasLocationMetadata: boolean;
+  } {
     let offset = 2;
-    while (offset + 9 < body.length) {
+    let width = 0;
+    let height = 0;
+    let hasLocationMetadata = false;
+    while (offset + 3 < body.length) {
       if (body[offset] !== 0xff) return this.integrityFailure();
-      const marker = body[offset + 1] ?? 0;
-      offset += 2;
-      if (marker === 0xd8 || marker === 0xd9) continue;
+      while (body[offset] === 0xff) offset += 1;
+      const marker = body[offset] ?? 0;
+      offset += 1;
+      if (marker === 0xda || marker === 0xd9) break;
+      if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd8)) continue;
+      if (offset + 2 > body.length) return this.integrityFailure();
       const segmentLength = body.readUInt16BE(offset);
       if (segmentLength < 2 || offset + segmentLength > body.length) this.integrityFailure();
-      if ([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb].includes(marker)) {
-        return { height: body.readUInt16BE(offset + 3), width: body.readUInt16BE(offset + 5) };
+      const payload = body.subarray(offset + 2, offset + segmentLength);
+      if (marker === 0xe1 || marker === 0xed || marker === 0xfe) {
+        hasLocationMetadata ||= this.metadataPayloadContainsLocation(payload);
+      }
+      if (JPEG_START_OF_FRAME_MARKERS.has(marker)) {
+        if (segmentLength < 7) this.integrityFailure();
+        height = body.readUInt16BE(offset + 3);
+        width = body.readUInt16BE(offset + 5);
       }
       offset += segmentLength;
     }
+    if (width < 1 || height < 1) return this.integrityFailure();
+    return { width, height, hasLocationMetadata };
+  }
+
+  private pngContainsLocationMetadata(body: Buffer): boolean {
+    let offset = 8;
+    while (offset + 12 <= body.length) {
+      const length = body.readUInt32BE(offset);
+      const type = body.subarray(offset + 4, offset + 8).toString('ascii');
+      const dataStart = offset + 8;
+      const dataEnd = dataStart + length;
+      if (dataEnd + 4 > body.length) return this.integrityFailure();
+      const payload = body.subarray(dataStart, dataEnd);
+      if (type === 'eXIf' && this.tiffContainsGpsIfd(payload)) return true;
+      if (['tEXt', 'zTXt', 'iTXt'].includes(type)) {
+        const keywordEnd = payload.indexOf(0);
+        const keyword = payload
+          .subarray(0, keywordEnd < 0 ? payload.length : keywordEnd)
+          .toString('latin1')
+          .toLowerCase();
+        if (this.locationTermsPresent(keyword)) return true;
+        if (
+          type !== 'zTXt' &&
+          this.locationTermsPresent(payload.toString('latin1').toLowerCase())
+        ) {
+          return true;
+        }
+      }
+      offset = dataEnd + 4;
+      if (type === 'IEND') return false;
+    }
     return this.integrityFailure();
+  }
+
+  private metadataPayloadContainsLocation(payload: Buffer): boolean {
+    if (
+      payload.length >= 6 &&
+      payload.subarray(0, 6).equals(Buffer.from([0x45, 0x78, 0x69, 0x66, 0, 0])) &&
+      this.tiffContainsGpsIfd(payload.subarray(6))
+    ) {
+      return true;
+    }
+    return this.locationTermsPresent(payload.toString('latin1').toLowerCase());
+  }
+
+  private tiffContainsGpsIfd(tiff: Buffer): boolean {
+    if (tiff.length < 8) return false;
+    const byteOrder = tiff.subarray(0, 2).toString('ascii');
+    if (byteOrder !== 'II' && byteOrder !== 'MM') return false;
+    const littleEndian = byteOrder === 'II';
+    const readUInt16 = (offset: number): number | null => {
+      if (offset < 0 || offset + 2 > tiff.length) return null;
+      return littleEndian ? tiff.readUInt16LE(offset) : tiff.readUInt16BE(offset);
+    };
+    const readUInt32 = (offset: number): number | null => {
+      if (offset < 0 || offset + 4 > tiff.length) return null;
+      return littleEndian ? tiff.readUInt32LE(offset) : tiff.readUInt32BE(offset);
+    };
+    if (readUInt16(2) !== 42) return false;
+    let ifdOffset = readUInt32(4);
+    const visited = new Set<number>();
+    for (let depth = 0; depth < 8 && ifdOffset !== null && ifdOffset !== 0; depth += 1) {
+      if (visited.has(ifdOffset)) return false;
+      visited.add(ifdOffset);
+      const entryCount = readUInt16(ifdOffset);
+      if (entryCount === null || entryCount > 4096) return false;
+      const entriesStart = ifdOffset + 2;
+      const nextOffsetPosition = entriesStart + entryCount * 12;
+      if (nextOffsetPosition + 4 > tiff.length) return false;
+      for (let index = 0; index < entryCount; index += 1) {
+        if (readUInt16(entriesStart + index * 12) === 0x8825) return true;
+      }
+      ifdOffset = readUInt32(nextOffsetPosition);
+    }
+    return false;
+  }
+
+  private locationTermsPresent(value: string): boolean {
+    return LOCATION_METADATA_TERMS.some((term) => value.includes(term));
   }
 
   private parseMovieHeader(header: Buffer): { timescale: number; duration: number } {
@@ -302,7 +408,12 @@ class IsoBaseMediaProbe {
     }
   }
 
-  finish(): { movieHeader: Buffer; hasAudioTrack: boolean } {
+  finish(): {
+    movieHeader: Buffer;
+    audioTrackCount: number;
+    videoTrackCount: number;
+    hasLocationMetadata: boolean;
+  } {
     if (
       this.movieBox === null ||
       this.remainingSkipBytes !== 0 ||
@@ -321,27 +432,31 @@ class IsoBaseMediaProbe {
     const movieHeader = Buffer.from(
       this.movieBox.subarray(movieHeaderBox.start + 4, movieHeaderBox.start + 44),
     );
-    const hasAudioTrack = children
+    const handlerTypes = children
       .filter((box) => box.type === 'trak')
-      .some((track) => this.trackHasAudioHandler(this.movieBox!, track));
-    return { movieHeader, hasAudioTrack };
+      .map((track) => this.trackHandlerType(this.movieBox!, track));
+    const audioTrackCount = handlerTypes.filter((type) => type === 'soun').length;
+    const videoTrackCount = handlerTypes.filter((type) => type === 'vide').length;
+    const metadataText = this.movieBox.toString('latin1').toLowerCase();
+    const hasLocationMetadata =
+      this.movieBox.includes(Buffer.from([0xa9, 0x78, 0x79, 0x7a])) ||
+      metadataText.includes('location') ||
+      metadataText.includes('loci');
+    return { movieHeader, audioTrackCount, videoTrackCount, hasLocationMetadata };
   }
 
-  private trackHasAudioHandler(buffer: Buffer, track: IsoBox): boolean {
+  private trackHandlerType(buffer: Buffer, track: IsoBox): string | null {
     const trackChildren = this.readBoxes(buffer, track.start + track.headerSize, track.end);
     for (const media of trackChildren.filter((box) => box.type === 'mdia')) {
       const mediaChildren = this.readBoxes(buffer, media.start + media.headerSize, media.end);
       for (const handler of mediaChildren.filter((box) => box.type === 'hdlr')) {
         const handlerTypeStart = handler.start + handler.headerSize + 8;
-        if (
-          handlerTypeStart + 4 <= handler.end &&
-          buffer.subarray(handlerTypeStart, handlerTypeStart + 4).toString('ascii') === 'soun'
-        ) {
-          return true;
+        if (handlerTypeStart + 4 <= handler.end) {
+          return buffer.subarray(handlerTypeStart, handlerTypeStart + 4).toString('ascii');
         }
       }
     }
-    return false;
+    return null;
   }
 
   private readBoxes(buffer: Buffer, start: number, end: number): IsoBox[] {
