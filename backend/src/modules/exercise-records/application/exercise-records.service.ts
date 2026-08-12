@@ -312,7 +312,7 @@ export class ExerciseRecordsService {
           creditType: input.creditType ?? (current.creditType as 'COURSE_RELATED' | 'GENERAL'),
           sportType: input.sportType ?? current.sportType,
           sportName: input.sportName === undefined ? current.sportName : input.sportName,
-          description: input.description ?? current.description,
+          description: input.description === undefined ? current.description : input.description,
         });
         const changedFields = Object.entries(content)
           .filter(([key, value]) => current[key as keyof ExerciseRecord] !== value)

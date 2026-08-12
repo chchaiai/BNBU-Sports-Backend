@@ -18,12 +18,12 @@ const HTTP_METHODS = new Set([
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..", "..");
 const publishedHash =
-  "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9";
+  "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b";
 const defaults = {
   baseline: path.join(
     repositoryRoot,
     "docs/backend-contracts/contract-history",
-    `1.3.0-contract-${publishedHash}`,
+    `1.4.0-contract-${publishedHash}`,
     "openapi.snapshot.yaml",
   ),
   current: path.join(repositoryRoot, "docs/backend-contracts/openapi.yaml"),
@@ -33,11 +33,11 @@ const defaults = {
   ),
   json: path.join(
     repositoryRoot,
-    "docs/backend-contracts/openapi-1.3-to-1.4-compatibility.json",
+    "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.json",
   ),
   markdown: path.join(
     repositoryRoot,
-    "docs/backend-contracts/openapi-1.3-to-1.4-compatibility.md",
+    "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.md",
   ),
 };
 
@@ -691,7 +691,7 @@ async function main() {
       readFile(options.allowlist, "utf8"),
     ]);
   if (hash(baselineContents) !== publishedHash)
-    throw new Error("Published Contract 1.3 snapshot hash mismatch");
+    throw new Error("Published Contract 1.4 snapshot hash mismatch");
   const baselineDocument = YAML.parse(baselineContents);
   const currentDocument = YAML.parse(currentContents);
   const allowlist = JSON.parse(allowlistContents);

@@ -29,7 +29,7 @@ export class InitiateMediaUploadRequestDto {
   @IsIn(['IMAGE', 'VIDEO'])
   mediaType!: 'IMAGE' | 'VIDEO';
 
-  @IsString()
+  @IsIn(['image/jpeg', 'image/png', 'video/mp4', 'video/quicktime', 'video/3gpp', 'video/webm'])
   @MinLength(1)
   @MaxLength(127)
   mimeType!: string;

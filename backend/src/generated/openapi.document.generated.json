@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "BNBU Sports Unified API",
-    "version": "1.4.0-contract",
+    "version": "1.5.0-contract",
     "summary": "Unified contract for the sports check-in platform",
     "license": {
       "name": "UNLICENSED",
       "identifier": "LicenseRef-UNLICENSED"
     },
-    "description": "Production-closure candidate derived from the immutable published 1.3.0\nsnapshot. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Of the 30 client-support operations added in\nStage 21, authentication, exemption, release-policy, notification,\npush-device, preference, help, and feedback capabilities are approved for\nreal local implementation, while unresolved capabilities remain explicit\nrouted denials. GPS has persistence and\napplication-layer foundations, but all six location HTTP operations remain\ndenied. None of these statements proves Staging, iOS-binary, push-delivery,\nGPS-production, or Production-Gate readiness.\n"
+    "description": "Cross-client compatibility candidate derived from the immutable published 1.4.0\nsnapshot. It does not prove that every registered capability is\nbusiness-enabled or production-ready.\nBusiness fields come from 02-data-dictionary.md, state transitions from\n03-state-machines.md, rules from 04-business-rules.md, and authorization\nfrom 05-permission-matrix.md. Foundation authentication/session persistence\nis approved; CourseInvite/Join Capability are contract-and-persistence-design\nonly until the Enrollment Gate, while every Export operation is fail-closed\nand V1 persists no ExportJob. Of the 30 client-support operations added in\nStage 21, authentication, exemption, release-policy, notification,\npush-device, preference, help, and feedback capabilities are approved for\nreal local implementation, while unresolved capabilities remain explicit\nrouted denials. GPS has persistence and\napplication-layer foundations, but all six location HTTP operations remain\ndenied. None of these statements proves Staging, iOS-binary, push-delivery,\nGPS-production, or Production-Gate readiness.\n"
   },
   "servers": [
     {
@@ -3982,7 +3982,8 @@
         "operationId": "confirmMediaUpload",
         "x-error-codes": [
           "MEDIA_VIDEO_DURATION_EXCEEDED",
-          "MEDIA_AUDIO_TRACK_REQUIRED"
+          "MEDIA_AUDIO_TRACK_REQUIRED",
+          "MEDIA_LOCATION_METADATA_NOT_ALLOWED"
         ],
         "x-access-policy": {
           "policyId": "MEDIA-UPLOAD-CONFIRM",
@@ -11111,7 +11112,10 @@
             "maxLength": 100
           },
           "description": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "minLength": 1,
             "maxLength": 200
           },
@@ -13139,7 +13143,6 @@
           "sessionId",
           "creditType",
           "sportType",
-          "description",
           "clientRequestId"
         ],
         "properties": {
@@ -13161,16 +13164,51 @@
             "maxLength": 100
           },
           "description": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 200
+            "description": "Student-authored explanation. Required and nonblank for GENERAL; optional for COURSE_RELATED, where omitted, null, or blank input is normalized to null.",
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "clientRequestId": {
             "type": "string",
             "minLength": 1,
             "maxLength": 64
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "creditType": {
+                  "const": "GENERAL"
+                }
+              },
+              "required": [
+                "creditType"
+              ]
+            },
+            "then": {
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200,
+                  "pattern": ".*\\S.*"
+                }
+              },
+              "required": [
+                "description"
+              ]
+            }
+          }
+        ]
       },
       "UpdateExerciseRecordRequest": {
         "type": "object",
@@ -13194,9 +13232,17 @@
             "maxLength": 100
           },
           "description": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 200
+            "description": "Omit to preserve the current value. Null or blank is accepted only when the resulting creditType is COURSE_RELATED.",
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "expectedVersion": {
             "$ref": "#/components/schemas/PositiveVersion"
@@ -13252,7 +13298,16 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 127,
-            "description": "Transport declaration. Exercise-record source-video format is device-defined and not a business restriction."
+            "enum": [
+              "image/jpeg",
+              "image/png",
+              "video/mp4",
+              "video/quicktime",
+              "video/3gpp",
+              "video/webm"
+            ],
+            "x-transport-constraint": true,
+            "description": "Untrusted transport declaration. The server verifies the actual bytes and container; clients must not substitute video/mp4 when the browser reports an empty or different MIME."
           },
           "fileSizeBytes": {
             "type": "integer",
@@ -13361,7 +13416,7 @@
             }
           }
         ],
-        "description": "EXERCISE_RECORD media is scoped to an owned ExerciseSession. EXEMPTION_APPLICATION media is scoped to an owned active Enrollment before atomic association with an application draft."
+        "description": "EXERCISE_RECORD media is scoped to an owned ExerciseSession. EXEMPTION_APPLICATION media is scoped to an owned active Enrollment before atomic association with an application draft. No location permission or GPS data is required; uploaded JPEG/PNG/ISO/WebM media containing recognized location metadata is rejected."
       },
       "ConfirmMediaUploadRequest": {
         "type": "object",

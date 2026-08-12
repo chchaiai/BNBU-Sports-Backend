@@ -107,7 +107,8 @@
 | ADR-097  | Stage 21 将 12 个客户端能力 operation 提升为仅本地集成，并为其余能力建立结构基础；不提升 Staging、iOS 或 Production Gate                                                                                                     | 2026-08-05 的 30 项统一 default deny 已不能描述当前实现；又必须防止把本地 PostgreSQL 证据误报为推送、GPS 或生产已开放                                                       | Notification、PushDevice、UserPreference、Help、Feedback、AppReleasePolicy、Auth/Exemption/Sport/GPS 结构、OpenAPI、Migration、runtime coverage | 是 | 12 个 operation 记为 `IMPLEMENTED_VERIFIED` 且仅作本地集成；18 个继续 `IMPLEMENTED_DEFAULT_DENY`；GPS 仅持久化/应用层基础且 6 个 HTTP operation 关闭；无 APNs/FCM、Staging、iOS 二进制或生产 GPS 完成声明 | ACCEPTED   |
 | ADR-098  | iOS 认证、版本与免测附件规则：请求显式携带 `organizationCode`；学生仅 OTP 登录，密码找回仅 TEACHER/ADMIN；iOS 强制升级只比较数字 `buildNumber`；免测附件使用私有 `EXEMPTION_APPLICATION` 媒体用途 | 负责人已于 2026-08-06 明确三项客户端阻塞决策；必须避免跨组织账号歧义、营销版本字符串误判、学生密码流和免测附件复用运动记录媒体语义 | Auth challenge/recovery、AuthSession、AppReleasePolicy、MediaEvidence、ExemptionApplication、OpenAPI、0012 migration | 是 | 认证/找回 4、免测 6 与版本读取 1 个 operation 进入本地真实实现；学生无密码找回；版本文本仅展示；运动媒体仍只允许相机，免测媒体允许相机或文件选择器；无短信/邮件生产 provider、Staging 或生产开放声明 | ACCEPTED   |
 | ADR-099  | 学生打卡视频固定为 App 内有声录制，单条记录最多 1 个，累计实际录制最多 15 秒；暂停不计时；不设文件大小、分辨率、码率或源格式业务限制 | 负责人于 2026-08-09 明确以短时现场凭证替代旧 300 秒及视频大小/格式规则，并要求客户端压缩后上传 | MediaEvidence、Android 采集/压缩、OpenAPI、媒体校验 | 是 | 学生可暂停/继续或提前结束，达到 15 秒自动结束；相机和麦克风权限均为录像前置；客户端压缩成功后才上传；后端以真实媒体时长最终裁决，超过 15 秒返回 `MEDIA_VIDEO_DURATION_EXCEEDED`；图片、免测、反馈规则不变 | ACCEPTED   |
-| ADR-100  | 完成记录只收集必填运动说明；完成后仍可补拍照片或视频；当前保留的全部现场素材自动作为凭证，不提供勾选排除 | 负责人于 2026-08-11 要求统一课程相关与自主运动完成页，并消除客户端漏选已拍凭证的风险 | ExerciseRecord、MediaEvidence、Android 完成记录、OpenAPI | 是 | `description` 对两类运动均为 1..200 字；移除 `studentRemark`；提交的 `mediaIds` 必须精确等于同会话全部 AVAILABLE 现场媒体；处理中媒体阻止提交；提交后禁止继续申请或绑定媒体 | ACCEPTED   |
+| ADR-100  | 完成记录只收集一个运动说明；完成后仍可补拍照片或视频；当前保留的全部现场素材自动作为凭证，不提供勾选排除 | 负责人于 2026-08-11 要求统一课程相关与自主运动完成页，并消除客户端漏选已拍凭证的风险 | ExerciseRecord、MediaEvidence、Android 完成记录、OpenAPI | 是 | 凭证完整集合、`studentRemark` 移除和提交后冻结规则继续有效；“两类运动说明均必填”由 ADR-103 修订为仅自主运动必填 | SUPERSEDED |
+| ADR-103  | 自主运动说明必填、课程运动说明可选；打卡视频增加原始 WebM 校验；上传凭证不要求 GPS，识别到位置元数据时拒绝 | iOS 与 Web 首轮联调发现说明规则、定位语义和浏览器容器能力存在跨端差异，且已发布 1.4 合同必须保持不可变 | ExerciseRecord、MediaEvidence、iOS/Web/Android 合同、OpenAPI、0016 migration | 是 | `GENERAL.description` trim 后 1..200；`COURSE_RELATED.description` 可省略或为 null；后端接受并按字节校验 MP4/MOV/3GP/WebM，视频仍须有画面、有声音且不超过 15 秒；客户端不得为上传凭证申请定位权限或采集坐标，识别到 GPS/EXIF/容器位置元数据返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED` | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -362,3 +363,12 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - `gradeYear` 表示四位 cohort 年份，统一按整数 `1000..9999` 校验；不再使用当前年份、课程年份、固定 `2027` 或“当前年 + 1”作为上限。
 - OpenAPI 为加入课程请求使用专用 `CourseJoinGender`，Android 与后端在同一 monorepo 变更中同步升级；旧客户端若继续提交 `OTHER` 将收到稳定校验失败。
 - 本决策不改变邮箱绑定、验证码、会话激活、名单历史数据或数据库结构，不需要 Migration。
+
+### ADR-103：跨端运动说明、WebM 与位置元数据边界（2026-08-12，ACCEPTED）
+
+- 本 ADR 仅取代 ADR-100 中“课程相关与自主运动说明均必填”的一句。`GENERAL` 自主运动必须提交 trim 后 1..200 字的 `description`；`COURSE_RELATED` 可省略或提交 null，非空值仍须 trim 后 1..200 字。`studentRemark` 移除、全部现场凭证绑定和提交后冻结规则不变。
+- `exercise_records.description` 由 forward-only Migration `0016_optional_course_exercise_description` 改为 nullable，并由数据库 CHECK 同时约束 `credit_type` 与说明；后端领域层仍执行同一规则，不能只依赖客户端显示。
+- ExerciseRecord 视频允许的传输声明为 `video/mp4`、`video/quicktime`、`video/3gpp`、`video/webm`。后端必须核对真实容器、SHA-256、字节数、可信时长和轨道；所有容器仍须至少一个视频轨和一个音轨，真实时长必须大于 0 且不超过 15 秒。
+- WebM 直接按原始 EBML/WebM 字节验证，不引入浏览器端 FFmpeg/WASM，也不把 WebM 伪装成 MP4。照片继续作为所有支持现场相机的客户端必备凭证路径。
+- 上传凭证不要求 GPS/EXIF 位置。iOS、Web、Android 不得为了上传照片或视频申请定位权限或主动采集经纬度。后端识别到 GPS IFD、EXIF 位置或容器位置标签时返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED`，不把位置提取成业务事实。
+- 本 ADR 不开放 6 个 GPS/位置 HTTP operation，不批准定位采集、真实性判断、地图、保留期或 Production Gate；Staging HTTPS、真实邮箱投递和真机媒体闭环仍需独立环境验收。

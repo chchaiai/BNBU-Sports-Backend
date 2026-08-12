@@ -540,6 +540,7 @@ ADR-058 已确认：ExerciseRecord 提交前，所有必需媒体必须为 `AVAI
 | `MEDIA_SIZE_EXCEEDED` | 413 | 文件大小超过上限 | 原始或解码后文件超过配置上限 | 是，压缩/重拍后 | 在上传前提示大小，保留其他合格项 | `error.media.sizeExceeded` |
 | `MEDIA_VIDEO_DURATION_EXCEEDED` | 422 | 打卡视频超过 15 秒 | 客户端声明或服务端探测的累计实际录制时长超过 15 秒 | 是，重新录制后 | 提示视频最多录制 15 秒；暂停时间不计入 | `error.media.videoDurationExceeded` |
 | `MEDIA_AUDIO_TRACK_REQUIRED` | 422 | 打卡视频缺少声音 | 服务端未在打卡视频容器中探测到可解析音轨 | 是，重新录制后 | 提示必须开启麦克风并重新录制有声视频 | `error.media.audioTrackRequired` |
+| `MEDIA_LOCATION_METADATA_NOT_ALLOWED` | 422 | 凭证包含位置元数据 | 服务端在 JPEG GPS IFD、EXIF 或视频容器/WebM 标签中识别到位置字段 | 是，移除元数据或重新拍摄后 | 不申请定位权限；提示用户移除位置元数据或重新拍摄，不展示或上传坐标 | `error.media.locationMetadataNotAllowed` |
 | `MEDIA_TYPE_NOT_ALLOWED` | 415 | 媒体格式不受支持 | MIME、文件签名或 MediaType 不在白名单 | 是，更换文件后 | 展示允许类型；不得只改扩展名 | `error.media.typeNotAllowed` |
 | `MEDIA_CAPTURE_SOURCE_NOT_ALLOWED` | 422 | 当前业务不允许该采集来源 | CaptureSource 不符合端点或课程策略 | 是，更换来源后 | 仅展示允许的拍摄/选择入口 | `error.media.captureSourceNotAllowed` |
 | `MEDIA_UPLOAD_SESSION_EXPIRED` | 410 | 上传会话已过期 | 当前时间超过上传凭证或分片会话有效期 | 是，创建新会话后 | 丢弃旧签名 URL，重新申请上传 | `error.media.uploadSessionExpired` |

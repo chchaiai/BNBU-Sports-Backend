@@ -319,7 +319,7 @@ export type ExerciseRecordGroupByOutputType = {
   creditType: string
   sportType: string
   sportName: string | null
-  description: string
+  description: string | null
   actualDurationSeconds: bigint
   pausedDurationSeconds: bigint
   creditedDurationSeconds: bigint
@@ -369,7 +369,7 @@ export type ExerciseRecordWhereInput = {
   creditType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportName?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
-  description?: Prisma.StringFilter<"ExerciseRecord"> | string
+  description?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
   actualDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
@@ -410,7 +410,7 @@ export type ExerciseRecordOrderByWithRelationInput = {
   creditType?: Prisma.SortOrder
   sportType?: Prisma.SortOrder
   sportName?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   actualDurationSeconds?: Prisma.SortOrder
   pausedDurationSeconds?: Prisma.SortOrder
   creditedDurationSeconds?: Prisma.SortOrder
@@ -458,7 +458,7 @@ export type ExerciseRecordWhereUniqueInput = Prisma.AtLeast<{
   creditType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportName?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
-  description?: Prisma.StringFilter<"ExerciseRecord"> | string
+  description?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
   actualDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
@@ -499,7 +499,7 @@ export type ExerciseRecordOrderByWithAggregationInput = {
   creditType?: Prisma.SortOrder
   sportType?: Prisma.SortOrder
   sportName?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   actualDurationSeconds?: Prisma.SortOrder
   pausedDurationSeconds?: Prisma.SortOrder
   creditedDurationSeconds?: Prisma.SortOrder
@@ -534,7 +534,7 @@ export type ExerciseRecordScalarWhereWithAggregatesInput = {
   creditType?: Prisma.StringWithAggregatesFilter<"ExerciseRecord"> | string
   sportType?: Prisma.StringWithAggregatesFilter<"ExerciseRecord"> | string
   sportName?: Prisma.StringNullableWithAggregatesFilter<"ExerciseRecord"> | string | null
-  description?: Prisma.StringWithAggregatesFilter<"ExerciseRecord"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"ExerciseRecord"> | string | null
   actualDurationSeconds?: Prisma.BigIntWithAggregatesFilter<"ExerciseRecord"> | bigint | number
   pausedDurationSeconds?: Prisma.BigIntWithAggregatesFilter<"ExerciseRecord"> | bigint | number
   creditedDurationSeconds?: Prisma.BigIntWithAggregatesFilter<"ExerciseRecord"> | bigint | number
@@ -553,7 +553,7 @@ export type ExerciseRecordCreateInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -594,7 +594,7 @@ export type ExerciseRecordUncheckedCreateInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -619,7 +619,7 @@ export type ExerciseRecordUpdateInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -660,7 +660,7 @@ export type ExerciseRecordUncheckedUpdateInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -693,7 +693,7 @@ export type ExerciseRecordCreateManyInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -712,7 +712,7 @@ export type ExerciseRecordUpdateManyMutationInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -739,7 +739,7 @@ export type ExerciseRecordUncheckedUpdateManyInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -1313,7 +1313,7 @@ export type ExerciseRecordCreateWithoutOrganizationInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1352,7 +1352,7 @@ export type ExerciseRecordUncheckedCreateWithoutOrganizationInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1414,7 +1414,7 @@ export type ExerciseRecordScalarWhereInput = {
   creditType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportType?: Prisma.StringFilter<"ExerciseRecord"> | string
   sportName?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
-  description?: Prisma.StringFilter<"ExerciseRecord"> | string
+  description?: Prisma.StringNullableFilter<"ExerciseRecord"> | string | null
   actualDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFilter<"ExerciseRecord"> | bigint | number
@@ -1433,7 +1433,7 @@ export type ExerciseRecordCreateWithoutStudentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1471,7 +1471,7 @@ export type ExerciseRecordUncheckedCreateWithoutStudentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1522,7 +1522,7 @@ export type ExerciseRecordCreateWithoutTeacherInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1560,7 +1560,7 @@ export type ExerciseRecordUncheckedCreateWithoutTeacherInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1611,7 +1611,7 @@ export type ExerciseRecordCreateWithoutSemesterInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1649,7 +1649,7 @@ export type ExerciseRecordUncheckedCreateWithoutSemesterInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1700,7 +1700,7 @@ export type ExerciseRecordCreateWithoutCourseInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1738,7 +1738,7 @@ export type ExerciseRecordUncheckedCreateWithoutCourseInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1789,7 +1789,7 @@ export type ExerciseRecordCreateWithoutClassSectionInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1824,7 +1824,7 @@ export type ExerciseRecordUncheckedCreateWithoutClassSectionInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1875,7 +1875,7 @@ export type ExerciseRecordCreateWithoutEnrollmentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1910,7 +1910,7 @@ export type ExerciseRecordUncheckedCreateWithoutEnrollmentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1961,7 +1961,7 @@ export type ExerciseRecordCreateWithoutSessionInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -1995,7 +1995,7 @@ export type ExerciseRecordUncheckedCreateWithoutSessionInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2036,7 +2036,7 @@ export type ExerciseRecordUpdateWithoutSessionInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2070,7 +2070,7 @@ export type ExerciseRecordUncheckedUpdateWithoutSessionInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2095,7 +2095,7 @@ export type ExerciseRecordCreateWithoutMediaInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2135,7 +2135,7 @@ export type ExerciseRecordUncheckedCreateWithoutMediaInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2175,7 +2175,7 @@ export type ExerciseRecordUpdateWithoutMediaInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2215,7 +2215,7 @@ export type ExerciseRecordUncheckedUpdateWithoutMediaInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2239,7 +2239,7 @@ export type ExerciseRecordCreateWithoutDailySlotInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2279,7 +2279,7 @@ export type ExerciseRecordUncheckedCreateWithoutDailySlotInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2319,7 +2319,7 @@ export type ExerciseRecordUpdateWithoutDailySlotInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2359,7 +2359,7 @@ export type ExerciseRecordUncheckedUpdateWithoutDailySlotInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2383,7 +2383,7 @@ export type ExerciseRecordCreateWithoutEventsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2423,7 +2423,7 @@ export type ExerciseRecordUncheckedCreateWithoutEventsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2463,7 +2463,7 @@ export type ExerciseRecordUpdateWithoutEventsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2503,7 +2503,7 @@ export type ExerciseRecordUncheckedUpdateWithoutEventsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2527,7 +2527,7 @@ export type ExerciseRecordCreateWithoutReviewsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2567,7 +2567,7 @@ export type ExerciseRecordUncheckedCreateWithoutReviewsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2607,7 +2607,7 @@ export type ExerciseRecordUpdateWithoutReviewsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2647,7 +2647,7 @@ export type ExerciseRecordUncheckedUpdateWithoutReviewsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2671,7 +2671,7 @@ export type ExerciseRecordCreateWithoutScoreContributionsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2711,7 +2711,7 @@ export type ExerciseRecordUncheckedCreateWithoutScoreContributionsInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2751,7 +2751,7 @@ export type ExerciseRecordUpdateWithoutScoreContributionsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2791,7 +2791,7 @@ export type ExerciseRecordUncheckedUpdateWithoutScoreContributionsInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2815,7 +2815,7 @@ export type ExerciseRecordCreateWithoutLocationSummaryInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2855,7 +2855,7 @@ export type ExerciseRecordUncheckedCreateWithoutLocationSummaryInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2895,7 +2895,7 @@ export type ExerciseRecordUpdateWithoutLocationSummaryInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2935,7 +2935,7 @@ export type ExerciseRecordUncheckedUpdateWithoutLocationSummaryInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -2966,7 +2966,7 @@ export type ExerciseRecordCreateManyOrganizationInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -2985,7 +2985,7 @@ export type ExerciseRecordUpdateWithoutOrganizationInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3024,7 +3024,7 @@ export type ExerciseRecordUncheckedUpdateWithoutOrganizationInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3056,7 +3056,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutOrganizationInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3081,7 +3081,7 @@ export type ExerciseRecordCreateManyStudentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3100,7 +3100,7 @@ export type ExerciseRecordUpdateWithoutStudentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3138,7 +3138,7 @@ export type ExerciseRecordUncheckedUpdateWithoutStudentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3169,7 +3169,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutStudentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3194,7 +3194,7 @@ export type ExerciseRecordCreateManyTeacherInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3213,7 +3213,7 @@ export type ExerciseRecordUpdateWithoutTeacherInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3251,7 +3251,7 @@ export type ExerciseRecordUncheckedUpdateWithoutTeacherInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3282,7 +3282,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutTeacherInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3307,7 +3307,7 @@ export type ExerciseRecordCreateManySemesterInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3326,7 +3326,7 @@ export type ExerciseRecordUpdateWithoutSemesterInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3364,7 +3364,7 @@ export type ExerciseRecordUncheckedUpdateWithoutSemesterInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3395,7 +3395,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutSemesterInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3420,7 +3420,7 @@ export type ExerciseRecordCreateManyCourseInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3439,7 +3439,7 @@ export type ExerciseRecordUpdateWithoutCourseInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3477,7 +3477,7 @@ export type ExerciseRecordUncheckedUpdateWithoutCourseInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3508,7 +3508,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutCourseInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3530,7 +3530,7 @@ export type ExerciseRecordCreateManyClassSectionInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3549,7 +3549,7 @@ export type ExerciseRecordUpdateWithoutClassSectionInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3584,7 +3584,7 @@ export type ExerciseRecordUncheckedUpdateWithoutClassSectionInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3612,7 +3612,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutClassSectionInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3634,7 +3634,7 @@ export type ExerciseRecordCreateManyEnrollmentInput = {
   creditType: string
   sportType: string
   sportName?: string | null
-  description: string
+  description?: string | null
   actualDurationSeconds: bigint | number
   pausedDurationSeconds: bigint | number
   creditedDurationSeconds: bigint | number
@@ -3653,7 +3653,7 @@ export type ExerciseRecordUpdateWithoutEnrollmentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3688,7 +3688,7 @@ export type ExerciseRecordUncheckedUpdateWithoutEnrollmentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3716,7 +3716,7 @@ export type ExerciseRecordUncheckedUpdateManyWithoutEnrollmentInput = {
   creditType?: Prisma.StringFieldUpdateOperationsInput | string
   sportType?: Prisma.StringFieldUpdateOperationsInput | string
   sportName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actualDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   pausedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   creditedDurationSeconds?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
@@ -3997,7 +3997,7 @@ export type $ExerciseRecordPayload<ExtArgs extends runtime.Types.Extensions.Inte
     creditType: string
     sportType: string
     sportName: string | null
-    description: string
+    description: string | null
     actualDurationSeconds: bigint
     pausedDurationSeconds: bigint
     creditedDurationSeconds: bigint

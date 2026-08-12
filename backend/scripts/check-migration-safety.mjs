@@ -27,6 +27,7 @@ const expectedMigrationDirectories = [
   '0013_production_rate_limits',
   '0014_email_only_auth',
   '0015_email_verification_fk_alignment',
+  '0016_optional_course_exercise_description',
 ];
 
 if (
@@ -114,6 +115,17 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
       .replace(
         'DROP CONSTRAINT "email_verification_challenges_user_fkey"',
         'REPLACE CONSTRAINT "email_verification_challenges_user_fkey"',
+      );
+  }
+  if (migrationId === '0016_optional_course_exercise_description') {
+    destructiveScanSql = destructiveScanSql
+      .replace(
+        'DROP CONSTRAINT "exercise_records_description_check"',
+        'REPLACE CONSTRAINT "exercise_records_description_check"',
+      )
+      .replace(
+        'ALTER COLUMN "description" DROP NOT NULL',
+        'ALTER COLUMN "description" REMOVE NOT NULL',
       );
   }
   if (migrationId === '0008_review_core') {
@@ -205,6 +217,7 @@ const iosAuthReleaseExemption = migrations[11];
 const productionRateLimits = migrations[12];
 const emailOnlyAuth = migrations[13];
 const emailVerificationFkAlignment = migrations[14];
+const optionalCourseExerciseDescription = migrations[15];
 const immutableFoundationChecksum =
   '0573e3d13018e0db103ef4b605eb35278723174507b37379425a489b10e1462d';
 if (foundation.checksum !== immutableFoundationChecksum) {
@@ -604,6 +617,17 @@ for (const invariant of [
     throw new Error(`0015_email_verification_fk_alignment: missing invariant ${invariant}`);
   }
 }
+for (const invariant of [
+  'exercise_records_description_check',
+  'exercise_records_description_by_credit_type_check',
+  'ALTER COLUMN "description" DROP NOT NULL',
+  '"credit_type" = \'GENERAL\'',
+  '"credit_type" = \'COURSE_RELATED\'',
+]) {
+  if (!optionalCourseExerciseDescription.sql.includes(invariant)) {
+    throw new Error(`0016_optional_course_exercise_description: missing invariant ${invariant}`);
+  }
+}
 
 for (const migration of migrations) {
   const foreignKeyCount = (migration.sql.match(/\bFOREIGN KEY\b/g) ?? []).length;
@@ -615,5 +639,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through email verification FK alignment)\n',
+  'Migration safety: PASS (forward-only Foundation through optional course exercise descriptions)\n',
 );

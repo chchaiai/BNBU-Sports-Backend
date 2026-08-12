@@ -14,7 +14,7 @@ export interface ExerciseRecordProjection {
   creditType: string;
   sportType: string;
   sportName: string | null;
-  description: string;
+  description: string | null;
   actualDurationSeconds: number;
   pausedDurationSeconds: number;
   creditedDurationSeconds: number;

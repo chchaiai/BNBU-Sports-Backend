@@ -121,7 +121,7 @@ describe('Stage 15 MediaEvidence contract', () => {
     assert.equal(object(bind.properties, 'bind properties').recordId, undefined);
   });
 
-  it('publishes the trusted audio-track failure only on upload confirmation', () => {
+  it('publishes trusted track and location failures only on upload confirmation', () => {
     const paths = object(contract.paths, 'paths');
     const initiate = object(object(paths['/media-uploads'], 'initiate path').post, 'initiate');
     const confirm = object(
@@ -140,6 +140,37 @@ describe('Stage 15 MediaEvidence contract', () => {
       ),
       true,
     );
+    assert.equal(
+      stringArray(initiate['x-error-codes'], 'initiate errors').includes(
+        'MEDIA_LOCATION_METADATA_NOT_ALLOWED',
+      ),
+      false,
+    );
+    assert.equal(
+      stringArray(confirm['x-error-codes'], 'confirm errors').includes(
+        'MEDIA_LOCATION_METADATA_NOT_ALLOWED',
+      ),
+      true,
+    );
+  });
+
+  it('publishes the byte-verified browser WebM transport without requiring GPS', () => {
+    const schemas = object(object(contract.components, 'components').schemas, 'schemas');
+    const initiate = object(schemas.InitiateMediaUploadRequest, 'initiate request');
+    const mimeType = object(
+      object(initiate.properties, 'initiate properties').mimeType,
+      'mimeType',
+    );
+    assert.deepEqual(stringArray(mimeType.enum, 'media MIME enum'), [
+      'image/jpeg',
+      'image/png',
+      'video/mp4',
+      'video/quicktime',
+      'video/3gpp',
+      'video/webm',
+    ]);
+    assert.match(String(mimeType.description), /actual bytes and container/);
+    assert.match(String(initiate.description), /No location permission or GPS data is required/);
   });
 
   it('keeps 123 total operations and exactly five MediaEvidence operations', () => {

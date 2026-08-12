@@ -24,9 +24,10 @@ export interface VerifiedMediaFacts {
 }
 
 const IMAGE_MIME = new Set(['image/jpeg', 'image/png']);
-const VIDEO_MIME = new Set(['video/mp4', 'video/quicktime', 'video/3gpp']);
+const VIDEO_MIME = new Set(['video/mp4', 'video/quicktime', 'video/3gpp', 'video/webm']);
 const EICAR = Buffer.from('EICAR-STANDARD-ANTIVIRUS-TEST-FILE', 'ascii');
 const MAX_VIDEO_METADATA_BYTES = 8 * 1024 * 1024;
+const WEBM_SIGNATURE = Buffer.from([0x1a, 0x45, 0xdf, 0xa3]);
 const JPEG_START_OF_FRAME_MARKERS = new Set([
   0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb,
 ]);
@@ -113,9 +114,12 @@ export class MediaValidator {
   ): Promise<VerifiedMediaFacts> {
     const digest = createHash('sha256');
     let length = 0;
-    let prefix = Buffer.alloc(0);
-    let scanTail = Buffer.alloc(0);
+    let prefix: Buffer = Buffer.alloc(0);
+    let scanTail: Buffer = Buffer.alloc(0);
     const containerProbe = new IsoBaseMediaProbe();
+    let containerKind: 'ISO_BASE_MEDIA' | 'WEBM' | null = null;
+    let undecidedBytes: Buffer = Buffer.alloc(0);
+    let webmMetadata: Buffer = Buffer.alloc(0);
     let unsafeContent = false;
     for await (const chunk of stream) {
       const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as Uint8Array);
@@ -129,7 +133,28 @@ export class MediaValidator {
       }
       const scan = Buffer.concat([scanTail, buffer]);
       unsafeContent ||= scan.includes(EICAR);
-      containerProbe.push(buffer);
+      if (containerKind === null) {
+        undecidedBytes = Buffer.concat([undecidedBytes, buffer]);
+        if (
+          undecidedBytes.length >= WEBM_SIGNATURE.length &&
+          undecidedBytes.subarray(0, WEBM_SIGNATURE.length).equals(WEBM_SIGNATURE)
+        ) {
+          containerKind = 'WEBM';
+          webmMetadata = this.appendBoundedMetadata(webmMetadata, undecidedBytes);
+          undecidedBytes = Buffer.alloc(0);
+        } else if (undecidedBytes.length >= 8) {
+          if (undecidedBytes.subarray(4, 8).toString('ascii') !== 'ftyp') {
+            this.integrityFailure();
+          }
+          containerKind = 'ISO_BASE_MEDIA';
+          containerProbe.push(undecidedBytes);
+          undecidedBytes = Buffer.alloc(0);
+        }
+      } else if (containerKind === 'ISO_BASE_MEDIA') {
+        containerProbe.push(buffer);
+      } else {
+        webmMetadata = this.appendBoundedMetadata(webmMetadata, buffer);
+      }
       scanTail = Buffer.from(scan.subarray(Math.max(0, scan.length - 64)));
     }
     if (length !== declared.fileSizeBytes || length < 32 || unsafeContent) this.integrityFailure();
@@ -142,20 +167,32 @@ export class MediaValidator {
         dependency: 'MEDIA_SCANNER',
       });
     }
-    if (prefix.subarray(4, 8).toString('ascii') !== 'ftyp') {
-      return this.integrityFailure();
+    if (containerKind === null) return this.integrityFailure();
+    let mimeType: string;
+    let durationSeconds: number;
+    let audioTrackCount: number;
+    let videoTrackCount: number;
+    let hasLocationMetadata: boolean;
+    if (containerKind === 'ISO_BASE_MEDIA') {
+      const parsed = containerProbe.finish();
+      ({ audioTrackCount, videoTrackCount, hasLocationMetadata } = parsed);
+      mimeType = this.isoBaseMediaMimeType(prefix.subarray(8, 12).toString('ascii'));
+      const timing = this.parseMovieHeader(parsed.movieHeader);
+      this.enforceVideoDuration(declared.businessPurpose, timing.duration, timing.timescale);
+      durationSeconds = Math.ceil(timing.duration / timing.timescale);
+    } else {
+      const parsed = new WebmMetadataProbe().parse(webmMetadata);
+      ({ audioTrackCount, videoTrackCount, hasLocationMetadata, durationSeconds } = parsed);
+      mimeType = 'video/webm';
+      this.enforceVideoDuration(declared.businessPurpose, durationSeconds, 1);
+      durationSeconds = Math.ceil(durationSeconds);
     }
-    const { movieHeader, audioTrackCount, videoTrackCount, hasLocationMetadata } =
-      containerProbe.finish();
-    if (hasLocationMetadata || videoTrackCount < 1) this.integrityFailure();
-    const mimeType = this.isoBaseMediaMimeType(prefix.subarray(8, 12).toString('ascii'));
+    if (hasLocationMetadata) this.locationMetadataFailure();
+    if (videoTrackCount < 1) this.integrityFailure();
     if (mimeType !== declared.mimeType.toLowerCase()) this.integrityFailure();
-    const timing = this.parseMovieHeader(movieHeader);
-    this.enforceVideoDuration(declared.businessPurpose, timing.duration, timing.timescale);
     if (declared.businessPurpose === 'EXERCISE_RECORD' && audioTrackCount < 1) {
       throw new ApplicationError('MEDIA_AUDIO_TRACK_REQUIRED', 422);
     }
-    const durationSeconds = Math.ceil(timing.duration / timing.timescale);
     if (declared.durationSeconds === null || durationSeconds !== declared.durationSeconds) {
       this.integrityFailure();
     }
@@ -166,6 +203,11 @@ export class MediaValidator {
       durationSeconds,
       safeMetadata: { durationSeconds, audioTrackCount, videoTrackCount },
     };
+  }
+
+  private appendBoundedMetadata(current: Buffer, chunk: Buffer): Buffer {
+    if (current.length >= MAX_VIDEO_METADATA_BYTES) return current;
+    return Buffer.concat([current, chunk.subarray(0, MAX_VIDEO_METADATA_BYTES - current.length)]);
   }
 
   private parseImage(
@@ -182,7 +224,7 @@ export class MediaValidator {
       body.subarray(body.length - 8, body.length - 4).toString('ascii') === 'IEND'
     ) {
       mimeType = 'image/png';
-      if (this.pngContainsLocationMetadata(body)) this.integrityFailure();
+      if (this.pngContainsLocationMetadata(body)) this.locationMetadataFailure();
       width = body.readUInt32BE(16);
       height = body.readUInt32BE(20);
     } else if (
@@ -194,7 +236,7 @@ export class MediaValidator {
     ) {
       mimeType = 'image/jpeg';
       const parsed = this.jpegInfo(body);
-      if (parsed.hasLocationMetadata) this.integrityFailure();
+      if (parsed.hasLocationMetadata) this.locationMetadataFailure();
       ({ width, height } = parsed);
     } else {
       return this.integrityFailure();
@@ -350,6 +392,172 @@ export class MediaValidator {
   }
 
   private integrityFailure(): never {
+    throw new ApplicationError('MEDIA_INTEGRITY_MISMATCH', 422);
+  }
+
+  private locationMetadataFailure(): never {
+    throw new ApplicationError('MEDIA_LOCATION_METADATA_NOT_ALLOWED', 422);
+  }
+}
+
+interface WebmFacts {
+  durationSeconds: number;
+  audioTrackCount: number;
+  videoTrackCount: number;
+  hasLocationMetadata: boolean;
+}
+
+interface EbmlElement {
+  id: number;
+  dataStart: number;
+  dataEnd: number;
+  nextOffset: number;
+}
+
+class WebmMetadataProbe {
+  parse(buffer: Buffer): WebmFacts {
+    const header = this.element(buffer, 0, buffer.length);
+    if (header.id !== 0x1a45dfa3) this.invalid();
+    const headerChildren = this.children(buffer, header.dataStart, header.dataEnd);
+    const documentType = headerChildren.find(({ id }) => id === 0x4282);
+    if (
+      documentType === undefined ||
+      buffer.subarray(documentType.dataStart, documentType.dataEnd).toString('ascii') !== 'webm'
+    ) {
+      this.invalid();
+    }
+    const segment = this.element(buffer, header.nextOffset, buffer.length, true);
+    if (segment.id !== 0x18538067) this.invalid();
+
+    let durationSeconds: number | null = null;
+    let audioTrackCount = 0;
+    let videoTrackCount = 0;
+    let hasLocationMetadata = false;
+    let offset = segment.dataStart;
+    while (offset < segment.dataEnd) {
+      const child = this.element(buffer, offset, segment.dataEnd, true);
+      if (child.id === 0x1f43b675) break;
+      if (child.id === 0x1549a966) {
+        durationSeconds = this.duration(buffer, child);
+      } else if (child.id === 0x1654ae6b) {
+        ({ audioTrackCount, videoTrackCount } = this.tracks(buffer, child));
+      } else if (child.id === 0x1254c367) {
+        const metadata = buffer
+          .subarray(child.dataStart, child.dataEnd)
+          .toString('utf8')
+          .toLowerCase();
+        hasLocationMetadata = LOCATION_METADATA_TERMS.some((term) => metadata.includes(term));
+      }
+      offset = child.nextOffset;
+    }
+    if (
+      durationSeconds === null ||
+      !Number.isFinite(durationSeconds) ||
+      durationSeconds <= 0 ||
+      videoTrackCount + audioTrackCount < 1
+    ) {
+      this.invalid();
+    }
+    return { durationSeconds, audioTrackCount, videoTrackCount, hasLocationMetadata };
+  }
+
+  private duration(buffer: Buffer, info: EbmlElement): number {
+    let timecodeScale = 1_000_000;
+    let durationUnits: number | null = null;
+    for (const child of this.children(buffer, info.dataStart, info.dataEnd)) {
+      if (child.id === 0x2ad7b1) {
+        timecodeScale = this.unsigned(buffer.subarray(child.dataStart, child.dataEnd));
+      } else if (child.id === 0x4489) {
+        const value = buffer.subarray(child.dataStart, child.dataEnd);
+        if (value.length === 4) durationUnits = value.readFloatBE(0);
+        else if (value.length === 8) durationUnits = value.readDoubleBE(0);
+        else this.invalid();
+      }
+    }
+    if (durationUnits === null || timecodeScale < 1) return this.invalid();
+    return (durationUnits * timecodeScale) / 1_000_000_000;
+  }
+
+  private tracks(
+    buffer: Buffer,
+    tracks: EbmlElement,
+  ): { audioTrackCount: number; videoTrackCount: number } {
+    let audioTrackCount = 0;
+    let videoTrackCount = 0;
+    for (const entry of this.children(buffer, tracks.dataStart, tracks.dataEnd)) {
+      if (entry.id !== 0xae) continue;
+      const type = this.children(buffer, entry.dataStart, entry.dataEnd).find(
+        ({ id }) => id === 0x83,
+      );
+      if (type === undefined) this.invalid();
+      const value = this.unsigned(buffer.subarray(type.dataStart, type.dataEnd));
+      if (value === 1) videoTrackCount += 1;
+      if (value === 2) audioTrackCount += 1;
+    }
+    return { audioTrackCount, videoTrackCount };
+  }
+
+  private children(buffer: Buffer, start: number, end: number): EbmlElement[] {
+    const result: EbmlElement[] = [];
+    let offset = start;
+    while (offset < end) {
+      const child = this.element(buffer, offset, end);
+      result.push(child);
+      offset = child.nextOffset;
+    }
+    if (offset !== end) this.invalid();
+    return result;
+  }
+
+  private element(
+    buffer: Buffer,
+    offset: number,
+    end: number,
+    allowUnknownSize = false,
+  ): EbmlElement {
+    const id = this.vint(buffer, offset, end, false);
+    const size = this.vint(buffer, offset + id.length, end, true);
+    const dataStart = offset + id.length + size.length;
+    const declaredEnd = dataStart + size.value;
+    const dataEnd = allowUnknownSize && (size.unknown || declaredEnd > end) ? end : declaredEnd;
+    if ((!allowUnknownSize && size.unknown) || dataEnd > end || dataEnd < dataStart) this.invalid();
+    return { id: id.value, dataStart, dataEnd, nextOffset: dataEnd };
+  }
+
+  private vint(
+    buffer: Buffer,
+    offset: number,
+    end: number,
+    isSize: boolean,
+  ): { value: number; length: number; unknown: boolean } {
+    if (offset >= end) this.invalid();
+    const first = buffer[offset] ?? 0;
+    let length = 1;
+    let marker = 0x80;
+    while (length <= 8 && (first & marker) === 0) {
+      marker >>= 1;
+      length += 1;
+    }
+    if (length > (isSize ? 8 : 4) || offset + length > end) this.invalid();
+    let value = isSize ? first & (marker - 1) : first;
+    let unknown = isSize && value === marker - 1;
+    for (let index = 1; index < length; index += 1) {
+      const byte = buffer[offset + index] ?? 0;
+      value = value * 256 + byte;
+      unknown &&= byte === 0xff;
+      if (!Number.isSafeInteger(value)) this.invalid();
+    }
+    return { value, length, unknown };
+  }
+
+  private unsigned(value: Buffer): number {
+    if (value.length < 1 || value.length > 6) return this.invalid();
+    let result = 0;
+    for (const byte of value) result = result * 256 + byte;
+    return result;
+  }
+
+  private invalid(): never {
     throw new ApplicationError('MEDIA_INTEGRITY_MISMATCH', 422);
   }
 }

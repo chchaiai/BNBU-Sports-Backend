@@ -76,6 +76,11 @@ export const foundationMigrations = [
     sha256: 'f96b84e50b1510c340c54eea8e7a99301c8db7185362c1db47540b2c43065b95',
     destructive: false,
   },
+  {
+    migrationId: '0016_optional_course_exercise_description',
+    sha256: '7e7292a85b086a830b84c52eebc1bd63d967775165aafb779346d3c2e85291ef',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -93,3 +98,4 @@ export const iosAuthReleaseExemptionMigration = foundationMigrations[11];
 export const productionRateLimitsMigration = foundationMigrations[12];
 export const emailOnlyAuthMigration = foundationMigrations[13];
 export const emailVerificationFkAlignmentMigration = foundationMigrations[14];
+export const optionalCourseExerciseDescriptionMigration = foundationMigrations[15];

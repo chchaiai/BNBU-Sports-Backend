@@ -20,6 +20,7 @@ const migrationIds = [
   '0013_production_rate_limits',
   '0014_email_only_auth',
   '0015_email_verification_fk_alignment',
+  '0016_optional_course_exercise_description',
 ];
 const outputPath = path.join(
   backendDirectory,
@@ -62,17 +63,18 @@ const generatedWithIosIntegration = `${generatedWithClientCapabilities}export co
 const generatedWithProductionRateLimits = `${generatedWithIosIntegration}export const productionRateLimitsMigration = foundationMigrations[12];\n`;
 const generatedWithEmailOnlyAuth = `${generatedWithProductionRateLimits}export const emailOnlyAuthMigration = foundationMigrations[13];\n`;
 const generatedWithEmailVerificationFkAlignment = `${generatedWithEmailOnlyAuth}export const emailVerificationFkAlignmentMigration = foundationMigrations[14];\n`;
+const generatedWithOptionalCourseExerciseDescription = `${generatedWithEmailVerificationFkAlignment}export const optionalCourseExerciseDescriptionMigration = foundationMigrations[15];\n`;
 
 if (checkOnly) {
   if (
     !fs.existsSync(outputPath) ||
-    fs.readFileSync(outputPath, 'utf8') !== generatedWithEmailVerificationFkAlignment
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithOptionalCourseExerciseDescription
   ) {
     throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
   }
   process.stdout.write('Generated migration manifest: PASS\n');
 } else {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, generatedWithEmailVerificationFkAlignment, 'utf8');
+  fs.writeFileSync(outputPath, generatedWithOptionalCourseExerciseDescription, 'utf8');
   process.stdout.write('Generated migration manifest updated.\n');
 }
