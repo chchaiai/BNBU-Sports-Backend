@@ -10,20 +10,20 @@ const canonicalPath = resolve(
   "docs/backend-contracts/openapi.yaml",
 );
 const publishedHash =
-  "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9";
+  "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b";
 const publishedSnapshotPath = resolve(
   repositoryRoot,
   "docs/backend-contracts/contract-history",
-  `1.3.0-contract-${publishedHash}`,
+  `1.4.0-contract-${publishedHash}`,
   "openapi.snapshot.yaml",
 );
 const compatibilityJsonPath = resolve(
   repositoryRoot,
-  "docs/backend-contracts/openapi-1.3-to-1.4-compatibility.json",
+  "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.json",
 );
 const compatibilityMarkdownPath = resolve(
   repositoryRoot,
-  "docs/backend-contracts/openapi-1.3-to-1.4-compatibility.md",
+  "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.md",
 );
 const runtimeManifestPath = resolve(
   repositoryRoot,
@@ -68,11 +68,11 @@ function writeOrCheck(path, expected) {
 const canonical = readFileSync(canonicalPath, "utf8");
 const published = readFileSync(publishedSnapshotPath, "utf8");
 if (sha256(published) !== publishedHash)
-  throw new Error("Immutable Contract 1.3 hash mismatch");
+  throw new Error("Immutable Contract 1.4 hash mismatch");
 const document = YAML.parse(canonical);
-if (document.info.version !== "1.4.0-contract") {
+if (document.info.version !== "1.5.0-contract") {
   throw new Error(
-    `Candidate version must be 1.4.0-contract, got ${document.info.version}`,
+    `Candidate version must be 1.5.0-contract, got ${document.info.version}`,
   );
 }
 if (document.openapi !== "3.1.0")
@@ -91,15 +91,17 @@ if (
   provenance.contractVersion !== document.info.version ||
   !/^[0-9a-f]{40}$/.test(provenance.sourceCommit)
 ) {
-  throw new Error("Release provenance is invalid or does not match the candidate");
+  throw new Error(
+    "Release provenance is invalid or does not match the candidate",
+  );
 }
 const candidateHash = sha256(canonical);
 const releaseDirectory = resolve(
   repositoryRoot,
-  "docs/backend-contracts/releases/1.4.0-contract",
+  "docs/backend-contracts/releases/1.5.0-contract",
 );
 const snapshotRelative =
-  "docs/backend-contracts/releases/1.4.0-contract/openapi.candidate.yaml";
+  "docs/backend-contracts/releases/1.5.0-contract/openapi.candidate.yaml";
 const metadata = {
   formatVersion: 1,
   contractVersion: document.info.version,
@@ -110,9 +112,9 @@ const metadata = {
   canonicalPath: "docs/backend-contracts/openapi.yaml",
   immutableCandidateSnapshot: snapshotRelative,
   publishedBaseline: {
-    version: "1.3.0-contract",
+    version: "1.4.0-contract",
     sha256: publishedHash,
-    sourceCommit: "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
+    sourceCommit: "75235c4ab46b909d0b0b487d5de954f120fdf15d",
   },
   counts: {
     paths: Object.keys(document.paths).length,
@@ -134,46 +136,45 @@ const metadata = {
 };
 
 const manifest = `${JSON.stringify(metadata, null, 2)}\n`;
-const changelog = `# Contract 1.4.0 Candidate Changelog
+const changelog = `# Contract 1.5.0 Candidate Changelog
 
-Baseline: immutable \`1.3.0-contract\` SHA-256 \`${publishedHash}\`.
+Baseline: immutable \`1.4.0-contract\` SHA-256 \`${publishedHash}\`.
 
-- Publishes ${metadata.counts.operations} operations and records every Contract 1.3 compatibility change through the checked exception registry.
-- Documents every globally reachable SystemMode mutation response and the Export read fail-closed response.
-- Defines mutually exclusive \`listStudentScores.status\` semantics and aligns the runtime projection with the published flat StudentScore transport.
-- Records all 16 Contract 1.3 errata without narrowing the 1.3 request schema: endpoint runtime vocabularies use \`x-runtime-enum\`; compatibility-only Score sort fields are deprecated and explicitly unsupported.
-- Accepts both RFC3339 time values and organization-local wall-clock values for class-section local-time fields while retaining the prior format alternative.
-- Adds an explicit UNLICENSED identifier and scoped Redocly suppressions with removal conditions.
-- Implements ADR-101 email-only authentication: removes the generic \`PATCH /me\` placeholder, adds dedicated email challenge operations, removes public phone fields, and closes \`channel\` to \`EMAIL\`.
-- All breaking changes are covered by time-bounded approved exceptions; no unapproved blocker remains.
+- Preserves the published Contract 1.4 snapshot and advances the mutable API surface under the new \`1.5.0-contract\` version.
+- Makes exercise descriptions required only for \`GENERAL\` records; \`COURSE_RELATED\` descriptions may be omitted or null.
+- Adds byte-level WebM validation for browser-recorded exercise videos while retaining the 15-second maximum and mandatory video and audio tracks.
+- Clarifies that clients must not request GPS permission or collect coordinates for evidence upload. Recognized GPS, EXIF location, or container location metadata is rejected with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`.
+- Keeps SHA-256, declared MIME, actual container, duration, track, and size verification authoritative on the Backend.
 `;
-const migrationNotes = `# Contract 1.4.0 Migration Notes
+const migrationNotes = `# Contract 1.5.0 Migration Notes
 
 ## Clients
 
-Android must upgrade with this contract: student sign-in and account security are email-only, \`PENDING_CONTACT_BINDING\` gates new students, and the two dedicated email challenge operations replace the removed generic \`PATCH /me\`. Web teacher/admin password login and recovery must submit verified email identifiers. Clients must not send \`PHONE\` or read public phone fields.
+iOS may generate and wire \`/api/v1\` types from this candidate handoff after its immutable SHA-256 is verified. Android and iOS must require a non-blank description for \`GENERAL\` records only; \`COURSE_RELATED\` may omit it. Web may upload a browser-produced \`video/webm\` file when it contains a video track, an audio track, and a trusted duration no greater than 15 seconds. MP4, MOV, and 3GP remain supported.
+
+No client is required or permitted by this contract to request location permission or collect coordinates for evidence. If a selected media file already contains recognized location metadata, Backend rejects it with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`; clients should ask the user to remove location metadata or capture a new file.
 
 ## Database
 
-Migration \`0014_email_only_auth\` adds the email-verification challenge table and the explicit \`PENDING_CONTACT_BINDING\` User status. Follow-up migration \`0015_email_verification_fk_alignment\` aligns the new table's foreign-key update actions without changing or deleting data. Both are forward-only and preserve legacy phone columns and historical \`PHONE\` challenges without reading, clearing, or dropping them. Deploy migrations before the application image.
+Migration \`0016_optional_course_exercise_description\` makes \`exercise_records.description\` nullable and adds a database check that still requires a trimmed 1..200 character description for \`GENERAL\` rows. \`COURSE_RELATED\` rows may store null or a trimmed 1..200 character description. The migration is forward-only and must run before the application image.
 
-## Deferred breaking cleanup
+## Media deployment
 
-A future separately approved destructive migration may physically remove the ignored legacy phone columns after retention and client evidence are complete. It is not part of this candidate. A future \`/api/v2\` may also remove deprecated compatibility-only Score sort inputs under a separate compatibility review.
+No FFmpeg/WASM or upload-time transcoding service is introduced. Backend validates the original uploaded bytes. Media scanner, object storage, and HTTPS staging configuration remain deployment concerns and are not proven by this candidate package.
 `;
-const checklist = `# Contract 1.4.0 Post-Merge Release Checklist
+const checklist = `# Contract 1.5.0 Post-Merge Release Checklist
 
 This pull request prepares artifacts only. Do not create a tag or GitHub Release before merge.
 
 1. On the merged default branch, run \`npm --prefix backend run repo-layout:check\`.
 2. Run \`npm --prefix tools/backend-contracts run contract:release:check\` and the full backend CI workflow.
 3. Confirm \`docs/backend-contracts/openapi.yaml\` still hashes to \`${candidateHash}\`.
-4. Copy the candidate snapshot into \`docs/backend-contracts/contract-history/1.4.0-contract-${candidateHash}/\` with its manifest in a dedicated post-merge release commit.
+4. Copy the candidate snapshot into \`docs/backend-contracts/contract-history/1.5.0-contract-${candidateHash}/\` with its manifest in a dedicated post-merge release commit.
 5. Update the current-baseline pointer only in that release commit.
 6. Create the approved Git tag and GitHub Release from the verified merged commit; attach the manifest, OpenAPI snapshot, compatibility reports, changelog, migration notes, and client handoff.
 7. If any hash or gate differs, stop and forward-fix; never overwrite a historical snapshot.
 `;
-const handoff = `# BNBU Sports Contract 1.4.0 Candidate Handoff
+const handoff = `# BNBU Sports Contract 1.5.0 Candidate Handoff
 
 | Item | Value |
 | --- | --- |
@@ -181,15 +182,15 @@ const handoff = `# BNBU Sports Contract 1.4.0 Candidate Handoff
 | Candidate version | \`${document.info.version}\` |
 | OpenAPI version | \`${document.openapi}\` |
 | SHA-256 | \`${candidateHash}\` |
-  | Source baseline commit | \`${metadata.sourceCommit}\` |
+| Source baseline commit | \`${metadata.sourceCommit}\` |
 | Operations | ${metadata.counts.operations} |
 | Schemas | ${metadata.counts.schemas} |
-| Compatibility vs 1.3 | PASS; 0 unapproved blockers |
+| Compatibility vs 1.4 | PASS; 0 unapproved blockers |
 | Enabled operations | ${metadata.runtime.implementedAndConformant} |
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed; this handoff does not authorize Export, generic profile mutation, location collection, or other unapproved capabilities. Android and shared Web recovery guidance are synchronized in the same monorepo change.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This handoff authorizes neither location collection nor GPS permission requests. It adds original-byte WebM verification, not transcoding. Clients must retain photo evidence as a supported path and surface stable media validation errors.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
@@ -200,11 +201,11 @@ The only canonical API contract is \`docs/backend-contracts/openapi.yaml\`.
 - SHA-256: \`${candidateHash}\`
 - Surface: ${metadata.counts.paths} paths / ${metadata.counts.operations} operations / ${metadata.counts.schemas} schemas
 - Runtime: ${metadata.runtime.implementedAndConformant} implemented and conformant / ${metadata.runtime.intentionallyDisabled} intentionally disabled / 0 not implemented
-- Published baseline: \`1.3.0-contract\` SHA-256 \`${publishedHash}\`, immutable
+- Published baseline: \`1.4.0-contract\` SHA-256 \`${publishedHash}\`, immutable
 - Breaking gate: PASS, 0 unapproved blockers
 - Release state: candidate artifacts prepared; no Git tag or GitHub Release created
 
-See \`docs/backend-contracts/releases/1.4.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md\`.
+See \`docs/backend-contracts/releases/1.5.0-contract/release-manifest.json\`, \`docs/backend-contracts/OPERATION-COMPLETION-MATRIX.md\`, and \`docs/client-handoff/CONTRACT-1.5.0-HANDOFF.md\`.
 `;
 const pointer = `${JSON.stringify(
   {
@@ -212,8 +213,8 @@ const pointer = `${JSON.stringify(
     sha256: candidateHash,
     canonicalPath: "docs/backend-contracts/openapi.yaml",
     releaseManifest:
-      "docs/backend-contracts/releases/1.4.0-contract/release-manifest.json",
-    publishedBaseline: { version: "1.3.0-contract", sha256: publishedHash },
+      "docs/backend-contracts/releases/1.5.0-contract/release-manifest.json",
+    publishedBaseline: { version: "1.4.0-contract", sha256: publishedHash },
   },
   null,
   2,
@@ -234,7 +235,7 @@ const artifacts = new Map([
   [resolve(releaseDirectory, "MIGRATION-NOTES.md"), migrationNotes],
   [resolve(releaseDirectory, "RELEASE-CHECKLIST.md"), checklist],
   [
-    resolve(repositoryRoot, "docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md"),
+    resolve(repositoryRoot, "docs/client-handoff/CONTRACT-1.5.0-HANDOFF.md"),
     handoff,
   ],
   [

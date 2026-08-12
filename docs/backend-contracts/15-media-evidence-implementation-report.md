@@ -47,7 +47,7 @@ Initiate 原子分配稳定 `mediaId` 和独立 `uploadSessionId`；confirm 沿�
 
 ## 4. 事实、状态与事务
 
-客户端声明与服务端验证事实分别保存：MIME、文件字节数、SHA-256、视频时长。ETag 仅作对象确认参考，绝不作为 SHA-256。服务端流式读取对象字节并计算 hash，检查 PNG/JPEG/MP4 magic、图片尺寸、视频时长、损坏内容、测试扫描签名和位置元数据；失败时不写入伪造的 verified facts。
+客户端声明与服务端验证事实分别保存：MIME、文件字节数、SHA-256、视频时长。ETag 仅作对象确认参考，绝不作为 SHA-256。服务端流式读取对象字节并计算 hash，检查 PNG/JPEG 与 MP4/MOV/3GP/WebM 真实容器、图片尺寸、视频轨、音轨、视频时长、损坏内容、测试扫描签名和位置元数据；失败时不写入伪造的 verified facts。Contract 1.5 增量明确：视频真实时长必须在 `(0, 15]` 秒且同时具有画面和声音；位置元数据返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED`，不会要求客户端申请定位权限，也不会被提取为 GPS 业务事实。
 
 状态机为 `PENDING_UPLOAD → UPLOADED → BOUND → PROCESSING → AVAILABLE`，完整失败路径进入 `FAILED`；`DELETED` 仅为冻结枚举，Stage 15 无删除/解绑/重绑 API。绑定、状态历史、AuditLog、Outbox、幂等结果和乐观版本在 PostgreSQL 事务中闭合。数据库驱动 worker 使用 `FOR UPDATE SKIP LOCKED`，持久化 attempt STARTED/SUCCEEDED/FAILED，进程重启后可继续 BOUND/PROCESSING 项且不重复终态副作用。
 
@@ -75,6 +75,7 @@ Compose 创建独立 Roster 与 Media private bucket、独立 app identity 和 p
 - 既有 Foundation/Teaching/Enrollment/Roster：复用未修改的 Stage 13 runner，通过 83 个 HTTP/不变量断言。
 - Stage 14：8 个 ExerciseSession operation 全部在容器 App 通过。
 - Stage 15：真实 IMAGE 和合成 MP4 经 initiate → private PUT → confirm → bind → PROCESSING → AVAILABLE → access URL → object GET；稳定 ID 与幂等 replay 通过。
+- Contract 1.5 增量：合成 15 秒有声 WebM 通过；15.001 秒、缺音轨、缺视频轨、伪造 MIME/容器和包含位置标签的 WebM 均被稳定拒绝。该增量不引入 FFmpeg/WASM 或上传后转码服务。
 - 负向：MIME spoof、hash mismatch、跨学生、IMAGE 第七个、Teacher/Admin 原件、未来 Record/Review/Score/Export 假成功均被拒绝。
 - restart：App healthy 恢复；PostgreSQL 停止时 readiness 503、恢复后 200；MinIO 重启 healthy；数据库行和对象均保留。
 - worker recovery：重启前持久化 BOUND，重启后恢复为 AVAILABLE。

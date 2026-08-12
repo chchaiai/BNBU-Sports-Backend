@@ -148,6 +148,43 @@ describe('Stage 16 ExerciseRecord contract', () => {
     assert.equal(mediaFields.includes('storageKey'), false);
   });
 
+  it('requires descriptions only for GENERAL exercise records', () => {
+    const schemas = object(object(contract.components, 'components').schemas, 'schemas');
+    const create = object(schemas.CreateExerciseRecordRequest, 'create');
+    const createRequired = stringArray(create.required, 'create required');
+    assert.equal(createRequired.includes('description'), false);
+    const rules = create.allOf;
+    assert.ok(Array.isArray(rules));
+    assert.equal(rules.length, 1);
+    const conditional = object(rules[0], 'description conditional');
+    const when = object(conditional.if, 'description condition');
+    assert.equal(
+      object(object(when.properties, 'condition properties').creditType, 'credit type').const,
+      'GENERAL',
+    );
+    const then = object(conditional.then, 'description requirement');
+    assert.deepEqual(stringArray(then.required, 'conditional required'), ['description']);
+
+    const update = object(schemas.UpdateExerciseRecordRequest, 'update');
+    const updateDescription = object(
+      object(update.properties, 'update properties').description,
+      'update description',
+    );
+    const alternatives = updateDescription.oneOf;
+    assert.ok(Array.isArray(alternatives));
+    assert.equal(
+      alternatives.some((value) => object(value, 'description alternative').type === 'null'),
+      true,
+    );
+
+    const projection = object(schemas.ExerciseRecord, 'record');
+    const projectedDescription = object(
+      object(projection.properties, 'record properties').description,
+      'record description',
+    );
+    assert.deepEqual(projectedDescription.type, ['string', 'null']);
+  });
+
   it('keeps withdraw as a routed default deny and Review handlers outside the Record controller', () => {
     const paths = object(contract.paths, 'paths');
     const withdraw = object(

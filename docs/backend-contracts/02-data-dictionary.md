@@ -416,7 +416,7 @@
 | ExerciseRecord | `creditType` | `credit_type` | enum / varchar | 32 | 是 | 否 | — | — | 稳定英文枚举；不得发送中文 label | `COURSE_RELATED` | 学生选择+服务端校验 | INTERNAL | 系统抵扣不伪装成学生运动 Record，迁移见第 7 节 |
 | ExerciseRecord | `sportType` | `sport_type` | enum / varchar | 64 | 是 | 否 | — | — | 标准项目用稳定枚举；未知值 fail closed | `RUNNING` | 学生 | INTERNAL | 具体枚举阶段 7 冻结 |
 | ExerciseRecord | `sportName` | `sport_name` | string / varchar | 100 | 条件必填 | 是 | `null` | — | `sportType=OTHER` 时必填；trim；1–100 | `飞盘` | 学生 | SENSITIVE | 标准项目名称由 i18n 派生，不重复存储 |
-| ExerciseRecord | `description` | `description` | string / varchar | 200 | 是 | 否 | — | — | trim；1–200；服务端再次校验 | `晨跑 5 公里` | 学生 | SENSITIVE | 不用 `note` 代替 |
+| ExerciseRecord | `description` | `description` | string / varchar | 200 | 条件必填 | 是 | `null` | — | `GENERAL` 时 trim 后 1–200；`COURSE_RELATED` 可为 null，非空仍为 1–200；服务端与数据库共同校验 | `晨跑 5 公里` | 学生 | SENSITIVE | ADR-103；不用 `note` 代替 |
 | ExerciseRecord | `actualDurationSeconds` | `actual_duration_seconds` | integer / bigint | 64-bit | 是 | 否 | 从 Session 冻结 | 秒 | 必须等于服务端确认的 session actual duration | `5400` | 服务端 | SENSITIVE | 不信任客户端 hours |
 | ExerciseRecord | `pausedDurationSeconds` | `paused_duration_seconds` | integer / bigint | 64-bit | 是 | 否 | 从 Session 冻结 | 秒 | 必须等于服务端确认的 session paused duration | `600` | 服务端 | SENSITIVE | 事实快照 |
 | ExerciseRecord | `creditedDurationSeconds` | `credited_duration_seconds` | integer / bigint | 64-bit | 是 | 否 | 服务端计算 | 秒 | ADR-009：仅 `0/3600/7200`；保存提交时规则结果 | `3600` | 服务端规则引擎 | SENSITIVE | 审核改动写 ReviewRecord，不覆盖原值 |

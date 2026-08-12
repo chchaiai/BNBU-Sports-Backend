@@ -729,7 +729,7 @@ model ExerciseRecord {
   creditType              String    @map("credit_type") @db.VarChar(32)
   sportType               String    @map("sport_type") @db.VarChar(64)
   sportName               String?   @map("sport_name") @db.VarChar(100)
-  description             String    @db.VarChar(200)
+  description             String?   @db.VarChar(200)
   /// Retired compatibility tombstone. Application code cannot read or write this legacy column.
   retiredStudentRemark    String?   @ignore @map("student_remark") @db.VarChar(200)
   actualDurationSeconds   BigInt    @map("actual_duration_seconds")

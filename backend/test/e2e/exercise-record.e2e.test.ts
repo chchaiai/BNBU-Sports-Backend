@@ -380,14 +380,21 @@ describe('ExerciseRecord HTTP E2E', () => {
           sessionId,
           creditType: 'COURSE_RELATED',
           sportType: 'RUNNING',
-          description: 'Course running session',
           clientRequestId: `android-${uuidv7()}`,
         },
         uuidv7(),
       ),
     );
     assert.equal(created.status, 201);
-    const recordId = String(object(created.body.data).id);
+    const createdRecord = object(created.body.data);
+    assert.equal(createdRecord.description, null);
+    const recordId = String(createdRecord.id);
+    const invalidGeneral = await request(
+      `/api/v1/exercise-records/${recordId}`,
+      authenticated(token, 'PATCH', { creditType: 'GENERAL', expectedVersion: 1 }, uuidv7()),
+    );
+    assert.equal(invalidGeneral.status, 422);
+    assert.equal(invalidGeneral.body.code, 'VALIDATION_FAILED');
     const incomplete = await request(
       `/api/v1/exercise-records/${recordId}/submit`,
       authenticated(token, 'POST', { mediaIds: [mediaId], expectedVersion: 1 }, uuidv7()),

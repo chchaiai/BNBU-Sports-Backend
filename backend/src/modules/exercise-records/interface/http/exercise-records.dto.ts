@@ -90,11 +90,13 @@ class RecordContentDto {
   @Matches(/\S/u)
   sportName?: string | null;
 
+  @ValidateIf(
+    (object: RecordContentDto, value: unknown) =>
+      object.creditType === 'GENERAL' || (value !== undefined && value !== null),
+  )
   @IsString()
-  @MinLength(1)
   @MaxLength(200)
-  @Matches(/\S/u)
-  description!: string;
+  description?: string | null;
 }
 
 export class CreateExerciseRecordRequestDto extends RecordContentDto {
@@ -125,12 +127,10 @@ export class UpdateExerciseRecordRequestDto {
   @Matches(/\S/u)
   sportName?: string | null;
 
-  @ValidateIf((_object, value: unknown) => value !== undefined)
+  @ValidateIf((_object, value: unknown) => value !== undefined && value !== null)
   @IsString()
-  @MinLength(1)
   @MaxLength(200)
-  @Matches(/\S/u)
-  description?: string;
+  description?: string | null;
 
   @Type(() => Number)
   @IsInt()

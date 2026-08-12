@@ -46,6 +46,28 @@ describe('ExerciseRecord domain rules', () => {
         description: 'Synthetic run',
       },
     );
+    assert.deepEqual(
+      normalizeRecordContent({
+        creditType: 'COURSE_RELATED',
+        sportType: 'BADMINTON',
+        description: '   ',
+      }),
+      {
+        creditType: 'COURSE_RELATED',
+        sportType: 'BADMINTON',
+        sportName: null,
+        description: null,
+      },
+    );
+    assert.throws(
+      () =>
+        normalizeRecordContent({
+          creditType: 'GENERAL',
+          sportType: 'RUNNING',
+          description: null,
+        }),
+      (error: unknown) => error instanceof ApplicationError && error.code === 'VALIDATION_FAILED',
+    );
     assert.throws(
       () =>
         normalizeRecordContent({

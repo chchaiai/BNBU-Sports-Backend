@@ -56,7 +56,9 @@ describe('ExerciseRecord PostgreSQL integration', () => {
     });
   });
 
-  const createRecord = async (): Promise<ExerciseRecord> => {
+  const createRecord = async (
+    overrides: { creditType?: 'COURSE_RELATED' | 'GENERAL'; description?: string | null } = {},
+  ): Promise<ExerciseRecord> => {
     const now = new Date();
     return prisma.exerciseRecord.create({
       data: {
@@ -70,9 +72,10 @@ describe('ExerciseRecord PostgreSQL integration', () => {
         teacherId: fixture.teacherProfileId,
         sessionId,
         businessDate,
-        creditType: 'GENERAL',
+        creditType: overrides.creditType ?? 'GENERAL',
         sportType: 'RUNNING',
-        description: 'Synthetic record',
+        description:
+          overrides.description === undefined ? 'Synthetic record' : overrides.description,
         actualDurationSeconds: 3600n,
         pausedDurationSeconds: 0n,
         creditedDurationSeconds: 3600n,
@@ -135,6 +138,26 @@ describe('ExerciseRecord PostgreSQL integration', () => {
     );
     await createRecord();
     await assert.rejects(createRecord());
+  });
+
+  it('enforces the conditional description rule in PostgreSQL', async () => {
+    const courseRecord = await createRecord({ creditType: 'COURSE_RELATED', description: null });
+    assert.equal(courseRecord.description, null);
+    const generalRecord = await prisma.exerciseRecord.update({
+      where: { id: courseRecord.id },
+      data: {
+        creditType: 'GENERAL',
+        description: 'Required autonomous exercise detail',
+        version: { increment: 1 },
+      },
+    });
+    assert.equal(generalRecord.description, 'Required autonomous exercise detail');
+    await assert.rejects(
+      prisma.exerciseRecord.update({
+        where: { id: courseRecord.id },
+        data: { description: null, version: { increment: 1 } },
+      }),
+    );
   });
 
   it('enforces media ownership, availability, global uniqueness, and daily uniqueness', async () => {

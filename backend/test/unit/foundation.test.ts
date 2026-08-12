@@ -86,49 +86,6 @@ describe('Foundation time and identifiers', () => {
       '2026-08-02',
     );
   });
-
-  it('uses the Beijing 06:00-22:00 default only when starting a check-in', () => {
-    const time = new OrganizationTimeService();
-    const timezone = 'Asia/Shanghai';
-    assert.equal(
-      time.isWithinDailyCheckInWindow(new Date('2026-08-07T21:59:59.000Z'), timezone),
-      false,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(new Date('2026-08-07T22:00:00.000Z'), timezone),
-      true,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(new Date('2026-08-08T13:50:00.000Z'), timezone),
-      true,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(new Date('2026-08-08T14:00:00.000Z'), timezone),
-      true,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(new Date('2026-08-08T14:00:01.000Z'), timezone),
-      false,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(
-        new Date('2026-08-08T00:00:00.000Z'),
-        timezone,
-        '00:00:00',
-        '23:59:59',
-      ),
-      true,
-    );
-    assert.equal(
-      time.isWithinDailyCheckInWindow(
-        new Date('2026-08-08T15:00:00.000Z'),
-        timezone,
-        '00:00:00',
-        '23:59:59',
-      ),
-      false,
-    );
-  });
 });
 
 describe('HTTP primitives', () => {

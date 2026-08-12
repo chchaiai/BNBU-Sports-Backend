@@ -118,6 +118,38 @@ function mp4(
   return Buffer.concat([box('ftyp', fileTypePayload), movie, box('mdat', mediaDataPayload)]);
 }
 
+function webm(
+  durationSeconds: number,
+  options: { hasAudio?: boolean; hasLocationMetadata?: boolean } = {},
+): Buffer {
+  const id = (hex: string): Buffer => Buffer.from(hex, 'hex');
+  const size = (value: number): Buffer => {
+    if (value <= 0x7e) return Buffer.from([0x80 | value]);
+    if (value <= 0x3ffe) return Buffer.from([0x40 | (value >> 8), value & 0xff]);
+    throw new Error('Synthetic WebM element is too large');
+  };
+  const element = (elementId: string, payload: Buffer): Buffer =>
+    Buffer.concat([id(elementId), size(payload.length), payload]);
+  const unsigned = (value: number): Buffer => Buffer.from([value]);
+  const duration = Buffer.alloc(8);
+  duration.writeDoubleBE(durationSeconds * 1000, 0);
+  const info = element(
+    '1549a966',
+    Buffer.concat([element('2ad7b1', Buffer.from([0x0f, 0x42, 0x40])), element('4489', duration)]),
+  );
+  const track = (type: number): Buffer => element('ae', element('83', unsigned(type)));
+  const trackEntries = [track(1)];
+  if (options.hasAudio !== false) trackEntries.push(track(2));
+  const tracks = element('1654ae6b', Buffer.concat(trackEntries));
+  const tags =
+    options.hasLocationMetadata === true
+      ? element('1254c367', element('7373', Buffer.from('GPSLatitude', 'utf8')))
+      : Buffer.alloc(0);
+  const cluster = element('1f43b675', Buffer.alloc(16));
+  const header = element('1a45dfa3', element('4282', Buffer.from('webm', 'ascii')));
+  return Buffer.concat([header, element('18538067', Buffer.concat([info, tracks, tags, cluster]))]);
+}
+
 describe('MediaEvidence validation core', () => {
   it('separates declarations from verified image facts and computes SHA-256 from bytes', async () => {
     const body = png();
@@ -174,7 +206,7 @@ describe('MediaEvidence validation core', () => {
         config,
       ),
       (error: unknown) =>
-        error instanceof ApplicationError && error.code === 'MEDIA_INTEGRITY_MISMATCH',
+        error instanceof ApplicationError && error.code === 'MEDIA_LOCATION_METADATA_NOT_ALLOWED',
     );
   });
 
@@ -268,21 +300,18 @@ describe('MediaEvidence validation core', () => {
         ),
       (error: unknown) => error instanceof ApplicationError && error.code === 'MEDIA_SIZE_EXCEEDED',
     );
-    assert.throws(
-      () =>
-        validator.validateDeclaration(
-          {
-            businessPurpose: 'EXERCISE_RECORD',
-            mediaType: 'VIDEO',
-            mimeType: 'video/webm',
-            fileSizeBytes: 100,
-            contentSha256: null,
-            durationSeconds: 15,
-          },
-          config,
-        ),
-      (error: unknown) =>
-        error instanceof ApplicationError && error.code === 'MEDIA_TYPE_NOT_ALLOWED',
+    assert.doesNotThrow(() =>
+      validator.validateDeclaration(
+        {
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/webm',
+          fileSizeBytes: 100,
+          contentSha256: null,
+          durationSeconds: 15,
+        },
+        config,
+      ),
     );
     assert.throws(
       () =>
@@ -341,6 +370,55 @@ describe('MediaEvidence validation core', () => {
       (error: unknown) =>
         error instanceof ApplicationError && error.code === 'MEDIA_VIDEO_DURATION_EXCEEDED',
     );
+  });
+
+  it('accepts a 15-second audible WebM and verifies its actual tracks and duration', async () => {
+    const validator = new MediaValidator();
+    const accepted = webm(15);
+    const verified = await validator.readAndVerify(
+      Readable.from([accepted.subarray(0, 11), accepted.subarray(11, 47), accepted.subarray(47)]),
+      {
+        businessPurpose: 'EXERCISE_RECORD',
+        mediaType: 'VIDEO',
+        mimeType: 'video/webm',
+        fileSizeBytes: accepted.length,
+        contentSha256: createHash('sha256').update(accepted).digest('hex'),
+        durationSeconds: 15,
+      },
+      config,
+    );
+    assert.equal(verified.mimeType, 'video/webm');
+    assert.equal(verified.durationSeconds, 15);
+    assert.deepEqual(verified.safeMetadata, {
+      durationSeconds: 15,
+      audioTrackCount: 1,
+      videoTrackCount: 1,
+    });
+  });
+
+  it('rejects WebM duration overflow, missing audio, and location tags', async () => {
+    const validator = new MediaValidator();
+    for (const [body, durationSeconds, code] of [
+      [webm(15.001), 16, 'MEDIA_VIDEO_DURATION_EXCEEDED'],
+      [webm(8, { hasAudio: false }), 8, 'MEDIA_AUDIO_TRACK_REQUIRED'],
+      [webm(8, { hasLocationMetadata: true }), 8, 'MEDIA_LOCATION_METADATA_NOT_ALLOWED'],
+    ] as const) {
+      await assert.rejects(
+        validator.readAndVerify(
+          Readable.from(body),
+          {
+            businessPurpose: 'EXERCISE_RECORD',
+            mediaType: 'VIDEO',
+            mimeType: 'video/webm',
+            fileSizeBytes: body.length,
+            contentSha256: null,
+            durationSeconds,
+          },
+          config,
+        ),
+        (error: unknown) => error instanceof ApplicationError && error.code === code,
+      );
+    }
   });
 
   it('rejects an exercise video without a trusted audio track', async () => {
@@ -420,7 +498,7 @@ describe('MediaEvidence validation core', () => {
         config,
       ),
       (error: unknown) =>
-        error instanceof ApplicationError && error.code === 'MEDIA_INTEGRITY_MISMATCH',
+        error instanceof ApplicationError && error.code === 'MEDIA_LOCATION_METADATA_NOT_ALLOWED',
     );
 
     const payloadText = mp4(8_000, { locationTextInMediaData: true });

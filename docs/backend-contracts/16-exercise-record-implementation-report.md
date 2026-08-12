@@ -104,3 +104,7 @@ Stage 15 的 149/149 回归全部包含在本轮并持续通过。`npm ci`、for
 - Full Production：否
 
 本阶段未批准任何 PROPOSED ADR；未 push，未创建 Pull Request。验证结束后只删除 `bnbu-record-validation` 的 App、Compose containers/network/volumes、两个 ignored 临时 env 与临时容器 smoke 脚本；残留为 0 container、0 network、0 volume。未执行 system prune，也未影响其他 Docker project。
+
+## 9. Contract 1.5 增量（2026-08-12）
+
+ADR-103 修订了原说明规则：`GENERAL` 自主运动仍要求 trim 后 1..200 字说明，`COURSE_RELATED` 课程运动可省略或保存 null。`0016_optional_course_exercise_description` 只新增 forward-only nullability 与 creditType/description 联合 CHECK；既有 Migration 不修改。创建、更新及课程转自主运动的最终状态均由 DTO、领域层和数据库一致校验，客户端提示不能代替后端裁决。本文其余 Stage 16 历史验收数字保持当时证据，不被本增量段落改写。

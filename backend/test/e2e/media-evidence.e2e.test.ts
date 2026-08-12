@@ -116,6 +116,28 @@ function png(): Buffer {
   return Buffer.concat([header, Buffer.from([0, 0, 0, 0, 73, 69, 78, 68, 0, 0, 0, 0])]);
 }
 
+function webm(durationSeconds: number): Buffer {
+  const elementId = (hex: string): Buffer => Buffer.from(hex, 'hex');
+  const size = (value: number): Buffer => {
+    if (value <= 0x7e) return Buffer.from([0x80 | value]);
+    if (value <= 0x3ffe) return Buffer.from([0x40 | (value >> 8), value & 0xff]);
+    throw new Error('Synthetic WebM element is too large');
+  };
+  const element = (id: string, payload: Buffer): Buffer =>
+    Buffer.concat([elementId(id), size(payload.length), payload]);
+  const duration = Buffer.alloc(8);
+  duration.writeDoubleBE(durationSeconds * 1000, 0);
+  const info = element(
+    '1549a966',
+    Buffer.concat([element('2ad7b1', Buffer.from([0x0f, 0x42, 0x40])), element('4489', duration)]),
+  );
+  const track = (type: number): Buffer => element('ae', element('83', Buffer.from([type])));
+  const tracks = element('1654ae6b', Buffer.concat([track(1), track(2)]));
+  const cluster = element('1f43b675', Buffer.alloc(16));
+  const header = element('1a45dfa3', element('4282', Buffer.from('webm', 'ascii')));
+  return Buffer.concat([header, element('18538067', Buffer.concat([info, tracks, cluster]))]);
+}
+
 function object(value: unknown): Record<string, unknown> {
   assert.equal(typeof value, 'object');
   assert.notEqual(value, null);
@@ -379,6 +401,42 @@ describe('MediaEvidence HTTP E2E', () => {
     assert.equal(await prisma.mediaProcessingAttempt.count({ where: { mediaId } }), 2);
     assert.equal(await prisma.auditLog.count({ where: { targetId: mediaId } }), 6);
     assert.equal(await prisma.outboxEvent.count({ where: { aggregateId: mediaId } }), 5);
+  });
+
+  it('accepts a byte-verified 15-second audible WebM upload', async () => {
+    const token = await studentToken();
+    const body = webm(15);
+    const digest = createHash('sha256').update(body).digest('hex');
+    const initiated = await request(
+      '/api/v1/media-uploads',
+      authenticated(
+        token,
+        'POST',
+        {
+          sessionId,
+          businessPurpose: 'EXERCISE_RECORD',
+          mediaType: 'VIDEO',
+          mimeType: 'video/webm',
+          fileSizeBytes: body.length,
+          captureSource: 'IN_APP_CAMERA',
+          declaredContentSha256: digest,
+          durationSeconds: 15,
+        },
+        uuidv7(),
+      ),
+    );
+    assert.equal(initiated.status, 201);
+    const capability = object(initiated.body.data);
+    const entityTag = storage.upload(String(capability.uploadUrl), body, 'video/webm');
+    const confirmed = await request(
+      `/api/v1/media-uploads/${String(capability.uploadSessionId)}/confirm`,
+      authenticated(token, 'POST', { etag: entityTag }, uuidv7()),
+    );
+    assert.equal(confirmed.status, 200);
+    const uploaded = object(confirmed.body.data);
+    assert.equal(uploaded.verifiedMimeType, 'video/webm');
+    assert.equal(uploaded.verifiedDurationSeconds, 15);
+    assert.equal(uploaded.verifiedContentSha256, digest);
   });
 
   it('fails spoofed MIME without partial verified facts and rejects cross-Session binding', async () => {

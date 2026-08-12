@@ -493,7 +493,7 @@ stateDiagram-v2
 | 当前状态 | 操作 | 目标状态 | 发起角色 | 前置条件 | 后端副作用 | 错误码 |
 |---|---|---|---|---|---|---|
 | 不存在 | `REQUEST_UPLOAD` | `PENDING_UPLOAD` | `STUDENT` | 本人 ACTIVE session 或可编辑 Record；用途和媒体数量允许；图片类型/大小合法；打卡视频声明时长不超过 15 秒 | 创建 mediaId；签发短期、最小权限上传参数；记录过期时间 | `MEDIA_COUNT_LIMIT_EXCEEDED`、`MEDIA_TYPE_NOT_ALLOWED`、`MEDIA_SIZE_EXCEEDED`、`MEDIA_VIDEO_DURATION_EXCEEDED`、`MEDIA_CAPTURE_SOURCE_NOT_ALLOWED` |
-| `PENDING_UPLOAD` | `CONFIRM_UPLOAD` | `UPLOADED` | `STUDENT` | 上传会话未过期；对象存在；size/hash/MIME 与申请一致；打卡视频真实时长不超过 15 秒且包含可解析音轨 | 固化对象元数据；使上传凭证失效；写确认事件 | `MEDIA_UPLOAD_SESSION_EXPIRED`、`MEDIA_OBJECT_NOT_FOUND`、`MEDIA_INTEGRITY_MISMATCH`、`MEDIA_VIDEO_DURATION_EXCEEDED`、`MEDIA_AUDIO_TRACK_REQUIRED` |
+| `PENDING_UPLOAD` | `CONFIRM_UPLOAD` | `UPLOADED` | `STUDENT` | 上传会话未过期；对象存在；size/hash/MIME 与申请一致；图片为 JPEG/PNG；视频真实容器为 MP4/MOV/3GP/WebM、时长不超过 15 秒且同时包含可解析视频轨和音轨；不得包含可识别位置元数据 | 固化对象元数据；使上传凭证失效；写确认事件；不提取位置为业务事实 | `MEDIA_UPLOAD_SESSION_EXPIRED`、`MEDIA_OBJECT_NOT_FOUND`、`MEDIA_INTEGRITY_MISMATCH`、`MEDIA_VIDEO_DURATION_EXCEEDED`、`MEDIA_AUDIO_TRACK_REQUIRED`、`MEDIA_LOCATION_METADATA_NOT_ALLOWED` |
 | `PENDING_UPLOAD` | `FAIL_UPLOAD` | `FAILED` | `SYSTEM` | 上传过期或对象校验失败 | 保存失败码；撤销上传凭证；安排清理 | `MEDIA_TRANSITION_NOT_ALLOWED` |
 | `PENDING_UPLOAD` | `DELETE_ORPHAN` | `DELETED` | `SYSTEM` | 上传 TTL 到期且未确认 | 删除/标记对象；写清理事件 | `MEDIA_HAS_ACTIVE_BINDING` |
 | `UPLOADED` | `BIND` | `BOUND` | `STUDENT` | 目标 session/Record 属于本人且可编辑；用途、数量和组织一致 | 创建稳定绑定；禁止跨学生复用；写审计 | `MEDIA_BIND_TARGET_INVALID`、`MEDIA_ALREADY_BOUND`、`MEDIA_PURPOSE_MISMATCH` |

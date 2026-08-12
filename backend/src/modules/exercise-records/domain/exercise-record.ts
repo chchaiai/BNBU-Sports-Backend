@@ -27,19 +27,26 @@ export function normalizeRecordContent(input: {
   creditType: CreditType;
   sportType: string;
   sportName?: string | null;
-  description: string;
+  description?: string | null;
 }): {
   creditType: CreditType;
   sportType: string;
   sportName: string | null;
-  description: string;
+  description: string | null;
 } {
   const sportType = input.sportType.trim();
   const normalizedSportName = input.sportName?.trim();
   const sportName =
     normalizedSportName === undefined || normalizedSportName === '' ? null : normalizedSportName;
-  const description = input.description.trim();
-  if (!/^[A-Z][A-Z0-9_]*$/.test(sportType) || description.length === 0) {
+  const normalizedDescription = input.description?.trim();
+  const description =
+    normalizedDescription === undefined || normalizedDescription === ''
+      ? null
+      : normalizedDescription;
+  if (
+    !/^[A-Z][A-Z0-9_]*$/.test(sportType) ||
+    (input.creditType === 'GENERAL' && description === null)
+  ) {
     throw new ApplicationError('VALIDATION_FAILED', 422);
   }
   if ((sportType === 'OTHER') !== (sportName !== null)) {
