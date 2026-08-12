@@ -708,19 +708,30 @@ export class ExerciseSessionsService {
     ) {
       throw new ApplicationError('SESSION_OUTSIDE_TIME_WINDOW', 409);
     }
-    const dailyStart = classSection.dailyStartTime?.toISOString().slice(11, 19);
-    const dailyEnd = classSection.dailyEndTime?.toISOString().slice(11, 19);
-    if (
-      !this.organizationTime.isWithinDailyCheckInWindow(
-        now,
-        organization.timezone,
-        dailyStart,
-        dailyEnd,
-      )
-    ) {
-      throw new ApplicationError('SESSION_OUTSIDE_TIME_WINDOW', 409);
+    if (classSection.dailyStartTime !== null && classSection.dailyEndTime !== null) {
+      const localTime = this.localTime(now, organization.timezone);
+      const dailyStart = classSection.dailyStartTime.toISOString().slice(11, 19);
+      const dailyEnd = classSection.dailyEndTime.toISOString().slice(11, 19);
+      if (localTime < dailyStart || localTime > dailyEnd) {
+        throw new ApplicationError('SESSION_OUTSIDE_TIME_WINDOW', 409);
+      }
     }
     return businessDate;
+  }
+
+  private localTime(at: Date, timezone: string): string {
+    const values = new Map(
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23',
+      })
+        .formatToParts(at)
+        .map((part) => [part.type, part.value]),
+    );
+    return `${values.get('hour')}:${values.get('minute')}:${values.get('second')}`;
   }
 
   private async appendDomainEvent(
