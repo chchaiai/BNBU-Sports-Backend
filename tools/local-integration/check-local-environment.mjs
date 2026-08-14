@@ -16,9 +16,8 @@ if (!existsSync(envPath)) {
   process.exit(2);
 }
 
-const failures = validateLocalEnvironment(
-  parseEnvironment(readFileSync(envPath, "utf8")),
-);
+const values = parseEnvironment(readFileSync(envPath, "utf8"));
+const failures = validateLocalEnvironment(values);
 
 if (failures.length > 0) {
   console.error(`LOCAL_ENV_CHECK=FAIL count=${failures.length}`);
@@ -28,5 +27,5 @@ if (failures.length > 0) {
 
 console.log("LOCAL_ENV_CHECK=PASS");
 console.log(
-  "scope=local-only postgres=5433 minio=9000 mailpit=1025 web-origins=127.0.0.1,localhost secrets=redacted",
+  `scope=local-only backend=${values.get("PORT") ?? "3000"} postgres=${values.get("POSTGRES_PORT") ?? "5433"} minio=${values.get("MINIO_API_PORT") ?? "9000"} mailpit=${values.get("MAILPIT_SMTP_PORT") ?? "1025"} web-origins=127.0.0.1,localhost secrets=redacted`,
 );

@@ -24,6 +24,21 @@ export function validateLocalEnvironment(values) {
     }
     return value;
   };
+  const localPort = (key, fallback) => {
+    const raw = values.get(key) ?? String(fallback);
+    const value = Number(raw);
+    if (!Number.isInteger(value) || value < 1 || value > 65_535) {
+      failures.push(`${key}:not-valid-port`);
+      return null;
+    }
+    return value;
+  };
+  const safeCliCredential = (key) => {
+    const value = values.get(key);
+    if (value && !/^[A-Za-z0-9]/u.test(value)) {
+      failures.push(`${key}:unsafe-cli-prefix`);
+    }
+  };
 
   for (const key of [
     "DATABASE_URL",
@@ -34,6 +49,12 @@ export function validateLocalEnvironment(values) {
     "QR_JOIN_TOKEN_HASH_KEY",
     "QR_JOIN_SECRET_ENCRYPTION_KEY",
     "PUSH_TOKEN_ENCRYPTION_KEY",
+    "OBJECT_STORAGE_ACCESS_KEY",
+    "OBJECT_STORAGE_SECRET_KEY",
+    "MEDIA_STORAGE_ACCESS_KEY",
+    "MEDIA_STORAGE_SECRET_KEY",
+    "MINIO_ROOT_USER",
+    "MINIO_ROOT_PASSWORD",
     "LOCAL_SEED_TEACHER_PASSWORD",
     "LOCAL_SEED_ADMIN_PASSWORD",
   ]) {
@@ -41,7 +62,23 @@ export function validateLocalEnvironment(values) {
   }
 
   if (values.get("APP_ENV") !== "local") failures.push("APP_ENV:not-local");
-  if (values.get("PORT") !== "3000") failures.push("PORT:not-3000");
+  localPort("PORT", 3000);
+  const postgresPort = localPort("POSTGRES_PORT", 5433);
+  const minioApiPort = localPort("MINIO_API_PORT", 9000);
+  localPort("MINIO_CONSOLE_PORT", 9001);
+  const mailpitSmtpPort = localPort("MAILPIT_SMTP_PORT", 1025);
+  localPort("MAILPIT_UI_PORT", 8025);
+
+  for (const key of [
+    "OBJECT_STORAGE_ACCESS_KEY",
+    "OBJECT_STORAGE_SECRET_KEY",
+    "MEDIA_STORAGE_ACCESS_KEY",
+    "MEDIA_STORAGE_SECRET_KEY",
+    "MINIO_ROOT_USER",
+    "MINIO_ROOT_PASSWORD",
+  ]) {
+    safeCliCredential(key);
+  }
 
   const corsOrigins = new Set((values.get("CORS_ALLOWLIST") ?? "").split(","));
   if (
@@ -53,18 +90,42 @@ export function validateLocalEnvironment(values) {
 
   for (const key of ["DATABASE_URL", "MIGRATION_DATABASE_URL"]) {
     const value = values.get(key) ?? "";
-    if (!value.includes("@127.0.0.1:5433/bnbu_sports")) {
+    let parsed;
+    try {
+      parsed = new URL(value);
+    } catch {
+      failures.push(`${key}:invalid-url`);
+      continue;
+    }
+    if (
+      !["postgres:", "postgresql:"].includes(parsed.protocol) ||
+      !["127.0.0.1", "localhost"].includes(parsed.hostname) ||
+      parsed.pathname !== "/bnbu_sports" ||
+      (postgresPort !== null && parsed.port !== String(postgresPort))
+    ) {
       failures.push(`${key}:not-local-postgres`);
     }
   }
   for (const key of ["OBJECT_STORAGE_ENDPOINT", "MEDIA_STORAGE_ENDPOINT"]) {
-    if (values.get(key) !== "http://127.0.0.1:9000") {
+    let parsed;
+    try {
+      parsed = new URL(values.get(key) ?? "");
+    } catch {
+      failures.push(`${key}:invalid-url`);
+      continue;
+    }
+    if (
+      parsed.protocol !== "http:" ||
+      !["127.0.0.1", "localhost"].includes(parsed.hostname) ||
+      parsed.pathname !== "/" ||
+      (minioApiPort !== null && parsed.port !== String(minioApiPort))
+    ) {
       failures.push(`${key}:not-local-minio`);
     }
   }
   if (
-    values.get("SMTP_HOST") !== "127.0.0.1" ||
-    values.get("SMTP_PORT") !== "1025"
+    !["127.0.0.1", "localhost"].includes(values.get("SMTP_HOST")) ||
+    (mailpitSmtpPort !== null && values.get("SMTP_PORT") !== String(mailpitSmtpPort))
   ) {
     failures.push("SMTP:not-local-mailpit");
   }

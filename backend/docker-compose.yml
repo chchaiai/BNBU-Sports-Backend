@@ -61,21 +61,29 @@ services:
       - /bin/sh
       - -ec
       - |
-        mc alias set local http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"
+        run_mc() {
+          operation="$$1"
+          shift
+          if ! mc "$$@" >/dev/null 2>&1; then
+            echo "MINIO_INIT_FAILED operation=$${operation}" >&2
+            exit 1
+          fi
+        }
+        run_mc alias-set alias set local http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"
         test "$${MINIO_BUCKET}" != "$${MEDIA_STORAGE_BUCKET}"
         test "$${OBJECT_STORAGE_ACCESS_KEY}" != "$${MEDIA_STORAGE_ACCESS_KEY}"
-        mc mb --ignore-existing "local/$${MINIO_BUCKET}"
-        mc anonymous set none "local/$${MINIO_BUCKET}"
+        run_mc roster-bucket-create mb --ignore-existing "local/$${MINIO_BUCKET}"
+        run_mc roster-bucket-private anonymous set none "local/$${MINIO_BUCKET}"
         printf '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["s3:GetBucketLocation"],"Resource":["arn:aws:s3:::%s"]},{"Effect":"Allow","Action":["s3:ListBucket"],"Resource":["arn:aws:s3:::%s"],"Condition":{"StringLike":{"s3:prefix":["roster-sources/*"]}}},{"Effect":"Allow","Action":["s3:PutObject","s3:GetObject","s3:DeleteObject"],"Resource":["arn:aws:s3:::%s/roster-sources/*"]}]}' "$${MINIO_BUCKET}" "$${MINIO_BUCKET}" "$${MINIO_BUCKET}" > /tmp/roster-app-policy.json
-        mc admin user add local "$${OBJECT_STORAGE_ACCESS_KEY}" "$${OBJECT_STORAGE_SECRET_KEY}" >/dev/null
-        mc admin policy create local bnbu-roster-app /tmp/roster-app-policy.json
-        mc admin policy attach local bnbu-roster-app --user "$${OBJECT_STORAGE_ACCESS_KEY}" >/dev/null
-        mc mb --ignore-existing "local/$${MEDIA_STORAGE_BUCKET}"
-        mc anonymous set none "local/$${MEDIA_STORAGE_BUCKET}"
+        run_mc roster-user-create admin user add local "$${OBJECT_STORAGE_ACCESS_KEY}" "$${OBJECT_STORAGE_SECRET_KEY}"
+        run_mc roster-policy-create admin policy create local bnbu-roster-app /tmp/roster-app-policy.json
+        run_mc roster-policy-attach admin policy attach local bnbu-roster-app --user "$${OBJECT_STORAGE_ACCESS_KEY}"
+        run_mc media-bucket-create mb --ignore-existing "local/$${MEDIA_STORAGE_BUCKET}"
+        run_mc media-bucket-private anonymous set none "local/$${MEDIA_STORAGE_BUCKET}"
         printf '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["s3:GetBucketLocation"],"Resource":["arn:aws:s3:::%s"]},{"Effect":"Allow","Action":["s3:ListBucket"],"Resource":["arn:aws:s3:::%s"],"Condition":{"StringLike":{"s3:prefix":["media/*"]}}},{"Effect":"Allow","Action":["s3:PutObject","s3:GetObject"],"Resource":["arn:aws:s3:::%s/media/*"]}]}' "$${MEDIA_STORAGE_BUCKET}" "$${MEDIA_STORAGE_BUCKET}" "$${MEDIA_STORAGE_BUCKET}" > /tmp/media-app-policy.json
-        mc admin user add local "$${MEDIA_STORAGE_ACCESS_KEY}" "$${MEDIA_STORAGE_SECRET_KEY}" >/dev/null
-        mc admin policy create local bnbu-media-app /tmp/media-app-policy.json
-        mc admin policy attach local bnbu-media-app --user "$${MEDIA_STORAGE_ACCESS_KEY}" >/dev/null
+        run_mc media-user-create admin user add local "$${MEDIA_STORAGE_ACCESS_KEY}" "$${MEDIA_STORAGE_SECRET_KEY}"
+        run_mc media-policy-create admin policy create local bnbu-media-app /tmp/media-app-policy.json
+        run_mc media-policy-attach admin policy attach local bnbu-media-app --user "$${MEDIA_STORAGE_ACCESS_KEY}"
     restart: 'no'
 
   mailpit:

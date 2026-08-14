@@ -69,10 +69,11 @@ Course Catalog、ClassSection Management、Teaching Structure、Enrollment/QR Jo
 完整步骤、Windows/macOS/Linux 命令和故障排查见 [`docs/local-runbook.md`](docs/local-runbook.md)。最短流程如下：
 
 ```powershell
-# 从 monorepo 根目录执行；初始化脚本不会覆盖已有 backend/.env。
-npm run bootstrap
-npm run local:env:init
-npm run local:env:check
+# 从仓库根目录执行；初始化脚本不会覆盖已有 backend/.env。
+npm --prefix backend ci
+npm --prefix tools/backend-contracts ci
+npm --prefix backend run local:env:init
+npm --prefix backend run local:env:check
 docker compose --env-file backend/.env -f backend/docker-compose.yml up -d
 npm --prefix backend run db:generate
 npm --prefix backend run db:migrate:deploy

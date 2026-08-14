@@ -23,6 +23,22 @@ if (existsSync(outputPath)) {
 
 const randomSecret = (bytes = 32) => randomBytes(bytes).toString("base64url");
 const randomKey = () => randomBytes(32).toString("base64");
+const cliSafeSecret = () => `secret-${randomSecret()}`;
+const configuredPort = (key, fallback) => {
+  const raw = process.env[key]?.trim() || String(fallback);
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value < 1 || value > 65_535) {
+    console.error(`LOCAL_ENV_INIT=INVALID_PORT key=${key}`);
+    process.exit(2);
+  }
+  return String(value);
+};
+const backendPort = configuredPort("PORT", 3000);
+const postgresPort = configuredPort("POSTGRES_PORT", 5433);
+const minioApiPort = configuredPort("MINIO_API_PORT", 9000);
+const minioConsolePort = configuredPort("MINIO_CONSOLE_PORT", 9001);
+const mailpitSmtpPort = configuredPort("MAILPIT_SMTP_PORT", 1025);
+const mailpitUiPort = configuredPort("MAILPIT_UI_PORT", 8025);
 const { privateKey, publicKey } = generateKeyPairSync("ed25519");
 const privatePem = privateKey
   .export({ format: "pem", type: "pkcs8" })
@@ -37,18 +53,19 @@ const databasePassword = randomSecret();
 const migratorPassword = randomSecret();
 const bootstrapPassword = randomSecret();
 const rosterAccessKey = `roster-${randomSecret(12)}`;
-const rosterSecretKey = randomSecret();
+const rosterSecretKey = cliSafeSecret();
 const mediaAccessKey = `media-${randomSecret(12)}`;
-const mediaSecretKey = randomSecret();
+const mediaSecretKey = cliSafeSecret();
 
 const replacements = new Map(
   Object.entries({
     APP_ENV: "local",
     APP_VERSION: "local-integration",
-    PORT: "3000",
+    PORT: backendPort,
     LOG_LEVEL: "debug",
-    DATABASE_URL: `postgresql://bnbu_app:${databasePassword}@127.0.0.1:5433/bnbu_sports?schema=public`,
-    MIGRATION_DATABASE_URL: `postgresql://bnbu_migrator:${migratorPassword}@127.0.0.1:5433/bnbu_sports?schema=public`,
+    POSTGRES_PORT: postgresPort,
+    DATABASE_URL: `postgresql://bnbu_app:${databasePassword}@127.0.0.1:${postgresPort}/bnbu_sports?schema=public`,
+    MIGRATION_DATABASE_URL: `postgresql://bnbu_migrator:${migratorPassword}@127.0.0.1:${postgresPort}/bnbu_sports?schema=public`,
     POSTGRES_DB: "bnbu_sports",
     POSTGRES_BOOTSTRAP_USER: "bnbu_bootstrap",
     POSTGRES_BOOTSTRAP_PASSWORD: bootstrapPassword,
@@ -82,14 +99,16 @@ const replacements = new Map(
     QR_JOIN_PUBLIC_RATE_LIMIT_WINDOW_SECONDS: "60",
     QR_JOIN_PUBLIC_RATE_LIMIT_MAX_REQUESTS: "60",
     SMTP_HOST: "127.0.0.1",
-    SMTP_PORT: "1025",
+    SMTP_PORT: mailpitSmtpPort,
     SMTP_SECURE: "false",
     SMTP_FROM_ADDRESS: "no-reply@local.bnbu.invalid",
-    MAILPIT_SMTP_PORT: "1025",
-    MAILPIT_UI_PORT: "8025",
+    MAILPIT_SMTP_PORT: mailpitSmtpPort,
+    MAILPIT_UI_PORT: mailpitUiPort,
     PUSH_TOKEN_ENCRYPTION_KEY: randomKey(),
     PUSH_TOKEN_ENCRYPTION_KEY_VERSION: "1",
-    OBJECT_STORAGE_ENDPOINT: "http://127.0.0.1:9000",
+    MINIO_API_PORT: minioApiPort,
+    MINIO_CONSOLE_PORT: minioConsolePort,
+    OBJECT_STORAGE_ENDPOINT: `http://127.0.0.1:${minioApiPort}`,
     OBJECT_STORAGE_REGION: "local",
     OBJECT_STORAGE_BUCKET: "bnbu-sports-local-private",
     OBJECT_STORAGE_ACCESS_KEY: rosterAccessKey,
@@ -97,7 +116,7 @@ const replacements = new Map(
     OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
     OBJECT_STORAGE_REQUIRED: "false",
     MEDIA_STORAGE_REQUIRED: "true",
-    MEDIA_STORAGE_ENDPOINT: "http://127.0.0.1:9000",
+    MEDIA_STORAGE_ENDPOINT: `http://127.0.0.1:${minioApiPort}`,
     MEDIA_STORAGE_REGION: "local",
     MEDIA_STORAGE_BUCKET: "bnbu-sports-local-media-private",
     MEDIA_STORAGE_ACCESS_KEY: mediaAccessKey,
@@ -112,7 +131,7 @@ const replacements = new Map(
     MEDIA_WORKER_ENABLED: "true",
     MEDIA_WORKER_POLL_MS: "500",
     MINIO_ROOT_USER: `minio-${randomSecret(12)}`,
-    MINIO_ROOT_PASSWORD: randomSecret(),
+    MINIO_ROOT_PASSWORD: cliSafeSecret(),
     MINIO_BUCKET: "bnbu-sports-local-private",
     LOCAL_SEED_TEACHER_PASSWORD: randomSecret(),
     LOCAL_SEED_ADMIN_PASSWORD: randomSecret(),

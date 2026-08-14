@@ -12,15 +12,16 @@
 
 ## 2. Windows PowerShell
 
-从 monorepo 根目录执行唯一安装与初始化流程：
+从仓库根目录按各自 lockfile 安装并初始化：
 
 ```powershell
-npm run bootstrap
-npm run local:env:init
-npm run local:env:check
+npm --prefix backend ci
+npm --prefix tools/backend-contracts ci
+npm --prefix backend run local:env:init
+npm --prefix backend run local:env:check
 ```
 
-`npm run bootstrap` 按三个受管 package 的 lockfile 安装 Backend、合同工具和 Web 依赖。初始化脚本生成独立的 local-only 数据库、MinIO、Token、幂等、QR、Push 和 seed 凭证，并通过独占创建保护已有 `backend/.env`；它不会读取、打印或覆盖现有 Secret。TTL 单位都是秒，并自动校验：
+Web 位于独立仓库时应在 Web 仓库内单独安装依赖。初始化脚本生成独立的 local-only 数据库、MinIO、Token、幂等、QR、Push 和 seed 凭证，并通过独占创建保护已有 `backend/.env`；它不会读取、打印或覆盖现有 Secret。TTL 单位都是秒，并自动校验：
 
 ```text
 ACCESS_TOKEN_TTL < REFRESH_TOKEN_IDLE_TTL <= REFRESH_TOKEN_ABSOLUTE_TTL
@@ -62,9 +63,10 @@ docker compose --env-file backend/.env -f backend/docker-compose.yml down
 ## 3. macOS/Linux
 
 ```bash
-npm run bootstrap
-npm run local:env:init
-npm run local:env:check
+npm --prefix backend ci
+npm --prefix tools/backend-contracts ci
+npm --prefix backend run local:env:init
+npm --prefix backend run local:env:check
 docker compose --env-file backend/.env -f backend/docker-compose.yml up -d
 docker compose --env-file backend/.env -f backend/docker-compose.yml ps
 npm --prefix backend run db:generate
@@ -74,7 +76,7 @@ npm --prefix backend run db:seed:local
 npm --prefix backend run start:dev
 ```
 
-不要直接复制示例占位符；配置校验会拒绝 `CHANGE_ME`。已有 `.env` 需要保留时，只运行 `npm run local:env:check`，不要删除或覆盖它。
+不要直接复制示例占位符；配置校验会拒绝 `CHANGE_ME`。已有 `.env` 需要保留时，只运行 `npm --prefix backend run local:env:check`，不要删除或覆盖它。
 
 ## 4. Seed
 

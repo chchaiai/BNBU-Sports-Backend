@@ -19,12 +19,13 @@ docker run --rm hello-world
 
 通过标准：没有嵌套 Git/gitlink；`docker version` 同时返回 Client 和 Server；Compose、Buildx、`hello-world` 均成功。
 
-全新 Clone 只使用 monorepo 的统一依赖安装入口；它会按各自 lockfile 安装 Backend、合同工具和 Web 依赖：
+全新 Clone 按各自 lockfile 安装 Backend 与合同工具依赖；Web 位于独立仓库时应在 Web 仓库内单独安装：
 
 ```powershell
-npm run bootstrap
-npm run bootstrap:check
-npm run contract:check
+npm --prefix backend ci
+npm --prefix tools/backend-contracts ci
+npm --prefix backend run local:env:check
+npm --prefix backend run contract:check
 ```
 
 ## 第 2 阶段：生成本地环境配置
@@ -35,6 +36,8 @@ npm --prefix backend run local:env:check
 ```
 
 初始化脚本使用独占创建：若 `backend/.env` 已存在会拒绝覆盖。检查脚本只报告配置是否满足本地边界，不输出 Secret，并校验幂等 retention/lease、QR replay 与 invite/join capability 的全部 TTL 关系。
+
+如默认端口冲突，可在首次生成前通过进程环境覆盖 `PORT`、`POSTGRES_PORT`、`MINIO_API_PORT`、`MINIO_CONSOLE_PORT`、`MAILPIT_SMTP_PORT` 与 `MAILPIT_UI_PORT`；生成器会同步写入连接串和本地端点。已有 `.env` 则直接修改这些端口及对应 URL，并运行 `local:env:check` 核对一致性。
 
 ## 第 3 阶段：启动 Docker 基础设施
 

@@ -11,8 +11,6 @@ const backendRequire = createRequire(pathToFileURL(backendPackagePath));
 const { config: loadEnvironment } = backendRequire('dotenv');
 const { Client } = backendRequire('pg');
 
-const backendOrigin = 'http://127.0.0.1:3000';
-const mailpitOrigin = 'http://127.0.0.1:8025';
 const studentNumber = 'SYNTH-CLOSURE-0001';
 const studentEmail = 'student.closure.local.synthetic@bnbu.invalid';
 const teacherEmail = 'teacher.a.local.synthetic@bnbu.invalid';
@@ -24,6 +22,20 @@ loadEnvironment({
   quiet: true,
 });
 
+const localPort = (key, fallback) => {
+  const raw = process.env[key]?.trim() || String(fallback);
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value < 1 || value > 65_535) {
+    fail(`INVALID_${key}`, 3);
+  }
+  return value;
+};
+const backendPort = localPort('PORT', 3000);
+const postgresPort = localPort('POSTGRES_PORT', 5433);
+const mailpitUiPort = localPort('MAILPIT_UI_PORT', 8025);
+const backendOrigin = `http://127.0.0.1:${backendPort}`;
+const mailpitOrigin = `http://127.0.0.1:${mailpitUiPort}`;
+
 if (process.env.APP_ENV !== 'local') fail('REFUSED_NON_LOCAL_ENV', 2);
 
 let databaseUrl;
@@ -34,7 +46,7 @@ try {
 }
 if (
   !['127.0.0.1', 'localhost'].includes(databaseUrl.hostname) ||
-  databaseUrl.port !== '5433' ||
+  databaseUrl.port !== String(postgresPort) ||
   databaseUrl.pathname !== '/bnbu_sports'
 ) {
   fail('REFUSED_NON_LOCAL_DATABASE', 4);
