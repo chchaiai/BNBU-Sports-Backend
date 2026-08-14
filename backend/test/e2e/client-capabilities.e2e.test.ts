@@ -479,6 +479,33 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
         updatedAt: now,
       },
     });
+    const invalidDetails = await request('/api/v1/exemption-applications', {
+      method: 'POST',
+      headers: {
+        ...authorization(studentAuth.accessToken),
+        'content-type': 'application/json',
+        'idempotency-key': uuidv7(),
+      },
+      body: JSON.stringify({
+        enrollmentId: student.enrollmentId,
+        applicationType: 'PHYSICAL_TEST',
+        applicationSubtype: 'SCHOOL_TEAM',
+        organizationName: null,
+        reason: 'Invalid synthetic subtype combination.',
+        mediaIds: [mediaId],
+      }),
+    });
+    assert.equal(invalidDetails.status, 422);
+    assert.equal(invalidDetails.body.code, 'VALIDATION_FAILED');
+    assert.deepEqual(object(invalidDetails.body.details).fieldErrors, [
+      {
+        field: 'applicationSubtype',
+        code: 'INVALID',
+        i18nKey: 'error.validation.failed',
+        params: {},
+      },
+    ]);
+
     const created = await request('/api/v1/exemption-applications', {
       method: 'POST',
       headers: {
@@ -489,6 +516,8 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
       body: JSON.stringify({
         enrollmentId: student.enrollmentId,
         applicationType: 'PHYSICAL_TEST',
+        applicationSubtype: 'RUN_800M',
+        organizationName: null,
         reason: 'Synthetic exemption evidence for iOS integration.',
         mediaIds: [mediaId],
       }),
@@ -496,6 +525,8 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     assert.equal(created.status, 201);
     const draft = object(created.body.data);
     assert.equal(draft.status, 'DRAFT');
+    assert.equal('applicationSubtype' in draft, false);
+    assert.equal('organizationName' in draft, false);
     assert.deepEqual(draft.mediaIds, [mediaId]);
 
     const listedDrafts = await request('/api/v1/exemption-applications?status=DRAFT&limit=20', {
@@ -503,6 +534,17 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
     });
     assert.equal(listedDrafts.status, 200);
     assert.equal(array(listedDrafts.body.data).length, 1);
+    const structuredDrafts = await request(
+      '/api/v1/exemption-application-details?status=DRAFT&limit=20',
+      { headers: authorization(studentAuth.accessToken) },
+    );
+    assert.equal(structuredDrafts.status, 200);
+    const structuredDraft = array(structuredDrafts.body.data).find(
+      (item) => object(item).id === draft.id,
+    );
+    assert.notEqual(structuredDraft, undefined);
+    assert.equal(object(structuredDraft).applicationSubtype, 'RUN_800M');
+    assert.equal(object(structuredDraft).organizationName, null);
     const fetchedDraft = await request(`/api/v1/exemption-applications/${String(draft.id)}`, {
       headers: authorization(studentAuth.accessToken),
     });
@@ -561,6 +603,39 @@ describe('Stage 21 client capabilities with real PostgreSQL', () => {
       ).internalNote,
       'Internal synthetic note must not project.',
     );
+
+    const noMediaDraft = await request('/api/v1/exemption-applications', {
+      method: 'POST',
+      headers: {
+        ...authorization(studentAuth.accessToken),
+        'content-type': 'application/json',
+        'idempotency-key': uuidv7(),
+      },
+      body: JSON.stringify({
+        enrollmentId: student.enrollmentId,
+        applicationType: 'PHYSICAL_TEST',
+        applicationSubtype: 'RUN_1000M',
+        organizationName: null,
+        reason: 'Synthetic draft without evidence.',
+        mediaIds: [],
+      }),
+    });
+    assert.equal(noMediaDraft.status, 201);
+    const noMediaData = object(noMediaDraft.body.data);
+    const rejectedSubmission = await request(
+      `/api/v1/exemption-applications/${String(noMediaData.id)}/submit`,
+      {
+        method: 'POST',
+        headers: {
+          ...authorization(studentAuth.accessToken),
+          'content-type': 'application/json',
+          'idempotency-key': uuidv7(),
+        },
+        body: JSON.stringify({ expectedVersion: noMediaData.version }),
+      },
+    );
+    assert.equal(rejectedSubmission.status, 422);
+    assert.equal(rejectedSubmission.body.code, 'EXEMPTION_APPLICATION_MEDIA_INVALID');
   });
 
   it('completes recovery only for a teacher and revokes prior sessions', async () => {

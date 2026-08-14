@@ -5,52 +5,43 @@
 ## 1. 前置条件
 
 - Node.js 24 与 npm 11（CI/容器锁定 24.18.0，本轮本机验证运行时为 24.13.1）；
-- Docker Engine/Desktop 与 Compose v2，用于 PostgreSQL 18.4 和 local MinIO；
+- Docker Engine/Desktop 与 Compose v2，用于 PostgreSQL 18.4、local MinIO 和 Mailpit；
 - Git checkout 位于根仓库，`backend/` 是普通目录；
-- 可选 OpenSSL，用于生成 local-only Ed25519 密钥。
 
-容器镜像已精确锁定在 `docker-compose.yml`。PostgreSQL 和 MinIO 只绑定 loopback；bucket 默认私有。MinIO root credential 只供初始化使用，App 使用独立的 `OBJECT_STORAGE_ACCESS_KEY`/`OBJECT_STORAGE_SECRET_KEY`，且仅允许 `roster-sources/*`。Roster FILE source 使用该私有对象存储；这不代表 MediaEvidence 已实现。不要把 `.env`、PEM 或真实 Secret 提交到 Git。
+容器镜像已精确锁定在 `docker-compose.yml`。PostgreSQL、MinIO 与 Mailpit 只绑定 loopback；bucket 默认私有。MinIO root credential 只供初始化使用，App 使用独立的最小权限身份。不要把 `.env`、PEM、邮箱验证码或真实 Secret 提交到 Git。
 
 ## 2. Windows PowerShell
 
-在 `backend/` 中执行：
+从 monorepo 根目录执行唯一安装与初始化流程：
 
 ```powershell
-Copy-Item .env.example .env
-npm ci
+npm run bootstrap
+npm run local:env:init
+npm run local:env:check
 ```
 
-编辑 `.env`，替换每一个 `CHANGE_ME`。Token 私钥必须是 PKCS#8 PEM，公钥必须是 SPKI PEM；多行 PEM 在 `.env` 中写成带字面量 `\n` 的单行。可以在仓库之外生成 local-only 密钥：
-
-```powershell
-openssl genpkey -algorithm ED25519 -out C:\tmp\bnbu-local-ed25519-private.pem
-openssl pkey -in C:\tmp\bnbu-local-ed25519-private.pem -pubout -out C:\tmp\bnbu-local-ed25519-public.pem
-
-$bytes = New-Object byte[] 32
-$rng = [Security.Cryptography.RandomNumberGenerator]::Create()
-$rng.GetBytes($bytes)
-[Convert]::ToBase64String($bytes)
-$rng.Dispose()
-```
-
-最后一段输出可作为 local-only `IDEMPOTENCY_ENCRYPTION_KEY`。`SECURITY_HASH_KEY`、数据库、MinIO 和 seed 密码也必须使用独立的高熵 local 值。TTL 单位都是秒，并满足：
+`npm run bootstrap` 按三个受管 package 的 lockfile 安装 Backend、合同工具和 Web 依赖。初始化脚本生成独立的 local-only 数据库、MinIO、Token、幂等、QR、Push 和 seed 凭证，并通过独占创建保护已有 `backend/.env`；它不会读取、打印或覆盖现有 Secret。TTL 单位都是秒，并自动校验：
 
 ```text
 ACCESS_TOKEN_TTL < REFRESH_TOKEN_IDLE_TTL <= REFRESH_TOKEN_ABSOLUTE_TTL
 IDEMPOTENCY_LEASE < IDEMPOTENCY_RETENTION
+QR_JOIN_SECRET_REPLAY_SECONDS >= IDEMPOTENCY_RETENTION
+JOIN_CAPABILITY_TTL_SECONDS < COURSE_INVITE_TTL_SECONDS
 ```
 
 启动基础设施并初始化：
 
 ```powershell
-docker compose --env-file .env up -d postgres minio minio-init
-docker compose --env-file .env ps
-npm run db:generate
-npm run db:migration:check
-npm run db:migrate:deploy
-npm run db:seed:local
-npm run start:dev
+docker compose --env-file backend/.env -f backend/docker-compose.yml up -d
+docker compose --env-file backend/.env -f backend/docker-compose.yml ps
+npm --prefix backend run db:generate
+npm --prefix backend run db:migration:check
+npm --prefix backend run db:migrate:deploy
+npm --prefix backend run db:seed:local
+npm --prefix backend run start:dev
 ```
+
+等待 PostgreSQL、MinIO 和 Mailpit 均为 healthy；`minio-init` 成功退出属于正常状态。Mailpit SMTP 为 `127.0.0.1:1025`，UI 为 `http://127.0.0.1:8025`。
 
 验证：
 
@@ -63,7 +54,7 @@ Invoke-RestMethod http://127.0.0.1:3000/api/v1/system-mode
 local/development 的合同浏览页为 `http://127.0.0.1:3000/api/docs`。停止服务后保留本地卷：
 
 ```powershell
-docker compose --env-file .env down
+docker compose --env-file backend/.env -f backend/docker-compose.yml down
 ```
 
 不要使用 `down -v`，除非明确要销毁且已核对目标是可重建的合成本地数据。
@@ -71,22 +62,19 @@ docker compose --env-file .env down
 ## 3. macOS/Linux
 
 ```bash
-cp .env.example .env
-npm ci
-# 编辑 .env 并替换全部 CHANGE_ME；密钥只保存在本机安全位置
-openssl genpkey -algorithm ED25519 -out /tmp/bnbu-local-ed25519-private.pem
-openssl pkey -in /tmp/bnbu-local-ed25519-private.pem -pubout -out /tmp/bnbu-local-ed25519-public.pem
-openssl rand -base64 32
-docker compose --env-file .env up -d postgres minio minio-init
-docker compose --env-file .env ps
-npm run db:generate
-npm run db:migration:check
-npm run db:migrate:deploy
-npm run db:seed:local
-npm run start:dev
+npm run bootstrap
+npm run local:env:init
+npm run local:env:check
+docker compose --env-file backend/.env -f backend/docker-compose.yml up -d
+docker compose --env-file backend/.env -f backend/docker-compose.yml ps
+npm --prefix backend run db:generate
+npm --prefix backend run db:migration:check
+npm --prefix backend run db:migrate:deploy
+npm --prefix backend run db:seed:local
+npm --prefix backend run start:dev
 ```
 
-把 PEM 放入 `.env` 时，将真实换行编码为字面量 `\n`。不要直接复制示例占位符；配置校验会拒绝 `CHANGE_ME`。
+不要直接复制示例占位符；配置校验会拒绝 `CHANGE_ME`。已有 `.env` 需要保留时，只运行 `npm run local:env:check`，不要删除或覆盖它。
 
 ## 4. Seed
 
@@ -171,10 +159,11 @@ Dockerfile 提供 `migrator` 和非 root `runtime` stage；runtime 不复制源�
 | 启动报 `CHANGE_ME`         | `.env` 仍有占位符；全部替换，不添加代码 fallback                          |
 | PEM 格式错误               | 私钥不是 PKCS#8、公钥不是 SPKI，或 `.env` 未用 `\n` 编码换行              |
 | Token TTL 校验失败         | 调整显式秒数，满足 access < idle <= absolute                              |
+| 幂等/QR TTL 校验失败       | 重新运行检查并满足本手册列出的 retention、lease、replay 与 join 约束      |
 | Prisma 找不到 URL          | migration CLI 读取 `MIGRATION_DATABASE_URL`；应用读取 `DATABASE_URL`      |
 | readiness 失败             | 先检查 PostgreSQL、migration checksum、CURRENT Semester 与 SystemPolicy   |
 | integration 拒绝数据库 URL | `TEST_DATABASE_URL` 未设置或数据库名称不含 `test`；新建隔离测试库         |
 | CORS 被拒绝                | `CORS_ALLOWLIST` 必须是逗号分隔的精确 HTTP(S) origin，不含 path           |
 | 登录持续受限               | local 单进程限流生效；不要在代码中关闭，等待窗口或重启仅限合成 local 环境 |
-| MinIO 正常但无媒体接口     | 这是预期状态；当前只准备 private local bucket，Media Gate 未打开          |
+| Mailpit 无法访问           | 确认 Compose 中 `mailpit` 为 healthy，SMTP/UI 端口未被其他进程占用        |
 | Docker 不可用              | 安装/启动受支持的 Docker 环境后再验收；不得用未执行的 CI 配置冒充通过     |

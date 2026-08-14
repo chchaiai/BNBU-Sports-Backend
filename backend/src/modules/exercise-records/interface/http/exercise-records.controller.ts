@@ -19,7 +19,10 @@ import type {
 import type { PagedResult } from '../../../../common/http/envelope.interceptor.js';
 import { OperationPolicy } from '../../../../common/policy/operation-policy.decorator.js';
 import { CurrentPrincipal } from '../../../../common/policy/principal.decorator.js';
-import type { ExerciseRecordProjection } from '../../application/exercise-record-projection.js';
+import type {
+  ExerciseRecordEvidenceContextProjection,
+  ExerciseRecordProjection,
+} from '../../application/exercise-record-projection.js';
 import { ExerciseRecordsService } from '../../application/exercise-records.service.js';
 import {
   CreateExerciseRecordRequestDto,
@@ -70,6 +73,19 @@ export class ExerciseRecordsController {
       throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
     }
     return this.records.get(principal, request.exerciseRecordContext);
+  }
+
+  @Get(':recordId/evidence-context')
+  @OperationPolicy('getExerciseRecordEvidenceContext')
+  getEvidenceContext(
+    @CurrentPrincipal() principal: AuthenticatedPrincipal,
+    @Param() _path: ExerciseRecordPathDto,
+    @Req() request: FoundationRequest,
+  ): Promise<ExerciseRecordEvidenceContextProjection> {
+    if (request.exerciseRecordContext === undefined) {
+      throw new ApplicationError('SYSTEM_DATA_INTEGRITY_ERROR', 500);
+    }
+    return this.records.getEvidenceContext(principal, request.exerciseRecordContext);
   }
 
   @Patch(':recordId')

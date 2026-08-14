@@ -10,10 +10,12 @@ import type { Prisma } from '../src/generated/prisma/client.js';
 const SYNTHETIC_ORGANIZATION_CODE = 'BNBU';
 const ISOLATION_ORGANIZATION_CODE = 'ISOLATION-TEST';
 const SYNTHETIC_ADMIN_EMAIL = 'admin.local.synthetic@bnbu.invalid';
+const SYNTHETIC_ADMIN_B_EMAIL = 'admin.b.local.synthetic@bnbu.invalid';
 const SYNTHETIC_TEACHER_A_EMAIL = 'teacher.a.local.synthetic@bnbu.invalid';
 const SYNTHETIC_TEACHER_B_EMAIL = 'teacher.b.local.synthetic@bnbu.invalid';
 const ISOLATION_TEACHER_EMAIL = 'teacher.c.local.synthetic@isolation.invalid';
 const SYNTHETIC_ROLE_CONFLICT_EMAIL = 'role.conflict.local.synthetic@bnbu.invalid';
+const SYNTHETIC_CLOSURE_STUDENT_EMAIL = 'student.closure.local.synthetic@bnbu.invalid';
 const SYNTHETIC_CONCURRENT_STUDENT_NUMBER = 'SYNTH-CONCURRENT-0001';
 
 function requiredLocalSecret(name: string): string {
@@ -147,6 +149,7 @@ async function upsertStudent(
     fullName: string;
     gender: 'MALE' | 'FEMALE' | 'OTHER';
     gradeYear: number;
+    email?: string;
     now: Date;
   },
 ): Promise<{ userId: string; studentId: string }> {
@@ -166,6 +169,9 @@ async function upsertStudent(
             organizationId: input.organizationId,
             role: 'STUDENT',
             status: 'ACTIVE',
+            primaryEmail: input.email ?? null,
+            primaryEmailNormalized: input.email ?? null,
+            emailVerifiedAt: input.email === undefined ? null : input.now,
             passwordHash: null,
             createdAt: input.now,
             updatedAt: input.now,
@@ -176,6 +182,9 @@ async function upsertStudent(
           data: {
             role: 'STUDENT',
             status: 'ACTIVE',
+            primaryEmail: input.email ?? null,
+            primaryEmailNormalized: input.email ?? null,
+            emailVerifiedAt: input.email === undefined ? null : input.now,
             passwordHash: null,
             deletedAt: null,
             updatedAt: input.now,
@@ -526,6 +535,47 @@ async function main(): Promise<void> {
         },
         update: { status: 'ACTIVE', fullName: 'Synthetic Admin A', updatedAt: now },
       });
+      const adminB = await transaction.user.upsert({
+        where: {
+          organizationId_primaryEmailNormalized: {
+            organizationId: organization.id,
+            primaryEmailNormalized: SYNTHETIC_ADMIN_B_EMAIL,
+          },
+        },
+        create: {
+          id: uuidv7(),
+          organizationId: organization.id,
+          role: 'ADMIN',
+          status: 'ACTIVE',
+          primaryEmail: SYNTHETIC_ADMIN_B_EMAIL,
+          primaryEmailNormalized: SYNTHETIC_ADMIN_B_EMAIL,
+          emailVerifiedAt: now,
+          passwordHash: adminPasswordHash,
+          createdAt: now,
+          updatedAt: now,
+        },
+        update: {
+          role: 'ADMIN',
+          status: 'ACTIVE',
+          passwordHash: adminPasswordHash,
+          updatedAt: now,
+        },
+      });
+      await transaction.adminProfile.upsert({
+        where: { userId: adminB.id },
+        create: {
+          id: uuidv7(),
+          organizationId: organization.id,
+          userId: adminB.id,
+          employeeNumber: 'SYNTH-ADMIN-B',
+          fullName: 'Synthetic Admin B',
+          departmentName: 'Synthetic Test Office',
+          status: 'ACTIVE',
+          createdAt: now,
+          updatedAt: now,
+        },
+        update: { status: 'ACTIVE', fullName: 'Synthetic Admin B', updatedAt: now },
+      });
 
       const teacherA = await upsertTeacher(transaction, {
         organizationId: organization.id,
@@ -577,6 +627,70 @@ async function main(): Promise<void> {
             systemMode: 'NORMAL',
             changedBy: policy.changedBy,
             changeReason: 'Synthetic local teaching structure seed',
+            updatedAt: now,
+          },
+        });
+      }
+
+      const localAndroidPolicy = await transaction.appReleasePolicy.findUnique({
+        where: {
+          platform_policyVersion: {
+            platform: 'ANDROID',
+            policyVersion: 'local-android-0.1.0-mvp',
+          },
+        },
+      });
+      if (localAndroidPolicy === null) {
+        await transaction.appReleasePolicy.create({
+          data: {
+            id: uuidv7(),
+            platform: 'ANDROID',
+            minimumSupportedVersion: '0.1.0-mvp',
+            latestVersion: '0.1.0-mvp',
+            minimumSupportedBuildNumber: null,
+            latestBuildNumber: null,
+            enforcement: 'NONE',
+            message: 'Synthetic local environment release policy.',
+            downloadUrl: null,
+            effectiveAt: new Date('2026-01-01T00:00:00.000Z'),
+            expiresAt: null,
+            policyVersion: 'local-android-0.1.0-mvp',
+            createdAt: now,
+          },
+        });
+      }
+
+      for (const article of [
+        {
+          id: '11111111-1111-4111-8111-111111111111',
+          locale: 'zh-CN',
+          title: '如何完成运动打卡',
+          bodyMarkdown:
+            '开始运动后请保持应用运行。少于 1 小时的会话会取消，不会生成有效记录；达到 1 小时后请核对说明并提交真实凭证。',
+        },
+        {
+          id: '22222222-2222-4222-8222-222222222222',
+          locale: 'en',
+          title: 'How to complete an exercise check-in',
+          bodyMarkdown:
+            'Keep the app running after starting exercise. Sessions under one hour are cancelled without a valid record. At one hour, review the description and submit genuine evidence.',
+        },
+      ]) {
+        await transaction.helpArticle.upsert({
+          where: { id: article.id },
+          create: {
+            ...article,
+            category: 'checkin',
+            status: 'PUBLISHED',
+            publishedAt: now,
+            createdAt: now,
+            updatedAt: now,
+          },
+          update: {
+            title: article.title,
+            bodyMarkdown: article.bodyMarkdown,
+            status: 'PUBLISHED',
+            publishedAt: now,
             updatedAt: now,
           },
         });
@@ -826,6 +940,65 @@ async function main(): Promise<void> {
         sections.set(input.code, section);
       }
 
+      const activeSectionId = sections.get('SYNTH-A-01')!.id;
+      let activeScoreRule = await transaction.scoreRule.findFirst({
+        where: { classSectionId: activeSectionId, status: 'ACTIVE' },
+        orderBy: { ruleVersion: 'desc' },
+      });
+      if (activeScoreRule === null) {
+        const latestRule = await transaction.scoreRule.aggregate({
+          where: { classSectionId: activeSectionId },
+          _max: { ruleVersion: true },
+        });
+        activeScoreRule = await transaction.scoreRule.create({
+          data: {
+            id: uuidv7(),
+            organizationId: organization.id,
+            classSectionId: activeSectionId,
+            semesterId: currentSemester.id,
+            ruleCode: 'SYNTHETIC_LOCAL_TOTAL_20H',
+            ruleVersion: (latestRule._max.ruleVersion ?? 0) + 1,
+            displayName: 'Synthetic local 20-hour rule',
+            totalRequiredSeconds: 72_000n,
+            calculationDefinition: {
+              formulaType: 'LINEAR_CAPPED',
+              maximumScore: 100,
+              categoryAllocationMode: 'TOTAL_ONLY',
+            },
+            roundingMode: 'HALF_UP',
+            roundingScale: 2,
+            status: 'ACTIVE',
+            createdBy: teacherA.userId,
+            submittedAt: now,
+            activatedAt: now,
+            createdAt: now,
+            updatedAt: now,
+          },
+        });
+      }
+      for (const actorUserId of [admin.id, adminB.id]) {
+        await transaction.scoreRuleApprovalEvent.upsert({
+          where: {
+            scoreRuleId_actorUserId_action: {
+              scoreRuleId: activeScoreRule.id,
+              actorUserId,
+              action: 'APPROVE',
+            },
+          },
+          create: {
+            id: uuidv7(),
+            organizationId: organization.id,
+            scoreRuleId: activeScoreRule.id,
+            action: 'APPROVE',
+            actorUserId,
+            reason: 'Synthetic local two-person approval fixture',
+            requestId: `seed-${actorUserId.slice(0, 8)}`,
+            createdAt: now,
+          },
+          update: {},
+        });
+      }
+
       await upsertStudent(transaction, {
         organizationId: organization.id,
         studentNumber: 'SYNTH-STUDENT-0001',
@@ -844,10 +1017,11 @@ async function main(): Promise<void> {
       });
       const activeStudent = await upsertStudent(transaction, {
         organizationId: organization.id,
-        studentNumber: 'SYNTH-ACTIVE-0001',
-        fullName: 'Synthetic Active Enrollment Student',
+        studentNumber: 'SYNTH-CLOSURE-0001',
+        fullName: 'Synthetic Cross-Client Closure Student',
         gender: 'OTHER',
         gradeYear: 2026,
+        email: SYNTHETIC_CLOSURE_STUDENT_EMAIL,
         now,
       });
       const removedStudent = await upsertStudent(transaction, {

@@ -279,6 +279,7 @@ AuditLog 精确记录：`id`、`organizationId`、`actorUserId`、`actorRoleSnap
 |---|---|---|---|---|---|---|---|---|---|
 | `GET` | `/health/live` | `getHealthLive` | `PUBLIC-HEALTH-LIVE` | `PUBLIC` | `-` | `NONE` | `NONE` | `NONE` | `true` |
 | `GET` | `/health/ready` | `getHealthReady` | `PUBLIC-HEALTH-READY` | `PUBLIC` | `-` | `NONE` | `NONE` | `NONE` | `true` |
+| `GET` | `/health/admin` | `getAdminHealth` | `ADMIN-HEALTH-READ` | `ACCESS_TOKEN` | `ADMIN` | `PRINCIPAL_ORGANIZATION` | `ORGANIZATION` | `PRINCIPAL_ORGANIZATION` | `true` |
 | `GET` | `/system-mode` | `getSystemMode` | `PUBLIC-SYSTEM-MODE-READ` | `PUBLIC` | `-` | `NONE` | `NONE` | `NONE` | `true` |
 | `GET` | `/organizations/current` | `getCurrentOrganization` | `ORGANIZATION-CURRENT-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ORGANIZATION` | `PRINCIPAL_ORGANIZATION` | `true` |
 | `GET` | `/semesters/current` | `getCurrentSemester` | `SEMESTER-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ORGANIZATION` | `PRINCIPAL_ORGANIZATION` | `true` |
@@ -336,6 +337,7 @@ AuditLog 精确记录：`id`、`organizationId`、`actorUserId`、`actorRoleSnap
 | `GET` | `/exercise-records` | `listExerciseRecords` | `EXERCISE-RECORD-LIST` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `EXERCISE_RECORD_LIST_SCOPE` | `true` |
 | `POST` | `/exercise-records` | `createExerciseRecordDraft` | `EXERCISE-RECORD-CREATE` | `ACCESS_TOKEN` | `STUDENT` | `PRINCIPAL_ORGANIZATION` | `SELF` | `EXERCISE_SESSION_FROM_REQUEST` | `true` |
 | `GET` | `/exercise-records/{recordId}` | `getExerciseRecord` | `EXERCISE-RECORD-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `EXERCISE_RECORD_FROM_PATH` | `true` |
+| `GET` | `/exercise-records/{recordId}/evidence-context` | `getExerciseRecordEvidenceContext` | `EXERCISE-RECORD-EVIDENCE-CONTEXT-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `EXERCISE_RECORD_FROM_PATH` | `true` |
 | `PATCH` | `/exercise-records/{recordId}` | `updateExerciseRecordDraft` | `EXERCISE-RECORD-UPDATE` | `ACCESS_TOKEN` | `STUDENT` | `PRINCIPAL_ORGANIZATION` | `SELF` | `EXERCISE_RECORD_FROM_PATH` | `true` |
 | `POST` | `/exercise-records/{recordId}/submit` | `submitExerciseRecord` | `EXERCISE-RECORD-SUBMIT` | `ACCESS_TOKEN` | `STUDENT` | `PRINCIPAL_ORGANIZATION` | `SELF` | `EXERCISE_RECORD_FROM_PATH` | `true` |
 | `POST` | `/exercise-records/{recordId}/discard` | `discardExerciseRecord` | `EXERCISE-RECORD-DISCARD` | `ACCESS_TOKEN` | `STUDENT` | `PRINCIPAL_ORGANIZATION` | `SELF` | `EXERCISE_RECORD_FROM_PATH` | `true` |
@@ -385,6 +387,7 @@ AuditLog 精确记录：`id`、`organizationId`、`actorUserId`、`actorRoleSnap
 | `GET` | `/feedback` | `listFeedback` | `FEEDBACK-LIST` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `NONE` | `true` |
 | `POST` | `/feedback` | `createFeedback` | `FEEDBACK-CREATE` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_USER` | `true` |
 | `GET` | `/feedback/{feedbackId}` | `getFeedback` | `FEEDBACK-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `NONE` | `true` |
+| `GET` | `/exemption-application-details` | `listStructuredExemptionApplications` | `EXEMPTION-APPLICATION-STRUCTURED-LIST` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `NONE` | `true` |
 | `GET` | `/exemption-applications` | `listExemptionApplications` | `EXEMPTION-APPLICATION-LIST` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `NONE` | `true` |
 | `POST` | `/exemption-applications` | `createExemptionApplication` | `EXEMPTION-APPLICATION-CREATE` | `ACCESS_TOKEN` | `STUDENT` | `PRINCIPAL_ORGANIZATION` | `SELF` | `PRINCIPAL_STUDENT` | `true` |
 | `GET` | `/exemption-applications/{applicationId}` | `getExemptionApplication` | `EXEMPTION-APPLICATION-READ` | `ACCESS_TOKEN` | `STUDENT,TEACHER,ADMIN` | `PRINCIPAL_ORGANIZATION` | `ROLE_SCOPED` | `NONE` | `true` |

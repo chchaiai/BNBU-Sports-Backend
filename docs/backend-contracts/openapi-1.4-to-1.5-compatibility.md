@@ -5,13 +5,13 @@ Result: **COMPATIBLE**.
 | Source | Version | SHA-256 | Operations |
 | --- | --- | --- | ---: |
 | Published baseline | 1.4.0-contract | `c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b` | 122 |
-| Candidate | 1.5.0-contract | `f0b4916cb0abd1ec4057f690763de8d7e6f79ca2b7e666a8cd6f3d8c37c69bed` | 123 |
+| Candidate | 1.5.0-contract | `df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7` | 126 |
 
 | Classification | Count |
 | --- | ---: |
 | Breaking | 54 |
 | Review required | 0 |
-| Non-breaking | 11 |
+| Non-breaking | 17 |
 | Approved exceptions | 54 |
 | Unapproved blockers | 0 |
 
@@ -30,6 +30,10 @@ Result: **COMPATIBLE**.
 | enum-values-removed-a259718a82500839 | BREAKING | request | ENUM_VALUES_REMOVED | `POST /course-invites/{inviteToken}/join-capabilities/requestBody/application/json/properties/gender/enum` | YES |
 | enum-values-removed-ae13e512f631dd11 | BREAKING | request | ENUM_VALUES_REMOVED | `POST /auth/student-sign-in-codes/requestBody/application/json/properties/channel/enum` | YES |
 | operation-removed-ea73ccd9bdec9a3a | BREAKING | operation | OPERATION_REMOVED | `PATCH /me` | YES |
+| property-added-1908909463b5e388 | NON_BREAKING | request | PROPERTY_ADDED | `PATCH /exemption-applications/{applicationId}/requestBody/application/json/properties/applicationSubtype` | NO |
+| property-added-2a03006f9f3de4b0 | NON_BREAKING | request | PROPERTY_ADDED | `PATCH /exemption-applications/{applicationId}/requestBody/application/json/properties/organizationName` | NO |
+| property-added-b37be7dc9f0cf420 | NON_BREAKING | request | PROPERTY_ADDED | `POST /exemption-applications/requestBody/application/json/properties/applicationSubtype` | NO |
+| property-added-bc4db8bbd8ae4bad | NON_BREAKING | request | PROPERTY_ADDED | `POST /exemption-applications/requestBody/application/json/properties/organizationName` | NO |
 | property-removed-24b7355070b45b91 | BREAKING | response | PROPERTY_REMOVED | `POST /course-invites/{inviteToken}/join/responses/200/application/json/properties/data/properties/authSession/properties/user/properties/primaryPhoneMasked` | YES |
 | property-removed-3540dbcd706e1250 | BREAKING | response | PROPERTY_REMOVED | `POST /course-invites/{inviteToken}/join/responses/201/application/json/properties/data/properties/authSession/properties/user/properties/primaryPhoneMasked` | YES |
 | property-removed-41c83a02537eed1c | BREAKING | response | PROPERTY_REMOVED | `POST /auth/student-sign-in-codes/verify/responses/200/application/json/properties/data/properties/user/properties/phoneVerified` | YES |
@@ -52,6 +56,8 @@ Result: **COMPATIBLE**.
 | property-removed-e77bcdde4321d88c | BREAKING | response | PROPERTY_REMOVED | `POST /auth/password-login/responses/200/application/json/properties/data/properties/user/properties/phoneVerified` | YES |
 | property-removed-f926b518920a8cea | BREAKING | response | PROPERTY_REMOVED | `PATCH /exercise-records/{recordId}/responses/200/application/json/properties/data/properties/studentRemark` | YES |
 | response-status-added-6fe12d29a99e7316 | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `GET /me/preferences/responses/409` | NO |
+| response-status-added-8c6140e97f4bd71c | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `PATCH /exemption-applications/{applicationId}/responses/422` | NO |
+| response-status-added-f94a97fe6c147e30 | NON_BREAKING | response | RESPONSE_STATUS_ADDED | `POST /exemption-applications/{applicationId}/submit/responses/422` | NO |
 | schema-alternative-added-3235075c6f00436f | NON_BREAKING | response | SCHEMA_ALTERNATIVE_ADDED | `POST /exercise-records/{recordId}/withdraw/responses/200/application/json/properties/data/properties/description` | NO |
 | schema-alternative-added-38a1c4c4bbde872e | NON_BREAKING | request | SCHEMA_ALTERNATIVE_ADDED | `PATCH /exercise-records/{recordId}/requestBody/application/json/properties/description` | NO |
 | schema-alternative-added-5355a4f0c2013b6f | NON_BREAKING | request | SCHEMA_ALTERNATIVE_ADDED | `POST /exercise-records/requestBody/application/json/properties/description` | NO |

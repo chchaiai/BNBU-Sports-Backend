@@ -32,7 +32,7 @@ const contract = object(
 );
 
 describe('Stage 16 ExerciseRecord contract', () => {
-  it('binds seven operations to real handlers and role-scoped resolvers', () => {
+  it('binds eight operations to real handlers and role-scoped resolvers', () => {
     const expected = [
       [
         '/exercise-records',
@@ -55,6 +55,14 @@ describe('Stage 16 ExerciseRecord contract', () => {
         'get',
         'getExerciseRecord',
         'get',
+        ['STUDENT', 'TEACHER', 'ADMIN'],
+        'EXERCISE_RECORD_FROM_PATH',
+      ],
+      [
+        '/exercise-records/{recordId}/evidence-context',
+        'get',
+        'getExerciseRecordEvidenceContext',
+        'getEvidenceContext',
         ['STUDENT', 'TEACHER', 'ADMIN'],
         'EXERCISE_RECORD_FROM_PATH',
       ],
@@ -146,6 +154,17 @@ describe('Stage 16 ExerciseRecord contract', () => {
     );
     assert.equal(mediaFields.includes('recordId'), true);
     assert.equal(mediaFields.includes('storageKey'), false);
+    const evidenceFields = object(
+      object(schemas.ExerciseRecordEvidenceContext, 'evidence context').properties,
+      'evidence context fields',
+    );
+    assert.deepEqual(Object.keys(evidenceFields), [
+      'recordId',
+      'sessionId',
+      'startedAt',
+      'endedAt',
+      'mediaIds',
+    ]);
   });
 
   it('requires descriptions only for GENERAL exercise records', () => {

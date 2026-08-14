@@ -69,6 +69,7 @@ import type { AuthProjection } from '../auth/auth.service.js';
 import {
   ExemptionApplicationsService,
   type ExemptionApplicationProjection,
+  type StructuredExemptionApplicationProjection,
 } from './exemption-applications.service.js';
 
 @Controller()
@@ -262,6 +263,15 @@ export class ClientCapabilitiesController {
     @Param() path: FeedbackPathDto,
   ): Promise<FeedbackProjection> {
     return this.messaging.getFeedback(principal, path.feedbackId);
+  }
+
+  @Get('exemption-application-details')
+  @OperationPolicy('listStructuredExemptionApplications')
+  listStructuredExemptionApplications(
+    @CurrentPrincipal() principal: AuthenticatedPrincipal,
+    @Query() query: ExemptionApplicationListQueryDto,
+  ): Promise<PagedResult<StructuredExemptionApplicationProjection>> {
+    return this.exemptionApplications.listStructured(principal, query);
   }
 
   @Get('exemption-applications')

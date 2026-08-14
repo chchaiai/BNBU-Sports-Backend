@@ -24,6 +24,19 @@ export const operationPolicies = {
     "resourceResolver": "NONE",
     "defaultDeny": true
   },
+  "getAdminHealth": {
+    "method": "GET",
+    "route": "/health/admin",
+    "policyId": "ADMIN-HEALTH-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ORGANIZATION",
+    "resourceResolver": "PRINCIPAL_ORGANIZATION",
+    "defaultDeny": true
+  },
   "getSystemMode": {
     "method": "GET",
     "route": "/system-mode",
@@ -808,6 +821,21 @@ export const operationPolicies = {
     "resourceResolver": "EXERCISE_RECORD_FROM_PATH",
     "defaultDeny": true
   },
+  "getExerciseRecordEvidenceContext": {
+    "method": "GET",
+    "route": "/exercise-records/{recordId}/evidence-context",
+    "policyId": "EXERCISE-RECORD-EVIDENCE-CONTEXT-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "EXERCISE_RECORD_FROM_PATH",
+    "defaultDeny": true
+  },
   "submitExerciseRecord": {
     "method": "POST",
     "route": "/exercise-records/{recordId}/submit",
@@ -1440,6 +1468,21 @@ export const operationPolicies = {
     "method": "GET",
     "route": "/feedback/{feedbackId}",
     "policyId": "FEEDBACK-READ",
+    "authentication": "ACCESS_TOKEN",
+    "allowedRoles": [
+      "STUDENT",
+      "TEACHER",
+      "ADMIN"
+    ],
+    "organizationScope": "PRINCIPAL_ORGANIZATION",
+    "resourceScope": "ROLE_SCOPED",
+    "resourceResolver": "NONE",
+    "defaultDeny": true
+  },
+  "listStructuredExemptionApplications": {
+    "method": "GET",
+    "route": "/exemption-application-details",
+    "policyId": "EXEMPTION-APPLICATION-STRUCTURED-LIST",
     "authentication": "ACCESS_TOKEN",
     "allowedRoles": [
       "STUDENT",

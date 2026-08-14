@@ -1,5 +1,10 @@
 import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
-import { DeleteObjectCommand, GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  GetBucketLocationCommand,
+  GetObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { Readable } from 'node:stream';
 
@@ -20,6 +25,11 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort, OnModuleDestro
   private client: S3Client | null = null;
 
   constructor(@Inject(RUNTIME_CONFIG) private readonly runtimeConfig: RuntimeConfig) {}
+
+  async checkHealth(): Promise<void> {
+    const { bucket } = this.configuration();
+    await this.storageCall(() => this.s3().send(new GetBucketLocationCommand({ Bucket: bucket })));
+  }
 
   async putPrivateObject(input: PutPrivateObjectInput): Promise<PutPrivateObjectResult> {
     this.assertStorageKey(input.storageKey);

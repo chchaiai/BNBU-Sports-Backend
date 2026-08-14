@@ -46,6 +46,10 @@ interface HttpResult {
 }
 
 class MemoryMediaStorage implements MediaStoragePort {
+  checkHealth(): Promise<void> {
+    return Promise.resolve();
+  }
+
   readonly objects = new Map<string, { body: Buffer; contentType: string; entityTag: string }>();
   readonly uploads = new Map<string, string>();
 

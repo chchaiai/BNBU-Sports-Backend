@@ -30,6 +30,8 @@ import type {
 } from '../interface/http/exercise-records.dto.js';
 import {
   projectExerciseRecord,
+  projectExerciseRecordEvidenceContext,
+  type ExerciseRecordEvidenceContextProjection,
   type ExerciseRecordProjection,
   type ExerciseRecordWithReview,
 } from './exercise-record-projection.js';
@@ -45,6 +47,10 @@ const reviewProjection = {
   orderBy: { reviewVersion: 'desc' as const },
   take: 1,
   select: { result: true, reasonCode: true, publicComment: true, reviewVersion: true },
+};
+
+const recordProjectionRelations = {
+  reviews: reviewProjection,
 };
 
 @Injectable()
@@ -151,7 +157,7 @@ export class ExerciseRecordsService {
               ]),
         ],
       },
-      include: { reviews: reviewProjection },
+      include: recordProjectionRelations,
       orderBy: [{ businessDate: direction }, { id: direction }],
       take: input.limit + 1,
     });
@@ -180,6 +186,24 @@ export class ExerciseRecordsService {
   ): Promise<ExerciseRecordProjection> {
     this.assertContext(principal, context);
     return projectExerciseRecord(await this.requiredRecord(context.recordId));
+  }
+
+  async getEvidenceContext(
+    principal: AuthenticatedPrincipal,
+    context: ExerciseRecordPolicyContext,
+  ): Promise<ExerciseRecordEvidenceContextProjection> {
+    this.assertContext(principal, context);
+    const record = await this.prisma.exerciseRecord.findUnique({
+      where: { id: context.recordId },
+      select: {
+        id: true,
+        sessionId: true,
+        session: { select: { startedAt: true, completedAt: true } },
+        media: { orderBy: { position: 'asc' }, select: { mediaId: true } },
+      },
+    });
+    if (record === null) throw new ApplicationError('EXERCISE_RECORD_NOT_FOUND', 404);
+    return projectExerciseRecordEvidenceContext(record);
   }
 
   async create(
@@ -216,6 +240,18 @@ export class ExerciseRecordsService {
           }
           if (session.status !== 'COMPLETED') {
             return this.idempotency.failure(new ApplicationError('CONFLICT_STATE_TRANSITION', 409));
+          }
+          // The session row lock serializes every draft creation for this
+          // session. Detect the invariant before INSERT so PostgreSQL does not
+          // abort the idempotency transaction on a unique-key violation.
+          const existing = await transaction.exerciseRecord.findUnique({
+            where: { sessionId: session.id },
+            select: { id: true },
+          });
+          if (existing !== null) {
+            return this.idempotency.failure(
+              new ApplicationError('EXERCISE_RECORD_ALREADY_EXISTS_FOR_SESSION', 409),
+            );
           }
           const recordId = this.ids.next();
           const now = this.clock.now();
@@ -298,6 +334,7 @@ export class ExerciseRecordsService {
         await this.lock(transaction, 'exercise_records', context.recordId);
         const current = await transaction.exerciseRecord.findUnique({
           where: { id: context.recordId },
+          include: recordProjectionRelations,
         });
         if (current === null) {
           return this.idempotency.failure(new ApplicationError('EXERCISE_RECORD_NOT_FOUND', 404));
@@ -340,12 +377,18 @@ export class ExerciseRecordsService {
             changedFields,
           },
         });
-        return this.idempotency.success(projectExerciseRecord({ ...updated, reviews: [] }), {
-          principalId: principal.userId,
-          authSessionId: principal.sessionId,
-          resourceType: 'EXERCISE_RECORD',
-          resourceId: updated.id,
-        });
+        return this.idempotency.success(
+          projectExerciseRecord({
+            ...updated,
+            reviews: current.reviews,
+          }),
+          {
+            principalId: principal.userId,
+            authSessionId: principal.sessionId,
+            resourceType: 'EXERCISE_RECORD',
+            resourceId: updated.id,
+          },
+        );
       },
     );
   }
@@ -403,7 +446,10 @@ export class ExerciseRecordsService {
               new ApplicationError('EXERCISE_RECORD_DURATION_NOT_CREDITABLE', 422),
             );
           }
-          const activeStatuses = ['PENDING_UPLOAD', 'UPLOADED', 'BOUND', 'PROCESSING', 'AVAILABLE'];
+          // Only AVAILABLE evidence is eligible for submission. An abandoned or
+          // still-uploading object must not block a complete, explicitly selected
+          // evidence set from the same session.
+          const activeStatuses = ['AVAILABLE'];
           const discoveredMedia = await transaction.mediaEvidence.findMany({
             where: {
               organizationId: principal.organizationId,
@@ -534,7 +580,10 @@ export class ExerciseRecordsService {
             },
           });
           return this.idempotency.success(
-            projectExerciseRecord({ ...updated, reviews: [review] }),
+            projectExerciseRecord({
+              ...updated,
+              reviews: [review],
+            }),
             {
               principalId: principal.userId,
               authSessionId: principal.sessionId,
@@ -578,6 +627,7 @@ export class ExerciseRecordsService {
         await this.lock(transaction, 'exercise_records', context.recordId);
         const current = await transaction.exerciseRecord.findUnique({
           where: { id: context.recordId },
+          include: recordProjectionRelations,
         });
         if (current === null) {
           return this.idempotency.failure(new ApplicationError('EXERCISE_RECORD_NOT_FOUND', 404));
@@ -616,12 +666,18 @@ export class ExerciseRecordsService {
             reasonCode: 'STUDENT_DISCARD',
           },
         });
-        return this.idempotency.success(projectExerciseRecord({ ...updated, reviews: [] }), {
-          principalId: principal.userId,
-          authSessionId: principal.sessionId,
-          resourceType: 'EXERCISE_RECORD',
-          resourceId: updated.id,
-        });
+        return this.idempotency.success(
+          projectExerciseRecord({
+            ...updated,
+            reviews: current.reviews,
+          }),
+          {
+            principalId: principal.userId,
+            authSessionId: principal.sessionId,
+            resourceType: 'EXERCISE_RECORD',
+            resourceId: updated.id,
+          },
+        );
       },
     );
   }
@@ -646,7 +702,7 @@ export class ExerciseRecordsService {
   private async requiredRecord(recordId: string): Promise<ExerciseRecordWithReview> {
     const record = await this.prisma.exerciseRecord.findUnique({
       where: { id: recordId },
-      include: { reviews: reviewProjection },
+      include: recordProjectionRelations,
     });
     if (record === null) throw new ApplicationError('EXERCISE_RECORD_NOT_FOUND', 404);
     return record;

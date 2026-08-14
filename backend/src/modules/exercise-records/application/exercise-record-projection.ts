@@ -1,4 +1,9 @@
-import type { ExerciseRecord, ReviewRecord } from '../../../generated/prisma/client.js';
+import type {
+  ExerciseRecord,
+  ExerciseRecordMedia,
+  ExerciseSession,
+  ReviewRecord,
+} from '../../../generated/prisma/client.js';
 
 export interface ExerciseRecordProjection {
   id: string;
@@ -32,6 +37,19 @@ export interface ExerciseRecordProjection {
 
 export type ExerciseRecordWithReview = ExerciseRecord & {
   reviews: Pick<ReviewRecord, 'result' | 'reasonCode' | 'publicComment' | 'reviewVersion'>[];
+};
+
+export interface ExerciseRecordEvidenceContextProjection {
+  recordId: string;
+  sessionId: string;
+  startedAt: string;
+  endedAt: string | null;
+  mediaIds: string[];
+}
+
+export type ExerciseRecordWithEvidenceContext = Pick<ExerciseRecord, 'id' | 'sessionId'> & {
+  session: Pick<ExerciseSession, 'startedAt' | 'completedAt'>;
+  media: Pick<ExerciseRecordMedia, 'mediaId'>[];
 };
 
 function safeSeconds(value: bigint): number {
@@ -73,5 +91,17 @@ export function projectExerciseRecord(record: ExerciseRecordWithReview): Exercis
             publicComment: current.publicComment,
           },
     version: record.version,
+  };
+}
+
+export function projectExerciseRecordEvidenceContext(
+  record: ExerciseRecordWithEvidenceContext,
+): ExerciseRecordEvidenceContextProjection {
+  return {
+    recordId: record.id,
+    sessionId: record.sessionId,
+    startedAt: record.session.startedAt.toISOString(),
+    endedAt: record.session.completedAt?.toISOString() ?? null,
+    mediaIds: record.media.map(({ mediaId }) => mediaId),
   };
 }

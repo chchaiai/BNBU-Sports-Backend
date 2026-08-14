@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "CONTRACT_BASELINE_BOUND_LOCAL",
+  "closedAt": "2026-08-14",
+  "supersedesCurrentBindingFrom": "docs/backend-contracts/20b-client-contract-baseline.json",
+  "contract": {
+    "sourceRepository": "monorepo",
+    "sourceBranch": "monorepo/main",
+    "sourceCommit": "78276a18a9bbbc53ec3073cd1be07a85e55b0128",
+    "canonicalPath": "docs/backend-contracts/openapi.yaml",
+    "version": "1.5.0-contract",
+    "sha256": "df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7",
+    "prefix": "/api/v1",
+    "operationCount": 126,
+    "schemaCount": 288,
+    "enabledOperations": 109,
+    "intentionallyDisabledOperations": 17,
+    "notImplementedOperations": 0
+  },
+  "clients": {
+    "android": {
+      "contractBindingGate": true,
+      "snapshotPath": "BNBU-Sports-Android-master/app/openapi/openapi.snapshot.yaml",
+      "metadataPath": "BNBU-Sports-Android-master/app/openapi/contract.properties",
+      "generatedModelStrategy": "BUILD_TIME_KOTLIN_MODELS",
+      "transportStrategy": "HANDWRITTEN"
+    },
+    "webTeacherAdmin": {
+      "contractBindingGate": true,
+      "snapshotPath": "BNBU-Sports-Web-new/portal-teacher-admin/openapi/openapi.snapshot.yaml",
+      "metadataPath": "BNBU-Sports-Web-new/portal-teacher-admin/openapi/contract.json",
+      "generatedTypesPath": "BNBU-Sports-Web-new/portal-teacher-admin/app/openapi.generated.ts",
+      "generatedModelStrategy": "TRACKED_TYPESCRIPT_TYPES",
+      "transportStrategy": "HANDWRITTEN"
+    },
+    "ios": {
+      "contractBindingGate": false,
+      "projectPresent": false,
+      "reason": "IOS_PROJECT_IMPORT_REQUIRED"
+    }
+  },
+  "gates": {
+    "clientContractBaseline": true,
+    "androidContractBinding": true,
+    "webContractBinding": true,
+    "iosContractBinding": false,
+    "stagingRuntimeReadiness": false,
+    "clientIntegrationStarted": false,
+    "threeClientDefinitionOfDone": false,
+    "fullProduction": false
+  }
+}

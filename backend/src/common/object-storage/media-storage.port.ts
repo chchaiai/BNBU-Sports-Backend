@@ -9,6 +9,8 @@ export interface MediaObjectMetadata {
 }
 
 export abstract class MediaStoragePort {
+  abstract checkHealth(): Promise<void>;
+
   abstract createUploadUrl(input: {
     storageKey: string;
     contentType: string;

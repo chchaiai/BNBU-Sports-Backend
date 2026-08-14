@@ -19,7 +19,13 @@ const clientRequirements = new Map([
   ],
   [
     "BNBU-Sports-Web-new",
-    ["package.json", "package-lock.json", "app/page.tsx"],
+    [
+      "package.json",
+      "package-lock.json",
+      "frontend/index.html",
+      "frontend/preview-server.cjs",
+      "portal-teacher-admin/package.json",
+    ],
   ],
 ]);
 const generatedDirectoryNames = new Set([

@@ -2,13 +2,13 @@
 
 ## 当前事实
 
-Web 工程路径为 `BNBU-Sports-Web-new/`。当前是前端交互原型：任意非空账号密码可进入，admin session 保存 localStorage 30 天；admin 与 roster 主要由 localStorage/sessionStorage Mock service 提供，只有若干并不匹配权威 OpenAPI 的规划路径；尚无统一 BNBU HTTP client、真实 Token family、错误 envelope、opaque cursor 或并发协议。
+Web 工程路径为 `BNBU-Sports-Web-new/`。`portal-teacher-admin/` 已有统一 `/api/v1` client、真实登录/refresh、错误 envelope、`Idempotency-Key` 和部分教师数据接入；但 token 仍保存在 localStorage，Roster/Admin 等范围仍混有 Mock，不能作为 Staging 或 Production 完成证据。`frontend/` 下的旧入口和 `backend/` 下的 Express/MySQL 实现都不是权威后端。
 
 本阶段不能一次性把所有 Mock 页面全部接完，也不能只隐藏演示入口后声称完成。
 
 ## 当前任务
 
-只建立 OpenAPI TypeScript types、哈希绑定、env schema、统一 HTTP transport、Auth adapter、错误/requestId/cursor、Idempotency-Key、版本、Mock/real session 隔离、production Mock 不可达、local smoke 和日志脱敏。
+Contract 1.5 基线已经提供字节一致的 vendored OpenAPI、`contract.json` 和由 `openapi-typescript` 生成的只读 TypeScript 类型。下一阶段保留现有 UI，优先把打卡列表、详情、媒体访问和 Review 写回接到同一 `recordId`，再处理课程、名单与成绩；同时完成 env schema、cookie/CORS/CSRF 验收、Mock/real session 隔离和 production Mock 不可达。
 
 Web refresh cookie 决策状态：
 

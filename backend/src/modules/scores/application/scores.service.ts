@@ -679,16 +679,32 @@ export class ScoresService {
   async processReviewChange(recordId: string): Promise<void> {
     const record = await this.prisma.exerciseRecord.findUnique({ where: { id: recordId } });
     if (record === null) return;
-    const score = await this.prisma.studentScore.findUnique({
-      where: { enrollmentId: record.enrollmentId },
-    });
-    if (score === null) return;
     const rule = await this.prisma.scoreRule.findFirst({
       where: { classSectionId: record.classSectionId, status: 'ACTIVE' },
       include: ruleInclude,
     });
     if (rule === null) return;
-    await this.prisma.$transaction((tx) => this.recalculate(tx, score, rule, this.clock.now()));
+    await this.prisma.$transaction(async (tx) => {
+      const now = this.clock.now();
+      // A rule can become active before a student joins the class. Review
+      // processing therefore owns the last-mile creation of the derived score
+      // aggregate instead of silently dropping an otherwise valid record.
+      const score = await tx.studentScore.upsert({
+        where: { enrollmentId: record.enrollmentId },
+        create: {
+          id: this.ids.next(),
+          organizationId: record.organizationId,
+          semesterId: record.semesterId,
+          classSectionId: record.classSectionId,
+          studentId: record.studentId,
+          enrollmentId: record.enrollmentId,
+          createdAt: now,
+          updatedAt: now,
+        },
+        update: {},
+      });
+      await this.recalculate(tx, score, rule, now);
+    });
   }
 
   private adjustmentDecision(

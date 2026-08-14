@@ -98,7 +98,20 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
     baseUrl = `http://127.0.0.1:${port}`;
     child = spawn(process.execPath, ['--enable-source-maps', 'dist/main.js'], {
       cwd: new URL('../..', import.meta.url),
-      env: foundationEnvironment(databaseUrl, port),
+      env: {
+        ...foundationEnvironment(databaseUrl, port),
+        // Keep this suite independent from a developer's ignored backend/.env.
+        // Object storage is intentionally omitted while media points to a
+        // deterministic unreachable endpoint for the DOWN projection.
+        OBJECT_STORAGE_REQUIRED: 'false',
+        OBJECT_STORAGE_ENDPOINT: '',
+        OBJECT_STORAGE_REGION: '',
+        OBJECT_STORAGE_BUCKET: '',
+        OBJECT_STORAGE_ACCESS_KEY: '',
+        OBJECT_STORAGE_SECRET_KEY: '',
+        OBJECT_STORAGE_FORCE_PATH_STYLE: '',
+        MEDIA_STORAGE_ENDPOINT: 'http://127.0.0.1:9',
+      },
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     child.stdout.on('data', (chunk: Buffer) => (childOutput += chunk.toString()));
@@ -128,12 +141,46 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
     await prisma.$disconnect();
   });
 
-  it('serves liveness, readiness, and the minimal persisted SystemMode', async () => {
+  it('serves public probes and restricts dependency health to administrators', async () => {
     const live = await request('/api/v1/health/live');
     assert.equal(live.status, 200);
     assert.deepEqual(Object.keys(live.body).sort(), ['data', 'meta']);
     const ready = await request('/api/v1/health/ready');
     assert.equal(ready.status, 200);
+
+    const unauthenticatedAdminHealth = await request('/api/v1/health/admin');
+    assert.equal(unauthenticatedAdminHealth.status, 401);
+    const teacher = await login();
+    const forbiddenAdminHealth = await request('/api/v1/health/admin', {
+      headers: { authorization: `Bearer ${teacher.data.accessToken}` },
+    });
+    assert.equal(forbiddenAdminHealth.status, 403);
+
+    const adminLogin = await request('/api/v1/auth/password-login', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'idempotency-key': uuidv7() },
+      body: JSON.stringify({ account: fixture.adminEmail, password: TEST_PASSWORD }),
+    });
+    assert.equal(adminLogin.status, 200);
+    const adminAuth = asObject(adminLogin.body.data) as unknown as AuthData;
+    const adminHealth = await request('/api/v1/health/admin', {
+      headers: {
+        authorization: `Bearer ${adminAuth.accessToken}`,
+        'x-request-id': 'req-admin-health-safe',
+      },
+    });
+    assert.equal(adminHealth.status, 200);
+    assert.equal(asObject(adminHealth.body.meta).requestId, 'req-admin-health-safe');
+    const health = asObject(adminHealth.body.data);
+    assert.equal(health.kind, 'ADMIN');
+    assert.equal(health.status, 'DEGRADED');
+    const dependencies = asObject(health.dependencies);
+    assert.equal(asObject(dependencies.database).status, 'UP');
+    assert.equal(asObject(dependencies.notificationQueue).status, 'UP');
+    assert.equal(asObject(dependencies.objectStorage).status, 'NOT_CONFIGURED');
+    assert.equal(asObject(dependencies.mediaStorage).status, 'DOWN');
+    assert.equal(JSON.stringify(adminHealth.body).includes('127.0.0.1'), false);
+
     const mode = await request('/api/v1/system-mode');
     assert.equal(mode.status, 200);
     assert.equal(asObject(mode.body.data).mode, 'NORMAL');
@@ -216,7 +263,7 @@ describe('Foundation HTTP E2E with real PostgreSQL', () => {
           securityScheme: Object.keys((operation.security ?? document.security)?.[0] ?? {})[0],
         })),
     );
-    assert.equal(secured.length, 109);
+    assert.equal(secured.length, 112);
 
     for (const operation of secured) {
       const result = await request(`/api/v1${operation.path}`, {

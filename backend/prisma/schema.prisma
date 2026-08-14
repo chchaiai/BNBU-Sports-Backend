@@ -100,73 +100,73 @@ model SystemPolicy {
 }
 
 model User {
-  id                     String    @id @db.Uuid
-  organizationId         String    @map("organization_id") @db.Uuid
-  role                   String    @db.VarChar(32)
-  status                 String    @db.VarChar(32)
-  primaryEmail           String?   @map("primary_email") @db.VarChar(254)
-  primaryEmailNormalized String?   @map("primary_email_normalized") @db.VarChar(254)
-  emailVerifiedAt        DateTime? @map("email_verified_at") @db.Timestamptz(6)
-  retiredPrimaryPhone           String?   @ignore @map("primary_phone") @db.VarChar(32)
-  retiredPrimaryPhoneNormalized String?   @ignore @map("primary_phone_normalized") @db.VarChar(32)
-  retiredPhoneVerifiedAt        DateTime? @ignore @map("phone_verified_at") @db.Timestamptz(6)
-  passwordHash           String?   @map("password_hash") @db.VarChar(255)
-  tokenVersion           Int       @default(0) @map("token_version")
-  lastAuthenticatedAt    DateTime? @map("last_authenticated_at") @db.Timestamptz(6)
-  version                Int       @default(1)
-  createdAt              DateTime  @map("created_at") @db.Timestamptz(6)
-  updatedAt              DateTime  @map("updated_at") @db.Timestamptz(6)
-  deletedAt              DateTime? @map("deleted_at") @db.Timestamptz(6)
+  id                            String    @id @db.Uuid
+  organizationId                String    @map("organization_id") @db.Uuid
+  role                          String    @db.VarChar(32)
+  status                        String    @db.VarChar(32)
+  primaryEmail                  String?   @map("primary_email") @db.VarChar(254)
+  primaryEmailNormalized        String?   @map("primary_email_normalized") @db.VarChar(254)
+  emailVerifiedAt               DateTime? @map("email_verified_at") @db.Timestamptz(6)
+  retiredPrimaryPhone           String?   @map("primary_phone") @ignore @db.VarChar(32)
+  retiredPrimaryPhoneNormalized String?   @map("primary_phone_normalized") @ignore @db.VarChar(32)
+  retiredPhoneVerifiedAt        DateTime? @map("phone_verified_at") @ignore @db.Timestamptz(6)
+  passwordHash                  String?   @map("password_hash") @db.VarChar(255)
+  tokenVersion                  Int       @default(0) @map("token_version")
+  lastAuthenticatedAt           DateTime? @map("last_authenticated_at") @db.Timestamptz(6)
+  version                       Int       @default(1)
+  createdAt                     DateTime  @map("created_at") @db.Timestamptz(6)
+  updatedAt                     DateTime  @map("updated_at") @db.Timestamptz(6)
+  deletedAt                     DateTime? @map("deleted_at") @db.Timestamptz(6)
 
-  organization              Organization                   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  studentProfile            StudentProfile?
-  teacherProfile            TeacherProfile?
-  adminProfile              AdminProfile?
-  authSessions              AuthSession[]
-  idempotencyRecords        IdempotencyRecord[]            @relation("IdempotencyPrincipal")
-  auditLogs                 AuditLog[]                     @relation("AuditActor")
-  systemPolicyChanges       SystemPolicy[]                 @relation("SystemPolicyChangedBy")
-  createdSemesters          Semester[]                     @relation("SemesterCreatedBy")
-  createdCourses            Course[]                       @relation("CourseCreatedBy")
-  updatedCourses            Course[]                       @relation("CourseUpdatedBy")
-  deletedCourses            Course[]                       @relation("CourseDeletedBy")
-  createdClassSections      ClassSection[]                 @relation("ClassSectionCreatedBy")
-  updatedClassSections      ClassSection[]                 @relation("ClassSectionUpdatedBy")
-  closedClassSections       ClassSection[]                 @relation("ClassSectionClosedBy")
-  createdExcludedDates      ClassSectionExcludedDate[]     @relation("ClassSectionExcludedDateCreatedBy")
-  createdCourseInvites      CourseInvite[]                 @relation("CourseInviteCreatedBy")
-  revokedCourseInvites      CourseInvite[]                 @relation("CourseInviteRevokedBy")
-  consumedCapabilities      JoinCapability[]               @relation("JoinCapabilityConsumedBy")
-  createdEnrollments        Enrollment[]                   @relation("EnrollmentCreatedBy")
-  updatedEnrollments        Enrollment[]                   @relation("EnrollmentUpdatedBy")
-  enrollmentEvents          EnrollmentStatusEvent[]        @relation("EnrollmentStatusEventActor")
-  importedOfficialRosters   OfficialRosterImport[]         @relation("OfficialRosterImportImportedBy")
-  startedRosterAlignments   RosterAlignmentRun[]           @relation("RosterAlignmentRunStartedBy")
-  resolvedRosterResults     RosterAlignmentResult[]        @relation("RosterAlignmentResultResolvedBy")
-  rosterResolutionEvents    RosterResolutionEvent[]        @relation("RosterResolutionEventActor")
-  exerciseSessionEvents     ExerciseSessionEvent[]         @relation("ExerciseSessionEventActor")
-  initiatedMediaEvidence    MediaEvidence[]                @relation("MediaEvidenceInitiatedBy")
-  exerciseRecordEvents      ExerciseRecordEvent[]          @relation("ExerciseRecordEventActor")
-  createdScoreRules         ScoreRule[]                    @relation("ScoreRuleCreatedBy")
-  scoreRuleApprovals        ScoreRuleApprovalEvent[]       @relation("ScoreRuleApprovalActor")
-  requestedScoreAdjustments ScoreAdjustment[]              @relation("ScoreAdjustmentRequestedBy")
-  scoreAdjustmentApprovals  ScoreAdjustmentApprovalEvent[] @relation("ScoreAdjustmentApprovalActor")
-  scorePublicationEvents    ScorePublicationEvent[]        @relation("ScorePublicationActor")
-  studentSignInChallenges   StudentSignInChallenge[]
-  accountRecoveryChallenges AccountRecoveryChallenge[]
+  organization                Organization                   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  studentProfile              StudentProfile?
+  teacherProfile              TeacherProfile?
+  adminProfile                AdminProfile?
+  authSessions                AuthSession[]
+  idempotencyRecords          IdempotencyRecord[]            @relation("IdempotencyPrincipal")
+  auditLogs                   AuditLog[]                     @relation("AuditActor")
+  systemPolicyChanges         SystemPolicy[]                 @relation("SystemPolicyChangedBy")
+  createdSemesters            Semester[]                     @relation("SemesterCreatedBy")
+  createdCourses              Course[]                       @relation("CourseCreatedBy")
+  updatedCourses              Course[]                       @relation("CourseUpdatedBy")
+  deletedCourses              Course[]                       @relation("CourseDeletedBy")
+  createdClassSections        ClassSection[]                 @relation("ClassSectionCreatedBy")
+  updatedClassSections        ClassSection[]                 @relation("ClassSectionUpdatedBy")
+  closedClassSections         ClassSection[]                 @relation("ClassSectionClosedBy")
+  createdExcludedDates        ClassSectionExcludedDate[]     @relation("ClassSectionExcludedDateCreatedBy")
+  createdCourseInvites        CourseInvite[]                 @relation("CourseInviteCreatedBy")
+  revokedCourseInvites        CourseInvite[]                 @relation("CourseInviteRevokedBy")
+  consumedCapabilities        JoinCapability[]               @relation("JoinCapabilityConsumedBy")
+  createdEnrollments          Enrollment[]                   @relation("EnrollmentCreatedBy")
+  updatedEnrollments          Enrollment[]                   @relation("EnrollmentUpdatedBy")
+  enrollmentEvents            EnrollmentStatusEvent[]        @relation("EnrollmentStatusEventActor")
+  importedOfficialRosters     OfficialRosterImport[]         @relation("OfficialRosterImportImportedBy")
+  startedRosterAlignments     RosterAlignmentRun[]           @relation("RosterAlignmentRunStartedBy")
+  resolvedRosterResults       RosterAlignmentResult[]        @relation("RosterAlignmentResultResolvedBy")
+  rosterResolutionEvents      RosterResolutionEvent[]        @relation("RosterResolutionEventActor")
+  exerciseSessionEvents       ExerciseSessionEvent[]         @relation("ExerciseSessionEventActor")
+  initiatedMediaEvidence      MediaEvidence[]                @relation("MediaEvidenceInitiatedBy")
+  exerciseRecordEvents        ExerciseRecordEvent[]          @relation("ExerciseRecordEventActor")
+  createdScoreRules           ScoreRule[]                    @relation("ScoreRuleCreatedBy")
+  scoreRuleApprovals          ScoreRuleApprovalEvent[]       @relation("ScoreRuleApprovalActor")
+  requestedScoreAdjustments   ScoreAdjustment[]              @relation("ScoreAdjustmentRequestedBy")
+  scoreAdjustmentApprovals    ScoreAdjustmentApprovalEvent[] @relation("ScoreAdjustmentApprovalActor")
+  scorePublicationEvents      ScorePublicationEvent[]        @relation("ScorePublicationActor")
+  studentSignInChallenges     StudentSignInChallenge[]
+  accountRecoveryChallenges   AccountRecoveryChallenge[]
   emailVerificationChallenges EmailVerificationChallenge[]
-  notifications             Notification[]                 @relation("NotificationRecipient")
-  notificationEvents        NotificationEvent[]            @relation("NotificationEventActor")
-  pushDevices               PushDevice[]                   @relation("PushDeviceOwner")
-  pushDeviceEvents          PushDeviceEvent[]              @relation("PushDeviceEventActor")
-  userPreference            UserPreference?
-  userPreferenceEvents      UserPreferenceEvent[]          @relation("UserPreferenceEventActor")
-  createdFeedback           Feedback[]                     @relation("FeedbackCreator")
-  feedbackEvents            FeedbackEvent[]                @relation("FeedbackEventActor")
-  exemptionEvents           ExemptionApplicationEvent[]    @relation("ExemptionEventActor")
-  locationPoliciesCreated   LocationPrivacyPolicy[]        @relation("LocationPolicyCreator")
-  locationConsentEvents     LocationConsentEvent[]         @relation("LocationConsentEventActor")
-  locationTrackEvents       LocationTrackEvent[]           @relation("LocationTrackEventActor")
+  notifications               Notification[]                 @relation("NotificationRecipient")
+  notificationEvents          NotificationEvent[]            @relation("NotificationEventActor")
+  pushDevices                 PushDevice[]                   @relation("PushDeviceOwner")
+  pushDeviceEvents            PushDeviceEvent[]              @relation("PushDeviceEventActor")
+  userPreference              UserPreference?
+  userPreferenceEvents        UserPreferenceEvent[]          @relation("UserPreferenceEventActor")
+  createdFeedback             Feedback[]                     @relation("FeedbackCreator")
+  feedbackEvents              FeedbackEvent[]                @relation("FeedbackEventActor")
+  exemptionEvents             ExemptionApplicationEvent[]    @relation("ExemptionEventActor")
+  locationPoliciesCreated     LocationPrivacyPolicy[]        @relation("LocationPolicyCreator")
+  locationConsentEvents       LocationConsentEvent[]         @relation("LocationConsentEventActor")
+  locationTrackEvents         LocationTrackEvent[]           @relation("LocationTrackEventActor")
 
   @@unique([id, organizationId], map: "users_id_organization_id_key")
   @@unique([organizationId, primaryEmailNormalized], map: "users_organization_email_normalized_key")
@@ -530,7 +530,7 @@ model Enrollment {
   exerciseRecordDailySlots       ExerciseRecordDailySlot[]
   studentScore                   StudentScore?
   exemptionApplications          ExemptionApplication[]
-  exemptionMediaEvidence         MediaEvidence[]                  @relation("MediaEvidenceExemptionEnrollment")
+  exemptionMediaEvidence         MediaEvidence[]                @relation("MediaEvidenceExemptionEnrollment")
   locationTracks                 LocationTrack[]
 
   @@unique([id, organizationId], map: "enrollments_id_organization_id_key")
@@ -731,7 +731,7 @@ model ExerciseRecord {
   sportName               String?   @map("sport_name") @db.VarChar(100)
   description             String?   @db.VarChar(200)
   /// Retired compatibility tombstone. Application code cannot read or write this legacy column.
-  retiredStudentRemark    String?   @ignore @map("student_remark") @db.VarChar(200)
+  retiredStudentRemark    String?   @map("student_remark") @ignore @db.VarChar(200)
   actualDurationSeconds   BigInt    @map("actual_duration_seconds")
   pausedDurationSeconds   BigInt    @map("paused_duration_seconds")
   creditedDurationSeconds BigInt    @map("credited_duration_seconds")
@@ -1512,26 +1512,26 @@ model AccountRecoveryChallenge {
 }
 
 model EmailVerificationChallenge {
-  id                         String    @id @db.Uuid
-  organizationId             String    @map("organization_id") @db.Uuid
-  userId                     String    @map("user_id") @db.Uuid
-  mode                       String    @db.VarChar(16)
-  locale                     String    @db.VarChar(16)
-  targetEmail                String    @map("target_email") @db.VarChar(254)
-  targetEmailNormalized      String    @map("target_email_normalized") @db.VarChar(254)
-  currentEmailCodeDigest     String?   @map("current_email_code_digest") @db.Char(64)
-  newEmailCodeDigest         String    @map("new_email_code_digest") @db.Char(64)
-  codeKeyVersion             Int       @map("code_key_version")
-  status                     String    @db.VarChar(24)
-  failedAttempts             Int       @default(0) @map("failed_attempts")
-  maxAttempts                Int       @map("max_attempts")
-  expectedUserVersion        Int       @map("expected_user_version")
-  requestedAt                DateTime  @map("requested_at") @db.Timestamptz(6)
-  deliveredAt                DateTime? @map("delivered_at") @db.Timestamptz(6)
-  expiresAt                  DateTime  @map("expires_at") @db.Timestamptz(6)
-  consumedAt                 DateTime? @map("consumed_at") @db.Timestamptz(6)
-  requestId                  String    @map("request_id") @db.VarChar(64)
-  version                    Int       @default(1)
+  id                     String    @id @db.Uuid
+  organizationId         String    @map("organization_id") @db.Uuid
+  userId                 String    @map("user_id") @db.Uuid
+  mode                   String    @db.VarChar(16)
+  locale                 String    @db.VarChar(16)
+  targetEmail            String    @map("target_email") @db.VarChar(254)
+  targetEmailNormalized  String    @map("target_email_normalized") @db.VarChar(254)
+  currentEmailCodeDigest String?   @map("current_email_code_digest") @db.Char(64)
+  newEmailCodeDigest     String    @map("new_email_code_digest") @db.Char(64)
+  codeKeyVersion         Int       @map("code_key_version")
+  status                 String    @db.VarChar(24)
+  failedAttempts         Int       @default(0) @map("failed_attempts")
+  maxAttempts            Int       @map("max_attempts")
+  expectedUserVersion    Int       @map("expected_user_version")
+  requestedAt            DateTime  @map("requested_at") @db.Timestamptz(6)
+  deliveredAt            DateTime? @map("delivered_at") @db.Timestamptz(6)
+  expiresAt              DateTime  @map("expires_at") @db.Timestamptz(6)
+  consumedAt             DateTime? @map("consumed_at") @db.Timestamptz(6)
+  requestId              String    @map("request_id") @db.VarChar(64)
+  version                Int       @default(1)
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict, map: "email_verification_challenges_organization_fkey")
   user         User         @relation(fields: [userId, organizationId], references: [id, organizationId], onDelete: Restrict, map: "email_verification_challenges_user_fkey")
@@ -1784,21 +1784,23 @@ model FeedbackEvent {
 }
 
 model ExemptionApplication {
-  id              String    @id @db.Uuid
-  organizationId  String    @map("organization_id") @db.Uuid
-  semesterId      String    @map("semester_id") @db.Uuid
-  studentId       String    @map("student_id") @db.Uuid
-  enrollmentId    String    @map("enrollment_id") @db.Uuid
-  classSectionId  String    @map("class_section_id") @db.Uuid
-  applicationType String    @map("application_type") @db.VarChar(32)
-  reason          String    @db.VarChar(1000)
-  status          String    @db.VarChar(24)
-  publicComment   String?   @map("public_comment") @db.VarChar(1000)
-  submittedAt     DateTime? @map("submitted_at") @db.Timestamptz(6)
-  decidedAt       DateTime? @map("decided_at") @db.Timestamptz(6)
-  createdAt       DateTime  @map("created_at") @db.Timestamptz(6)
-  updatedAt       DateTime  @map("updated_at") @db.Timestamptz(6)
-  version         Int       @default(1)
+  id                 String    @id @db.Uuid
+  organizationId     String    @map("organization_id") @db.Uuid
+  semesterId         String    @map("semester_id") @db.Uuid
+  studentId          String    @map("student_id") @db.Uuid
+  enrollmentId       String    @map("enrollment_id") @db.Uuid
+  classSectionId     String    @map("class_section_id") @db.Uuid
+  applicationType    String    @map("application_type") @db.VarChar(32)
+  applicationSubtype String?   @map("application_subtype") @db.VarChar(32)
+  organizationName   String?   @map("organization_name") @db.VarChar(128)
+  reason             String    @db.VarChar(1000)
+  status             String    @db.VarChar(24)
+  publicComment      String?   @map("public_comment") @db.VarChar(1000)
+  submittedAt        DateTime? @map("submitted_at") @db.Timestamptz(6)
+  decidedAt          DateTime? @map("decided_at") @db.Timestamptz(6)
+  createdAt          DateTime  @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime  @map("updated_at") @db.Timestamptz(6)
+  version            Int       @default(1)
 
   organization Organization                @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   semester     Semester                    @relation(fields: [semesterId, organizationId], references: [id, organizationId], onDelete: Restrict)
