@@ -17,7 +17,7 @@
 | `UserPreferences` | locale、pushEnabled、emailEnabled、version | 本地集成本人读取和按 `expectedVersion` 修改；不扩大到他人 |
 | `HelpArticle` | category、locale、title、bodyMarkdown、publishedAt、version | 本地只读已发布且到达发布时间的安全内容；没有管理端发布/编辑 operation |
 | `Feedback` | category、content、status、publicReply、version | 本地集成创建/列表/详情；非管理员只读本人，管理员只读本组织；处理/回复 mutation 未开放 |
-| `ExemptionApplication` | studentId、enrollmentId、classSectionId、applicationType、reason、mediaIds、status、publicComment、version | 已实现本人草稿/更新/提交、责任教师审核和 ADMIN 组织内只读；附件必须为同 Enrollment 的私有 EXEMPTION_APPLICATION 媒体 |
+| `ExemptionApplication` | studentId、enrollmentId、classSectionId、applicationType、applicationSubtype、organizationName、reason、mediaIds、status、publicComment、version | 已实现本人草稿/更新/提交、责任教师审核和 ADMIN 组织内只读；subtype 无损区分 800/1000 米、校队/社团，组织名称独立保存；附件必须为同 Enrollment 的私有 EXEMPTION_APPLICATION 媒体 |
 | `AppReleasePolicy` | platform、minimumSupportedVersion、latestVersion、minimumSupportedBuildNumber、latestBuildNumber、enforcement、effectiveAt、policyVersion | iOS 只按数字 build 比较；营销版本仅展示。无有效政策返回稳定 503；发布/灰度管理流程仍未开放 |
 | `SportCatalogItem` / `ActivityConversionRule` | sportType；activityType、unit、ruleVersion、status | `SportCatalogItem` 已有表结构，`ActivityConversionRule` 仍只有 transport 结构；2 个 HTTP operation 均 default deny，不得形成第二套 ScoreRule |
 | `StudentSignInChallenge` / `AccountRecoveryChallenge` / `AuthRateLimitFact` | organizationCode 解析后的 organizationId、challenge digest、channel、expiry、attempt、consumption、durable rate facts | 4 个公开 operation 已本地实现；STUDENT 仅 OTP，找回仅 TEACHER/ADMIN；无真实 provider 时非 test 环境 fail closed |
@@ -814,7 +814,7 @@
 | 旧 `ContactStatusResponse` 与 send/verify code DTO | Android | 已退役联系方式绑定流程 | `EmailVerificationChallenge` 与 `/me/email-verification-challenges` | Android 迁移到正式邮箱 challenge；旧手机号 DTO 删除 | ADR-101 已落地 |
 | `LoginResponse.token`、CourseJoin session/token | Android | 登录会话凭证 | 待 DeviceSession/Token 对象或认证服务合同 | token 永不落业务表/普通日志；阶段 8 冻结 | 待模型 |
 | `RecoveryRequest*` | Android/Web admin | 联系方式失效后的账户恢复申请 | 待 AccountRecoveryRequest 对象 | 保留申请/审核历史；不得转成 AuditLog 代替领域状态 | 待模型 |
-| `Exemption.*`、`ExemptionStatus/Type` | Android/Web teacher | 免测、校队/社团认证混合 | 待 ExemptionApplication/OrganizationCertification 对象 | 按用途拆分；proofFiles 迁 MediaEvidence；当前状态不丢失 | 待模型 |
+| `Exemption.*`、`ExemptionStatus/Type` | Android/Web teacher | 免测、校队/社团认证混合 | `ExemptionApplication.applicationType/applicationSubtype/organizationName` | 800/1000 米及校队/社团映射为结构化 subtype；proofFiles 迁 MediaEvidence；旧记录 subtype 为 null，不猜测回填 | ADR-104 已落地；认证抵扣结果仍由后续成绩域决策处理 |
 | `StudentNotice/NotificationResponse`、AdminNotification | Android/Web admin | App 内业务消息/公告 | `Notification` | Stage 21 本地支持本人列表/已读；尚无业务通知生产者或推送投递 | 本地集成，生产未验收 |
 | `PushDeviceRegistrationRequest` | Android | FCM 设备地址 | 待 PushDevice 对象 | token 为 HIGHLY_SENSITIVE；与 User/DeviceSession 关联 | 待模型 |
 | `FeedbackTicket/SupportTicket/replies` | Android/Web admin | 服务反馈/工单 | `Feedback`（仅当前创建/查询投影） | Stage 21 未实现线程、附件、回复 mutation 或处理 SLA；不得把当前单条反馈扩张为完整工单系统 | 部分本地集成 |

@@ -173,7 +173,7 @@ describe('Stage 15 MediaEvidence contract', () => {
     assert.match(String(initiate.description), /No location permission or GPS data is required/);
   });
 
-  it('keeps 123 total operations and exactly five MediaEvidence operations', () => {
+  it('keeps 126 total operations and exactly five MediaEvidence operations', () => {
     const operations: JsonObject[] = [];
     const methods = new Set(['get', 'post', 'put', 'patch', 'delete', 'options', 'head']);
     for (const pathItem of Object.values(object(contract.paths, 'paths'))) {
@@ -183,7 +183,7 @@ describe('Stage 15 MediaEvidence contract', () => {
         if (typeof operation.operationId === 'string') operations.push(operation);
       }
     }
-    assert.equal(operations.length, 123);
+    assert.equal(operations.length, 126);
     assert.equal(
       operations.filter(
         (operation) =>

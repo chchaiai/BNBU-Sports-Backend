@@ -240,6 +240,16 @@ export class CreateExemptionApplicationRequestDto {
   @IsIn(['PHYSICAL_TEST', 'EXERCISE_CHECK_IN', 'SPECIAL_CIRCUMSTANCE'])
   applicationType!: string;
 
+  @ValidateIf((_object, value: unknown) => value !== undefined)
+  @IsIn(['RUN_800M', 'RUN_1000M', 'SCHOOL_TEAM', 'STUDENT_CLUB', 'SPECIAL_CIRCUMSTANCE'])
+  applicationSubtype?: string;
+
+  @ValidateIf((_object, value: unknown) => value !== undefined && value !== null)
+  @Transform(trim)
+  @IsString()
+  @Length(1, 128)
+  organizationName?: string | null;
+
   @Transform(trim)
   @IsString()
   @Length(1, 1000)
@@ -252,6 +262,16 @@ export class CreateExemptionApplicationRequestDto {
 }
 
 export class UpdateExemptionApplicationRequestDto {
+  @ValidateIf((_object, value: unknown) => value !== undefined)
+  @IsIn(['RUN_800M', 'RUN_1000M', 'SCHOOL_TEAM', 'STUDENT_CLUB', 'SPECIAL_CIRCUMSTANCE'])
+  applicationSubtype?: string;
+
+  @ValidateIf((_object, value: unknown) => value !== undefined && value !== null)
+  @Transform(trim)
+  @IsString()
+  @Length(1, 128)
+  organizationName?: string | null;
+
   @ValidateIf((_object, value: unknown) => value !== undefined)
   @Transform(trim)
   @IsString()

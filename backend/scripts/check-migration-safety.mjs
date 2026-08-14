@@ -28,6 +28,7 @@ const expectedMigrationDirectories = [
   '0014_email_only_auth',
   '0015_email_verification_fk_alignment',
   '0016_optional_course_exercise_description',
+  '0017_exemption_application_details',
 ];
 
 if (
@@ -617,6 +618,25 @@ for (const invariant of [
     throw new Error(`0015_email_verification_fk_alignment: missing invariant ${invariant}`);
   }
 }
+const exemptionApplicationDetails = migrations.find(
+  ({ migrationId }) => migrationId === '0017_exemption_application_details',
+);
+if (exemptionApplicationDetails === undefined) {
+  throw new Error('0017_exemption_application_details: migration is missing');
+}
+for (const invariant of [
+  'application_subtype',
+  'organization_name',
+  'exemption_applications_detail_check',
+  "'RUN_800M'",
+  "'RUN_1000M'",
+  "'SCHOOL_TEAM'",
+  "'STUDENT_CLUB'",
+]) {
+  if (!exemptionApplicationDetails.sql.includes(invariant)) {
+    throw new Error(`0017_exemption_application_details: missing invariant ${invariant}`);
+  }
+}
 for (const invariant of [
   'exercise_records_description_check',
   'exercise_records_description_by_credit_type_check',
@@ -639,5 +659,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through optional course exercise descriptions)\n',
+  'Migration safety: PASS (forward-only Foundation through structured exemption application details)\n',
 );

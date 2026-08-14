@@ -6,13 +6,13 @@
 
 ## 当前事实
 
-Android 工程路径为 `BNBU-Sports-Android-master/`。当前代码使用 BuildConfig + OkHttp + Gson，但 debug 默认旧 `http://123.207.5.70:3334/api`，endpoint/DTO 仍是旧合同；只保存一个 bearer token；mutation 每次自动生成新 Idempotency-Key；旧 `/upload/proof` multipart 返回 URL/cosKey；本地 Session/Score/Mock 仍可能承担业务事实。
+Android 工程路径为 `BNBU-Sports-Android-master/`。当前代码已建立 `/api/v1` BuildConfig、OkHttp/Auth、Session、Media、Record 和学生工作区 gateway，并在构建时从精确绑定的 Contract 1.5 快照生成 Kotlin model。快照版本、SHA-256 和 operation count 由 `app/openapi/contract.properties` 校验，根 monorepo 还会检查该快照与权威 OpenAPI 字节一致。
 
 这些是第一阶段要建立隔离与迁移底座的差距，不授权一次性重写全部页面。
 
 ## 当前任务
 
-只在 Android 目录建立 generated Kotlin model、哈希绑定、三环境 BuildConfig、统一 OkHttp transport、Auth/refresh/logout、安全 Token 存储、错误/requestId、幂等/版本、Mock 隔离、local smoke 和日志脱敏。
+下一阶段只验证真实 private Pre-Staging 链路：Auth/refresh、QR 入班、Session、Media、Record、同一 `recordId` 的教师审核和学生回读。不得为联调重新引入旧路由、旧 multipart `/upload/proof`、第二份 DTO 或 Staging/Production Mock fallback。
 
 ## 禁止范围
 
@@ -20,6 +20,8 @@ Android 工程路径为 `BNBU-Sports-Android-master/`。当前代码使用 Build
 - 不接完所有业务页面，不改变 UI 业务流程。
 - 不连接旧远程 API、未知数据库或真实数据。
 - 不把 staging/production、Export 或跨端联调写成完成。
+- Contract 1.5 允许 `COURSE_RELATED` Record 的 `description` 为 null；`GENERAL` 仍由后端强制要求描述。
+- 客户端不得请求 GPS 权限或采集坐标；图片证据必须继续可用，WebM 支持不替代图片路径。
 - 不 push，不创建 PR。
 
 ## 本地联调

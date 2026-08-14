@@ -1,5 +1,7 @@
 # Stage 21 合同更新提示
 
+> 历史阶段提示：本文件记录 Stage 21 当时的 1.2.0 合同，不是当前客户端生成输入。当前绑定请使用 `CONTRACT-1.5.0-HANDOFF.md` 与 `client-contract-baseline.json`。
+
 日期：2026-08-06。
 
 `client-backend-integration-v1` 是绑定旧 OpenAPI `1.0.0-contract`、92 operations 和 SHA-256 `1171cb76a485911ef44f5df9fc65f99ad5cbb9f7ab9d6a4e0d479c06eb4dad8c` 的不可变历史包。它不包含本阶段新增的客户端能力和 GPS operation，不能继续作为这些功能的生成输入。

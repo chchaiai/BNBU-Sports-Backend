@@ -85,12 +85,12 @@ describe('authoritative OpenAPI contract', () => {
       }
     };
     visit(contract);
-    assert.equal(referenceCount, 1_732);
+    assert.equal(referenceCount, 1_778);
 
     const operations = collectOperations(contract);
-    assert.equal(operations.length, 123);
-    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 123);
-    assert.equal(Object.keys(operationPolicies).length, 123);
+    assert.equal(operations.length, 126);
+    assert.equal(new Set(operations.map(({ operationId }) => operationId)).size, 126);
+    assert.equal(Object.keys(operationPolicies).length, 126);
     for (const { operationId, policy } of operations) {
       assert.equal(policy.defaultDeny, true);
       assert.equal(typeof policy.policyId, 'string');
@@ -102,6 +102,7 @@ describe('authoritative OpenAPI contract', () => {
     const bindings: [object, string, OperationId][] = [
       [HealthController.prototype, 'live', 'getHealthLive'],
       [HealthController.prototype, 'ready', 'getHealthReady'],
+      [HealthController.prototype, 'admin', 'getAdminHealth'],
       [SystemModeController.prototype, 'getSystemMode', 'getSystemMode'],
       [OrganizationsController.prototype, 'current', 'getCurrentOrganization'],
       [SemestersController.prototype, 'current', 'getCurrentSemester'],

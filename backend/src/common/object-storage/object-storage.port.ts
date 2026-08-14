@@ -14,6 +14,7 @@ export interface PutPrivateObjectResult {
 }
 
 export interface ObjectStoragePort {
+  checkHealth(): Promise<void>;
   putPrivateObject(input: PutPrivateObjectInput): Promise<PutPrivateObjectResult>;
   getPrivateObject(storageKey: string): Promise<Readable>;
   deletePrivateObject(storageKey: string): Promise<void>;

@@ -178,6 +178,31 @@ describe('ExerciseReview HTTP E2E', () => {
     const teacher = await login(fixture.teacherEmail);
     const now = new Date();
     const mediaId = uuidv7();
+    const scoreRule = await prisma.scoreRule.create({
+      data: {
+        id: uuidv7(),
+        organizationId: fixture.organizationId,
+        classSectionId: fixture.teacherAActiveSectionId,
+        semesterId: fixture.semesterId,
+        ruleCode: 'REVIEW_FLOW_20H',
+        ruleVersion: 1,
+        displayName: 'Synthetic review flow 20 hour rule',
+        totalRequiredSeconds: 72_000n,
+        calculationDefinition: {
+          formulaType: 'LINEAR_CAPPED',
+          maximumScore: 100,
+          categoryAllocationMode: 'TOTAL_ONLY',
+        },
+        roundingMode: 'HALF_UP',
+        roundingScale: 2,
+        status: 'ACTIVE',
+        createdBy: fixture.adminUserId,
+        submittedAt: now,
+        activatedAt: now,
+        createdAt: now,
+        updatedAt: now,
+      },
+    });
     await prisma.mediaEvidence.create({
       data: {
         id: mediaId,
@@ -239,6 +264,12 @@ describe('ExerciseReview HTTP E2E', () => {
     );
     assert.equal(valid.status, 201);
     assert.equal(object(valid.body.data).reviewVersion, 2);
+    const createdScore = await prisma.studentScore.findFirstOrThrow({
+      where: { studentId: seeded.studentId },
+      include: { currentWorkingRevision: true },
+    });
+    assert.equal(createdScore.currentWorkingRevision?.scoreRuleId, scoreRule.id);
+    assert.equal(createdScore.currentWorkingRevision?.totalValidCreditedSeconds, 3600n);
 
     const history = await request(
       `/api/v1/exercise-records/${seeded.recordId}/reviews?limit=10`,
@@ -288,6 +319,11 @@ describe('ExerciseReview HTTP E2E', () => {
     assert.equal(record.version, 5);
     assert.equal(record.actualDurationSeconds, 3600n);
     assert.equal(record.creditedDurationSeconds, 3600n);
+    const recalculatedScore = await prisma.studentScore.findFirstOrThrow({
+      where: { studentId: seeded.studentId },
+      include: { currentWorkingRevision: true },
+    });
+    assert.equal(recalculatedScore.currentWorkingRevision?.totalValidCreditedSeconds, 0n);
 
     const student = await studentToken(seeded.studentUserId);
     const studentProjection = await request(

@@ -18,6 +18,7 @@
 8. GPS 原始经纬度只允许进入用途绑定的加密存储，不得进入公共 projection、日志、AuditLog、Outbox、通知或成绩事实；轨迹摘要必须按 ExerciseRecord 校验学生本人、责任教师或本组织管理员范围，并且只返回同一粗化投影。
 9. 只有本组织 ADMIN 具备未来位置政策 mutation 的角色资格；当前 6 个位置 HTTP route 均 default deny。管理员不能据此代行教师审核。
 10. 在同意/撤回、采样、精度、保留、删除、密钥托管/轮换、审计、异常检测和 Production Gate 全部批准前，`collectionEnabled` 不得成为有效生产事实；GPS 本地基础不能被描述为生产开放。
+11. 免测申请按 ADR-104 使用结构化明细：更新后的客户端发送时，`PHYSICAL_TEST` 只接受 `RUN_800M/RUN_1000M` 且无组织名称；`EXERCISE_CHECK_IN` 只接受 `SCHOOL_TEAM/STUDENT_CLUB` 且必须有 1..128 字组织名称；`SPECIAL_CIRCUMSTANCE` 使用同名 subtype。三项同时省略仅作为既有 Contract 1.5 客户端兼容路径并投影为 legacy null，不能部分省略。前两类提交审核前至少有一份 AVAILABLE 私有材料，客户端不得把 subtype 或组织名拼入 `reason` 代替结构化字段。
 
 ## 1. 适用范围与冲突优先级
 

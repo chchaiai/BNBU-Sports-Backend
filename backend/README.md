@@ -69,15 +69,18 @@ Course Catalog、ClassSection Management、Teaching Structure、Enrollment/QR Jo
 完整步骤、Windows/macOS/Linux 命令和故障排查见 [`docs/local-runbook.md`](docs/local-runbook.md)。最短流程如下：
 
 ```powershell
-Copy-Item .env.example .env
-# 替换 .env 中每一个 CHANGE_ME；只使用合成的本地凭证和数据
-npm ci
-docker compose --env-file .env up -d postgres minio minio-init
-npm run db:generate
-npm run db:migrate:deploy
-npm run db:seed:local
-npm run start:dev
+# 从 monorepo 根目录执行；初始化脚本不会覆盖已有 backend/.env。
+npm run bootstrap
+npm run local:env:init
+npm run local:env:check
+docker compose --env-file backend/.env -f backend/docker-compose.yml up -d
+npm --prefix backend run db:generate
+npm --prefix backend run db:migrate:deploy
+npm --prefix backend run db:seed:local
+npm --prefix backend run start:dev
 ```
+
+Compose 会同时启动 PostgreSQL、MinIO、MinIO 初始化任务和 Mailpit；Mailpit UI 位于 `http://127.0.0.1:8025`。生成和启动前都会校验 `IDEMPOTENCY_LEASE < IDEMPOTENCY_RETENTION`、`QR_JOIN_SECRET_REPLAY_SECONDS >= IDEMPOTENCY_RETENTION` 与 `JOIN_CAPABILITY_TTL_SECONDS < COURSE_INVITE_TTL_SECONDS`。
 
 应用启动不会自动执行 migration。local/development 环境可访问 `/api/docs`；Swagger 只展示权威合同的生成副本，不是新合同源。
 

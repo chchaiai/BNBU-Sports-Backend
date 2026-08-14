@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 import { OperationPolicy } from '../../common/policy/operation-policy.decorator.js';
-import { HealthService, type HealthStatus } from './health.service.js';
+import { type AdminHealthStatus, HealthService, type HealthStatus } from './health.service.js';
 
 @Controller('health')
 export class HealthController {
@@ -17,5 +17,11 @@ export class HealthController {
   @OperationPolicy('getHealthReady')
   ready(): Promise<HealthStatus> {
     return this.health.ready();
+  }
+
+  @Get('admin')
+  @OperationPolicy('getAdminHealth')
+  admin(): Promise<AdminHealthStatus> {
+    return this.health.admin();
   }
 }

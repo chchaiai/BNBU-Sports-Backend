@@ -81,6 +81,11 @@ export const foundationMigrations = [
     sha256: '7e7292a85b086a830b84c52eebc1bd63d967775165aafb779346d3c2e85291ef',
     destructive: false,
   },
+  {
+    migrationId: '0017_exemption_application_details',
+    sha256: '1f04f19f20c0a13006779d11c2bddb643650463e3051eed8c3e6a14e5730f959',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -99,3 +104,4 @@ export const productionRateLimitsMigration = foundationMigrations[12];
 export const emailOnlyAuthMigration = foundationMigrations[13];
 export const emailVerificationFkAlignmentMigration = foundationMigrations[14];
 export const optionalCourseExerciseDescriptionMigration = foundationMigrations[15];
+export const exemptionApplicationDetailsMigration = foundationMigrations[16];

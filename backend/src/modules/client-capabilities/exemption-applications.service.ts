@@ -50,6 +50,11 @@ export interface ExemptionApplicationProjection {
   version: number;
 }
 
+export interface StructuredExemptionApplicationProjection extends ExemptionApplicationProjection {
+  applicationSubtype: string | null;
+  organizationName: string | null;
+}
+
 @Injectable()
 export class ExemptionApplicationsService {
   constructor(
@@ -67,6 +72,21 @@ export class ExemptionApplicationsService {
     principal: AuthenticatedPrincipal,
     input: ExemptionApplicationListQueryDto,
   ): Promise<PagedResult<ExemptionApplicationProjection>> {
+    return this.listProjected(principal, input, (row) => this.project(row));
+  }
+
+  async listStructured(
+    principal: AuthenticatedPrincipal,
+    input: ExemptionApplicationListQueryDto,
+  ): Promise<PagedResult<StructuredExemptionApplicationProjection>> {
+    return this.listProjected(principal, input, (row) => this.projectStructured(row));
+  }
+
+  private async listProjected<T>(
+    principal: AuthenticatedPrincipal,
+    input: ExemptionApplicationListQueryDto,
+    project: (row: ApplicationRow) => T,
+  ): Promise<PagedResult<T>> {
     const binding = {
       resource: 'EXEMPTION_APPLICATION' as const,
       organizationId: principal.organizationId,
@@ -99,17 +119,14 @@ export class ExemptionApplicationsService {
     const hasMore = rows.length > input.limit;
     const page = hasMore ? rows.slice(0, input.limit) : rows;
     const last = page.at(-1);
-    return pagedResult(
-      page.map((row) => this.project(row)),
-      {
-        nextCursor:
-          hasMore && last !== undefined
-            ? this.cursors.encode(binding, { value: last.createdAt.toISOString(), id: last.id })
-            : null,
-        hasMore,
-        limit: input.limit,
-      },
-    );
+    return pagedResult(page.map(project), {
+      nextCursor:
+        hasMore && last !== undefined
+          ? this.cursors.encode(binding, { value: last.createdAt.toISOString(), id: last.id })
+          : null,
+      hasMore,
+      limit: input.limit,
+    });
   }
 
   async get(
@@ -146,6 +163,15 @@ export class ExemptionApplicationsService {
         requestId: facts.requestId,
       },
       async (transaction) => {
+        if (
+          !this.hasValidApplicationDetails(
+            input.applicationType,
+            input.applicationSubtype,
+            input.organizationName,
+          )
+        ) {
+          return this.idempotency.failure(this.applicationDetailsFailure());
+        }
         const enrollment = await transaction.enrollment.findFirst({
           where: {
             id: input.enrollmentId,
@@ -176,6 +202,8 @@ export class ExemptionApplicationsService {
             enrollmentId: enrollment.id,
             classSectionId: enrollment.classSectionId,
             applicationType: input.applicationType,
+            applicationSubtype: input.applicationSubtype ?? null,
+            organizationName: input.organizationName ?? null,
             reason: input.reason,
             status: 'DRAFT',
             createdAt: now,
@@ -229,8 +257,29 @@ export class ExemptionApplicationsService {
         if (current.status !== 'DRAFT' && current.status !== 'SUPPLEMENT_REQUIRED') {
           return this.transitionFailure();
         }
-        if (input.reason === undefined && input.mediaIds === undefined) {
+        if (
+          input.applicationSubtype === undefined &&
+          input.organizationName === undefined &&
+          input.reason === undefined &&
+          input.mediaIds === undefined
+        ) {
           return this.idempotency.failure(new ApplicationError('VALIDATION_FAILED', 422));
+        }
+        const applicationSubtype = input.applicationSubtype ?? current.applicationSubtype;
+        const organizationName =
+          input.organizationName === undefined ? current.organizationName : input.organizationName;
+        const detailsChanged =
+          input.applicationSubtype !== undefined || input.organizationName !== undefined;
+        if (
+          detailsChanged &&
+          (applicationSubtype === null ||
+            !this.hasValidApplicationDetails(
+              current.applicationType,
+              applicationSubtype,
+              organizationName,
+            ))
+        ) {
+          return this.idempotency.failure(this.applicationDetailsFailure());
         }
         if (input.mediaIds !== undefined) {
           const mediaFailure = await this.validateMedia(
@@ -247,6 +296,12 @@ export class ExemptionApplicationsService {
         const updated = await transaction.exemptionApplication.update({
           where: { id: current.id },
           data: {
+            ...(input.applicationSubtype === undefined
+              ? {}
+              : { applicationSubtype: input.applicationSubtype }),
+            ...(input.organizationName === undefined
+              ? {}
+              : { organizationName: input.organizationName }),
             ...(input.reason === undefined ? {} : { reason: input.reason }),
             updatedAt: now,
             version: { increment: 1 },
@@ -303,6 +358,15 @@ export class ExemptionApplicationsService {
         if (current.version !== expectedVersion) return this.versionFailure();
         if (current.status !== 'DRAFT' && current.status !== 'SUPPLEMENT_REQUIRED')
           return this.transitionFailure();
+        if (
+          (current.applicationType === 'PHYSICAL_TEST' ||
+            current.applicationType === 'EXERCISE_CHECK_IN') &&
+          current.media.length === 0
+        ) {
+          return this.idempotency.failure(
+            new ApplicationError('EXEMPTION_APPLICATION_MEDIA_INVALID', 422),
+          );
+        }
         const mediaFailure = await this.validateMedia(
           transaction,
           current.organizationId,
@@ -628,6 +692,54 @@ export class ExemptionApplicationsService {
       decidedAt: row.decidedAt?.toISOString() ?? null,
       version: row.version,
     };
+  }
+
+  private projectStructured(row: ApplicationRow): StructuredExemptionApplicationProjection {
+    return {
+      ...this.project(row),
+      applicationSubtype: row.applicationSubtype,
+      organizationName: row.organizationName,
+    };
+  }
+
+  private hasValidApplicationDetails(
+    applicationType: string,
+    applicationSubtype: string | undefined,
+    organizationName: string | null | undefined,
+  ): boolean {
+    if (applicationSubtype === undefined && organizationName === undefined) return true;
+    if (applicationSubtype === undefined || organizationName === undefined) return false;
+    if (applicationType === 'PHYSICAL_TEST') {
+      return (
+        (applicationSubtype === 'RUN_800M' || applicationSubtype === 'RUN_1000M') &&
+        organizationName === null
+      );
+    }
+    if (applicationType === 'EXERCISE_CHECK_IN') {
+      return (
+        (applicationSubtype === 'SCHOOL_TEAM' || applicationSubtype === 'STUDENT_CLUB') &&
+        typeof organizationName === 'string' &&
+        organizationName.length >= 1 &&
+        organizationName.length <= 128
+      );
+    }
+    return applicationType === 'SPECIAL_CIRCUMSTANCE' &&
+      applicationSubtype === 'SPECIAL_CIRCUMSTANCE'
+      ? organizationName === null
+      : false;
+  }
+
+  private applicationDetailsFailure(): ApplicationError {
+    return new ApplicationError('VALIDATION_FAILED', 422, {
+      fieldErrors: [
+        {
+          field: 'applicationSubtype',
+          code: 'INVALID',
+          i18nKey: 'error.validation.failed',
+          params: {},
+        },
+      ],
+    });
   }
 
   private references(

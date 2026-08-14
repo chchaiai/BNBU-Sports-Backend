@@ -42,6 +42,8 @@ export type ExemptionApplicationMinAggregateOutputType = {
   enrollmentId: string | null
   classSectionId: string | null
   applicationType: string | null
+  applicationSubtype: string | null
+  organizationName: string | null
   reason: string | null
   status: string | null
   publicComment: string | null
@@ -60,6 +62,8 @@ export type ExemptionApplicationMaxAggregateOutputType = {
   enrollmentId: string | null
   classSectionId: string | null
   applicationType: string | null
+  applicationSubtype: string | null
+  organizationName: string | null
   reason: string | null
   status: string | null
   publicComment: string | null
@@ -78,6 +82,8 @@ export type ExemptionApplicationCountAggregateOutputType = {
   enrollmentId: number
   classSectionId: number
   applicationType: number
+  applicationSubtype: number
+  organizationName: number
   reason: number
   status: number
   publicComment: number
@@ -106,6 +112,8 @@ export type ExemptionApplicationMinAggregateInputType = {
   enrollmentId?: true
   classSectionId?: true
   applicationType?: true
+  applicationSubtype?: true
+  organizationName?: true
   reason?: true
   status?: true
   publicComment?: true
@@ -124,6 +132,8 @@ export type ExemptionApplicationMaxAggregateInputType = {
   enrollmentId?: true
   classSectionId?: true
   applicationType?: true
+  applicationSubtype?: true
+  organizationName?: true
   reason?: true
   status?: true
   publicComment?: true
@@ -142,6 +152,8 @@ export type ExemptionApplicationCountAggregateInputType = {
   enrollmentId?: true
   classSectionId?: true
   applicationType?: true
+  applicationSubtype?: true
+  organizationName?: true
   reason?: true
   status?: true
   publicComment?: true
@@ -247,6 +259,8 @@ export type ExemptionApplicationGroupByOutputType = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype: string | null
+  organizationName: string | null
   reason: string
   status: string
   publicComment: string | null
@@ -288,6 +302,8 @@ export type ExemptionApplicationWhereInput = {
   enrollmentId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   classSectionId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   applicationType?: Prisma.StringFilter<"ExemptionApplication"> | string
+  applicationSubtype?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
+  organizationName?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
   reason?: Prisma.StringFilter<"ExemptionApplication"> | string
   status?: Prisma.StringFilter<"ExemptionApplication"> | string
   publicComment?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
@@ -314,6 +330,8 @@ export type ExemptionApplicationOrderByWithRelationInput = {
   enrollmentId?: Prisma.SortOrder
   classSectionId?: Prisma.SortOrder
   applicationType?: Prisma.SortOrder
+  applicationSubtype?: Prisma.SortOrderInput | Prisma.SortOrder
+  organizationName?: Prisma.SortOrderInput | Prisma.SortOrder
   reason?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publicComment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -344,6 +362,8 @@ export type ExemptionApplicationWhereUniqueInput = Prisma.AtLeast<{
   enrollmentId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   classSectionId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   applicationType?: Prisma.StringFilter<"ExemptionApplication"> | string
+  applicationSubtype?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
+  organizationName?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
   reason?: Prisma.StringFilter<"ExemptionApplication"> | string
   status?: Prisma.StringFilter<"ExemptionApplication"> | string
   publicComment?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
@@ -370,6 +390,8 @@ export type ExemptionApplicationOrderByWithAggregationInput = {
   enrollmentId?: Prisma.SortOrder
   classSectionId?: Prisma.SortOrder
   applicationType?: Prisma.SortOrder
+  applicationSubtype?: Prisma.SortOrderInput | Prisma.SortOrder
+  organizationName?: Prisma.SortOrderInput | Prisma.SortOrder
   reason?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publicComment?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -396,6 +418,8 @@ export type ExemptionApplicationScalarWhereWithAggregatesInput = {
   enrollmentId?: Prisma.UuidWithAggregatesFilter<"ExemptionApplication"> | string
   classSectionId?: Prisma.UuidWithAggregatesFilter<"ExemptionApplication"> | string
   applicationType?: Prisma.StringWithAggregatesFilter<"ExemptionApplication"> | string
+  applicationSubtype?: Prisma.StringNullableWithAggregatesFilter<"ExemptionApplication"> | string | null
+  organizationName?: Prisma.StringNullableWithAggregatesFilter<"ExemptionApplication"> | string | null
   reason?: Prisma.StringWithAggregatesFilter<"ExemptionApplication"> | string
   status?: Prisma.StringWithAggregatesFilter<"ExemptionApplication"> | string
   publicComment?: Prisma.StringNullableWithAggregatesFilter<"ExemptionApplication"> | string | null
@@ -409,6 +433,8 @@ export type ExemptionApplicationScalarWhereWithAggregatesInput = {
 export type ExemptionApplicationCreateInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -435,6 +461,8 @@ export type ExemptionApplicationUncheckedCreateInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -451,6 +479,8 @@ export type ExemptionApplicationUncheckedCreateInput = {
 export type ExemptionApplicationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -477,6 +507,8 @@ export type ExemptionApplicationUncheckedUpdateInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -498,6 +530,8 @@ export type ExemptionApplicationCreateManyInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -511,6 +545,8 @@ export type ExemptionApplicationCreateManyInput = {
 export type ExemptionApplicationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -529,6 +565,8 @@ export type ExemptionApplicationUncheckedUpdateManyInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -562,6 +600,8 @@ export type ExemptionApplicationCountOrderByAggregateInput = {
   enrollmentId?: Prisma.SortOrder
   classSectionId?: Prisma.SortOrder
   applicationType?: Prisma.SortOrder
+  applicationSubtype?: Prisma.SortOrder
+  organizationName?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publicComment?: Prisma.SortOrder
@@ -584,6 +624,8 @@ export type ExemptionApplicationMaxOrderByAggregateInput = {
   enrollmentId?: Prisma.SortOrder
   classSectionId?: Prisma.SortOrder
   applicationType?: Prisma.SortOrder
+  applicationSubtype?: Prisma.SortOrder
+  organizationName?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publicComment?: Prisma.SortOrder
@@ -602,6 +644,8 @@ export type ExemptionApplicationMinOrderByAggregateInput = {
   enrollmentId?: Prisma.SortOrder
   classSectionId?: Prisma.SortOrder
   applicationType?: Prisma.SortOrder
+  applicationSubtype?: Prisma.SortOrder
+  organizationName?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publicComment?: Prisma.SortOrder
@@ -876,6 +920,8 @@ export type ExemptionApplicationUpdateOneRequiredWithoutMediaNestedInput = {
 export type ExemptionApplicationCreateWithoutOrganizationInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -900,6 +946,8 @@ export type ExemptionApplicationUncheckedCreateWithoutOrganizationInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -950,6 +998,8 @@ export type ExemptionApplicationScalarWhereInput = {
   enrollmentId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   classSectionId?: Prisma.UuidFilter<"ExemptionApplication"> | string
   applicationType?: Prisma.StringFilter<"ExemptionApplication"> | string
+  applicationSubtype?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
+  organizationName?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
   reason?: Prisma.StringFilter<"ExemptionApplication"> | string
   status?: Prisma.StringFilter<"ExemptionApplication"> | string
   publicComment?: Prisma.StringNullableFilter<"ExemptionApplication"> | string | null
@@ -963,6 +1013,8 @@ export type ExemptionApplicationScalarWhereInput = {
 export type ExemptionApplicationCreateWithoutStudentInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -986,6 +1038,8 @@ export type ExemptionApplicationUncheckedCreateWithoutStudentInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1028,6 +1082,8 @@ export type ExemptionApplicationUpdateManyWithWhereWithoutStudentInput = {
 export type ExemptionApplicationCreateWithoutSemesterInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1051,6 +1107,8 @@ export type ExemptionApplicationUncheckedCreateWithoutSemesterInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1093,6 +1151,8 @@ export type ExemptionApplicationUpdateManyWithWhereWithoutSemesterInput = {
 export type ExemptionApplicationCreateWithoutClassSectionInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1115,6 +1175,8 @@ export type ExemptionApplicationUncheckedCreateWithoutClassSectionInput = {
   studentId: string
   enrollmentId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1157,6 +1219,8 @@ export type ExemptionApplicationUpdateManyWithWhereWithoutClassSectionInput = {
 export type ExemptionApplicationCreateWithoutEnrollmentInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1177,6 +1241,8 @@ export type ExemptionApplicationCreateWithoutEnrollmentInput = {
 export type ExemptionApplicationUncheckedCreateWithoutEnrollmentInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1219,6 +1285,8 @@ export type ExemptionApplicationUpdateManyWithWhereWithoutEnrollmentInput = {
 export type ExemptionApplicationCreateWithoutEventsInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1244,6 +1312,8 @@ export type ExemptionApplicationUncheckedCreateWithoutEventsInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1275,6 +1345,8 @@ export type ExemptionApplicationUpdateToOneWithWhereWithoutEventsInput = {
 export type ExemptionApplicationUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1300,6 +1372,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutEventsInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1315,6 +1389,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutEventsInput = {
 export type ExemptionApplicationCreateWithoutReviewsInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1340,6 +1416,8 @@ export type ExemptionApplicationUncheckedCreateWithoutReviewsInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1371,6 +1449,8 @@ export type ExemptionApplicationUpdateToOneWithWhereWithoutReviewsInput = {
 export type ExemptionApplicationUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1396,6 +1476,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutReviewsInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1411,6 +1493,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutReviewsInput = {
 export type ExemptionApplicationCreateWithoutMediaInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1436,6 +1520,8 @@ export type ExemptionApplicationUncheckedCreateWithoutMediaInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1467,6 +1553,8 @@ export type ExemptionApplicationUpdateToOneWithWhereWithoutMediaInput = {
 export type ExemptionApplicationUpdateWithoutMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1492,6 +1580,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutMediaInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1511,6 +1601,8 @@ export type ExemptionApplicationCreateManyOrganizationInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1524,6 +1616,8 @@ export type ExemptionApplicationCreateManyOrganizationInput = {
 export type ExemptionApplicationUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1548,6 +1642,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutOrganizationInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1568,6 +1664,8 @@ export type ExemptionApplicationUncheckedUpdateManyWithoutOrganizationInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1584,6 +1682,8 @@ export type ExemptionApplicationCreateManyStudentInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1597,6 +1697,8 @@ export type ExemptionApplicationCreateManyStudentInput = {
 export type ExemptionApplicationUpdateWithoutStudentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1620,6 +1722,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutStudentInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1639,6 +1743,8 @@ export type ExemptionApplicationUncheckedUpdateManyWithoutStudentInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1655,6 +1761,8 @@ export type ExemptionApplicationCreateManySemesterInput = {
   enrollmentId: string
   classSectionId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1668,6 +1776,8 @@ export type ExemptionApplicationCreateManySemesterInput = {
 export type ExemptionApplicationUpdateWithoutSemesterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1691,6 +1801,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutSemesterInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1710,6 +1822,8 @@ export type ExemptionApplicationUncheckedUpdateManyWithoutSemesterInput = {
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   classSectionId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1725,6 +1839,8 @@ export type ExemptionApplicationCreateManyClassSectionInput = {
   studentId: string
   enrollmentId: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1738,6 +1854,8 @@ export type ExemptionApplicationCreateManyClassSectionInput = {
 export type ExemptionApplicationUpdateWithoutClassSectionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1760,6 +1878,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutClassSectionInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1778,6 +1898,8 @@ export type ExemptionApplicationUncheckedUpdateManyWithoutClassSectionInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   enrollmentId?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1791,6 +1913,8 @@ export type ExemptionApplicationUncheckedUpdateManyWithoutClassSectionInput = {
 export type ExemptionApplicationCreateManyEnrollmentInput = {
   id: string
   applicationType: string
+  applicationSubtype?: string | null
+  organizationName?: string | null
   reason: string
   status: string
   publicComment?: string | null
@@ -1804,6 +1928,8 @@ export type ExemptionApplicationCreateManyEnrollmentInput = {
 export type ExemptionApplicationUpdateWithoutEnrollmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1824,6 +1950,8 @@ export type ExemptionApplicationUpdateWithoutEnrollmentInput = {
 export type ExemptionApplicationUncheckedUpdateWithoutEnrollmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1840,6 +1968,8 @@ export type ExemptionApplicationUncheckedUpdateWithoutEnrollmentInput = {
 export type ExemptionApplicationUncheckedUpdateManyWithoutEnrollmentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationType?: Prisma.StringFieldUpdateOperationsInput | string
+  applicationSubtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   publicComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1907,6 +2037,8 @@ export type ExemptionApplicationSelect<ExtArgs extends runtime.Types.Extensions.
   enrollmentId?: boolean
   classSectionId?: boolean
   applicationType?: boolean
+  applicationSubtype?: boolean
+  organizationName?: boolean
   reason?: boolean
   status?: boolean
   publicComment?: boolean
@@ -1934,6 +2066,8 @@ export type ExemptionApplicationSelectCreateManyAndReturn<ExtArgs extends runtim
   enrollmentId?: boolean
   classSectionId?: boolean
   applicationType?: boolean
+  applicationSubtype?: boolean
+  organizationName?: boolean
   reason?: boolean
   status?: boolean
   publicComment?: boolean
@@ -1957,6 +2091,8 @@ export type ExemptionApplicationSelectUpdateManyAndReturn<ExtArgs extends runtim
   enrollmentId?: boolean
   classSectionId?: boolean
   applicationType?: boolean
+  applicationSubtype?: boolean
+  organizationName?: boolean
   reason?: boolean
   status?: boolean
   publicComment?: boolean
@@ -1980,6 +2116,8 @@ export type ExemptionApplicationSelectScalar = {
   enrollmentId?: boolean
   classSectionId?: boolean
   applicationType?: boolean
+  applicationSubtype?: boolean
+  organizationName?: boolean
   reason?: boolean
   status?: boolean
   publicComment?: boolean
@@ -1990,7 +2128,7 @@ export type ExemptionApplicationSelectScalar = {
   version?: boolean
 }
 
-export type ExemptionApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "semesterId" | "studentId" | "enrollmentId" | "classSectionId" | "applicationType" | "reason" | "status" | "publicComment" | "submittedAt" | "decidedAt" | "createdAt" | "updatedAt" | "version", ExtArgs["result"]["exemptionApplication"]>
+export type ExemptionApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "semesterId" | "studentId" | "enrollmentId" | "classSectionId" | "applicationType" | "applicationSubtype" | "organizationName" | "reason" | "status" | "publicComment" | "submittedAt" | "decidedAt" | "createdAt" | "updatedAt" | "version", ExtArgs["result"]["exemptionApplication"]>
 export type ExemptionApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   semester?: boolean | Prisma.SemesterDefaultArgs<ExtArgs>
@@ -2037,6 +2175,8 @@ export type $ExemptionApplicationPayload<ExtArgs extends runtime.Types.Extension
     enrollmentId: string
     classSectionId: string
     applicationType: string
+    applicationSubtype: string | null
+    organizationName: string | null
     reason: string
     status: string
     publicComment: string | null
@@ -2483,6 +2623,8 @@ export interface ExemptionApplicationFieldRefs {
   readonly enrollmentId: Prisma.FieldRef<"ExemptionApplication", 'String'>
   readonly classSectionId: Prisma.FieldRef<"ExemptionApplication", 'String'>
   readonly applicationType: Prisma.FieldRef<"ExemptionApplication", 'String'>
+  readonly applicationSubtype: Prisma.FieldRef<"ExemptionApplication", 'String'>
+  readonly organizationName: Prisma.FieldRef<"ExemptionApplication", 'String'>
   readonly reason: Prisma.FieldRef<"ExemptionApplication", 'String'>
   readonly status: Prisma.FieldRef<"ExemptionApplication", 'String'>
   readonly publicComment: Prisma.FieldRef<"ExemptionApplication", 'String'>

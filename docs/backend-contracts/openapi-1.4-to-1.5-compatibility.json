@@ -7,14 +7,14 @@
   },
   "current": {
     "version": "1.5.0-contract",
-    "sha256": "f0b4916cb0abd1ec4057f690763de8d7e6f79ca2b7e666a8cd6f3d8c37c69bed",
-    "operationCount": 123
+    "sha256": "df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7",
+    "operationCount": 126
   },
   "compatible": true,
   "summary": {
     "breaking": 54,
     "reviewRequired": 0,
-    "nonBreaking": 11,
+    "nonBreaking": 17,
     "approvedExceptions": 54,
     "unapprovedBlockers": 0
   },
@@ -282,6 +282,86 @@
         ],
         "targetVersion": "1.5.0-contract"
       }
+    },
+    {
+      "id": "property-added-1908909463b5e388",
+      "kind": "PROPERTY_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "request",
+      "location": "PATCH /exemption-applications/{applicationId}/requestBody/application/json/properties/applicationSubtype",
+      "detail": "An optional property was added.",
+      "before": null,
+      "after": {
+        "type": "string",
+        "enum": [
+          "RUN_800M",
+          "RUN_1000M",
+          "SCHOOL_TEAM",
+          "STUDENT_CLUB",
+          "SPECIAL_CIRCUMSTANCE"
+        ],
+        "x-transport-constraint": true
+      },
+      "approvedException": null
+    },
+    {
+      "id": "property-added-2a03006f9f3de4b0",
+      "kind": "PROPERTY_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "request",
+      "location": "PATCH /exemption-applications/{applicationId}/requestBody/application/json/properties/organizationName",
+      "detail": "An optional property was added.",
+      "before": null,
+      "after": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "approvedException": null
+    },
+    {
+      "id": "property-added-b37be7dc9f0cf420",
+      "kind": "PROPERTY_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "request",
+      "location": "POST /exemption-applications/requestBody/application/json/properties/applicationSubtype",
+      "detail": "An optional property was added.",
+      "before": null,
+      "after": {
+        "type": "string",
+        "enum": [
+          "RUN_800M",
+          "RUN_1000M",
+          "SCHOOL_TEAM",
+          "STUDENT_CLUB",
+          "SPECIAL_CIRCUMSTANCE"
+        ],
+        "x-transport-constraint": true,
+        "description": "Updated Contract 1.5 clients send this field. RUN_800M/RUN_1000M require PHYSICAL_TEST; SCHOOL_TEAM/STUDENT_CLUB require EXERCISE_CHECK_IN; SPECIAL_CIRCUMSTANCE requires the matching applicationType. Omission is accepted only for backward-compatible legacy clients and persists null."
+      },
+      "approvedException": null
+    },
+    {
+      "id": "property-added-bc4db8bbd8ae4bad",
+      "kind": "PROPERTY_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "request",
+      "location": "POST /exemption-applications/requestBody/application/json/properties/organizationName",
+      "detail": "An optional property was added.",
+      "before": null,
+      "after": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "minLength": 1,
+        "maxLength": 128,
+        "description": "Updated Contract 1.5 clients send a name for SCHOOL_TEAM and STUDENT_CLUB and null otherwise. Omission is accepted only with an omitted applicationSubtype for backward-compatible legacy clients."
+      },
+      "approvedException": null
     },
     {
       "id": "property-removed-24b7355070b45b91",
@@ -893,6 +973,32 @@
       "before": null,
       "after": {
         "$ref": "#/components/responses/Conflict"
+      },
+      "approvedException": null
+    },
+    {
+      "id": "response-status-added-8c6140e97f4bd71c",
+      "kind": "RESPONSE_STATUS_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "response",
+      "location": "PATCH /exemption-applications/{applicationId}/responses/422",
+      "detail": "A response status was documented additively.",
+      "before": null,
+      "after": {
+        "$ref": "#/components/responses/UnprocessableEntity"
+      },
+      "approvedException": null
+    },
+    {
+      "id": "response-status-added-f94a97fe6c147e30",
+      "kind": "RESPONSE_STATUS_ADDED",
+      "classification": "NON_BREAKING",
+      "direction": "response",
+      "location": "POST /exemption-applications/{applicationId}/submit/responses/422",
+      "detail": "A response status was documented additively.",
+      "before": null,
+      "after": {
+        "$ref": "#/components/responses/UnprocessableEntity"
       },
       "approvedException": null
     },

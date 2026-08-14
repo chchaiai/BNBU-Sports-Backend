@@ -7253,6 +7253,8 @@ export const ExemptionApplicationScalarFieldEnum = {
   enrollmentId: 'enrollmentId',
   classSectionId: 'classSectionId',
   applicationType: 'applicationType',
+  applicationSubtype: 'applicationSubtype',
+  organizationName: 'organizationName',
   reason: 'reason',
   status: 'status',
   publicComment: 'publicComment',

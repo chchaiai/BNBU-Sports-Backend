@@ -42,6 +42,7 @@ const bindings = [
   ['/feedback', 'post', 'createFeedback'],
   ['/feedback', 'get', 'listFeedback'],
   ['/feedback/{feedbackId}', 'get', 'getFeedback'],
+  ['/exemption-application-details', 'get', 'listStructuredExemptionApplications'],
   ['/exemption-applications', 'get', 'listExemptionApplications'],
   ['/exemption-applications', 'post', 'createExemptionApplication'],
   ['/exemption-applications/{applicationId}', 'get', 'getExemptionApplication'],
@@ -179,7 +180,40 @@ describe('Stage 21 client capability contract', () => {
     ]);
   });
 
-  it('closes all 123 operations and reports the persisted subset separately from default deny', () => {
+  it('preserves exact exemption subtypes and the pre-authentication QR join sequence', () => {
+    const schemas = object(object(contract.components, 'components').schemas, 'schemas');
+    for (const schemaName of [
+      'StructuredExemptionApplication',
+      'CreateExemptionApplicationRequest',
+      'UpdateExemptionApplicationRequest',
+    ]) {
+      const properties = object(object(schemas[schemaName], schemaName).properties, 'properties');
+      assert.ok(Object.hasOwn(properties, 'applicationSubtype'));
+      assert.ok(Object.hasOwn(properties, 'organizationName'));
+    }
+    const createRequired = object(
+      schemas.CreateExemptionApplicationRequest,
+      'CreateExemptionApplicationRequest',
+    ).required as string[];
+    assert.equal(createRequired.includes('applicationSubtype'), false);
+    assert.equal(createRequired.includes('organizationName'), false);
+
+    const paths = object(contract.paths, 'paths');
+    const join = object(
+      object(paths['/course-invites/{inviteToken}/join'], 'join path').post,
+      'join operation',
+    );
+    assert.match(String(join.description), /PENDING_CONTACT_BINDING/u);
+    assert.deepEqual(join.security, [{ JoinCapability: [] }]);
+
+    const submitExemption = object(
+      object(paths['/exemption-applications/{applicationId}/submit'], 'submit path').post,
+      'submit operation',
+    );
+    assert.ok(Object.hasOwn(object(submitExemption.responses, 'submit responses'), '422'));
+  });
+
+  it('closes all 126 operations and reports the persisted subset separately from default deny', () => {
     const coverage = JSON.parse(
       readFileSync(new URL('../../runtime-coverage.manifest.json', import.meta.url), 'utf8'),
     ) as {
@@ -187,8 +221,8 @@ describe('Stage 21 client capability contract', () => {
       implemented: JsonObject;
       implementedDefaultDeny: string[];
     };
-    assert.equal(coverage.expectedOperationCount, 123);
-    assert.equal(Object.keys(coverage.implemented).length, 123);
+    assert.equal(coverage.expectedOperationCount, 126);
+    assert.equal(Object.keys(coverage.implemented).length, 126);
     assert.equal(coverage.implementedDefaultDeny.length, 17);
     for (const [, , operationId] of bindings) {
       assert.equal(

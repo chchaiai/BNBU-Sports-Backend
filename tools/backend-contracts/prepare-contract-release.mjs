@@ -145,6 +145,10 @@ Baseline: immutable \`1.4.0-contract\` SHA-256 \`${publishedHash}\`.
 - Adds byte-level WebM validation for browser-recorded exercise videos while retaining the 15-second maximum and mandatory video and audio tracks.
 - Clarifies that clients must not request GPS permission or collect coordinates for evidence upload. Recognized GPS, EXIF location, or container location metadata is rejected with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`.
 - Keeps SHA-256, declared MIME, actual container, duration, track, and size verification authoritative on the Backend.
+- Adds the ADMIN-only \`GET /health/admin\` projection for measured PostgreSQL, notification-outbox, roster-object-storage, and media-storage status without changing the public readiness response.
+- Clarifies that QR enrollment remains a pre-authentication capability flow: join returns a restricted \`PENDING_CONTACT_BINDING\` session, email verification activates that session, and protected student operations remain blocked until activation.
+- Adds lossless exemption application details for 800m, 1000m, school-team, student-club, and special-circumstance applications through additive request fields and \`GET /exemption-application-details\`, without changing the existing exemption response projection.
+- Publishes the repository-owned local integration initializer and checker required to create a secret-safe Backend environment for Android, iOS, and Web synthetic E2E.
 `;
 const migrationNotes = `# Contract 1.5.0 Migration Notes
 
@@ -152,15 +156,27 @@ const migrationNotes = `# Contract 1.5.0 Migration Notes
 
 iOS may generate and wire \`/api/v1\` types from this candidate handoff after its immutable SHA-256 is verified. Android and iOS must require a non-blank description for \`GENERAL\` records only; \`COURSE_RELATED\` may omit it. Web may upload a browser-produced \`video/webm\` file when it contains a video track, an audio track, and a trusted duration no greater than 15 seconds. MP4, MOV, and 3GP remain supported.
 
+Updated clients create exemption applications with both \`applicationSubtype\` and \`organizationName\`; legacy clients may omit both. Read exact structured details from \`GET /api/v1/exemption-application-details\`. The original \`/exemption-applications\` mutation and list responses intentionally keep their prior projection for compatibility. QR join remains bearer-free and capability-authorized; its restricted session must complete email verification before any protected student operation.
+
 No client is required or permitted by this contract to request location permission or collect coordinates for evidence. If a selected media file already contains recognized location metadata, Backend rejects it with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`; clients should ask the user to remove location metadata or capture a new file.
 
 ## Database
 
 Migration \`0016_optional_course_exercise_description\` makes \`exercise_records.description\` nullable and adds a database check that still requires a trimmed 1..200 character description for \`GENERAL\` rows. \`COURSE_RELATED\` rows may store null or a trimmed 1..200 character description. The migration is forward-only and must run before the application image.
 
+Migration \`0017_exemption_application_details\` adds nullable \`application_subtype\` and \`organization_name\` columns plus a database combination constraint. Null/null preserves legacy rows; new clients use the typed combinations defined by ADR-104. This forward-only migration must run before clients use the structured details endpoint.
+
+## Local integration
+
+Run \`npm run local:env:init\` from the monorepo root to generate a gitignored Backend environment with fresh synthetic-only secrets, then run \`npm run local:env:check\` before Docker Compose. Do not use templates containing \`CHANGE_ME\`, reuse production credentials, or log generated secrets.
+
 ## Media deployment
 
 No FFmpeg/WASM or upload-time transcoding service is introduced. Backend validates the original uploaded bytes. Media scanner, object storage, and HTTPS staging configuration remain deployment concerns and are not proven by this candidate package.
+
+## Operational health
+
+\`GET /api/v1/health/admin\` requires an ADMIN access token and returns safe dependency categories, latency, and notification backlog. The published \`/health/live\` and \`/health/ready\` projections remain unchanged. The administrator response never exposes endpoints, bucket credentials, storage keys, or signed URLs.
 `;
 const checklist = `# Contract 1.5.0 Post-Merge Release Checklist
 
@@ -190,7 +206,7 @@ const handoff = `# BNBU Sports Contract 1.5.0 Candidate Handoff
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This handoff authorizes neither location collection nor GPS permission requests. It adds original-byte WebM verification, not transcoding. Clients must retain photo evidence as a supported path and surface stable media validation errors.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This handoff authorizes neither location collection nor GPS permission requests. It adds original-byte WebM verification, not transcoding. Clients must retain photo evidence as a supported path and surface stable media validation errors. Updated clients use \`GET /api/v1/exemption-application-details\` for lossless exemption subtype and organization fields; QR join still completes email verification before the restricted session becomes active.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

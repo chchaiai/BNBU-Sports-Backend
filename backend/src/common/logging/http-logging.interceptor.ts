@@ -1,4 +1,5 @@
 import {
+  HttpException,
   Injectable,
   type CallHandler,
   type ExecutionContext,
@@ -23,11 +24,38 @@ export class HttpLoggingInterceptor implements NestInterceptor {
     const request = http.getRequest<FoundationRequest>();
     const response = http.getResponse<Response>();
     let errorCode: string | undefined;
+    let errorStatus: number | undefined;
 
     return next.handle().pipe(
       tap({
         error: (error: unknown) => {
-          errorCode = error instanceof ApplicationError ? error.code : 'SYSTEM_INTERNAL_ERROR';
+          if (error instanceof ApplicationError) {
+            errorCode = error.code;
+            errorStatus = error.status;
+            return;
+          }
+          if (error instanceof HttpException) {
+            const status = error.getStatus();
+            if (status === 404) {
+              errorCode = 'PERMISSION_RESOURCE_NOT_FOUND';
+              errorStatus = 404;
+            } else if (status === 401) {
+              errorCode = 'AUTH_REQUIRED';
+              errorStatus = 401;
+            } else if (status === 403) {
+              errorCode = 'PERMISSION_RESOURCE_SCOPE_DENIED';
+              errorStatus = 403;
+            } else if (status >= 400 && status < 500) {
+              errorCode = 'VALIDATION_FAILED';
+              errorStatus = 422;
+            } else {
+              errorCode = 'SYSTEM_INTERNAL_ERROR';
+              errorStatus = 500;
+            }
+            return;
+          }
+          errorCode = 'SYSTEM_INTERNAL_ERROR';
+          errorStatus = 500;
         },
       }),
       finalize(() => {
@@ -49,7 +77,9 @@ export class HttpLoggingInterceptor implements NestInterceptor {
               : `/api/v1/${operationPolicies[
                   request.operationId as keyof typeof operationPolicies
                 ].route.replace(/^\//, '')}`,
-          statusCode: response.statusCode,
+          // Exception filters run after interceptor finalization. Prefer the
+          // mapped error status so failure logs match the response on the wire.
+          statusCode: errorStatus ?? response.statusCode,
           durationMs: Math.round((performance.now() - startedAt) * 100) / 100,
           ...(errorCode === undefined ? {} : { errorCode }),
           outcome: errorCode === undefined ? 'SUCCEEDED' : 'FAILED',

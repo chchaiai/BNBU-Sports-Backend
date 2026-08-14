@@ -97,7 +97,7 @@ describe('Stage 18 Score contract', () => {
         ['get', 'post', 'put', 'patch', 'delete'].includes(method),
       ),
     );
-    assert.equal(operations.length, 123);
+    assert.equal(operations.length, 126);
   });
 
   it('freezes the fixed formula and rejects client-authored calculation facts', () => {

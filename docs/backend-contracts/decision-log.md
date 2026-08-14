@@ -109,6 +109,7 @@
 | ADR-099  | 学生打卡视频固定为 App 内有声录制，单条记录最多 1 个，累计实际录制最多 15 秒；暂停不计时；不设文件大小、分辨率、码率或源格式业务限制 | 负责人于 2026-08-09 明确以短时现场凭证替代旧 300 秒及视频大小/格式规则，并要求客户端压缩后上传 | MediaEvidence、Android 采集/压缩、OpenAPI、媒体校验 | 是 | 学生可暂停/继续或提前结束，达到 15 秒自动结束；相机和麦克风权限均为录像前置；客户端压缩成功后才上传；后端以真实媒体时长最终裁决，超过 15 秒返回 `MEDIA_VIDEO_DURATION_EXCEEDED`；图片、免测、反馈规则不变 | ACCEPTED   |
 | ADR-100  | 完成记录只收集一个运动说明；完成后仍可补拍照片或视频；当前保留的全部现场素材自动作为凭证，不提供勾选排除 | 负责人于 2026-08-11 要求统一课程相关与自主运动完成页，并消除客户端漏选已拍凭证的风险 | ExerciseRecord、MediaEvidence、Android 完成记录、OpenAPI | 是 | 凭证完整集合、`studentRemark` 移除和提交后冻结规则继续有效；“两类运动说明均必填”由 ADR-103 修订为仅自主运动必填 | SUPERSEDED |
 | ADR-103  | 自主运动说明必填、课程运动说明可选；打卡视频增加原始 WebM 校验；上传凭证不要求 GPS，识别到位置元数据时拒绝 | iOS 与 Web 首轮联调发现说明规则、定位语义和浏览器容器能力存在跨端差异，且已发布 1.4 合同必须保持不可变 | ExerciseRecord、MediaEvidence、iOS/Web/Android 合同、OpenAPI、0016 migration | 是 | `GENERAL.description` trim 后 1..200；`COURSE_RELATED.description` 可省略或为 null；后端接受并按字节校验 MP4/MOV/3GP/WebM，视频仍须有画面、有声音且不超过 15 秒；客户端不得为上传凭证申请定位权限或采集坐标，识别到 GPS/EXIF/容器位置元数据返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED` | ACCEPTED   |
+| ADR-104  | 免测申请保留泛化 `applicationType`，新增结构化 `applicationSubtype` 与 `organizationName`；扫码入班明确为邮箱验证前的预认证 bootstrap | iOS Contract 1.5 回归确认自由文本 reason 无法无损表达 800/1000 米和校队/社团；Join Capability 与邮箱激活顺序也需要消除歧义 | ExemptionApplication、QR Join、OpenAPI、Backend、Android、Web、0017 migration | 否，采用 additive optional 字段兼容既有 1.5 客户端 | 更新后的客户端必须提交匹配组合；旧请求和旧申请 subtype 保留 null 而不伪造；PHYSICAL_TEST/EXERCISE_CHECK_IN 提交前至少一份可用私有材料；Join 仍拒绝 Access Token，新用户完成 join 后以 `PENDING_CONTACT_BINDING` 会话强制邮箱验证 | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -372,3 +373,13 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - WebM 直接按原始 EBML/WebM 字节验证，不引入浏览器端 FFmpeg/WASM，也不把 WebM 伪装成 MP4。照片继续作为所有支持现场相机的客户端必备凭证路径。
 - 上传凭证不要求 GPS/EXIF 位置。iOS、Web、Android 不得为了上传照片或视频申请定位权限或主动采集经纬度。后端识别到 GPS IFD、EXIF 位置或容器位置标签时返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED`，不把位置提取成业务事实。
 - 本 ADR 不开放 6 个 GPS/位置 HTTP operation，不批准定位采集、真实性判断、地图、保留期或 Production Gate；Staging HTTPS、真实邮箱投递和真机媒体闭环仍需独立环境验收。
+
+### ADR-104：免测结构化明细与扫码入班 bootstrap 顺序（2026-08-14，ACCEPTED）
+
+- `applicationType` 继续使用 `PHYSICAL_TEST`、`EXERCISE_CHECK_IN`、`SPECIAL_CIRCUMSTANCE` 三类稳定运输值；新增 `applicationSubtype` 精确区分 `RUN_800M`、`RUN_1000M`、`SCHOOL_TEAM`、`STUDENT_CLUB`、`SPECIAL_CIRCUMSTANCE`。
+- `SCHOOL_TEAM`、`STUDENT_CLUB` 必须单独保存 trim 后 1..128 字的 `organizationName`；其他 subtype 的 `organizationName` 必须为 null。`reason` 只保存学生理由，不再拼接组织名称或用自由文本代替 subtype。
+- forward-only Migration `0017_exemption_application_details` 新增两个可空列。历史申请无法可靠反推 subtype，保持 null 并在投影中明确为 legacy；禁止按学生性别、reason 或客户端旧枚举伪造回填。
+- 更新后的 iOS/Android 新建与修改必须发送结构化明细，后端校验 applicationType/subtype/organizationName 组合。为兼容已经完成的 Contract 1.5 客户端，三项明细同时省略的旧请求仍可保存为 legacy null；不得只发送其中一部分。`PHYSICAL_TEST` 与 `EXERCISE_CHECK_IN` 在提交审核前必须至少关联一份同 Enrollment、状态为 AVAILABLE 的私有免测材料。
+- `enrollmentId` 保留为必填权威归属，用于唯一责任教师、ClassSection、媒体范围和学期边界；客户端应从后端 ACTIVE Enrollment 中明确选择，不得用 courseId、学号或本地默认值替代。
+- 公开 Join Capability 是普通 Access Token 出现前的受限预认证凭证。新学生 join 成功后得到 `PENDING_CONTACT_BINDING` 会话，只能访问本人信息、邮箱 challenge、refresh 和 logout；邮箱验证转为 `ACTIVE` 后才可进入运动、免测等受保护业务。两阶段顺序不构成身份冲突。
+- 本 ADR 不启用 APNs/FCM，不修改通知隐私政策，也不证明 Staging HTTPS 或生产投递。iOS 可先使用本地 Docker、Mailpit、MinIO 与合成数据完成真实 API 闭环。

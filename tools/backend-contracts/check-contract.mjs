@@ -154,6 +154,7 @@ assert(duplicatePolicyIds.length === 0, `Duplicate policyId values: ${duplicateP
 const requiredFoundationPolicies = new Map([
   ['getHealthLive', 'PUBLIC-HEALTH-LIVE'],
   ['getHealthReady', 'PUBLIC-HEALTH-READY'],
+  ['getAdminHealth', 'ADMIN-HEALTH-READ'],
   ['getSystemMode', 'PUBLIC-SYSTEM-MODE-READ'],
   ['passwordLogin', 'AUTH-PASSWORD-LOGIN'],
   ['refreshSession', 'AUTH-REFRESH'],

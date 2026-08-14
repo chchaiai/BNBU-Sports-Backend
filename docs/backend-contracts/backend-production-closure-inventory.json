@@ -7,25 +7,25 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "f0b4916cb0abd1ec4057f690763de8d7e6f79ca2b7e666a8cd6f3d8c37c69bed",
+    "currentContractSha256": "27272e268882609034a841f42984fb4fc47bb68587fc7e1ecb42528bfdbf7754",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 604,
+    "fileCount": 609,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
-      "backend-contract-doc": 102,
+      "backend-contract-doc": 103,
       "backend-generated": 88,
       "backend-script": 10,
       "backend-source": 216,
-      "backend-test": 71,
-      "client-handoff": 37,
+      "backend-test": 72,
+      "client-handoff": 38,
       "contract-tool": 12,
       "database": 35,
       "docker": 2,
       "repository-doc": 1,
-      "repository-tool": 1,
+      "repository-tool": 3,
       "root-governance": 6
     },
     "files": [
@@ -1762,6 +1762,10 @@
         "category": "backend-test"
       },
       {
+        "path": "backend/test/unit/health.test.ts",
+        "category": "backend-test"
+      },
+      {
         "path": "backend/test/unit/location-evidence-foundation.test.ts",
         "category": "backend-test"
       },
@@ -2170,6 +2174,10 @@
         "category": "backend-contract-doc"
       },
       {
+        "path": "docs/backend-contracts/PRIVATE-PRE-STAGING-EXECUTION-PLAN.md",
+        "category": "backend-contract-doc"
+      },
+      {
         "path": "docs/backend-contracts/REDOCLY-SUPPRESSIONS.md",
         "category": "backend-contract-doc"
       },
@@ -2346,6 +2354,10 @@
         "category": "client-handoff"
       },
       {
+        "path": "docs/client-handoff/client-contract-baseline.json",
+        "category": "client-handoff"
+      },
+      {
         "path": "docs/client-handoff/CONTRACT-1.4.0-HANDOFF.md",
         "category": "client-handoff"
       },
@@ -2442,7 +2454,15 @@
         "category": "contract-tool"
       },
       {
+        "path": "tools/repository/check-client-contract-baseline.mjs",
+        "category": "repository-tool"
+      },
+      {
         "path": "tools/repository/check-monorepo-layout.mjs",
+        "category": "repository-tool"
+      },
+      {
+        "path": "tools/repository/install-workspace-dependencies.mjs",
         "category": "repository-tool"
       }
     ],
@@ -2481,32 +2501,32 @@
       "files": 15
     },
     "mock": {
-      "matches": 244,
-      "files": 57
+      "matches": 242,
+      "files": 58
     },
     "stub": {
       "matches": 3,
       "files": 3
     },
     "not implemented": {
-      "matches": 17,
-      "files": 12
+      "matches": 19,
+      "files": 14
     },
     "NotImplementedException": {
       "matches": 1,
       "files": 1
     },
     "throw new Error": {
-      "matches": 190,
-      "files": 42
+      "matches": 191,
+      "files": 43
     },
     "console.log": {
-      "matches": 14,
-      "files": 8
+      "matches": 18,
+      "files": 10
     },
     "console.error": {
-      "matches": 11,
-      "files": 6
+      "matches": 19,
+      "files": 8
     },
     "debugger": {
       "matches": 2,
@@ -2525,11 +2545,11 @@
       "files": 86
     },
     "any": {
-      "matches": 309,
-      "files": 100
+      "matches": 308,
+      "files": 99
     },
     "unknown as": {
-      "matches": 56,
+      "matches": 57,
       "files": 26
     },
     "skip": {
@@ -2549,12 +2569,12 @@
       "files": 16
     },
     "hard-coded URL": {
-      "matches": 3426,
-      "files": 122
+      "matches": 3430,
+      "files": 124
     },
     "default deny": {
-      "matches": 468,
-      "files": 76
+      "matches": 472,
+      "files": 77
     },
     "deprecated": {
       "matches": 76,
@@ -2565,8 +2585,8 @@
       "files": 28
     },
     "compatibility": {
-      "matches": 235,
-      "files": 54
+      "matches": 238,
+      "files": 55
     }
   },
   "keywordDispositions": {

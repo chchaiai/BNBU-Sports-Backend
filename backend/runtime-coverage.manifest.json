@@ -1,5 +1,5 @@
 {
-  "expectedOperationCount": 123,
+  "expectedOperationCount": 126,
   "implemented": {
     "getHealthLive": {
       "module": "Health",
@@ -18,6 +18,17 @@
       "controller": "src/modules/health/health.controller.ts",
       "useCase": "HealthService.ready",
       "repository": "MigrationCompatibilityService",
+      "migration": "0001+0002",
+      "contractTest": "test/contract/openapi-contract.test.ts",
+      "e2eTest": "test/e2e/auth.e2e.test.ts",
+      "dockerSmoke": "docs/backend-contracts/10a-foundation-runtime-validation.md"
+    },
+    "getAdminHealth": {
+      "module": "Health",
+      "stage": "Foundation",
+      "controller": "src/modules/health/health.controller.ts",
+      "useCase": "HealthService.admin",
+      "repository": "MigrationCompatibilityService + PrismaService.outboxEvent + ObjectStoragePort + MediaStoragePort",
       "migration": "0001+0002",
       "contractTest": "test/contract/openapi-contract.test.ts",
       "e2eTest": "test/e2e/auth.e2e.test.ts",
@@ -705,6 +716,17 @@
       "e2eTest": "test/e2e/exercise-record.e2e.test.ts",
       "dockerSmoke": "docs/backend-contracts/16-exercise-record-implementation-report.md"
     },
+    "getExerciseRecordEvidenceContext": {
+      "module": "Exercise Record",
+      "stage": "Stage 16",
+      "controller": "src/modules/exercise-records/interface/http/exercise-records.controller.ts",
+      "useCase": "ExerciseRecordsService.getEvidenceContext",
+      "repository": "PrismaService exercise record, session and media relations",
+      "migration": "0007",
+      "contractTest": "test/contract/exercise-record-contract.test.ts",
+      "e2eTest": "test/e2e/exercise-record.e2e.test.ts",
+      "dockerSmoke": "docs/backend-contracts/16-exercise-record-implementation-report.md"
+    },
     "updateExerciseRecordDraft": {
       "module": "Exercise Record",
       "stage": "Stage 16",
@@ -1196,6 +1218,17 @@
       "useCase": "ExemptionApplicationsService.list",
       "repository": "PrismaService.exemptionApplication",
       "migration": "0011+0012",
+      "contractTest": "test/contract/client-capabilities-contract.test.ts",
+      "e2eTest": "test/e2e/client-capabilities.e2e.test.ts",
+      "dockerSmoke": "docs/backend-contracts/21-client-capabilities-local-integration-report.md"
+    },
+    "listStructuredExemptionApplications": {
+      "module": "Client Capabilities",
+      "stage": "Stage 21B iOS Integration",
+      "controller": "src/modules/client-capabilities/client-capabilities.controller.ts",
+      "useCase": "ExemptionApplicationsService.listStructured",
+      "repository": "PrismaService.exemptionApplication",
+      "migration": "0011+0012+0017",
       "contractTest": "test/contract/client-capabilities-contract.test.ts",
       "e2eTest": "test/e2e/client-capabilities.e2e.test.ts",
       "dockerSmoke": "docs/backend-contracts/21-client-capabilities-local-integration-report.md"

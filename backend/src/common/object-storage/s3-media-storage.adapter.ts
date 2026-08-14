@@ -1,6 +1,7 @@
 import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import {
   GetObjectCommand,
+  GetBucketLocationCommand,
   HeadObjectCommand,
   PutObjectCommand,
   S3Client,
@@ -21,6 +22,13 @@ export class S3MediaStorageAdapter extends MediaStoragePort implements OnModuleD
 
   constructor(@Inject(RUNTIME_CONFIG) private readonly runtimeConfig: RuntimeConfig) {
     super();
+  }
+
+  async checkHealth(): Promise<void> {
+    const config = this.configuration();
+    await this.storageCall(() =>
+      this.s3().send(new GetBucketLocationCommand({ Bucket: config.storage.bucket })),
+    );
   }
 
   async createUploadUrl(input: {

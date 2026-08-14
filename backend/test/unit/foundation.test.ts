@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import { Reflector } from '@nestjs/core';
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, of, throwError } from 'rxjs';
 
 import { Prisma } from '../../src/generated/prisma/client.js';
 import { AuditService } from '../../src/common/audit/audit.service.js';
@@ -20,6 +20,7 @@ import {
   validateIdempotencyKey,
 } from '../../src/common/idempotency/idempotency.service.js';
 import { redactSensitive, REDACTED_VALUE } from '../../src/common/logging/redaction.js';
+import { HttpLoggingInterceptor } from '../../src/common/logging/http-logging.interceptor.js';
 import { OutboxService } from '../../src/common/outbox/outbox.service.js';
 import { AccessPolicyGuard } from '../../src/common/policy/access-policy.guard.js';
 import { OPERATION_ID_METADATA } from '../../src/common/policy/operation-policy.decorator.js';
@@ -89,6 +90,35 @@ describe('Foundation time and identifiers', () => {
 });
 
 describe('HTTP primitives', () => {
+  it('logs the mapped application error status instead of the pre-filter response status', async () => {
+    let logged: Record<string, unknown> | undefined;
+    const interceptor = new HttpLoggingInterceptor({
+      http: (fields: Record<string, unknown>) => {
+        logged = fields;
+      },
+    } as never);
+    const request = {
+      requestId: '00000000-0000-7000-8000-000000000001',
+      operationId: 'getCurrentUser',
+      method: 'GET',
+    } as FoundationRequest;
+
+    await assert.rejects(
+      firstValueFrom(
+        interceptor.intercept(
+          httpContext(() => undefined, request),
+          {
+            handle: () => throwError(() => new ApplicationError('CONFLICT_STATE_TRANSITION', 409)),
+          },
+        ),
+      ),
+      (error: unknown) =>
+        error instanceof ApplicationError && error.code === 'CONFLICT_STATE_TRANSITION',
+    );
+    assert.equal(logged?.statusCode, 409);
+    assert.equal(logged?.errorCode, 'CONFLICT_STATE_TRANSITION');
+    assert.equal(logged?.outcome, 'FAILED');
+  });
   it('accepts only bounded safe request IDs and generates a replacement', () => {
     assert.equal(validRequestId('safe:req-1'), true);
     assert.equal(validRequestId('unsafe request id'), false);

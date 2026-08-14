@@ -332,6 +332,18 @@ describe('ExerciseRecord HTTP E2E', () => {
     assert.equal(await prisma.exerciseRecordMedia.count({ where: { recordId } }), 1);
     assert.equal(await prisma.exerciseRecordDailySlot.count({ where: { recordId } }), 1);
 
+    const evidenceContext = await request(
+      `/api/v1/exercise-records/${recordId}/evidence-context`,
+      authenticated(token),
+    );
+    assert.equal(evidenceContext.status, 200);
+    const contextData = object(evidenceContext.body.data);
+    assert.equal(contextData.recordId, recordId);
+    assert.equal(contextData.sessionId, sessionId);
+    assert.equal(typeof contextData.startedAt, 'string');
+    assert.equal(typeof contextData.endedAt, 'string');
+    assert.deepEqual(contextData.mediaIds, [mediaId]);
+
     const media = await request(`/api/v1/media/${mediaId}`, authenticated(token));
     assert.equal(media.status, 200);
     assert.equal(object(media.body.data).recordId, recordId);
@@ -415,7 +427,7 @@ describe('ExerciseRecord HTTP E2E', () => {
     assert.equal(await prisma.exerciseRecordMedia.count({ where: { recordId } }), 2);
   });
 
-  it('blocks submission while any retained session media is still processing', async () => {
+  it('does not let an unselected processing upload block valid evidence submission', async () => {
     const token = await studentToken();
     const processingMediaId = uuidv7();
     const now = new Date();
@@ -470,8 +482,37 @@ describe('ExerciseRecord HTTP E2E', () => {
         uuidv7(),
       ),
     );
-    assert.equal(denied.status, 409);
-    assert.equal(denied.body.code, 'MEDIA_NOT_AVAILABLE');
+    assert.equal(denied.status, 422);
+    assert.equal(denied.body.code, 'EXERCISE_RECORD_MEDIA_INCOMPLETE');
+
+    const submitted = await request(
+      `/api/v1/exercise-records/${recordId}/submit`,
+      authenticated(token, 'POST', { mediaIds: [mediaId], expectedVersion: 1 }, uuidv7()),
+    );
+    assert.equal(submitted.status, 200);
+    assert.equal(object(submitted.body.data).status, 'SUBMITTED');
+  });
+
+  it('returns a stable conflict when a second draft is created for one session', async () => {
+    const token = await studentToken();
+    const body = {
+      sessionId,
+      creditType: 'GENERAL',
+      sportType: 'RUNNING',
+      description: 'Synthetic duplicate draft',
+      clientRequestId: `android-${uuidv7()}`,
+    };
+    const first = await request(
+      '/api/v1/exercise-records',
+      authenticated(token, 'POST', body, uuidv7()),
+    );
+    assert.equal(first.status, 201);
+    const duplicate = await request(
+      '/api/v1/exercise-records',
+      authenticated(token, 'POST', { ...body, clientRequestId: `android-${uuidv7()}` }, uuidv7()),
+    );
+    assert.equal(duplicate.status, 409);
+    assert.equal(duplicate.body.code, 'EXERCISE_RECORD_ALREADY_EXISTS_FOR_SESSION');
   });
 
   it('discards a draft atomically with append-only evidence', async () => {

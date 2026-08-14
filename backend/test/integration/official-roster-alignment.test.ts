@@ -33,6 +33,10 @@ import {
 import { foundationEnvironment, requireTestDatabaseUrl } from '../helpers/test-environment.js';
 
 class MemoryObjectStorage implements ObjectStoragePort {
+  checkHealth(): Promise<void> {
+    return Promise.resolve();
+  }
+
   readonly objects = new Map<string, Buffer>();
 
   async putPrivateObject(input: PutPrivateObjectInput): Promise<{ entityTag: string | null }> {
