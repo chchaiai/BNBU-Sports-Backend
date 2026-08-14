@@ -19,12 +19,12 @@ This inventory preserves the initial findings and records their final production
 | backend-test | 72 |
 | client-handoff | 38 |
 | contract-tool | 12 |
-| database | 35 |
+| database | 37 |
 | docker | 2 |
 | repository-doc | 1 |
 | repository-tool | 3 |
 | root-governance | 6 |
-| **Total** | **609** |
+| **Total** | **611** |
 
 Excluded from mutation: Android, Web, iOS, and all client implementation files. `AGENTS.md` is audited as a root governance file but its user-owned modification is protected from editing, staging, commit, and PR inclusion.
 
@@ -44,14 +44,14 @@ Every requested lexical category is retained with a contextual disposition; coun
 | stub | 3 | 3 | INTENTIONAL_DESIGN | RESOLVED |
 | not implemented | 19 | 14 | INTENTIONAL_DESIGN | RESOLVED |
 | NotImplementedException | 1 | 1 | INTENTIONAL_DESIGN | RESOLVED |
-| throw new Error | 191 | 43 | INTENTIONAL_DESIGN | RESOLVED |
+| throw new Error | 193 | 43 | INTENTIONAL_DESIGN | RESOLVED |
 | console.log | 18 | 10 | INTENTIONAL_DESIGN | RESOLVED |
 | console.error | 19 | 8 | INTENTIONAL_DESIGN | RESOLVED |
 | debugger | 2 | 1 | FALSE_POSITIVE | RESOLVED |
 | @ts-ignore | 3 | 1 | INTENTIONAL_DESIGN | RESOLVED |
 | @ts-nocheck | 88 | 84 | INTENTIONAL_DESIGN | RESOLVED |
 | eslint-disable | 88 | 86 | INTENTIONAL_DESIGN | RESOLVED |
-| any | 308 | 99 | INTENTIONAL_DESIGN | RESOLVED |
+| any | 310 | 100 | INTENTIONAL_DESIGN | RESOLVED |
 | unknown as | 57 | 26 | INTENTIONAL_DESIGN | RESOLVED |
 | skip | 1150 | 94 | FALSE_POSITIVE | RESOLVED |
 | only | 3 | 1 | FALSE_POSITIVE | RESOLVED |
@@ -60,8 +60,8 @@ Every requested lexical category is retained with a contextual disposition; coun
 | hard-coded URL | 3430 | 124 | FALSE_POSITIVE | RESOLVED |
 | default deny | 472 | 77 | INTENTIONAL_DESIGN | RESOLVED |
 | deprecated | 76 | 20 | INTENTIONAL_DESIGN | RESOLVED |
-| legacy | 68 | 28 | INTENTIONAL_DESIGN | RESOLVED |
-| compatibility | 238 | 55 | INTENTIONAL_DESIGN | RESOLVED |
+| legacy | 94 | 31 | INTENTIONAL_DESIGN | RESOLVED |
+| compatibility | 240 | 56 | INTENTIONAL_DESIGN | RESOLVED |
 
 Promise-without-await analysis: RESOLVED — Type-aware ESLint no-floating-promises applies to production TypeScript; node:test registration promises have one explicit test-only exception.
 

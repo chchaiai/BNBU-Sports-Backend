@@ -7,11 +7,11 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "27272e268882609034a841f42984fb4fc47bb68587fc7e1ecb42528bfdbf7754",
+    "currentContractSha256": "df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 609,
+    "fileCount": 611,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
@@ -22,7 +22,7 @@
       "backend-test": 72,
       "client-handoff": 38,
       "contract-tool": 12,
-      "database": 35,
+      "database": 37,
       "docker": 2,
       "repository-doc": 1,
       "repository-tool": 3,
@@ -255,6 +255,14 @@
       },
       {
         "path": "backend/prisma/migrations/0016_optional_course_exercise_description/migration.sql",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0017_exemption_application_details/manifest.json",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0017_exemption_application_details/migration.sql",
         "category": "database"
       },
       {
@@ -2517,7 +2525,7 @@
       "files": 1
     },
     "throw new Error": {
-      "matches": 191,
+      "matches": 193,
       "files": 43
     },
     "console.log": {
@@ -2545,8 +2553,8 @@
       "files": 86
     },
     "any": {
-      "matches": 308,
-      "files": 99
+      "matches": 310,
+      "files": 100
     },
     "unknown as": {
       "matches": 57,
@@ -2581,12 +2589,12 @@
       "files": 20
     },
     "legacy": {
-      "matches": 68,
-      "files": 28
+      "matches": 94,
+      "files": 31
     },
     "compatibility": {
-      "matches": 238,
-      "files": 55
+      "matches": 240,
+      "files": 56
     }
   },
   "keywordDispositions": {
