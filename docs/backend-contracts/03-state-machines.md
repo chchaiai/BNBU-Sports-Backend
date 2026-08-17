@@ -7,7 +7,7 @@
 > 基线：`00-current-state-audit.md`、`conflict-matrix.md`、`decision-log.md` 中已接受的 ADR，以及已交叉核对的 `01-domain-model.md`、`02-data-dictionary.md` 与本轮阶段 3 指令
 >
 > 适用角色：`STUDENT`、`TEACHER`、`ADMIN`。图表中的 `SYSTEM` 是后端事务、定时任务或受信队列消费者，不是新增业务角色。
-> 重要迁移口径：本轮采用逐条 `PENDING / VALID / INVALID` 审核模型；旧“提交即有效”只能通过显式迁移记录兼容，不能继续作为新记录的隐式默认值。
+> 重要口径：自 ADR-105 起，新打卡提交由系统原子创建 `VALID` ReviewRecord，无需教师逐条确认；`PENDING` 仅用于存量兼容和显式重开，教师发现问题时追加 `INVALID`。
 
 ## Stage 21 客户端能力状态边界
 
@@ -329,7 +329,7 @@ stateDiagram-v2
 | 状态 | 定义 | 当前 ReviewResult | 是否贡献有效时长 |
 |---|---|---|---:|
 | `DRAFT` | 已由 COMPLETED session 创建但尚未正式提交，可继续绑定媒体和填写说明 | 无 | 否 |
-| `SUBMITTED` | 学生已提交，内容冻结并等待教师处理 | `PENDING` | 否 |
+| `SUBMITTED` | 切换前存量记录或显式重开的记录，内容冻结并等待教师处理 | `PENDING` | 否 |
 | `REVIEWED` | 当前审核版本已经给出 `VALID` 或 `INVALID` | `VALID` 或 `INVALID` | 仅 `VALID`，并使用该审核版本确认的计入秒数 |
 | `CANCELLED` | 草稿被放弃，或按已批准撤回规则取消 | 历史 ReviewRecord 可保留；当前不计分 | 否 |
 
@@ -338,7 +338,7 @@ stateDiagram-v2
 核心不变量：
 
 - `ExerciseSession : ExerciseRecord = 1 : 0..1`。同一 session 最多形成一条逻辑 Record。
-- `ExerciseRecord : ReviewRecord = 1 : 0..N`；Record 提交后必须至少存在一条由系统创建的 `PENDING` ReviewRecord。
+- `ExerciseRecord : ReviewRecord = 1 : 0..N`；新 Record 提交后必须至少存在一条由系统创建的 `VALID` ReviewRecord；存量首条 `PENDING` 继续兼容。
 - Record 只存流程 `status`；不得存可覆盖的 `reviewStatus/auditStatus/approved`。
 - `REVIEWED` 不能单独推断有效性，必须读取最高 `reviewVersion` 的 `ReviewRecord.result`。
 - 阶段提示词要求评估 `NEEDS_REVISION`，但现行学生/教师业务均明确打卡不提供“补材料”。因此 v1 **不把 `NEEDS_REVISION` 纳入可写枚举，也不提供 REQUEST_REVISION/RESUBMIT 转换**（ADR-055）；旧值按 10.4 的迁移规则回到 `SUBMITTED + PENDING`，教师只能作 `VALID/INVALID` 裁决。
@@ -349,7 +349,7 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
     [*] --> DRAFT: createFromCompletedSession
-    DRAFT --> SUBMITTED: submit
+    DRAFT --> REVIEWED: submitAutoValid
     DRAFT --> CANCELLED: discard
     SUBMITTED --> REVIEWED: decideValidOrInvalid
     REVIEWED --> SUBMITTED: reopenReview
@@ -361,9 +361,10 @@ stateDiagram-v2
 | 当前状态 | 操作 | 目标状态 | 发起角色 | 前置条件 | 后端副作用 | 错误码 |
 |---|---|---|---|---|---|---|
 | 不存在 | `CREATE_DRAFT` | `DRAFT` | `STUDENT` | 本人 session 为 COMPLETED；该 session 尚无 Record | 创建 Record 并关联 session/enrollment/classSection/businessDate；不占用每日成功提交次数 | `SESSION_NOT_COMPLETED`、`EXERCISE_RECORD_ALREADY_EXISTS_FOR_SESSION` |
-| `DRAFT` | `SUBMIT` | `SUBMITTED` | `STUDENT` | 本人 Record；身份与 Enrollment 有效；时长由服务端重算；请求集合精确包含同 session 全部 AVAILABLE 现场媒体且不存在处理中媒体；用途通过；唯一 `(enrollmentId,businessDate)` 通过 | 冻结提交快照；创建 ReviewRecord v1=`PENDING`；占用当日提交；通知教师；写审计/outbox | `EXERCISE_RECORD_MEDIA_INCOMPLETE`、`MEDIA_NOT_AVAILABLE`、`EXERCISE_RECORD_DAILY_LIMIT_REACHED`、`EXERCISE_RECORD_DURATION_NOT_CREDITABLE` |
+| `DRAFT` | `SUBMIT` | `REVIEWED` | `STUDENT` | 本人 Record；身份与 Enrollment 有效；时长由服务端重算；请求集合精确包含同 session 全部 AVAILABLE 现场媒体且不存在处理中媒体；用途通过；唯一 `(enrollmentId,businessDate)` 通过 | 冻结提交快照；创建系统 ReviewRecord v1=`VALID`；占用当日提交并立即重算成绩；写审计/outbox | `EXERCISE_RECORD_MEDIA_INCOMPLETE`、`MEDIA_NOT_AVAILABLE`、`EXERCISE_RECORD_DAILY_LIMIT_REACHED`、`EXERCISE_RECORD_DURATION_NOT_CREDITABLE` |
 | `DRAFT` | `DISCARD` | `CANCELLED` | `STUDENT` | 本人 Record；未提交 | 记录取消原因；解绑/清理媒体按保留策略执行 | `PERMISSION_RESOURCE_SCOPE_DENIED` |
-| `SUBMITTED` | `REVIEW` | `REVIEWED` | `TEACHER` | 单一责任教师；当前 ReviewResult=PENDING；`expectedVersion` 与 `expectedReviewVersion` 同时匹配；VALID/INVALID 字段规则完整 | 同一数据库事务取得 Record/Review 并发保护、追加唯一 `(recordId,reviewVersion)` ReviewRecord、更新 Record、写 AuditLog/Outbox；触发重算 | `REVIEW_RESULT_REQUIRED`、`REVIEW_INVALID_REASON_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
+| `SUBMITTED` | `REVIEW` | `REVIEWED` | `TEACHER` | 仅存量/重开兼容；当前 ReviewResult=PENDING；单一责任教师；双版本匹配 | 追加唯一 ReviewRecord=VALID/INVALID、更新 Record、写 AuditLog/Outbox并重算 | `REVIEW_RESULT_REQUIRED`、`REVIEW_INVALID_REASON_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
+| `REVIEWED` | `MARK_INVALID` | `REVIEWED` | `TEACHER` | 当前 ReviewResult=VALID；单一责任教师；INVALID 原因字段完整；双版本匹配 | 追加下一版本 INVALID，不覆盖系统 VALID；Record 版本递增并保持 REVIEWED；写 AuditLog/Outbox并移除成绩贡献 | `REVIEW_INVALID_REASON_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
 | `REVIEWED` | `REOPEN_REVIEW` | `SUBMITTED` | `TEACHER` | 单一责任教师；原因必填；未归档或已有批准修正窗口；`expectedVersion` 与 `expectedReviewVersion` 匹配 | 同一事务追加新 ReviewRecord=`PENDING` 并引用前一版本；暂时移除该记录有效时长；触发重算 | `VALIDATION_FIELD_REQUIRED`、`SCORE_LOCKED`、`SCORE_CORRECTION_WINDOW_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
 
 批量审核不是特殊状态转换：后端对每条 Record 独立执行 `SUBMITTED -> REVIEWED`，每条写独立 ReviewRecord、`expectedVersion`/`expectedReviewVersion` 检查和错误结果；不得以一个班级级状态覆盖所有记录。
@@ -372,11 +373,10 @@ stateDiagram-v2
 
 禁止：
 
-- `DRAFT` 直接进入 `REVIEWED`。
 - `SUBMITTED / REVIEWED` 回到 `DRAFT`。
 - 创建或写入 `UNDER_REVIEW`、`CLAIM_REVIEW`、claimant、claimedAt、claim lease、release 或 reclaim；V1 没有审核领取语义。
 - v1 禁止产生或接受 `NEEDS_REVISION`；打卡凭证不提供补材料流程。
-- `REVIEWED` 直接改成另一审核结论；必须 `REOPEN_REVIEW` 产生新 PENDING 版本后再审核。
+- 覆盖或修改既有 ReviewRecord；`VALID -> INVALID` 必须追加新版本。`INVALID -> VALID` 仍须显式重开为 PENDING 后再裁决。
 - `SUBMITTED` 由学生撤回；V1 接口稳定返回 `EXERCISE_RECORD_WITHDRAWAL_NOT_ALLOWED` 且不产生副作用，也不释放 `(enrollmentId,businessDate)` 槽位。
 - `CANCELLED` 恢复；如确需重新打卡必须新建 session/record。
 - 教师修改原始运动时钟、原始媒体或学生身份来实现“审核调整”。
@@ -394,15 +394,15 @@ stateDiagram-v2
 
 ### 6.1 Append-only 模型
 
-`ReviewResult` 不是 `ExerciseRecord` 上可更新的列，而是 `ReviewRecord.result` 的枚举。每次变化追加新 ReviewRecord，核心字段至少包括 `reviewVersion`、`result`、`previousReviewId`、`teacherId`、原因/意见、可选 `creditedDurationOverrideSeconds`、`reviewedAt`、`createdAt`。当前结果取最高 `reviewVersion`；旧版本不可修改或删除。由系统初始化的首条 `PENDING` 记录没有审核教师，因此其 `teacherId=null`；教师创建的 `VALID / INVALID` 以及教师主动重开产生的 `PENDING` 必须写入当前 `teacherId`。
+`ReviewResult` 不是 `ExerciseRecord` 上可更新的列，而是 `ReviewRecord.result` 的枚举。每次变化追加新 ReviewRecord，核心字段至少包括 `reviewVersion`、`result`、`previousReviewId`、`teacherId`、原因/意见、可选 `creditedDurationOverrideSeconds`、`reviewedAt`、`createdAt`。当前结果取最高 `reviewVersion`；旧版本不可修改或删除。新提交由系统初始化首条 `VALID`，其 `teacherId=null`；存量首条 PENDING 也可为系统事实。教师追加的 VALID/INVALID 必须写入责任教师 ID。
 
 | 结果 | 定义 | Record 的正常流程状态 | 评分贡献 |
 |---|---|---|---:|
 | `PENDING` | 尚无最终有效性裁决，或旧裁决已被重新打开 | `SUBMITTED` | 0 秒 |
-| `VALID` | 任课教师确认记录有效 | `REVIEWED` | 服务端规则秒数，或已审计的覆盖秒数 |
+| `VALID` | 系统在提交时默认判定记录有效，或教师裁决存量 PENDING 有效 | `REVIEWED` | 服务端规则秒数，或已审计的覆盖秒数 |
 | `INVALID` | 任课教师确认记录无效 | `REVIEWED` | 0 秒 |
 
-初始结果为首条系统 `PENDING`；`VALID / INVALID` 是可通过显式重开离开的静止结果，没有可覆盖的终态行。
+新提交初始结果为首条系统 `VALID`；历史 `PENDING` 继续兼容。`VALID / INVALID` 都没有可覆盖的终态行，任何变化必须追加版本。
 
 `creditedDurationOverrideSeconds` 只能在专门 ADR 批准后开放，并且只能为当前规则允许的整数秒，不能改写 session 原始事实。ADR 未批准时所有新审核必须写 `null` 并沿用 Record 的服务端折算值；它即使获批也只表达审核后计入量，不表达流程状态。
 
@@ -412,9 +412,10 @@ V1 原因合同：VALID 不要求 `reasonCode`；INVALID 必须提供 `ReviewRea
 
 ```mermaid
 stateDiagram-v2
-    [*] --> PENDING: recordSubmitted
+    [*] --> VALID: recordSubmitted
     PENDING --> VALID: decideValid
     PENDING --> INVALID: decideInvalid
+    VALID --> INVALID: teacherMarksProblem
     VALID --> PENDING: reopenWithReason
     INVALID --> PENDING: reopenWithReason
 ```
@@ -423,9 +424,10 @@ stateDiagram-v2
 
 | 当前状态 | 操作 | 目标状态 | 发起角色 | 前置条件 | 后端副作用 | 错误码 |
 |---|---|---|---|---|---|---|
-| 不存在 | `INITIALIZE_REVIEW` | `PENDING` | `SYSTEM` | Record 在同一事务进入 SUBMITTED；尚无 ReviewRecord | 创建 reviewVersion=1；不计入有效时长 | `REVIEW_ALREADY_INITIALIZED` |
+| 不存在 | `INITIALIZE_REVIEW` | `VALID` | `SYSTEM` | Record 在同一事务由 DRAFT 进入 REVIEWED；尚无 ReviewRecord | 创建 reviewVersion=1、teacherId=null；立即按服务端时长重算 | `REVIEW_ALREADY_INITIALIZED` |
 | `PENDING` | `MARK_VALID` | `VALID` | `TEACHER` | 任课教师；证据可用；Record 可审核；公开意见符合规则；`creditedDurationOverrideSeconds` 默认必须为 null，只有专门 ADR 已批准时才按批准范围校验 | 追加下一 reviewVersion；Record 进入 REVIEWED；重算累计与成绩；生成学生通知 | `PERMISSION_COURSE_SCOPE_DENIED`、`MEDIA_NOT_AVAILABLE`、`REVIEW_CREDIT_OVERRIDE_NOT_APPROVED`、`REVIEW_CREDIT_DURATION_INVALID`、`CONFLICT_VERSION_MISMATCH` |
 | `PENDING` | `MARK_INVALID` | `INVALID` | `TEACHER` | 任课教师；标准原因必填；Record 可审核 | 追加下一 reviewVersion；Record 进入 REVIEWED；有效时长为 0；重算；通知学生 | `REVIEW_INVALID_REASON_REQUIRED`、`PERMISSION_COURSE_SCOPE_DENIED`、`CONFLICT_VERSION_MISMATCH` |
+| `VALID` | `MARK_INVALID` | `INVALID` | `TEACHER` | 任课教师；标准原因必填；Record 当前为 REVIEWED；双版本匹配 | 追加下一 reviewVersion；Record 保持 REVIEWED；有效时长变为 0；重算并通知学生 | `REVIEW_INVALID_REASON_REQUIRED`、`PERMISSION_COURSE_SCOPE_DENIED`、`CONFLICT_VERSION_MISMATCH` |
 | `VALID` | `REOPEN` | `PENDING` | `TEACHER` | 任课教师；原因必填；未锁定或有修正窗口；`expectedReviewVersion`/`expectedVersion` 匹配 | 事务追加 PENDING 版本并引用旧版本；Record 回到 SUBMITTED；暂时撤销评分贡献；重算 | `VALIDATION_FIELD_REQUIRED`、`SCORE_LOCKED`、`SCORE_CORRECTION_WINDOW_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
 | `INVALID` | `REOPEN` | `PENDING` | `TEACHER` | 任课教师；原因必填；未锁定或已有批准修正窗口；`expectedReviewVersion`/`expectedVersion` 匹配 | 事务追加 PENDING 版本并引用旧版本；Record 回到 SUBMITTED；写审计并触发输入失效检查 | `VALIDATION_FIELD_REQUIRED`、`SCORE_LOCKED`、`SCORE_CORRECTION_WINDOW_REQUIRED`、`CONFLICT_VERSION_MISMATCH` |
 
@@ -433,7 +435,7 @@ stateDiagram-v2
 
 禁止：
 
-- `VALID <-> INVALID` 直接覆盖；必须先追加 `PENDING` 重开版本。
+- `VALID <-> INVALID` 直接覆盖；`VALID -> INVALID` 允许追加新版本，`INVALID -> VALID` 仍必须先追加 PENDING 重开版本。
 - `PENDING` 记录贡献任何有效时长。
 - AI 风险分、管理员全局权限或前端按钮直接产生最终 `VALID/INVALID`。
 - 在没有对应 ACTIVE/历史可审教学班归属的情况下审核。
@@ -708,7 +710,7 @@ flowchart LR
 1. 在迁移前快照每名学生的历史累计、已发布成绩、记录状态和调整意见。
 2. 优先使用显式旧 `auditStatus` 或教师调整证据生成 ReviewRecord。
 3. 对已计入但无显式审核的历史记录，采用上表 `LEGACY_ASSUMED_VALID` 来源标记兼容方案，避免破坏既有成绩；该方案需业务方明确批准，ReviewResult 仍严格为 `VALID`。
-4. 对新系统切换时点之后提交的所有记录，一律创建 PENDING ReviewRecord，未 VALID 前贡献 0 秒。
+4. ADR-105 切换之后的新提交一律创建系统 VALID ReviewRecord 并立即贡献服务端折算时长；此前存量映射结果保持可追溯，不静默改写历史 ReviewRecord。
 5. 迁移后双算旧汇总与新汇总并出具差异报告；不得静默覆盖已发布/锁定成绩。
 6. 只有差异获批准后，才发布由新 Review/Score 链路计算的新版本。
 
@@ -741,7 +743,7 @@ flowchart LR
 |---|---|---|---|
 | SM-BC-01 | 正常扫码不再存在 `PENDING_APPROVAL` | 旧加入申请 API、教师审批 UI | 保留只读兼容与调用遥测；存量申请一次性分流，不进入新 Enrollment 状态机 |
 | SM-BC-02 | Enrollment、名单、账号和教学班状态完全分列 | 所有客户端 DTO、数据库 | 新字段双读；禁止继续复用 membership/status |
-| SM-BC-03 | 新记录不再“提交即有效”，未 VALID 前贡献 0 秒 | Android、教师 Web、成绩汇总 | 以切换时间分界；历史使用显式迁移 ReviewRecord；UI 展示待审影响 |
+| SM-BC-03 | 新记录改为“提交即系统 VALID”，不再要求教师逐条确认 | Android、教师 Web、成绩汇总 | 以 ADR-105 切换时间分界；旧 PENDING 继续兼容；UI 默认展示有效并允许教师标记无效 |
 | SM-BC-04 | ReviewRecord append-only，禁止覆盖审核结果 | 教师 API、数据库、审计 | 旧当前值转换为 reviewVersion 历史；更新接口改为命令式追加 |
 | SM-BC-04A | v1 不采用打卡 `NEEDS_REVISION` / 补材料流程（ADR-055） | 旧 Record 状态、学生/教师打卡 UI | 旧值映射为 SUBMITTED+PENDING 并保留历史；教师重新作 VALID/INVALID 裁决 |
 | SM-BC-05 | Session 与 Record 分离，7200 秒为 COMPLETED | Android 计时、提交 API | 旧 Paused 封顶映射 Completed；Submitted 拆成两个对象状态 |
@@ -771,7 +773,7 @@ flowchart LR
 |---|---|---|---|---|
 | SM-TBD-01 | 学生是否可主动退出 Enrollment，以及退出后能否自行重入 | 允许在限定期限内退出；REMOVED 只能教师恢复 | 不开放 STUDENT `WITHDRAW/REJOIN` API，只保留状态与教师恢复能力 | ADR-054（PROPOSED）；关联 ADR-006 |
 | SM-CLOSED-02 | 已 SUBMITTED Record 的学生撤回 | V1 关闭；仅允许 DRAFT discard，SUBMITTED 撤回稳定拒绝且不释放每日槽位 | 保持关闭；未来开放需新 ADR、状态迁移和唯一键语义 | ADR-020 / V1 default deny |
-| SM-TBD-03 | 审核时点与领取模式 | 支持学期中逐条及批量，但每条独立 ReviewRecord；期末只做完成性检查 | Record 提交即 PENDING，只有任课教师可处理；不设自动最终审核 | ADR-019 |
+| SM-TBD-03 | 审核时点与领取模式 | 新提交由系统自动 VALID；教师仅处理异常记录，仍可批量追加 INVALID | 无领取态；旧 PENDING 仍只允许任课教师处理 | ADR-105（取代 ADR-019 的新提交口径） |
 | SM-TBD-04 | 历史“提交即有效”记录是否按 `LEGACY_ASSUMED_VALID` 迁移 | 推荐批准，以保持历史累计/发布成绩不突降，并要求批次审计与抽检 | 不自动重算或发布历史成绩；冲突记录保持 PENDING 人工处理 | ADR-056（PROPOSED）；关联 ADR-011 |
 | SM-TBD-05 | 哪些名单异常允许 IGNORED、是否设过期时间 | MISSING/EXTRA/IDENTITY 可带原因暂时忽略；WRONG/DUPLICATED 禁止 | 全部异常不允许忽略，只能确认/修复 | ADR-057（PROPOSED） |
 | SM-TBD-06 | Session 心跳、离线容差与 EXPIRED 阈值 | 每人一个活动 session，服务端时间+有限离线补传；参数按测试决定 | 无可信连续证据的区间不累计；到恢复阈值即 EXPIRED | ADR-021 |
@@ -791,7 +793,7 @@ flowchart LR
 - [ ] Enrollment 正常加入直接 ACTIVE，旧 `PENDING_APPROVAL` 只在兼容/迁移层出现。
 - [ ] RosterAlignment 分类结果按运行版本不可变，处置状态单独保存。
 - [ ] Session 到 7200 秒转 COMPLETED；Record 仍需学生确认提交。
-- [ ] Record 提交原子创建首条 PENDING ReviewRecord；Record 不保存可覆盖审核结果。
+- [ ] Record 提交原子创建首条系统 VALID ReviewRecord；Record 不保存可覆盖审核结果。
 - [ ] 每次 VALID/INVALID 或重开都追加 ReviewRecord，并触发有效时长与成绩输入重算。
 - [ ] override ADR 未批准时，Review 的 `creditedDurationOverrideSeconds` 只能为 null；VALID 沿用 Record 折算值。
 - [ ] 只有当前 VALID 且 Record=REVIEWED 的记录贡献有效秒数。

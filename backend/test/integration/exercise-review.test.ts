@@ -73,6 +73,34 @@ describe('ExerciseReview PostgreSQL integration', () => {
     await assert.rejects(prisma.reviewRecord.delete({ where: { id: first.id } }));
   });
 
+  it('accepts a system VALID first review and a reviewed-to-reviewed invalidation', async () => {
+    const { recordId } = await seedSubmittedExerciseRecord(prisma, fixture, 'AUTO-VALID', 'VALID');
+    const first = await prisma.reviewRecord.findFirstOrThrow({ where: { recordId } });
+    assert.equal(first.result, 'VALID');
+    assert.equal(first.teacherId, null);
+    const invalid = await prisma.reviewRecord.create({
+      data: {
+        id: uuidv7(),
+        organizationId: fixture.organizationId,
+        recordId,
+        reviewVersion: 2,
+        previousReviewId: first.id,
+        teacherId: fixture.teacherProfileId,
+        result: 'INVALID',
+        reasonCode: 'INVALID_MEDIA',
+        reason: 'Synthetic media mismatch',
+        reviewedAt: new Date(),
+        createdAt: new Date(),
+      },
+    });
+    assert.equal(invalid.result, 'INVALID');
+    const reviewed = await prisma.exerciseRecord.update({
+      where: { id: recordId },
+      data: { status: 'REVIEWED', version: 3, updatedAt: new Date() },
+    });
+    assert.equal(reviewed.status, 'REVIEWED');
+  });
+
   it('enforces INVALID reason shape and permanently denies credited override', async () => {
     const { recordId } = await seedSubmittedExerciseRecord(prisma, fixture, 'SHAPE');
     const first = await prisma.reviewRecord.findFirstOrThrow({ where: { recordId } });

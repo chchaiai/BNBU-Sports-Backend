@@ -13,9 +13,9 @@ const failures = [];
 const paths = {
   canonical: "docs/backend-contracts/openapi.yaml",
   currentContract: "docs/backend-contracts/current-contract.json",
-  releaseManifest:
-    "docs/backend-contracts/releases/1.5.0-contract/release-manifest.json",
   clientBaseline: "docs/client-handoff/client-contract-baseline.json",
+  readmeFirst: "docs/client-handoff/README-FIRST.md",
+  currentHandoff: "docs/backend-contracts/CURRENT-HANDOFF.md",
   androidSnapshot:
     "BNBU-Sports-Android-master/app/openapi/openapi.snapshot.yaml",
   androidMetadata: "BNBU-Sports-Android-master/app/openapi/contract.properties",
@@ -113,7 +113,12 @@ expect(
 );
 
 const currentContract = readJson(paths.currentContract);
-const releaseManifest = readJson(paths.releaseManifest);
+const releaseManifestPath = currentContract.releaseManifest;
+expect(
+  typeof releaseManifestPath === "string" && releaseManifestPath.length > 0,
+  "current contract release manifest path is missing",
+);
+const releaseManifest = readJson(releaseManifestPath ?? "");
 const clientBaseline = readJson(paths.clientBaseline);
 const androidMetadata = isBackendPublicationMirror
   ? {}
@@ -122,13 +127,20 @@ const webMetadata = isBackendPublicationMirror
   ? {}
   : readJson(paths.webMetadata);
 
-const expectedVersion = currentContract.currentCandidate;
+const expectedVersion =
+  currentContract.currentVersion ?? currentContract.currentCandidate;
 const expectedSha256 = currentContract.sha256;
 const expectedOperationCount = releaseManifest.counts?.operations;
 const expectedSchemaCount = releaseManifest.counts?.schemas;
 const expectedSourceCommit = clientBaseline.contract?.sourceCommit;
+const readmeFirst = readBytes(paths.readmeFirst).toString("utf8");
+const currentHandoff = readBytes(paths.currentHandoff).toString("utf8");
 
 expectEqual(canonicalVersion, expectedVersion, "canonical version");
+expect(
+  ["candidate", "published"].includes(currentContract.releaseState),
+  `invalid current contract release state: ${String(currentContract.releaseState)}`,
+);
 expectEqual(canonicalSha256, expectedSha256, "canonical SHA-256");
 expectEqual(
   canonicalOperationCount,
@@ -142,8 +154,36 @@ expectEqual(
 );
 expectEqual(releaseManifest.sha256, expectedSha256, "release manifest SHA-256");
 expectEqual(
+  releaseManifest.releaseState,
+  currentContract.releaseState,
+  "release manifest state",
+);
+for (const [label, contents] of [
+  ["README-FIRST", readmeFirst],
+  ["CURRENT-HANDOFF", currentHandoff],
+]) {
+  expect(
+    contents.includes(expectedVersion),
+    `${label} does not reference current contract version ${expectedVersion}`,
+  );
+  expect(
+    contents.includes(expectedSha256),
+    `${label} does not reference current contract SHA-256 ${expectedSha256}`,
+  );
+  expect(
+    contents.includes(String(expectedOperationCount)),
+    `${label} does not reference operation count ${String(expectedOperationCount)}`,
+  );
+  expect(
+    contents.includes(String(expectedSchemaCount)),
+    `${label} does not reference schema count ${String(expectedSchemaCount)}`,
+  );
+}
+expectEqual(
   clientBaseline.status,
-  "CONTRACT_BASELINE_BOUND_LOCAL",
+  currentContract.releaseState === "published"
+    ? "CONTRACT_BASELINE_RELEASED"
+    : "CONTRACT_BASELINE_BOUND_LOCAL",
   "client baseline status",
 );
 expectEqual(

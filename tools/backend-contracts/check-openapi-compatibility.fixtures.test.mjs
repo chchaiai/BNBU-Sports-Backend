@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { compareContracts } from "./check-openapi-compatibility.mjs";
+import {
+  compareContracts,
+  validateMajorChangeApproval,
+  validateMajorChangeApprovalSet,
+} from "./check-openapi-compatibility.mjs";
 
 const operation = (overrides = {}) => ({
   operationId: "fixtureOperation",
@@ -103,6 +107,40 @@ describe("direction-aware OpenAPI compatibility fixtures", () => {
     assert.ok(changes.some((change) => change.kind === "SECURITY_CHANGED"));
     assert.ok(
       changes.some((change) => change.kind === "PERMISSION_METADATA_CHANGED"),
+    );
+  });
+});
+
+describe("major-version breaking change approval", () => {
+  const approval = {
+    formatVersion: 1,
+    targetVersion: "2.0.0-contract",
+    approvedBy: "repository-owner",
+    approvedDate: "2026-08-18",
+    approvalBasis: "Explicitly approved test scope.",
+    expectedBreakingChangeCount: 1,
+    changeIds: ["breaking-a"],
+  };
+
+  it("accepts an exact, version-bound breaking change set", () => {
+    assert.doesNotThrow(() =>
+      validateMajorChangeApproval(approval, "2.0.0-contract"),
+    );
+    assert.doesNotThrow(() =>
+      validateMajorChangeApprovalSet(approval, [
+        { id: "breaking-a", classification: "BREAKING" },
+        { id: "compatible-b", classification: "NON_BREAKING" },
+      ]),
+    );
+  });
+
+  it("rejects contract drift after approval", () => {
+    assert.throws(
+      () =>
+        validateMajorChangeApprovalSet(approval, [
+          { id: "breaking-b", classification: "BREAKING" },
+        ]),
+      /does not exactly match/,
     );
   });
 });

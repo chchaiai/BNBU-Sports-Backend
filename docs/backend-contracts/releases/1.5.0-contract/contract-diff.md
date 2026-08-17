@@ -5,14 +5,14 @@ Result: **COMPATIBLE**.
 | Source | Version | SHA-256 | Operations |
 | --- | --- | --- | ---: |
 | Published baseline | 1.4.0-contract | `c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b` | 122 |
-| Candidate | 1.5.0-contract | `df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7` | 126 |
+| Candidate | 1.5.0-contract | `bf303721fcf8cf7dac2af37559a6ddb77bdf615ad0e3cb63b6849ea3ee645302` | 126 |
 
 | Classification | Count |
 | --- | ---: |
-| Breaking | 54 |
+| Breaking | 55 |
 | Review required | 0 |
 | Non-breaking | 17 |
-| Approved exceptions | 54 |
+| Approved exceptions | 55 |
 | Unapproved blockers | 0 |
 
 ## Direction-aware changes
@@ -68,6 +68,7 @@ Result: **COMPATIBLE**.
 | schema-alternative-added-d77fd63280256076 | NON_BREAKING | response | SCHEMA_ALTERNATIVE_ADDED | `PATCH /exercise-records/{recordId}/responses/200/application/json/properties/data/properties/description` | NO |
 | schema-alternative-added-e8feb08bf8f67650 | NON_BREAKING | response | SCHEMA_ALTERNATIVE_ADDED | `POST /exercise-records/{recordId}/submit/responses/200/application/json/properties/data/properties/description` | NO |
 | schema-composition-changed-0404ff52260db0b3 | BREAKING | response | SCHEMA_COMPOSITION_CHANGED | `GET /me/responses/200/application/json/properties/data/properties/studentProfile` | YES |
+| schema-composition-changed-ddd6315e3a007326 | BREAKING | response | SCHEMA_COMPOSITION_CHANGED | `POST /exercise-reviews/batch/responses/200/application/json/properties/data/properties/items/items/properties/data` | YES |
 | schema-format-changed-45f6b1a170bfc60e | BREAKING | request | SCHEMA_FORMAT_CHANGED | `POST /auth/account-recovery-requests/requestBody/application/json/properties/account/format` | YES |
 | schema-format-changed-96429a8db1425d4e | BREAKING | request | SCHEMA_FORMAT_CHANGED | `POST /auth/student-sign-in-codes/requestBody/application/json/properties/account/format` | YES |
 | schema-format-changed-aef80021814edf44 | BREAKING | request | SCHEMA_FORMAT_CHANGED | `POST /auth/password-login/requestBody/application/json/properties/account/format` | YES |

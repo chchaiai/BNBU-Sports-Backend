@@ -110,6 +110,7 @@
 | ADR-100  | 完成记录只收集一个运动说明；完成后仍可补拍照片或视频；当前保留的全部现场素材自动作为凭证，不提供勾选排除 | 负责人于 2026-08-11 要求统一课程相关与自主运动完成页，并消除客户端漏选已拍凭证的风险 | ExerciseRecord、MediaEvidence、Android 完成记录、OpenAPI | 是 | 凭证完整集合、`studentRemark` 移除和提交后冻结规则继续有效；“两类运动说明均必填”由 ADR-103 修订为仅自主运动必填 | SUPERSEDED |
 | ADR-103  | 自主运动说明必填、课程运动说明可选；打卡视频增加原始 WebM 校验；上传凭证不要求 GPS，识别到位置元数据时拒绝 | iOS 与 Web 首轮联调发现说明规则、定位语义和浏览器容器能力存在跨端差异，且已发布 1.4 合同必须保持不可变 | ExerciseRecord、MediaEvidence、iOS/Web/Android 合同、OpenAPI、0016 migration | 是 | `GENERAL.description` trim 后 1..200；`COURSE_RELATED.description` 可省略或为 null；后端接受并按字节校验 MP4/MOV/3GP/WebM，视频仍须有画面、有声音且不超过 15 秒；客户端不得为上传凭证申请定位权限或采集坐标，识别到 GPS/EXIF/容器位置元数据返回 `MEDIA_LOCATION_METADATA_NOT_ALLOWED` | ACCEPTED   |
 | ADR-104  | 免测申请保留泛化 `applicationType`，新增结构化 `applicationSubtype` 与 `organizationName`；扫码入班明确为邮箱验证前的预认证 bootstrap | iOS Contract 1.5 回归确认自由文本 reason 无法无损表达 800/1000 米和校队/社团；Join Capability 与邮箱激活顺序也需要消除歧义 | ExemptionApplication、QR Join、OpenAPI、Backend、Android、Web、0017 migration | 否，采用 additive optional 字段兼容既有 1.5 客户端 | 更新后的客户端必须提交匹配组合；旧请求和旧申请 subtype 保留 null 而不伪造；PHYSICAL_TEST/EXERCISE_CHECK_IN 提交前至少一份可用私有材料；Join 仍拒绝 Access Token，新用户完成 join 后以 `PENDING_CONTACT_BINDING` 会话强制邮箱验证 | ACCEPTED   |
+| ADR-105  | 新打卡提交后由系统原子创建首条 `VALID` ReviewRecord；责任教师仅在发现问题时追加 `INVALID` | 本次工作指令取消逐条确认，要求 Web 默认有效且各端状态一致，同时仍须保留审核历史和后端最终裁决 | ExerciseRecord、ReviewRecord、Score、OpenAPI、Backend、Android、Web、0018 migration | 是（改变新提交的默认审核结果） | 新提交直接 `DRAFT -> REVIEWED` 并立即按服务端折算时长重算；首条系统 VALID 的 `teacherId=null`；旧 PENDING 仍可按原流程裁决；教师可将当前 VALID 直接追加为 INVALID，禁止覆盖旧 ReviewRecord | ACCEPTED   |
 
 ## 详细决策说明
 
@@ -383,3 +384,11 @@ The project owner explicitly approved the complete Stage 18 decision package in 
 - `enrollmentId` 保留为必填权威归属，用于唯一责任教师、ClassSection、媒体范围和学期边界；客户端应从后端 ACTIVE Enrollment 中明确选择，不得用 courseId、学号或本地默认值替代。
 - 公开 Join Capability 是普通 Access Token 出现前的受限预认证凭证。新学生 join 成功后得到 `PENDING_CONTACT_BINDING` 会话，只能访问本人信息、邮箱 challenge、refresh 和 logout；邮箱验证转为 `ACTIVE` 后才可进入运动、免测等受保护业务。两阶段顺序不构成身份冲突。
 - 本 ADR 不启用 APNs/FCM，不修改通知隐私政策，也不证明 Staging HTTPS 或生产投递。iOS 可先使用本地 Docker、Mailpit、MinIO 与合成数据完成真实 API 闭环。
+
+### ADR-105：打卡提交默认有效与教师异常否决（2026-08-17，ACCEPTED）
+
+- 学生成功提交 ExerciseRecord 时，后端在同一事务中将 Record 从 `DRAFT` 直接置为 `REVIEWED`，并创建 `reviewVersion=1`、`result=VALID`、`teacherId=null` 的系统 ReviewRecord；该记录立即按服务端裁决的 `creditedDurationSeconds` 进入成绩重算。
+- 教师端不再把新记录作为逐条待办。Web 默认展示全部已提交记录及其当前 `VALID` 结果；风险提示只用于发现异常，不产生审核事实。
+- 责任教师发现问题时，可通过既有 review mutation 在双版本校验、权限校验、事务、AuditLog 和 Outbox 保护下，从当前 `VALID` 直接追加下一版本 `INVALID`；Record 保持 `REVIEWED`，旧 VALID 行不可修改或删除，并立即移除该记录的成绩贡献。
+- 为兼容切换前的存量数据，`SUBMITTED + PENDING -> REVIEWED + VALID/INVALID` 和 reopen 流程继续可用；新提交不得再隐式生成 PENDING。`PENDING` 保留为历史兼容及显式重开状态，不是新记录默认值。
+- 本 ADR 取代 ADR-011、ADR-019、ADR-056、ADR-078 中关于“所有新提交必须先 PENDING 并由教师逐条确认”的部分；ReviewResult 与 Record 流程状态分离、append-only 历史、责任教师边界和只有当前 VALID 贡献成绩的其余规则不变。

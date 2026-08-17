@@ -22,6 +22,8 @@ const migrationIds = [
   '0015_email_verification_fk_alignment',
   '0016_optional_course_exercise_description',
   '0017_exemption_application_details',
+  '0018_default_valid_exercise_reviews',
+  '0019_default_valid_initial_review_constraint',
 ];
 const outputPath = path.join(
   backendDirectory,
@@ -66,17 +68,19 @@ const generatedWithEmailOnlyAuth = `${generatedWithProductionRateLimits}export c
 const generatedWithEmailVerificationFkAlignment = `${generatedWithEmailOnlyAuth}export const emailVerificationFkAlignmentMigration = foundationMigrations[14];\n`;
 const generatedWithOptionalCourseExerciseDescription = `${generatedWithEmailVerificationFkAlignment}export const optionalCourseExerciseDescriptionMigration = foundationMigrations[15];\n`;
 const generatedWithExemptionApplicationDetails = `${generatedWithOptionalCourseExerciseDescription}export const exemptionApplicationDetailsMigration = foundationMigrations[16];\n`;
+const generatedWithDefaultValidExerciseReviews = `${generatedWithExemptionApplicationDetails}export const defaultValidExerciseReviewsMigration = foundationMigrations[17];\n`;
+const generatedWithDefaultValidInitialReviewConstraint = `${generatedWithDefaultValidExerciseReviews}export const defaultValidInitialReviewConstraintMigration = foundationMigrations[18];\n`;
 
 if (checkOnly) {
   if (
     !fs.existsSync(outputPath) ||
-    fs.readFileSync(outputPath, 'utf8') !== generatedWithExemptionApplicationDetails
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithDefaultValidInitialReviewConstraint
   ) {
     throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
   }
   process.stdout.write('Generated migration manifest: PASS\n');
 } else {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, generatedWithExemptionApplicationDetails, 'utf8');
+  fs.writeFileSync(outputPath, generatedWithDefaultValidInitialReviewConstraint, 'utf8');
   process.stdout.write('Generated migration manifest updated.\n');
 }

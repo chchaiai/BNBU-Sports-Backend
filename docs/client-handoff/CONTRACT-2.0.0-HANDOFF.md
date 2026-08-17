@@ -1,15 +1,16 @@
-# BNBU Sports Contract 1.5.0 Candidate Handoff
+# BNBU Sports Contract 2.0.0 Release Handoff
 
 | Item | Value |
 | --- | --- |
 | Canonical OpenAPI | `docs/backend-contracts/openapi.yaml` |
-| Candidate version | `1.5.0-contract` |
+| Contract version | `2.0.0-contract` |
+| Release state | `published` |
 | OpenAPI version | `3.1.0` |
-| SHA-256 | `bf303721fcf8cf7dac2af37559a6ddb77bdf615ad0e3cb63b6849ea3ee645302` |
-| Source baseline commit | `3b4a9b902b700bbaffb085cd1d5b6f853cf52687` |
+| SHA-256 | `0e350cecf84a615dea53346ceff0a221de449976ce3d28be4cb84ba6aa3a4dd9` |
+| Source baseline commit | `116e6adb3bd6c5963c9428ee3a11e1eee9e04cb1` |
 | Operations | 126 |
 | Schemas | 288 |
-| Compatibility vs 1.4 | PASS; 0 unapproved blockers |
+| Compatibility vs 1.4.0-contract | PASS; 0 unapproved blockers |
 | Enabled operations | 109 |
 | Intentionally disabled | 17 |
 | Not implemented | 0 |

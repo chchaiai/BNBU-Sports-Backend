@@ -30,8 +30,9 @@
     "db:manifest:generate": "node ./scripts/generate-migration-manifest.mjs",
     "db:manifest:check": "node ./scripts/generate-migration-manifest.mjs --check",
     "generate": "npm run openapi:generate && npm run db:manifest:generate",
-    "generate:check": "npm run repo-layout:check && npm run client-contract-baseline:check && npm run openapi:check && npm run db:manifest:check",
+    "generate:check": "npm run repo-layout:check && npm run backend-release-policy:check && npm run client-contract-baseline:check && npm run openapi:check && npm run db:manifest:check",
     "repo-layout:check": "node ../tools/repository/check-monorepo-layout.mjs",
+    "backend-release-policy:check": "node --test ../tools/repository/check-backend-release-policy.test.mjs && node ../tools/repository/check-backend-release-policy.mjs",
     "client-contract-baseline:check": "node ../tools/repository/check-client-contract-baseline.mjs",
     "contract:check": "npm --prefix ../tools/backend-contracts run contract:check && npm run openapi:check",
     "contract:parity:check": "node ./scripts/check-contract-parity.mjs",
@@ -110,6 +111,7 @@
   "overrides": {
     "@nestjs/swagger": {
       "js-yaml": "5.2.3"
-    }
+    },
+    "deepmerge-ts": "8.0.1"
   }
 }

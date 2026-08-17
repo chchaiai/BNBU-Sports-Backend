@@ -7,25 +7,25 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "df64a01ce2880f949e276c1d5befbd111e0162b4b74218480f635f139eff9ba7",
+    "currentContractSha256": "0e350cecf84a615dea53346ceff0a221de449976ce3d28be4cb84ba6aa3a4dd9",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 611,
+    "fileCount": 631,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
-      "backend-contract-doc": 103,
+      "backend-contract-doc": 114,
       "backend-generated": 88,
       "backend-script": 10,
       "backend-source": 216,
       "backend-test": 72,
-      "client-handoff": 38,
-      "contract-tool": 12,
-      "database": 37,
+      "client-handoff": 39,
+      "contract-tool": 14,
+      "database": 41,
       "docker": 2,
       "repository-doc": 1,
-      "repository-tool": 3,
+      "repository-tool": 5,
       "root-governance": 6
     },
     "files": [
@@ -263,6 +263,22 @@
       },
       {
         "path": "backend/prisma/migrations/0017_exemption_application_details/migration.sql",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0018_default_valid_exercise_reviews/manifest.json",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0018_default_valid_exercise_reviews/migration.sql",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0019_default_valid_initial_review_constraint/manifest.json",
+        "category": "database"
+      },
+      {
+        "path": "backend/prisma/migrations/0019_default_valid_initial_review_constraint/migration.sql",
         "category": "database"
       },
       {
@@ -2138,6 +2154,14 @@
         "category": "backend-contract-doc"
       },
       {
+        "path": "docs/backend-contracts/contract-history/2.0.0-contract-0e350cecf84a615dea53346ceff0a221de449976ce3d28be4cb84ba6aa3a4dd9/openapi.snapshot.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/contract-history/2.0.0-contract-0e350cecf84a615dea53346ceff0a221de449976ce3d28be4cb84ba6aa3a4dd9/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
         "path": "docs/backend-contracts/current-contract.json",
         "category": "backend-contract-doc"
       },
@@ -2171,6 +2195,14 @@
       },
       {
         "path": "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-1.4-to-2.0-compatibility.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-1.4-to-2.0-compatibility.md",
         "category": "backend-contract-doc"
       },
       {
@@ -2243,6 +2275,34 @@
       },
       {
         "path": "docs/backend-contracts/releases/1.5.0-contract/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/CHANGELOG.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/contract-diff.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/contract-diff.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/MIGRATION-NOTES.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/openapi.candidate.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/RELEASE-CHECKLIST.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.0-contract/release-manifest.json",
         "category": "backend-contract-doc"
       },
       {
@@ -2374,6 +2434,10 @@
         "category": "client-handoff"
       },
       {
+        "path": "docs/client-handoff/CONTRACT-2.0.0-HANDOFF.md",
+        "category": "client-handoff"
+      },
+      {
         "path": "docs/client-handoff/contract-history/1.1.0-contract-fb040b671e3f25c48279ad6b173ced5f633de1b1a1a9db0cc0f23a11e3fde4d1/openapi.manifest.json",
         "category": "client-handoff"
       },
@@ -2446,6 +2510,10 @@
         "category": "contract-tool"
       },
       {
+        "path": "tools/backend-contracts/major-change-approval-2.0.0.json",
+        "category": "contract-tool"
+      },
+      {
         "path": "tools/backend-contracts/package-lock.json",
         "category": "contract-tool"
       },
@@ -2458,8 +2526,20 @@
         "category": "contract-tool"
       },
       {
+        "path": "tools/backend-contracts/release-config.json",
+        "category": "contract-tool"
+      },
+      {
         "path": "tools/backend-contracts/release-provenance.json",
         "category": "contract-tool"
+      },
+      {
+        "path": "tools/repository/check-backend-release-policy.mjs",
+        "category": "repository-tool"
+      },
+      {
+        "path": "tools/repository/check-backend-release-policy.test.mjs",
+        "category": "repository-tool"
       },
       {
         "path": "tools/repository/check-client-contract-baseline.mjs",
@@ -2505,36 +2585,36 @@
       "files": 3
     },
     "placeholder": {
-      "matches": 56,
-      "files": 15
+      "matches": 66,
+      "files": 17
     },
     "mock": {
-      "matches": 242,
-      "files": 58
+      "matches": 243,
+      "files": 59
     },
     "stub": {
       "matches": 3,
       "files": 3
     },
     "not implemented": {
-      "matches": 19,
-      "files": 14
+      "matches": 21,
+      "files": 15
     },
     "NotImplementedException": {
       "matches": 1,
       "files": 1
     },
     "throw new Error": {
-      "matches": 193,
-      "files": 43
+      "matches": 212,
+      "files": 44
     },
     "console.log": {
-      "matches": 18,
-      "files": 10
+      "matches": 19,
+      "files": 11
     },
     "console.error": {
-      "matches": 19,
-      "files": 8
+      "matches": 20,
+      "files": 9
     },
     "debugger": {
       "matches": 2,
@@ -2553,8 +2633,8 @@
       "files": 86
     },
     "any": {
-      "matches": 310,
-      "files": 100
+      "matches": 320,
+      "files": 104
     },
     "unknown as": {
       "matches": 57,
@@ -2577,24 +2657,24 @@
       "files": 16
     },
     "hard-coded URL": {
-      "matches": 3430,
+      "matches": 3432,
       "files": 124
     },
     "default deny": {
-      "matches": 472,
-      "files": 77
+      "matches": 532,
+      "files": 79
     },
     "deprecated": {
-      "matches": 76,
-      "files": 20
+      "matches": 86,
+      "files": 22
     },
     "legacy": {
-      "matches": 94,
-      "files": 31
+      "matches": 131,
+      "files": 36
     },
     "compatibility": {
-      "matches": 240,
-      "files": 56
+      "matches": 281,
+      "files": 67
     }
   },
   "keywordDispositions": {

@@ -219,6 +219,16 @@
     { "changeId": "schema-minimum-changed-8df0919d11a83df3", "reason": "ADR-102 broadens gradeYear to the stable four-digit cohort range.", "owner": "BNBU Sports product and backend", "approvedDate": "2026-08-11", "expiration": "2027-08-31", "migrationPlan": "Android is upgraded in the same monorepo change; clients must remove the obsolete fixed 2000 minimum.", "affectedClients": ["Clients validating gradeYear against a 2000 minimum"], "targetVersion": "1.5.0-contract" },
     { "changeId": "schema-minimum-changed-94856ef8536503a9", "reason": "ADR-102 broadens gradeYear to the stable four-digit cohort range.", "owner": "BNBU Sports product and backend", "approvedDate": "2026-08-11", "expiration": "2027-08-31", "migrationPlan": "Android is upgraded in the same monorepo change; clients must remove the obsolete fixed 2000 minimum.", "affectedClients": ["Clients validating gradeYear against a 2000 minimum"], "targetVersion": "1.5.0-contract" },
     { "changeId": "schema-minimum-changed-c9a42d113c7a3057", "reason": "ADR-102 broadens gradeYear to the stable four-digit cohort range.", "owner": "BNBU Sports product and backend", "approvedDate": "2026-08-11", "expiration": "2027-08-31", "migrationPlan": "Android is upgraded in the same monorepo change; clients must remove the obsolete fixed 2000 minimum.", "affectedClients": ["Clients validating gradeYear against a 2000 minimum"], "targetVersion": "1.5.0-contract" },
-    { "changeId": "schema-minimum-changed-d83366ff85a25e57", "reason": "ADR-102 broadens gradeYear to the stable four-digit cohort range.", "owner": "BNBU Sports product and backend", "approvedDate": "2026-08-11", "expiration": "2027-08-31", "migrationPlan": "Android is upgraded in the same monorepo change; clients must remove the obsolete fixed 2000 minimum.", "affectedClients": ["Clients validating gradeYear against a 2000 minimum"], "targetVersion": "1.5.0-contract" }
+    { "changeId": "schema-minimum-changed-d83366ff85a25e57", "reason": "ADR-102 broadens gradeYear to the stable four-digit cohort range.", "owner": "BNBU Sports product and backend", "approvedDate": "2026-08-11", "expiration": "2027-08-31", "migrationPlan": "Android is upgraded in the same monorepo change; clients must remove the obsolete fixed 2000 minimum.", "affectedClients": ["Clients validating gradeYear against a 2000 minimum"], "targetVersion": "1.5.0-contract" },
+    {
+      "changeId": "schema-composition-changed-ddd6315e3a007326",
+      "reason": "ADR-105 changes only ReviewRecord descriptive semantics so system-created reviewVersion 1 may be VALID; the response structure, union alternatives, required fields, and transport values are unchanged.",
+      "owner": "BNBU Sports product and backend",
+      "approvedDate": "2026-08-17",
+      "expiration": "2027-08-31",
+      "migrationPlan": "Backend, Android, and Web are upgraded in the same monorepo change. Clients continue parsing the existing ReviewRecord shape and ReviewResult enum while treating new submissions as VALID by default.",
+      "affectedClients": ["Android clients", "Web teacher clients", "Clients displaying ReviewRecord teacher ownership"],
+      "targetVersion": "1.5.0-contract"
+    }
   ]
 }

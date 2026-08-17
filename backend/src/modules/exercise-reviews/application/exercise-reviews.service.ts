@@ -366,7 +366,12 @@ export class ExerciseReviewsService {
           ) {
             return this.idempotency.failure(new ApplicationError('CONFLICT_VERSION_MISMATCH', 409));
           }
-          if (record.status !== 'SUBMITTED' || current?.result !== 'PENDING') {
+          const isPendingDecision = record.status === 'SUBMITTED' && current?.result === 'PENDING';
+          const isValidInvalidation =
+            record.status === 'REVIEWED' &&
+            current?.result === 'VALID' &&
+            normalized.result === 'INVALID';
+          if (!isPendingDecision && !isValidInvalidation) {
             return this.idempotency.failure(new ApplicationError('REVIEW_ALREADY_COMPLETED', 409));
           }
           const teacher = await transaction.teacherProfile.findFirst({
@@ -400,7 +405,7 @@ export class ExerciseReviewsService {
             },
           });
           const updated = await transaction.exerciseRecord.update({
-            where: { id: recordId, version: input.expectedVersion, status: 'SUBMITTED' },
+            where: { id: recordId, version: input.expectedVersion, status: record.status },
             data: { status: 'REVIEWED', updatedAt: now, version: { increment: 1 } },
           });
           await this.appendEvidence(
@@ -411,6 +416,7 @@ export class ExerciseReviewsService {
             principal,
             facts,
             'REVIEWED',
+            record.status,
           );
           return this.idempotency.success(projectExerciseReview(review), {
             principalId: principal.userId,
@@ -465,6 +471,7 @@ export class ExerciseReviewsService {
     principal: AuthenticatedPrincipal,
     facts: MutationFacts,
     eventType: 'REVIEWED' | 'REOPENED',
+    previousRecordStatus?: ExerciseRecord['status'],
   ): Promise<void> {
     const now = this.clock.now();
     await transaction.exerciseRecordEvent.create({
@@ -474,7 +481,7 @@ export class ExerciseReviewsService {
         recordId: record.id,
         eventVersion: record.version,
         eventType,
-        fromStatus: eventType === 'REVIEWED' ? 'SUBMITTED' : 'REVIEWED',
+        fromStatus: previousRecordStatus ?? (eventType === 'REVIEWED' ? 'SUBMITTED' : 'REVIEWED'),
         toStatus: record.status,
         actorUserId: principal.userId,
         authSessionId: principal.sessionId,

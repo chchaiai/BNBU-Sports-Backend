@@ -173,6 +173,49 @@ describe('ExerciseReview HTTP E2E', () => {
       .sign(await importPKCS8(TEST_PRIVATE_KEY, 'EdDSA'));
   };
 
+  it('lets the responsible teacher append INVALID to a system-valid submission', async () => {
+    const seeded = await seedSubmittedExerciseRecord(prisma, fixture, 'AUTO-VALID', 'VALID');
+    const teacher = await login(fixture.teacherEmail);
+
+    const invalid = await request(
+      `/api/v1/exercise-records/${seeded.recordId}/reviews`,
+      authenticated(
+        teacher,
+        'POST',
+        {
+          result: 'INVALID',
+          reasonCode: 'INVALID_MEDIA',
+          reason: 'Synthetic media mismatch',
+          publicComment: '凭证存在问题',
+          internalNote: null,
+          creditedDurationOverrideSeconds: null,
+          expectedReviewVersion: 1,
+          expectedVersion: 2,
+        },
+        uuidv7(),
+      ),
+    );
+
+    assert.equal(invalid.status, 201, JSON.stringify(invalid.body));
+    assert.equal(object(invalid.body.data).result, 'INVALID');
+    const record = await prisma.exerciseRecord.findUniqueOrThrow({
+      where: { id: seeded.recordId },
+    });
+    assert.equal(record.status, 'REVIEWED');
+    assert.equal(record.version, 3);
+    const reviews = await prisma.reviewRecord.findMany({
+      where: { recordId: seeded.recordId },
+      orderBy: { reviewVersion: 'asc' },
+    });
+    assert.deepEqual(
+      reviews.map(({ result, teacherId }) => ({ result, teacherId })),
+      [
+        { result: 'VALID', teacherId: null },
+        { result: 'INVALID', teacherId: fixture.teacherProfileId },
+      ],
+    );
+  });
+
   it('appends VALID, lists history, reopens, and appends INVALID without changing duration facts', async () => {
     const seeded = await seedSubmittedExerciseRecord(prisma, fixture, 'FLOW');
     const teacher = await login(fixture.teacherEmail);

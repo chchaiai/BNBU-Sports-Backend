@@ -17,13 +17,17 @@ const HTTP_METHODS = new Set([
 ]);
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..", "..");
-const publishedHash =
-  "c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b";
+const releaseConfig = JSON.parse(
+  await readFile(path.join(scriptDirectory, "release-config.json"), "utf8"),
+);
+if (releaseConfig.formatVersion !== 1)
+  throw new Error("Unsupported contract release config format");
+const publishedHash = releaseConfig.publishedBaseline.sha256;
 const defaults = {
   baseline: path.join(
     repositoryRoot,
     "docs/backend-contracts/contract-history",
-    `1.4.0-contract-${publishedHash}`,
+    `${releaseConfig.publishedBaseline.version}-${publishedHash}`,
     "openapi.snapshot.yaml",
   ),
   current: path.join(repositoryRoot, "docs/backend-contracts/openapi.yaml"),
@@ -33,12 +37,15 @@ const defaults = {
   ),
   json: path.join(
     repositoryRoot,
-    "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.json",
+    releaseConfig.compatibility.jsonPath,
   ),
   markdown: path.join(
     repositoryRoot,
-    "docs/backend-contracts/openapi-1.4-to-1.5-compatibility.md",
+    releaseConfig.compatibility.markdownPath,
   ),
+  majorChangeApproval: releaseConfig.majorChangeApprovalPath
+    ? path.join(repositoryRoot, releaseConfig.majorChangeApprovalPath)
+    : null,
 };
 
 function canonical(value) {
@@ -641,6 +648,52 @@ function validateException(exception) {
     );
 }
 
+export function validateMajorChangeApproval(approval, currentVersion) {
+  if (approval.formatVersion !== 1)
+    throw new Error("Unsupported major change approval format");
+  if (approval.targetVersion !== currentVersion)
+    throw new Error(
+      `Major change approval targets ${approval.targetVersion}, expected ${currentVersion}`,
+    );
+  for (const field of ["approvedDate", "approvalBasis", "approvedBy"])
+    if (!approval[field])
+      throw new Error(`Major change approval is missing ${field}`);
+  if (!Number.isInteger(approval.expectedBreakingChangeCount))
+    throw new Error(
+      "Major change approval expectedBreakingChangeCount must be an integer",
+    );
+  if (!Array.isArray(approval.changeIds))
+    throw new Error("Major change approval changeIds must be an array");
+  if (new Set(approval.changeIds).size !== approval.changeIds.length)
+    throw new Error("Major change approval contains duplicate change IDs");
+  if (approval.changeIds.length !== approval.expectedBreakingChangeCount)
+    throw new Error(
+      `Major change approval declares ${approval.expectedBreakingChangeCount} changes but lists ${approval.changeIds.length}`,
+    );
+}
+
+export function validateMajorChangeApprovalSet(approval, changes) {
+  const breakingChangeIds = changes
+    .filter((change) => change.classification === "BREAKING")
+    .map((change) => change.id)
+    .sort();
+  const approvedChangeIds = new Set(approval.changeIds);
+  const missing = breakingChangeIds.filter(
+    (changeId) => !approvedChangeIds.has(changeId),
+  );
+  const extra = [...approvedChangeIds]
+    .filter((changeId) => !breakingChangeIds.includes(changeId))
+    .sort();
+  if (
+    breakingChangeIds.length !== approval.expectedBreakingChangeCount ||
+    missing.length > 0 ||
+    extra.length > 0
+  )
+    throw new Error(
+      `Major change approval does not exactly match current breaking changes (actual=${breakingChangeIds.length}, expected=${approval.expectedBreakingChangeCount}, missing=${missing.length}, extra=${extra.length})`,
+    );
+}
+
 function renderMarkdown(report) {
   const rows = report.changes.map(
     (change) =>
@@ -663,6 +716,12 @@ Result: **${report.compatible ? "COMPATIBLE" : "BLOCKED"}**.
 | Approved exceptions | ${report.summary.approvedExceptions} |
 | Unapproved blockers | ${report.summary.unapprovedBlockers} |
 
+${
+  report.majorChangeApproval
+    ? `Major-version approval: **${report.majorChangeApproval.approvedChangeCount}** breaking changes approved by ${report.majorChangeApproval.approvedBy} on ${report.majorChangeApproval.approvedDate}.\n\nApproval basis: ${report.majorChangeApproval.approvalBasis}\n`
+    : "Major-version approval: none.\n"
+}
+
 ## Direction-aware changes
 
 | Change ID | Classification | Direction | Kind | Location | Approved exception |
@@ -684,31 +743,65 @@ async function writeOrCheck(file, expected, check) {
 
 async function main() {
   const options = parseArguments(process.argv.slice(2));
-  const [baselineContents, currentContents, allowlistContents] =
-    await Promise.all([
+  const [
+    baselineContents,
+    currentContents,
+    allowlistContents,
+    majorApprovalContents,
+  ] = await Promise.all([
       readFile(options.baseline, "utf8"),
       readFile(options.current, "utf8"),
       readFile(options.allowlist, "utf8"),
+      options.majorChangeApproval
+        ? readFile(options.majorChangeApproval, "utf8")
+        : Promise.resolve(null),
     ]);
   if (hash(baselineContents) !== publishedHash)
-    throw new Error("Published Contract 1.4 snapshot hash mismatch");
+    throw new Error(
+      `Published ${releaseConfig.publishedBaseline.version} snapshot hash mismatch`,
+    );
   const baselineDocument = YAML.parse(baselineContents);
   const currentDocument = YAML.parse(currentContents);
+  if (currentDocument.info.version !== releaseConfig.candidateVersion)
+    throw new Error(
+      `Candidate version must be ${releaseConfig.candidateVersion}, got ${currentDocument.info.version}`,
+    );
   const allowlist = JSON.parse(allowlistContents);
+  const majorChangeApproval = majorApprovalContents
+    ? JSON.parse(majorApprovalContents)
+    : null;
+  if (majorChangeApproval)
+    validateMajorChangeApproval(
+      majorChangeApproval,
+      currentDocument.info.version,
+    );
   for (const exception of allowlist.exceptions ?? [])
     validateException(exception);
   const exceptions = new Map(
-    (allowlist.exceptions ?? []).map((exception) => [
-      exception.changeId,
-      exception,
-    ]),
+    (allowlist.exceptions ?? [])
+      .filter(
+        (exception) => exception.targetVersion === currentDocument.info.version,
+      )
+      .map((exception) => [exception.changeId, exception]),
   );
-  const changes = compareContracts(baselineDocument, currentDocument).map(
-    (change) => ({
-      ...change,
-      approvedException: exceptions.get(change.id) ?? null,
-    }),
-  );
+  const comparedChanges = compareContracts(baselineDocument, currentDocument);
+  const approvedMajorChangeIds = new Set(majorChangeApproval?.changeIds ?? []);
+  if (majorChangeApproval)
+    validateMajorChangeApprovalSet(majorChangeApproval, comparedChanges);
+  const changes = comparedChanges.map((change) => ({
+    ...change,
+    approvedException:
+      exceptions.get(change.id) ??
+      (approvedMajorChangeIds.has(change.id)
+        ? {
+            approvalType: "MAJOR_VERSION_SCOPE",
+            approvedBy: majorChangeApproval.approvedBy,
+            approvedDate: majorChangeApproval.approvedDate,
+            approvalBasis: majorChangeApproval.approvalBasis,
+            targetVersion: majorChangeApproval.targetVersion,
+          }
+        : null),
+  }));
   const blockers = changes.filter(
     (change) =>
       ["BREAKING", "REVIEW_REQUIRED"].includes(change.classification) &&
@@ -727,6 +820,15 @@ async function main() {
       operationCount: operations(currentDocument).size,
     },
     compatible: blockers.length === 0,
+    majorChangeApproval: majorChangeApproval
+      ? {
+          targetVersion: majorChangeApproval.targetVersion,
+          approvedBy: majorChangeApproval.approvedBy,
+          approvedDate: majorChangeApproval.approvedDate,
+          approvalBasis: majorChangeApproval.approvalBasis,
+          approvedChangeCount: majorChangeApproval.changeIds.length,
+        }
+      : null,
     summary: {
       breaking: changes.filter((change) => change.classification === "BREAKING")
         .length,

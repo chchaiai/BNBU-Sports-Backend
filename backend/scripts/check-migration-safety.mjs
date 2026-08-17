@@ -29,6 +29,8 @@ const expectedMigrationDirectories = [
   '0015_email_verification_fk_alignment',
   '0016_optional_course_exercise_description',
   '0017_exemption_application_details',
+  '0018_default_valid_exercise_reviews',
+  '0019_default_valid_initial_review_constraint',
 ];
 
 if (
@@ -139,6 +141,18 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
         'DROP CONSTRAINT "exercise_record_events_type_check"',
         'REPLACE CONSTRAINT "exercise_record_events_type_check"',
       );
+  }
+  if (migrationId === '0018_default_valid_exercise_reviews') {
+    destructiveScanSql = destructiveScanSql.replace(
+      'DROP CONSTRAINT "review_records_shape_check"',
+      'REPLACE CONSTRAINT "review_records_shape_check"',
+    );
+  }
+  if (migrationId === '0019_default_valid_initial_review_constraint') {
+    destructiveScanSql = destructiveScanSql.replace(
+      'DROP CONSTRAINT "review_records_initial_pending_check"',
+      'REPLACE CONSTRAINT "review_records_initial_pending_check"',
+    );
   }
   if (
     migrationId === '0002_teaching_structure' &&
@@ -659,5 +673,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through structured exemption application details)\n',
+  'Migration safety: PASS (forward-only Foundation through default-valid exercise reviews)\n',
 );

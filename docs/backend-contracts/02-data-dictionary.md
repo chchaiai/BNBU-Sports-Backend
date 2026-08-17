@@ -425,7 +425,7 @@
 | ExerciseRecord | `cancelledAt` | `cancelled_at` | date-time / timestamp | 微秒精度 | 否 | 是 | `null` | UTC 时间点 | 进入 CANCELLED 时由服务端写入；其他状态必须为 null | `null` | 服务端状态机 | SENSITIVE | 取消不删除事实；具体允许取消窗口待状态机阶段冻结 |
 | ExerciseRecord | `clientRequestId` | `client_request_id` | string / varchar | 64 | 是 | 否 | — | — | 同 student/action 唯一；字符白名单 | `android-3f4c...` | 客户端 | INTERNAL | 与 HTTP Idempotency-Key 共同防重复；保存期阶段 8 冻结 |
 | ExerciseRecord | `currentReview` | —（派生） | object | — | 响应是 | 否 | — | — | 只由最高 reviewVersion 的 ReviewRecord 投影；精确包含 result、reasonCode、publicComment | `{"result":"INVALID","reasonCode":"INVALID_MEDIA","publicComment":"请重新确认凭证"}` | 后端 projection | SENSITIVE | 不落库；学生端不得复用完整 ReviewRecord |
-| ExerciseRecord | `currentReview.result` | —（派生） | enum | 16 | 响应是 | 否 | `PENDING` | — | `ReviewResult` | `INVALID` | 后端 projection | SENSITIVE | 无审核记录时按 PENDING；不覆盖 Review 历史 |
+| ExerciseRecord | `currentReview.result` | —（派生） | enum | 16 | 响应是 | 否 | `VALID` | — | `ReviewResult` | `INVALID` | 后端 projection | SENSITIVE | 新提交默认 VALID；旧 PENDING 与显式重开仍兼容；不覆盖 Review 历史 |
 | ExerciseRecord | `currentReview.reasonCode` | —（派生） | enum | 64 | 响应是 | 是 | `null` | — | `ReviewReasonCode`；INVALID 必有，VALID/PENDING 可空 | `INVALID_MEDIA` | 后端 projection | SENSITIVE | 客户端业务分支只依赖 code，不匹配 reason 文本 |
 | ExerciseRecord | `currentReview.publicComment` | —（派生） | string | 1000 | 响应是 | 是 | `null` | — | 最大 1000 | `请确保凭证清晰可见` | 后端 projection | SENSITIVE | 学生可见；不得包含 internalNote |
 
@@ -460,7 +460,7 @@
 | ReviewRecord | `id` | `id` | string / varchar | 64 | 是 | 否 | 服务端生成 | — | opaque；唯一 | `rev_01JABC123` | 服务端 | INTERNAL | append-only 审核历史 ID |
 | ReviewRecord | `organizationId` | `organization_id` | string / varchar | 64 | 是 | 否 | — | — | 引用 `Organization.id` | `org_bnbu` | 服务端 | INTERNAL | 从 Record/ClassSection 校验 |
 | ReviewRecord | `recordId` | `record_id` | string / varchar | 64 | 是 | 否 | — | — | 引用 `ExerciseRecord.id` | `rec_01JABC123` | 审核动作 | SENSITIVE | 同一 record 可有多条历史 |
-| ReviewRecord | `teacherId` | `teacher_id` | string / varchar | 64 | 条件必填 | 是 | `null` | — | SYSTEM 创建的首条 PENDING 允许 null；教师产生 VALID/INVALID 或教师重开 PENDING 时必填并引用负责该班的 `TeacherProfile.id` | `tch_01JABC123` | 认证/授权服务或系统提交事务 | SENSITIVE | 与 ClassSection/ExerciseRecord 的 `teacherId` 同义；管理员默认不得代行教师审核 |
+| ReviewRecord | `teacherId` | `teacher_id` | string / varchar | 64 | 条件必填 | 是 | `null` | — | SYSTEM 创建的首条 VALID 或历史首条 PENDING 允许 null；教师产生后续 VALID/INVALID 时必填并引用负责该班的 `TeacherProfile.id` | `tch_01JABC123` | 认证/授权服务或系统提交事务 | SENSITIVE | 与 ClassSection/ExerciseRecord 的 `teacherId` 同义；管理员默认不得代行教师审核 |
 | ReviewRecord | `reviewVersion` | `review_version` | integer / integer | 32-bit | 是 | 否 | 服务端递增 | 版本序号 | 同 record 从 1 连续递增且唯一 | `2` | 服务端 | INTERNAL | 稳定确定最新审核，不依赖时间并列；与 optimistic-lock `version` 分离 |
 | ReviewRecord | `previousReviewId` | `previous_review_id` | string / varchar | 64 | 否 | 是 | `null` | — | 引用同一 record 的上一条 ReviewRecord；首版为 null | `rev_01JOLD123` | 服务端 | INTERNAL | 修改结果通过追加，不覆盖旧行 |
 | ReviewRecord | `result` | `result` | enum / varchar | 16 | 是 | 否 | `PENDING` | — | `PENDING/VALID/INVALID`；阶段 3 冻结 | `VALID` | 教师/状态机 | SENSITIVE | 与 ExerciseRecord.status 分离 |

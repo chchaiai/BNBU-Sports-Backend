@@ -86,6 +86,16 @@ export const foundationMigrations = [
     sha256: '1f04f19f20c0a13006779d11c2bddb643650463e3051eed8c3e6a14e5730f959',
     destructive: false,
   },
+  {
+    migrationId: '0018_default_valid_exercise_reviews',
+    sha256: 'c3d1e0e589a8c4e86ab3b86c3429a29e2eadd5c8f2157483e39ad86b4eebec20',
+    destructive: false,
+  },
+  {
+    migrationId: '0019_default_valid_initial_review_constraint',
+    sha256: '3fb294065f22698fb924672911455588745cb39a40d343c91261b3b774cd3be0',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -105,3 +115,5 @@ export const emailOnlyAuthMigration = foundationMigrations[13];
 export const emailVerificationFkAlignmentMigration = foundationMigrations[14];
 export const optionalCourseExerciseDescriptionMigration = foundationMigrations[15];
 export const exemptionApplicationDetailsMigration = foundationMigrations[16];
+export const defaultValidExerciseReviewsMigration = foundationMigrations[17];
+export const defaultValidInitialReviewConstraintMigration = foundationMigrations[18];

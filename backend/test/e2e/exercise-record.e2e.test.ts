@@ -320,10 +320,10 @@ describe('ExerciseRecord HTTP E2E', () => {
     );
     assert.equal(submitted.status, 200);
     const record = object(submitted.body.data);
-    assert.equal(record.status, 'SUBMITTED');
+    assert.equal(record.status, 'REVIEWED');
     assert.equal(Object.hasOwn(record, 'studentRemark'), false);
     assert.deepEqual(record.currentReview, {
-      result: 'PENDING',
+      result: 'VALID',
       reasonCode: null,
       publicComment: null,
     });
@@ -490,7 +490,7 @@ describe('ExerciseRecord HTTP E2E', () => {
       authenticated(token, 'POST', { mediaIds: [mediaId], expectedVersion: 1 }, uuidv7()),
     );
     assert.equal(submitted.status, 200);
-    assert.equal(object(submitted.body.data).status, 'SUBMITTED');
+    assert.equal(object(submitted.body.data).status, 'REVIEWED');
   });
 
   it('returns a stable conflict when a second draft is created for one session', async () => {

@@ -34,7 +34,7 @@ IOS_PROJECT_IMPORT_REQUIRED=YES
 WEB_REFRESH_COOKIE_STATUS=ACCEPTED_WITH_STAGING_VALIDATION
 ```
 
-`CLIENT_CONTRACT_BASELINE_GATE=YES` 只表示 Android 与 Web 已精确绑定同一份 `1.5.0-contract` 快照、hash 和生成模型输入。`ANDROID_FOUNDATION_LOCAL_GATE=YES` 只表示 Android 本地 `/api/v1` transport 与构建门禁已建立；二者都不表示 Staging 已部署或联调已经开始。
+`CLIENT_CONTRACT_BASELINE_GATE=YES` 只表示 Android 与 Web 已精确绑定同一份 `2.0.0-contract` 快照、hash 和生成模型输入。`ANDROID_FOUNDATION_LOCAL_GATE=YES` 只表示 Android 本地 `/api/v1` transport 与构建门禁已建立；二者都不表示 Staging 已部署或联调已经开始。
 
 `PRIVATE_PRE_STAGING_EXECUTION_PLAN_READY=YES` 只表示目标、命令、影响、验证和回退方案已落盘。由于服务器写入、`sudo`、SMTP、staging seed/reset、私有 Android HTTPS 路由仍需单独批准或补齐，执行 readiness 继续为 `NO`。
 

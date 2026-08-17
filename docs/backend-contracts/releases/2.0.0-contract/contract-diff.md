@@ -1,11 +1,11 @@
-# OpenAPI Compatibility Report: 1.4.0-contract to 1.5.0-contract
+# OpenAPI Compatibility Report: 1.4.0-contract to 2.0.0-contract
 
 Result: **COMPATIBLE**.
 
 | Source | Version | SHA-256 | Operations |
 | --- | --- | --- | ---: |
 | Published baseline | 1.4.0-contract | `c5d18c4894bbe421074cba27da3b39a9076328c499cc742b273665994c29059b` | 122 |
-| Candidate | 1.5.0-contract | `bf303721fcf8cf7dac2af37559a6ddb77bdf615ad0e3cb63b6849ea3ee645302` | 126 |
+| Candidate | 2.0.0-contract | `0e350cecf84a615dea53346ceff0a221de449976ce3d28be4cb84ba6aa3a4dd9` | 126 |
 
 | Classification | Count |
 | --- | ---: |
@@ -14,6 +14,11 @@ Result: **COMPATIBLE**.
 | Non-breaking | 17 |
 | Approved exceptions | 55 |
 | Unapproved blockers | 0 |
+
+Major-version approval: **55** breaking changes approved by repository-owner on 2026-08-18.
+
+Approval basis: The repository owner explicitly approved the 55 breaking changes reported for the Contract 2.0 formal scope; this approval does not authorize deployment or database migration execution.
+
 
 ## Direction-aware changes
 

@@ -16,6 +16,7 @@ import { SecureDigestService } from '../../../common/security/secure-digest.serv
 import { Clock } from '../../../common/time/clock.js';
 import { IdGenerator } from '../../../common/time/id-generator.js';
 import { Prisma, type ExerciseRecord } from '../../../generated/prisma/client.js';
+import { ScoresService } from '../../scores/application/scores.service.js';
 import {
   assertCreditableDuration,
   creditedDuration,
@@ -64,6 +65,7 @@ export class ExerciseRecordsService {
     private readonly digest: SecureDigestService,
     private readonly clock: Clock,
     private readonly ids: IdGenerator,
+    private readonly scores: ScoresService,
   ) {}
 
   async list(
@@ -401,7 +403,7 @@ export class ExerciseRecordsService {
   ): Promise<ExerciseRecordProjection> {
     this.assertStudentContext(principal, context);
     const mediaIds = [...input.mediaIds].sort();
-    return this.idempotency.execute(
+    const result = await this.idempotency.execute(
       {
         organizationId: principal.organizationId,
         principalId: principal.userId,
@@ -544,7 +546,7 @@ export class ExerciseRecordsService {
           const updated = await transaction.exerciseRecord.update({
             where: { id: current.id, version: input.expectedVersion, status: 'DRAFT' },
             data: {
-              status: 'SUBMITTED',
+              status: 'REVIEWED',
               submittedAt: now,
               updatedAt: now,
               version: { increment: 1 },
@@ -556,15 +558,21 @@ export class ExerciseRecordsService {
               organizationId: updated.organizationId,
               recordId: updated.id,
               reviewVersion: 1,
-              result: 'PENDING',
+              result: 'VALID',
+              reviewedAt: now,
               createdAt: now,
             },
           });
           await this.appendEvent(transaction, updated, principal, facts, {
             eventType: 'SUBMITTED',
             fromStatus: 'DRAFT',
-            toStatus: 'SUBMITTED',
-            safeMetadata: { mediaCount: media.length },
+            toStatus: 'REVIEWED',
+            safeMetadata: {
+              mediaCount: media.length,
+              reviewId: review.id,
+              reviewVersion: review.reviewVersion,
+              reviewResult: review.result,
+            },
           });
           await this.appendEvidence(transaction, updated, principal, facts, {
             permissionId: 'EXERCISE-RECORD-SUBMIT',
@@ -602,6 +610,8 @@ export class ExerciseRecordsService {
         }
       },
     );
+    await this.scores.processReviewChange(context.recordId);
+    return result;
   }
 
   async discard(

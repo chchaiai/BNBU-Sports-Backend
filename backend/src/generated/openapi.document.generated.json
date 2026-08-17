@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "BNBU Sports Unified API",
-    "version": "1.5.0-contract",
+    "version": "2.0.0-contract",
     "summary": "Unified contract for the sports check-in platform",
     "license": {
       "name": "UNLICENSED",
@@ -3552,9 +3552,9 @@
                       "actualDurationSeconds": 5400,
                       "pausedDurationSeconds": 600,
                       "creditedDurationSeconds": 3600,
-                      "status": "SUBMITTED",
+                      "status": "REVIEWED",
                       "currentReview": {
-                        "result": "PENDING",
+                        "result": "VALID",
                         "reasonCode": null,
                         "publicComment": null
                       },
@@ -3814,7 +3814,7 @@
           "resourceResolver": "EXERCISE_RECORD_FROM_PATH",
           "defaultDeny": true
         },
-        "summary": "Submit a draft and atomically create ReviewRecord v1 PENDING",
+        "summary": "Submit a draft and atomically create a system VALID ReviewRecord",
         "parameters": [
           {
             "$ref": "#/components/parameters/RecordId"
@@ -4383,8 +4383,8 @@
           "resourceResolver": "EXERCISE_RECORD_FROM_PATH",
           "defaultDeny": true
         },
-        "summary": "Append a VALID or INVALID review decision",
-        "description": "creditedDurationOverrideSeconds must be null until ADR-047 is accepted.",
+        "summary": "Append an INVALID decision for a current VALID record, or resolve legacy PENDING",
+        "description": "New submissions are system-valid by default. The responsible teacher may append INVALID when a problem is found. Legacy or explicitly reopened PENDING records may still be resolved as VALID or INVALID. Existing ReviewRecord rows are never overwritten. creditedDurationOverrideSeconds must be null until ADR-047 is accepted.",
         "x-field-blocker": "ADR-047",
         "x-field-deny-error": "REVIEW_CREDIT_OVERRIDE_NOT_APPROVED",
         "parameters": [
@@ -11714,7 +11714,7 @@
                 "type": "null"
               }
             ],
-            "description": "Null for initial and reopened PENDING rows; required for teacher-created VALID or INVALID rows."
+            "description": "Null for the initial system VALID row and legacy system PENDING rows; required for teacher-created VALID or INVALID rows."
           },
           "reviewVersion": {
             "type": "integer",

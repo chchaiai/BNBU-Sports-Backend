@@ -8,6 +8,7 @@ export async function seedSubmittedExerciseRecord(
   prisma: PrismaClient,
   fixture: FoundationFixture,
   suffix: string,
+  initialResult: 'PENDING' | 'VALID' = 'PENDING',
 ): Promise<{
   recordId: string;
   sessionId: string;
@@ -59,7 +60,7 @@ export async function seedSubmittedExerciseRecord(
       actualDurationSeconds: 3600n,
       pausedDurationSeconds: 0n,
       creditedDurationSeconds: 3600n,
-      status: 'SUBMITTED',
+      status: initialResult === 'VALID' ? 'REVIEWED' : 'SUBMITTED',
       submittedAt: now,
       clientRequestId: `review-record-${suffix}-${uuidv7()}`,
       version: 2,
@@ -73,7 +74,8 @@ export async function seedSubmittedExerciseRecord(
       organizationId: fixture.organizationId,
       recordId,
       reviewVersion: 1,
-      result: 'PENDING',
+      result: initialResult,
+      reviewedAt: initialResult === 'VALID' ? now : null,
       createdAt: now,
     },
   });

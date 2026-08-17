@@ -336,7 +336,7 @@ Stage 13 物理化两个不可变支持事实：`RosterAlignmentRun` 冻结 rost
 | 主要字段概览 | `id`、`organizationId`、`semesterId`、`courseId`、`classSectionId`、`enrollmentId`、`studentId`、`teacherId`、`sessionId`、`businessDate`、`creditType`、`sportType`、`sportName`、`description`、`actualDurationSeconds`、`pausedDurationSeconds`、`creditedDurationSeconds`、`status`、`submittedAt`、`cancelledAt`、`clientRequestId`、`createdAt`、`updatedAt`、`version` |
 | 与其他对象关系 | 一对一来源于 Session；绑定 1..7 个可用 MediaEvidence 才可提交；拥有 ReviewRecord 历史；可出现在多个 ScoreContribution 计算修订中 |
 | 创建来源 | 学生确认提交命令；后端重新计算时长、businessDate、关系链和媒体条件后幂等创建 |
-| 生命周期 | `DRAFT` → `SUBMITTED` → `REVIEWED`；`REVIEWED` 重开时追加 PENDING ReviewRecord 并回到 `SUBMITTED`，再次裁决后回到 `REVIEWED`；`CANCELLED` 保留为闭集值但学生撤回能力关闭。流程状态不含 VALID/INVALID。旧 `NEEDS_REVISION` 迁移为 Record=`SUBMITTED` 且最新 Review=`PENDING`，v1 不保留可执行的“要求补正”状态 |
+| 生命周期 | 新记录提交时 `DRAFT` → `REVIEWED` 并由系统原子创建首条 VALID ReviewRecord；历史 `SUBMITTED + PENDING` 仍可由教师裁决后进入 `REVIEWED`；`REVIEWED` 显式重开时追加 PENDING ReviewRecord 并回到 `SUBMITTED`。`CANCELLED` 保留为闭集值但学生撤回能力关闭。流程状态不含 VALID/INVALID。旧 `NEEDS_REVISION` 迁移为 Record=`SUBMITTED` 且最新 Review=`PENDING`，v1 不保留可执行的“要求补正”状态 |
 | 是否允许软删除 | 否；无效或取消记录仍保留 |
 | 是否需要审计 | 是；提交、撤回/取消、流程推进和归属重分配均审计 |
 | 数据所有者 | `Organization`/ClassSection；学生是记录主体，责任教师是审核 steward |
@@ -374,14 +374,14 @@ Stage 13 物理化两个不可变支持事实：`RosterAlignmentRun` 冻结 rost
 | 唯一标识 | `id`；`(recordId, reviewVersion)` 唯一；`previousReviewId` 形成同 Record 内历史链 |
 | 所属组织范围 | `organizationId` |
 | 主要字段概览 | `id`、`organizationId`、`recordId`、`reviewVersion`、`result`、`teacherId`、`previousReviewId`、`reasonCode`、`reason`、`publicComment`、`internalNote`、`creditedDurationOverrideSeconds`、`reviewedAt`、`createdAt` |
-| 与其他对象关系 | 必属一个 ExerciseRecord；首条 PENDING 可由系统创建且 reviewer 为空；VALID/INVALID 由责任教师创建；ScoreContribution 指向实际生效的 ReviewRecord |
-| 创建来源 | Record 提交时系统追加 PENDING；教师审核或修改审核时追加新行 |
+| 与其他对象关系 | 必属一个 ExerciseRecord；新提交的首条 VALID 由系统创建且 reviewer 为空；历史首条 PENDING 也可为系统事实；教师发现异常时追加 INVALID，ScoreContribution 指向实际生效的 ReviewRecord |
+| 创建来源 | Record 提交时系统追加 VALID；历史 PENDING 的教师裁决、异常否决或显式重开时追加新行 |
 | 生命周期 | 只追加；当前结果取最高连续 `reviewVersion`；旧行永不更新、删除或失效覆盖 |
 | 是否允许软删除 | 否 |
 | 是否需要审计 | 是；Review 本身是领域历史，同时操作另写 AuditLog（ADR-016） |
 | 数据所有者 | `Organization`/ClassSection |
 | 哪些客户端可以读取 | 学生客户端只读 `currentReview.result/reasonCode/publicComment`；教师 Web 读本人班完整历史；管理 Web 仅治理权限；`internalNote` 永不下发学生 |
-| 哪些角色可以修改 | 无角色可修改既有行；责任 `TEACHER` 可追加新审核，系统可追加初始 PENDING；管理员默认不能代审 |
+| 哪些角色可以修改 | 无角色可修改既有行；责任 `TEACHER` 可追加新审核，系统可追加初始 VALID（历史首条 PENDING 兼容）；管理员默认不能代审 |
 
 `creditedDurationOverrideSeconds` 仅用于承接现有教师端 `approvedHours` 的迁移和表达候选能力。当前已确认基线是后端按 Session 秒数折算并由 `VALID/INVALID` 决定是否计入；在新增 ADR 明确教师是否可把 1h/2h/0 改写为另一档之前，该字段必须为 `null`，任何客户端都不得开放写入口。
 
@@ -702,7 +702,7 @@ erDiagram
 | ExerciseSession → ExerciseRecord | 1 : 0..1 | Session 可取消/过期而无 Record；一个 Session 不得重复提交 |
 | Session → MediaEvidence | 1 : 0..N | 打卡媒体先归 Session；数量/类型由后端规则裁决 |
 | ExerciseRecord → MediaEvidence | 1 : 0..N（提交时 1..7） | 上传阶段可未绑定；正式提交至少 1 个且最多 6 图+1视频，每个媒体最多绑定一个 Record |
-| ExerciseRecord → ReviewRecord | 1 : 0..N（提交后至少 1） | 提交时系统追加 PENDING；后续结果全部追加，绝不覆盖 |
+| ExerciseRecord → ReviewRecord | 1 : 0..N（提交后至少 1） | 新提交时系统追加 VALID；存量 PENDING 与后续教师结果全部追加，绝不覆盖 |
 | Enrollment → StudentScore | 1 : 0..1 | 尚未计算可不存在；一旦建立即是该 Enrollment 的当前聚合 |
 | ClassSection → ScoreRule | 1 : 0..N | 多版本并存，某时点最多一个 ACTIVE |
 | ScoreRule → StudentScore | 1 : 0..N | 未计算 Score 可暂不引用；已计算必须引用明确版本 |
