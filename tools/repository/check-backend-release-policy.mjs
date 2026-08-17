@@ -75,16 +75,31 @@ function refExists(reference) {
   }
 }
 
+function hasMergeBase(reference) {
+  try {
+    git("merge-base", reference, "HEAD");
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function changeBaseCandidates(branch, githubBaseRef) {
+  const isDefaultBranch = ["main", "master", "monorepo/main"].includes(branch);
+  return [
+    githubBaseRef === undefined ? null : `origin/${githubBaseRef}`,
+    branch === "monorepo/main" ? null : "monorepo/main",
+    isDefaultBranch ? null : "origin/main",
+  ].filter(Boolean);
+}
+
 function changeBase() {
   const branch = git("branch", "--show-current");
-  const candidates = [
-    process.env.GITHUB_BASE_REF === undefined
-      ? null
-      : `origin/${process.env.GITHUB_BASE_REF}`,
-    branch === "monorepo/main" ? null : "monorepo/main",
-    branch === "main" || branch === "master" ? null : "origin/main",
-  ].filter(Boolean);
-  return candidates.find(refExists) ?? "HEAD^";
+  return (
+    changeBaseCandidates(branch, process.env.GITHUB_BASE_REF).find(
+      (reference) => refExists(reference) && hasMergeBase(reference),
+    ) ?? "HEAD^"
+  );
 }
 
 function currentOpenApiVersion(contents) {
