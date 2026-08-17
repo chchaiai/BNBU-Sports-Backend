@@ -4,15 +4,15 @@
 
 | 项目 | 值 |
 | --- | --- |
-| Version | `2.0.1-contract` |
+| Version | `2.0.2-contract` |
 | Release state | `published` |
-| SHA-256 | `061a61f9f542a61878474b7d658e1f07060a0a715f26963d4c6c60421e827141` |
+| SHA-256 | `853e7f5efadb10dcbbe0f446c4c60962ce2fd864360a156343b5740d0c1761a4` |
 | Surface | 109 paths / 126 operations / 288 schemas |
 | Runtime | 109 enabled / 17 intentionally disabled / 0 not implemented |
-| Source monorepo commit | `4a0eac17fa01aaeb928e26722d6cb632edaac26a` |
+| Source monorepo commit | `bec7aac06f53e71cef5e969359a032a8f054be79` |
 | Machine baseline | `client-contract-baseline.json` |
-| Current handoff | `CONTRACT-2.0.1-HANDOFF.md` |
+| Current handoff | `CONTRACT-2.0.2-HANDOFF.md` |
 
-开发前依次核验 `CONTRACT-2.0.1-HANDOFF.md`、`client-contract-baseline.json`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；iOS 仓库位于 monorepo 之外，必须从正式 Release 资产导入并在自身仓库记录相同版本和 hash。
+开发前依次核验 `CONTRACT-2.0.2-HANDOFF.md`、`client-contract-baseline.json`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；iOS 仓库位于 monorepo 之外，必须从正式 Release 资产导入并在自身仓库记录相同版本和 hash。
 
 本地合同、客户端绑定或 Backend Release 均不表示 Staging 已部署、外部邮箱/COS 已验收、APNs 已启用或 Production Gate 已打开。

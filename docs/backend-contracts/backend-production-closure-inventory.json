@@ -7,20 +7,20 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "061a61f9f542a61878474b7d658e1f07060a0a715f26963d4c6c60421e827141",
+    "currentContractSha256": "853e7f5efadb10dcbbe0f446c4c60962ce2fd864360a156343b5740d0c1761a4",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 643,
+    "fileCount": 655,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 22,
-      "backend-contract-doc": 125,
+      "backend-contract-doc": 136,
       "backend-generated": 88,
       "backend-script": 10,
       "backend-source": 216,
       "backend-test": 72,
-      "client-handoff": 40,
+      "client-handoff": 41,
       "contract-tool": 14,
       "database": 41,
       "docker": 2,
@@ -2170,6 +2170,14 @@
         "category": "backend-contract-doc"
       },
       {
+        "path": "docs/backend-contracts/contract-history/2.0.2-contract-853e7f5efadb10dcbbe0f446c4c60962ce2fd864360a156343b5740d0c1761a4/openapi.snapshot.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/contract-history/2.0.2-contract-853e7f5efadb10dcbbe0f446c4c60962ce2fd864360a156343b5740d0c1761a4/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
         "path": "docs/backend-contracts/current-contract.json",
         "category": "backend-contract-doc"
       },
@@ -2219,6 +2227,14 @@
       },
       {
         "path": "docs/backend-contracts/openapi-2.0-to-2.0.1-compatibility.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-2.0.1-to-2.0.2-compatibility.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-2.0.1-to-2.0.2-compatibility.md",
         "category": "backend-contract-doc"
       },
       {
@@ -2347,6 +2363,34 @@
       },
       {
         "path": "docs/backend-contracts/releases/2.0.1-contract/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/CHANGELOG.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/contract-diff.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/contract-diff.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/MIGRATION-NOTES.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/openapi.candidate.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/RELEASE-CHECKLIST.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.2-contract/release-manifest.json",
         "category": "backend-contract-doc"
       },
       {
@@ -2483,6 +2527,10 @@
       },
       {
         "path": "docs/client-handoff/CONTRACT-2.0.1-HANDOFF.md",
+        "category": "client-handoff"
+      },
+      {
+        "path": "docs/client-handoff/CONTRACT-2.0.2-HANDOFF.md",
         "category": "client-handoff"
       },
       {
@@ -2633,20 +2681,20 @@
       "files": 3
     },
     "placeholder": {
-      "matches": 76,
-      "files": 19
+      "matches": 86,
+      "files": 21
     },
     "mock": {
-      "matches": 245,
-      "files": 61
+      "matches": 247,
+      "files": 63
     },
     "stub": {
       "matches": 3,
       "files": 3
     },
     "not implemented": {
-      "matches": 22,
-      "files": 16
+      "matches": 23,
+      "files": 17
     },
     "NotImplementedException": {
       "matches": 1,
@@ -2681,8 +2729,8 @@
       "files": 86
     },
     "any": {
-      "matches": 330,
-      "files": 108
+      "matches": 340,
+      "files": 112
     },
     "unknown as": {
       "matches": 57,
@@ -2709,20 +2757,20 @@
       "files": 124
     },
     "default deny": {
-      "matches": 592,
-      "files": 81
+      "matches": 652,
+      "files": 83
     },
     "deprecated": {
-      "matches": 96,
-      "files": 24
+      "matches": 106,
+      "files": 26
     },
     "legacy": {
-      "matches": 151,
-      "files": 39
+      "matches": 171,
+      "files": 42
     },
     "compatibility": {
-      "matches": 318,
-      "files": 76
+      "matches": 355,
+      "files": 85
     }
   },
   "keywordDispositions": {
