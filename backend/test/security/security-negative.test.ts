@@ -55,13 +55,16 @@ describe('security negative gates', () => {
       3000,
     );
     raw.APP_ENV = 'staging';
+    useCvmRoleStorage(raw);
     delete raw.SMTP_HOST;
     delete raw.SMTP_PORT;
     delete raw.SMTP_FROM_ADDRESS;
     delete raw.SMTP_USERNAME;
     delete raw.SMTP_PASSWORD;
-    assert.throws(() => validateEnvironment(raw), /SMTP email delivery configuration/);
+    delete raw.EMAIL_DELIVERY_PROVIDER;
+    assert.throws(() => validateEnvironment(raw), /EMAIL_DELIVERY_PROVIDER/);
 
+    raw.EMAIL_DELIVERY_PROVIDER = 'SMTP';
     raw.SMTP_HOST = 'smtp.example.test';
     raw.SMTP_PORT = '587';
     raw.SMTP_SECURE = 'false';
@@ -75,6 +78,7 @@ describe('security negative gates', () => {
       3000,
     );
     raw.APP_ENV = 'local';
+    raw.EMAIL_DELIVERY_PROVIDER = 'SMTP';
     raw.SMTP_HOST = '127.0.0.1';
     raw.SMTP_PORT = '1025';
     raw.SMTP_SECURE = 'false';
@@ -85,6 +89,7 @@ describe('security negative gates', () => {
       emailDelivery: { username: string | null; password: string | null } | null;
     };
     assert.deepEqual(config.emailDelivery, {
+      provider: 'SMTP',
       host: '127.0.0.1',
       port: 1025,
       secure: false,
@@ -92,6 +97,56 @@ describe('security negative gates', () => {
       password: null,
       fromAddress: 'no-reply@local.bnbu.invalid',
     });
+  });
+
+  it('accepts explicit Tencent SES template configuration without static cloud credentials', () => {
+    const raw = foundationEnvironment(
+      'postgresql://synthetic:synthetic@127.0.0.1:1/bnbu_security_test',
+      3000,
+    );
+    raw.APP_ENV = 'staging';
+    useCvmRoleStorage(raw);
+    raw.EMAIL_DELIVERY_PROVIDER = 'TENCENT_SES';
+    raw.TENCENT_SES_REGION = 'ap-guangzhou';
+    raw.TENCENT_SES_FROM_EMAIL = 'no-reply@verityai.cn';
+    raw.TENCENT_SES_TEMPLATE_ID = '56852';
+    raw.TENCENT_SES_TEMPLATE_CODE_VARIABLE = 'code';
+    const config = validateEnvironment(raw).RUNTIME_CONFIG as {
+      emailDelivery: Record<string, unknown> | null;
+    };
+    assert.deepEqual(config.emailDelivery, {
+      provider: 'TENCENT_SES',
+      region: 'ap-guangzhou',
+      fromAddress: 'no-reply@verityai.cn',
+      replyToAddress: null,
+      templateId: 56_852,
+      templateVariables: {
+        code: 'code',
+        expiryMinutes: null,
+        purpose: null,
+      },
+    });
+  });
+
+  it('requires CVM role storage and rejects static COS credentials in staging', () => {
+    const raw = foundationEnvironment(
+      'postgresql://synthetic:synthetic@127.0.0.1:1/bnbu_security_test',
+      3000,
+    );
+    raw.APP_ENV = 'staging';
+    raw.EMAIL_DELIVERY_PROVIDER = 'TENCENT_SES';
+    raw.TENCENT_SES_REGION = 'ap-guangzhou';
+    raw.TENCENT_SES_FROM_EMAIL = 'no-reply@verityai.cn';
+    raw.TENCENT_SES_TEMPLATE_ID = '56852';
+    raw.TENCENT_SES_TEMPLATE_CODE_VARIABLE = 'code';
+    assert.throws(() => validateEnvironment(raw), /must be TENCENT_CVM_ROLE/);
+
+    useCvmRoleStorage(raw);
+    raw.MEDIA_STORAGE_SECRET_KEY = 'must-not-be-accepted-in-staging';
+    assert.throws(
+      () => validateEnvironment(raw),
+      /Static object storage credentials must be omitted/,
+    );
   });
 
   it('rejects a forged role or organization even when token verification succeeds', async () => {
@@ -408,3 +463,11 @@ describe('security negative gates', () => {
     );
   });
 });
+
+function useCvmRoleStorage(raw: NodeJS.ProcessEnv): void {
+  raw.STORAGE_CREDENTIAL_PROVIDER = 'TENCENT_CVM_ROLE';
+  delete raw.OBJECT_STORAGE_ACCESS_KEY;
+  delete raw.OBJECT_STORAGE_SECRET_KEY;
+  delete raw.MEDIA_STORAGE_ACCESS_KEY;
+  delete raw.MEDIA_STORAGE_SECRET_KEY;
+}

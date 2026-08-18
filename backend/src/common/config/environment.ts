@@ -3,12 +3,14 @@ export const APP_ENVIRONMENTS = ['local', 'test', 'development', 'staging', 'pro
 export type AppEnvironment = (typeof APP_ENVIRONMENTS)[number];
 export type LogLevel = 'silent' | 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
+export type StorageCredentialConfig =
+  { provider: 'STATIC'; accessKey: string; secretKey: string } | { provider: 'TENCENT_CVM_ROLE' };
+
 export interface ObjectStorageConfig {
   endpoint: string;
   region: string;
   bucket: string;
-  accessKey: string;
-  secretKey: string;
+  credentials: StorageCredentialConfig;
   forcePathStyle: boolean;
 }
 
@@ -29,7 +31,8 @@ export interface PushConfig {
   encryptionKeyVersion: number;
 }
 
-export interface EmailDeliveryConfig {
+export interface SmtpEmailDeliveryConfig {
+  provider: 'SMTP';
   host: string;
   port: number;
   secure: boolean;
@@ -37,6 +40,21 @@ export interface EmailDeliveryConfig {
   password: string | null;
   fromAddress: string;
 }
+
+export interface TencentSesEmailDeliveryConfig {
+  provider: 'TENCENT_SES';
+  region: string;
+  fromAddress: string;
+  replyToAddress: string | null;
+  templateId: number;
+  templateVariables: {
+    code: string;
+    expiryMinutes: string | null;
+    purpose: string | null;
+  };
+}
+
+export type EmailDeliveryConfig = SmtpEmailDeliveryConfig | TencentSesEmailDeliveryConfig;
 
 export interface RuntimeConfig {
   appEnvironment: AppEnvironment;
@@ -171,23 +189,21 @@ function objectStorage(
   raw: Record<string, unknown>,
   appEnvironment: AppEnvironment,
 ): ObjectStorageConfig | null {
-  const names = [
+  const baseNames = [
     'OBJECT_STORAGE_ENDPOINT',
     'OBJECT_STORAGE_REGION',
     'OBJECT_STORAGE_BUCKET',
-    'OBJECT_STORAGE_ACCESS_KEY',
-    'OBJECT_STORAGE_SECRET_KEY',
     'OBJECT_STORAGE_FORCE_PATH_STYLE',
   ] as const;
   const requiredForEnvironment =
     appEnvironment === 'production' || optionalBoolean(raw, 'OBJECT_STORAGE_REQUIRED', false);
-  const presentCount = names.filter((name) => {
+  const basePresentCount = baseNames.filter((name) => {
     const value = raw[name];
     return typeof value === 'string' && value.trim().length > 0;
   }).length;
 
-  if (presentCount === 0 && !requiredForEnvironment) return null;
-  if (presentCount !== names.length) {
+  if (basePresentCount === 0 && !requiredForEnvironment) return null;
+  if (basePresentCount !== baseNames.length) {
     throw new Error('Object storage configuration must be either complete or omitted');
   }
 
@@ -219,18 +235,41 @@ function objectStorage(
     throw new Error('OBJECT_STORAGE_BUCKET must be a valid DNS-compatible bucket name');
   }
 
-  const accessKey = required(raw, 'OBJECT_STORAGE_ACCESS_KEY');
-  const secretKey = required(raw, 'OBJECT_STORAGE_SECRET_KEY');
-  if (accessKey.length < 3 || secretKey.length < 16) {
-    throw new Error('Object storage credentials do not meet the minimum local-validation strength');
+  const provider = optionalText(raw.STORAGE_CREDENTIAL_PROVIDER) ?? 'STATIC';
+  let credentials: StorageCredentialConfig;
+  if (provider === 'STATIC') {
+    if (appEnvironment === 'staging' || appEnvironment === 'production') {
+      throw new Error(
+        'STORAGE_CREDENTIAL_PROVIDER must be TENCENT_CVM_ROLE for staging and production',
+      );
+    }
+    const accessKey = required(raw, 'OBJECT_STORAGE_ACCESS_KEY');
+    const secretKey = required(raw, 'OBJECT_STORAGE_SECRET_KEY');
+    if (accessKey.length < 3 || secretKey.length < 16) {
+      throw new Error(
+        'Object storage credentials do not meet the minimum local-validation strength',
+      );
+    }
+    credentials = { provider, accessKey, secretKey };
+  } else if (provider === 'TENCENT_CVM_ROLE') {
+    if (
+      optionalText(raw.OBJECT_STORAGE_ACCESS_KEY) !== null ||
+      optionalText(raw.OBJECT_STORAGE_SECRET_KEY) !== null
+    ) {
+      throw new Error(
+        'Static object storage credentials must be omitted when using TENCENT_CVM_ROLE',
+      );
+    }
+    credentials = { provider };
+  } else {
+    throw new Error('STORAGE_CREDENTIAL_PROVIDER must be STATIC or TENCENT_CVM_ROLE');
   }
 
   return {
     endpoint: endpoint.origin + endpoint.pathname.replace(/\/$/, ''),
     region: required(raw, 'OBJECT_STORAGE_REGION'),
     bucket,
-    accessKey,
-    secretKey,
+    credentials,
     forcePathStyle: optionalBoolean(raw, 'OBJECT_STORAGE_FORCE_PATH_STYLE', true),
   };
 }
@@ -243,8 +282,6 @@ function mediaConfiguration(
     'MEDIA_STORAGE_ENDPOINT',
     'MEDIA_STORAGE_REGION',
     'MEDIA_STORAGE_BUCKET',
-    'MEDIA_STORAGE_ACCESS_KEY',
-    'MEDIA_STORAGE_SECRET_KEY',
     'MEDIA_STORAGE_FORCE_PATH_STYLE',
   ] as const;
   const settingNames = [
@@ -259,13 +296,18 @@ function mediaConfiguration(
   ] as const;
   const requiredForEnvironment =
     appEnvironment === 'production' || optionalBoolean(raw, 'MEDIA_STORAGE_REQUIRED', false);
-  const names = [...storageNames, ...settingNames];
-  const presentCount = names.filter((name) => {
+  const names = [...storageNames, ...settingNames] as const;
+  const allNames = [...names, 'MEDIA_STORAGE_ACCESS_KEY', 'MEDIA_STORAGE_SECRET_KEY'] as const;
+  const anyPresent = allNames.some((name) => {
+    const value = raw[name];
+    return typeof value === 'string' && value.trim().length > 0;
+  });
+  const basePresentCount = names.filter((name) => {
     const value = raw[name];
     return typeof value === 'string' && value.trim().length > 0;
   }).length;
-  if (presentCount === 0 && !requiredForEnvironment) return null;
-  if (presentCount !== names.length) {
+  if (!anyPresent && !requiredForEnvironment) return null;
+  if (basePresentCount !== names.length) {
     throw new Error('Media configuration must be either complete or omitted');
   }
 
@@ -277,6 +319,7 @@ function mediaConfiguration(
     OBJECT_STORAGE_SECRET_KEY: raw.MEDIA_STORAGE_SECRET_KEY,
     OBJECT_STORAGE_FORCE_PATH_STYLE: raw.MEDIA_STORAGE_FORCE_PATH_STYLE,
     OBJECT_STORAGE_REQUIRED: 'true',
+    STORAGE_CREDENTIAL_PROVIDER: raw.STORAGE_CREDENTIAL_PROVIDER,
   };
   const storage = objectStorage(storageRaw, appEnvironment);
   if (storage === null) throw new Error('Media object storage configuration is required');
@@ -333,17 +376,26 @@ function emailDeliveryConfiguration(
   raw: Record<string, unknown>,
   appEnvironment: AppEnvironment,
 ): EmailDeliveryConfig | null {
+  const configuredProvider = optionalText(raw.EMAIL_DELIVERY_PROVIDER);
   const coreNames = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_FROM_ADDRESS'] as const;
   const requiredForEnvironment =
     appEnvironment === 'staging' ||
     appEnvironment === 'production' ||
     optionalBoolean(raw, 'EMAIL_DELIVERY_REQUIRED', false);
-  const presentCount = coreNames.filter((name) => {
+  const smtpPresentCount = coreNames.filter((name) => {
     const value = raw[name];
     return typeof value === 'string' && value.trim().length > 0;
   }).length;
-  if (presentCount === 0 && !requiredForEnvironment) return null;
-  if (presentCount !== coreNames.length) {
+  const provider = configuredProvider ?? (smtpPresentCount > 0 ? 'SMTP' : null);
+  if (provider === null && !requiredForEnvironment) return null;
+  if (provider === null) {
+    throw new Error('EMAIL_DELIVERY_PROVIDER is required outside local and test environments');
+  }
+  if (provider === 'TENCENT_SES') return tencentSesEmailDeliveryConfiguration(raw);
+  if (provider !== 'SMTP') {
+    throw new Error('EMAIL_DELIVERY_PROVIDER must be SMTP or TENCENT_SES');
+  }
+  if (smtpPresentCount !== coreNames.length) {
     throw new Error('SMTP email delivery configuration must be either complete or omitted');
   }
   const rawUsername = raw.SMTP_USERNAME;
@@ -367,6 +419,7 @@ function emailDeliveryConfiguration(
     throw new Error('SMTP_FROM_ADDRESS must be a valid email address');
   }
   return {
+    provider: 'SMTP',
     host: required(raw, 'SMTP_HOST'),
     port: integer(raw, 'SMTP_PORT', { minimum: 1, maximum: 65_535 }),
     secure: optionalBoolean(raw, 'SMTP_SECURE', true),
@@ -374,6 +427,65 @@ function emailDeliveryConfiguration(
     password,
     fromAddress,
   };
+}
+
+function tencentSesEmailDeliveryConfiguration(
+  raw: Record<string, unknown>,
+): TencentSesEmailDeliveryConfig {
+  const fromAddress = required(raw, 'TENCENT_SES_FROM_EMAIL');
+  if (!validEmailAddress(fromAddress)) {
+    throw new Error('TENCENT_SES_FROM_EMAIL must contain a valid email address');
+  }
+  const rawReplyToAddress = optionalText(raw.TENCENT_SES_REPLY_TO);
+  if (rawReplyToAddress !== null && !validEmailAddress(rawReplyToAddress)) {
+    throw new Error('TENCENT_SES_REPLY_TO must be a valid email address');
+  }
+  const codeVariable = templateVariable(raw, 'TENCENT_SES_TEMPLATE_CODE_VARIABLE', true);
+  if (codeVariable === null) {
+    throw new Error('TENCENT_SES_TEMPLATE_CODE_VARIABLE is required');
+  }
+  const templateVariables = {
+    code: codeVariable,
+    expiryMinutes: templateVariable(raw, 'TENCENT_SES_TEMPLATE_EXPIRY_MINUTES_VARIABLE', false),
+    purpose: templateVariable(raw, 'TENCENT_SES_TEMPLATE_PURPOSE_VARIABLE', false),
+  };
+  const configuredVariableNames = Object.values(templateVariables).filter(
+    (value): value is string => value !== null,
+  );
+  if (new Set(configuredVariableNames).size !== configuredVariableNames.length) {
+    throw new Error('Tencent SES template variable names must be unique');
+  }
+  return {
+    provider: 'TENCENT_SES',
+    region: required(raw, 'TENCENT_SES_REGION'),
+    fromAddress,
+    replyToAddress: rawReplyToAddress,
+    templateId: integer(raw, 'TENCENT_SES_TEMPLATE_ID', { minimum: 1 }),
+    templateVariables,
+  };
+}
+
+function templateVariable(
+  raw: Record<string, unknown>,
+  name: string,
+  isRequired: boolean,
+): string | null {
+  const value = isRequired ? required(raw, name) : optionalText(raw[name]);
+  if (value === null) return null;
+  if (!/^[A-Za-z][A-Za-z0-9_]{0,63}$/.test(value)) {
+    throw new Error(`${name} must be a safe Tencent SES template variable name`);
+  }
+  return value;
+}
+
+function validEmailAddress(value: string): boolean {
+  const match = /^(?:[^<>]+\s+<([^<>]+)>|([^<>\s]+))$/.exec(value.trim());
+  const address = match?.[1] ?? match?.[2];
+  return address !== undefined && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address);
+}
+
+function optionalText(value: unknown): string | null {
+  return typeof value === 'string' && value.trim().length > 0 ? value.trim() : null;
 }
 
 export function validateEnvironment(raw: Record<string, unknown>): Record<string, unknown> {

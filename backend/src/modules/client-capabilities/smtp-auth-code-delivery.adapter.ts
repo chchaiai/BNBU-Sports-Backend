@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-import type { EmailDeliveryConfig } from '../../common/config/environment.js';
+import type { SmtpEmailDeliveryConfig } from '../../common/config/environment.js';
 import {
   AuthCodeDeliveryPort,
   AuthCodeDeliveryUnavailableError,
@@ -12,7 +12,7 @@ export class SmtpAuthCodeDeliveryAdapter extends AuthCodeDeliveryPort {
   private static readonly MAX_DELIVERY_ATTEMPTS = 3;
 
   constructor(
-    private readonly config: EmailDeliveryConfig,
+    private readonly config: SmtpEmailDeliveryConfig,
     transport?: Pick<nodemailer.Transporter, 'sendMail'>,
   ) {
     super();

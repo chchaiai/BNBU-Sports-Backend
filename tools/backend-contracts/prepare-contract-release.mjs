@@ -157,44 +157,36 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Makes exercise descriptions required only for \`GENERAL\` records; \`COURSE_RELATED\` descriptions may be omitted or null.
-- Adds byte-level WebM validation for browser-recorded exercise videos while retaining the 15-second maximum and mandatory video and audio tracks.
-- Clarifies that clients must not request GPS permission or collect coordinates for evidence upload. Recognized GPS, EXIF location, or container location metadata is rejected with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`.
-- Keeps SHA-256, declared MIME, actual container, duration, track, and size verification authoritative on the Backend.
-- Adds the ADMIN-only \`GET /health/admin\` projection for measured PostgreSQL, notification-outbox, roster-object-storage, and media-storage status without changing the public readiness response.
-- Clarifies that QR enrollment remains a pre-authentication capability flow: join returns a restricted \`PENDING_CONTACT_BINDING\` session, email verification activates that session, and protected student operations remain blocked until activation.
-- Adds lossless exemption application details for 800m, 1000m, school-team, student-club, and special-circumstance applications through additive request fields and \`GET /exemption-application-details\`, without changing the existing exemption response projection.
-- Publishes the repository-owned local integration initializer and checker required to create a secret-safe Backend environment for Android, iOS, and Web synthetic E2E.
-- Makes a newly submitted exercise record immediately \`VALID\` through a system-authored append-only review; teachers retain the existing mutation to append \`INVALID\` when a problem is found.
-- Establishes one-version/one-hash release governance so every completed Backend change set advances a unique semantic contract version and GitHub Release.
+- Adds fail-fast \`FILE_JSON\` runtime and migrator secret loading for Docker Compose secrets, including duplicate environment-variable rejection and strict key allowlists.
+- Adds a secret-safe staging preflight that reports only configured, missing, or unknown status and never prints managed values.
+- Adds Tencent CVM instance-role credential discovery for COS so staging does not store long-lived COS keys.
+- Adds the Tencent Cloud SES \`SendEmail\` adapter for the approved email template and verification-code variable.
+- Publishes the staging Compose, credential-free environment template, least-privilege COS and SES CAM policy baselines, and Docker runtime smoke test.
+- Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
+- Pins the Tencent SDK dependency path to a zero-vulnerability audited set without changing the public API contract.
+- Adds no database migration and no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
 
 ## Clients
 
-iOS may generate and wire \`/api/v1\` types from this ${releaseConfig.releaseState} handoff after its SHA-256 is verified. Android and iOS must require a non-blank description for \`GENERAL\` records only; \`COURSE_RELATED\` may omit it. Web may upload a browser-produced \`video/webm\` file when it contains a video track, an audio track, and a trusted duration no greater than 15 seconds. MP4, MOV, and 3GP remain supported.
-
-Updated clients create exemption applications with both \`applicationSubtype\` and \`organizationName\`; legacy clients may omit both. Read exact structured details from \`GET /api/v1/exemption-application-details\`. The original \`/exemption-applications\` mutation and list responses intentionally keep their prior projection for compatibility. QR join remains bearer-free and capability-authorized; its restricted session must complete email verification before any protected student operation.
-
-No client is required or permitted by this contract to request location permission or collect coordinates for evidence. If a selected media file already contains recognized location metadata, Backend rejects it with \`MEDIA_LOCATION_METADATA_NOT_ALLOWED\`; clients should ask the user to remove location metadata or capture a new file.
+No Android, iOS, or Web API payload change is required. Clients remain bound to the same 126 operations and 288 schemas; only the immutable release version and SHA-256 advance.
 
 ## Database
 
-Migration \`0016_optional_course_exercise_description\` makes \`exercise_records.description\` nullable and adds a database check that still requires a trimmed 1..200 character description for \`GENERAL\` rows. \`COURSE_RELATED\` rows may store null or a trimmed 1..200 character description. The migration is forward-only and must run before the application image.
+This release adds no Prisma migration. Staging still requires a dedicated business database, a schema-admin migration account, and a separate least-privilege runtime account. Creating the database is infrastructure preparation; applying the existing migration chain remains a separately authorized deployment phase.
 
-Migration \`0017_exemption_application_details\` adds nullable \`application_subtype\` and \`organization_name\` columns plus a database combination constraint. Null/null preserves legacy rows; new clients use the typed combinations defined by ADR-104. This forward-only migration must run before clients use the structured details endpoint.
+## Staging secrets
 
-## Local integration
+Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. Do not duplicate those keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
 
-Run \`npm run local:env:init\` from the monorepo root to generate a gitignored Backend environment with fresh synthetic-only secrets, then run \`npm run local:env:check\` before Docker Compose. Do not use templates containing \`CHANGE_ME\`, reuse production credentials, or log generated secrets.
+## Tencent Cloud access
 
-## Media deployment
+COS credentials are obtained from the bound CVM role and must be scoped by the published single-bucket policy. SES uses the bound role and the \`SendEmail\`-only policy. Cloud policy association, bucket access, template acceptance, and actual delivery remain deployment verification steps.
 
-No FFmpeg/WASM or upload-time transcoding service is introduced. Backend validates the original uploaded bytes. Media scanner, object storage, and HTTPS staging configuration remain deployment concerns and are not proven by this candidate package.
+## Deployment boundary
 
-## Operational health
-
-\`GET /api/v1/health/admin\` requires an ADMIN access token and returns safe dependency categories, latency, and notification backlog. The published \`/health/live\` and \`/health/ready\` projections remain unchanged. The administrator response never exposes endpoints, bucket credentials, storage keys, or signed URLs.
+Publishing this release does not deploy it, start a container, run a TencentDB migration, modify Nginx, or prove external COS or SES connectivity.
 `;
 const checklist = `# Contract ${candidateSemver} Post-Merge Release Checklist
 
@@ -225,7 +217,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This handoff authorizes neither location collection nor GPS permission requests. It adds original-byte WebM verification, not transcoding. Clients must retain photo evidence as a supported path and surface stable media validation errors. Updated clients use \`GET /api/v1/exemption-application-details\` for lossless exemption subtype and organization fields; QR join still completes email verification before the restricted session becomes active.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release changes staging secret delivery and Tencent Cloud adapters only; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

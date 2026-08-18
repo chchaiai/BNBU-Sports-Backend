@@ -19,6 +19,7 @@ import {
 } from './auth-code-delivery.port.js';
 import { ExemptionApplicationsService } from './exemption-applications.service.js';
 import { SmtpAuthCodeDeliveryAdapter } from './smtp-auth-code-delivery.adapter.js';
+import { TencentSesAuthCodeDeliveryAdapter } from './tencent-ses-auth-code-delivery.adapter.js';
 
 @Module({
   imports: [AuthModule],
@@ -50,7 +51,9 @@ import { SmtpAuthCodeDeliveryAdapter } from './smtp-auth-code-delivery.adapter.j
           ? new InMemoryTestAuthCodeDeliveryAdapter('test')
           : config.emailDelivery === null
             ? new DisabledAuthCodeDeliveryAdapter()
-            : new SmtpAuthCodeDeliveryAdapter(config.emailDelivery),
+            : config.emailDelivery.provider === 'SMTP'
+              ? new SmtpAuthCodeDeliveryAdapter(config.emailDelivery)
+              : new TencentSesAuthCodeDeliveryAdapter(config.emailDelivery),
     },
     {
       provide: PUSH_TOKEN_CIPHER,

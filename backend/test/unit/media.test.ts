@@ -12,8 +12,11 @@ const config: MediaConfig = {
     endpoint: 'http://storage.test:9000',
     region: 'us-east-1',
     bucket: 'synthetic-media-private',
-    accessKey: 'synthetic-access',
-    secretKey: 'synthetic-secret-never-production',
+    credentials: {
+      provider: 'STATIC',
+      accessKey: 'synthetic-access',
+      secretKey: 'synthetic-secret-never-production',
+    },
     forcePathStyle: true,
   },
   uploadUrlTtlSeconds: 300,

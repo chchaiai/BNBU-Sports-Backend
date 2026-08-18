@@ -1,8 +1,8 @@
 import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common';
 import {
   DeleteObjectCommand,
-  GetBucketLocationCommand,
   GetObjectCommand,
+  HeadBucketCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
@@ -16,6 +16,7 @@ import type {
   PutPrivateObjectInput,
   PutPrivateObjectResult,
 } from './object-storage.port.js';
+import { storageCredentials } from './tencent-cvm-role-credential-provider.js';
 
 const STORAGE_KEY_PATTERN = /^[a-z0-9][a-z0-9/_.-]{0,511}$/;
 const MULTIPART_PART_SIZE_BYTES = 5 * 1024 * 1024;
@@ -28,7 +29,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort, OnModuleDestro
 
   async checkHealth(): Promise<void> {
     const { bucket } = this.configuration();
-    await this.storageCall(() => this.s3().send(new GetBucketLocationCommand({ Bucket: bucket })));
+    await this.storageCall(() => this.s3().send(new HeadBucketCommand({ Bucket: bucket })));
   }
 
   async putPrivateObject(input: PutPrivateObjectInput): Promise<PutPrivateObjectResult> {
@@ -106,10 +107,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort, OnModuleDestro
       endpoint: config.endpoint,
       region: config.region,
       forcePathStyle: config.forcePathStyle,
-      credentials: {
-        accessKeyId: config.accessKey,
-        secretAccessKey: config.secretKey,
-      },
+      credentials: storageCredentials(config.credentials),
     });
     return this.client;
   }

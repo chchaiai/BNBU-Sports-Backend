@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "environment": "staging",
+  "nonSecret": [
+    {
+      "name": "APP_ENV",
+      "owner": "DEPLOYMENT",
+      "source": "frozen staging value",
+      "expected": "staging"
+    },
+    { "name": "APP_VERSION", "owner": "RELEASE", "source": "published Backend release" },
+    {
+      "name": "PORT",
+      "owner": "DEPLOYMENT",
+      "source": "internal backend port",
+      "expected": "3000"
+    },
+    {
+      "name": "LOG_LEVEL",
+      "owner": "DEPLOYMENT",
+      "source": "staging logging policy",
+      "expected": "info"
+    },
+    {
+      "name": "RUNTIME_SECRET_PROVIDER",
+      "owner": "DEPLOYMENT",
+      "source": "frozen FILE_JSON value",
+      "expected": "FILE_JSON"
+    },
+    {
+      "name": "RUNTIME_SECRET_FILE",
+      "owner": "DEPLOYMENT",
+      "source": "runtime Docker Compose secret target",
+      "expected": "/run/secrets/bnbu_runtime.json"
+    },
+    {
+      "name": "MIGRATOR_SECRET_FILE",
+      "owner": "DEPLOYMENT",
+      "source": "migrator Docker Compose secret target",
+      "expected": "/run/secrets/bnbu_migrator.json"
+    },
+    { "name": "TOKEN_ISSUER", "owner": "DEPLOYMENT", "source": "staging identity boundary" },
+    { "name": "TOKEN_AUDIENCE", "owner": "DEPLOYMENT", "source": "staging client boundary" },
+    { "name": "ACCESS_TOKEN_TTL", "owner": "DEPLOYMENT", "source": "security policy" },
+    { "name": "REFRESH_TOKEN_ABSOLUTE_TTL", "owner": "DEPLOYMENT", "source": "security policy" },
+    { "name": "REFRESH_TOKEN_IDLE_TTL", "owner": "DEPLOYMENT", "source": "security policy" },
+    { "name": "IDEMPOTENCY_RETENTION", "owner": "DEPLOYMENT", "source": "runtime policy" },
+    { "name": "IDEMPOTENCY_LEASE", "owner": "DEPLOYMENT", "source": "runtime policy" },
+    {
+      "name": "AUTH_RATE_LIMIT_WINDOW_SECONDS",
+      "owner": "DEPLOYMENT",
+      "source": "security policy"
+    },
+    { "name": "AUTH_RATE_LIMIT_MAX_ATTEMPTS", "owner": "DEPLOYMENT", "source": "security policy" },
+    {
+      "name": "CORS_ALLOWLIST",
+      "owner": "DEPLOYMENT",
+      "source": "deployed Web origin",
+      "expected": "http://129.204.146.192"
+    },
+    {
+      "name": "TRUST_PROXY",
+      "owner": "DEPLOYMENT",
+      "source": "Nginx reverse proxy topology",
+      "expected": "true"
+    },
+    { "name": "SYSTEM_MODE_SOURCE", "owner": "DEPLOYMENT", "source": "frozen database value" },
+    { "name": "REQUEST_BODY_LIMIT_BYTES", "owner": "DEPLOYMENT", "source": "request policy" },
+    { "name": "REQUEST_TIMEOUT_MS", "owner": "DEPLOYMENT", "source": "request policy" },
+    { "name": "COURSE_INVITE_TTL_SECONDS", "owner": "DEPLOYMENT", "source": "business policy" },
+    { "name": "JOIN_CAPABILITY_TTL_SECONDS", "owner": "DEPLOYMENT", "source": "security policy" },
+    { "name": "QR_JOIN_SECRET_REPLAY_SECONDS", "owner": "DEPLOYMENT", "source": "security policy" },
+    {
+      "name": "QR_JOIN_PUBLIC_RATE_LIMIT_WINDOW_SECONDS",
+      "owner": "DEPLOYMENT",
+      "source": "security policy"
+    },
+    {
+      "name": "QR_JOIN_PUBLIC_RATE_LIMIT_MAX_REQUESTS",
+      "owner": "DEPLOYMENT",
+      "source": "security policy"
+    },
+    { "name": "PUSH_TOKEN_ENCRYPTION_KEY_VERSION", "owner": "DEPLOYMENT", "source": "key version" },
+    {
+      "name": "EMAIL_DELIVERY_PROVIDER",
+      "owner": "DEPLOYMENT",
+      "source": "frozen TENCENT_SES value",
+      "expected": "TENCENT_SES"
+    },
+    {
+      "name": "TENCENT_SES_REGION",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "SES region",
+      "expected": "ap-guangzhou"
+    },
+    {
+      "name": "TENCENT_SES_FROM_EMAIL",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "approved SES sender",
+      "expected": "no-reply@verityai.cn"
+    },
+    {
+      "name": "TENCENT_SES_TEMPLATE_ID",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "approved SES template",
+      "expected": "56852"
+    },
+    {
+      "name": "TENCENT_SES_TEMPLATE_CODE_VARIABLE",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "SES template body variable",
+      "expected": "code"
+    },
+    {
+      "name": "STORAGE_CREDENTIAL_PROVIDER",
+      "owner": "DEPLOYMENT",
+      "source": "CVM instance role authentication",
+      "expected": "TENCENT_CVM_ROLE"
+    },
+    { "name": "OBJECT_STORAGE_REQUIRED", "owner": "DEPLOYMENT", "source": "frozen true value" },
+    {
+      "name": "OBJECT_STORAGE_ENDPOINT",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "COS regional endpoint"
+    },
+    {
+      "name": "OBJECT_STORAGE_REGION",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "COS bucket region"
+    },
+    {
+      "name": "OBJECT_STORAGE_BUCKET",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "private COS bucket",
+      "expected": "sports-staging-media-1443273655"
+    },
+    {
+      "name": "OBJECT_STORAGE_FORCE_PATH_STYLE",
+      "owner": "DEPLOYMENT",
+      "source": "frozen false value"
+    },
+    { "name": "MEDIA_STORAGE_REQUIRED", "owner": "DEPLOYMENT", "source": "frozen true value" },
+    {
+      "name": "MEDIA_STORAGE_ENDPOINT",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "COS regional endpoint"
+    },
+    {
+      "name": "MEDIA_STORAGE_REGION",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "COS bucket region"
+    },
+    {
+      "name": "MEDIA_STORAGE_BUCKET",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "private COS bucket",
+      "expected": "sports-staging-media-1443273655"
+    },
+    {
+      "name": "MEDIA_STORAGE_FORCE_PATH_STYLE",
+      "owner": "DEPLOYMENT",
+      "source": "frozen false value"
+    },
+    { "name": "MEDIA_UPLOAD_URL_TTL_SECONDS", "owner": "DEPLOYMENT", "source": "media policy" },
+    { "name": "MEDIA_ACCESS_URL_TTL_SECONDS", "owner": "DEPLOYMENT", "source": "media policy" },
+    { "name": "MEDIA_MAX_IMAGE_BYTES", "owner": "DEPLOYMENT", "source": "media policy" },
+    { "name": "MEDIA_MAX_IMAGE_PIXELS", "owner": "DEPLOYMENT", "source": "media policy" },
+    { "name": "MEDIA_MAX_VIDEO_TRANSPORT_BYTES", "owner": "DEPLOYMENT", "source": "media policy" },
+    {
+      "name": "MEDIA_SCANNER_MODE",
+      "owner": "DEPLOYMENT",
+      "source": "frozen TEST_SIGNATURE value",
+      "expected": "TEST_SIGNATURE"
+    },
+    { "name": "MEDIA_WORKER_ENABLED", "owner": "DEPLOYMENT", "source": "staging worker policy" },
+    { "name": "MEDIA_WORKER_POLL_MS", "owner": "DEPLOYMENT", "source": "worker policy" },
+    {
+      "name": "POSTGRES_APP_USER",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "TencentDB runtime account",
+      "expected": "sports_staging_app"
+    }
+  ],
+  "optionalNonSecret": [
+    {
+      "name": "TENCENT_SES_REPLY_TO",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "optional SES reply address"
+    },
+    {
+      "name": "TENCENT_SES_TEMPLATE_EXPIRY_MINUTES_VARIABLE",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "optional SES template body variable"
+    },
+    {
+      "name": "TENCENT_SES_TEMPLATE_PURPOSE_VARIABLE",
+      "owner": "USER_TENCENT_CONSOLE",
+      "source": "optional SES template body variable"
+    }
+  ],
+  "consoleRequirements": [
+    {
+      "name": "TENCENT_SES_TEMPLATE_VARIABLES",
+      "source": "SES template 56852 variable names"
+    },
+    {
+      "name": "FILE_JSON_RUNTIME_SECRET_PROVISIONED",
+      "source": "runtime JSON file exists outside Git with the exact allowlist"
+    },
+    {
+      "name": "FILE_JSON_MIGRATOR_SECRET_PROVISIONED",
+      "source": "migrator JSON file exists outside Git with MIGRATION_DATABASE_URL only"
+    },
+    {
+      "name": "CVM_INSTANCE_ROLE_BINDING",
+      "source": "CVM sports-staging-cvm-01 role binding"
+    },
+    {
+      "name": "CAM_COS_LEAST_PRIVILEGE_POLICY",
+      "source": "apply config/tencent-cloud-staging-cam-policy.json and remove QcloudCOSDataFullControl"
+    },
+    {
+      "name": "CAM_SES_SEND_EMAIL_POLICY",
+      "source": "apply config/tencent-cloud-staging-ses-cam-policy.json and remove QcloudSESFullAccess"
+    },
+    {
+      "name": "TENCENTDB_RUNTIME_ACCOUNT",
+      "source": "least-privilege application account"
+    },
+    {
+      "name": "TENCENTDB_MIGRATOR_ACCOUNT",
+      "source": "separate schema migration account"
+    },
+    {
+      "name": "TENCENTDB_SECURITY_GROUP_PRIVATE_SOURCE",
+      "source": "sports-staging-pg-sg TCP 5432 source restricted to CVM private identity"
+    },
+    {
+      "name": "TENCENTDB_SSL_ENABLED",
+      "source": "TencentDB SSL status is enabled rather than enabling"
+    },
+    {
+      "name": "COS_SERVICE_ACCOUNT_POLICY",
+      "source": "least-privilege access to the private staging bucket"
+    },
+    {
+      "name": "COS_WEB_CORS",
+      "source": "exact Web IP origin when browser direct upload or read is enabled"
+    }
+  ],
+  "runtimeSecret": [
+    "DATABASE_URL",
+    "TOKEN_SIGNING_KEY",
+    "TOKEN_VERIFYING_KEY",
+    "IDEMPOTENCY_ENCRYPTION_KEY",
+    "SECURITY_HASH_KEY",
+    "QR_JOIN_TOKEN_HASH_KEY",
+    "QR_JOIN_SECRET_ENCRYPTION_KEY",
+    "PUSH_TOKEN_ENCRYPTION_KEY"
+  ],
+  "migratorSecret": ["MIGRATION_DATABASE_URL"]
+}

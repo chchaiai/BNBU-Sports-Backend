@@ -132,6 +132,7 @@ jobs:
           npm run runtime-conformance:check
           npm run test:contract
           npm run test:security
+          npm run test:tencent-cloud-config
 
       - name: Build production application
         run: npm run build
@@ -143,8 +144,9 @@ jobs:
 
       - name: Build the non-root runtime and migrator images
         run: |
-          docker build --no-cache --target runtime --file backend/Dockerfile .
+          docker build --no-cache --target runtime --file backend/Dockerfile --tag bnbu-backend:ci-runtime .
           docker build --no-cache --target migrator --file backend/Dockerfile .
+          npm --prefix backend run test:docker-runtime-smoke -- bnbu-backend:ci-runtime
         working-directory: .
 
       - name: Reject whitespace errors

@@ -3,10 +3,11 @@ import { describe, it } from 'node:test';
 
 import type nodemailer from 'nodemailer';
 
-import type { EmailDeliveryConfig } from '../../src/common/config/environment.js';
+import type { SmtpEmailDeliveryConfig } from '../../src/common/config/environment.js';
 import { SmtpAuthCodeDeliveryAdapter } from '../../src/modules/client-capabilities/smtp-auth-code-delivery.adapter.js';
 
-const config: EmailDeliveryConfig = {
+const config: SmtpEmailDeliveryConfig = {
+  provider: 'SMTP',
   host: 'smtp.example.test',
   port: 587,
   secure: false,

@@ -8,9 +8,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 
-import { AppModule } from './app.module.js';
 import type { RuntimeConfig } from './common/config/environment.js';
 import { RUNTIME_CONFIG } from './common/config/runtime-config.module.js';
+import { loadRuntimeSecrets } from './common/config/file-json-secret-loader.js';
 import { BodyParserErrorMiddleware } from './common/http/body-parser-error.middleware.js';
 import { RequestIdMiddleware } from './common/http/request-id.js';
 import { validationException } from './common/http/validation.js';
@@ -18,6 +18,8 @@ import { JsonLoggerService } from './common/logging/json-logger.service.js';
 import openApiDocument from './generated/openapi.document.generated.json' with { type: 'json' };
 
 async function bootstrap(): Promise<void> {
+  await loadRuntimeSecrets(process.env);
+  const { AppModule } = await import('./app.module.js');
   const application = await NestFactory.create(AppModule, {
     abortOnError: true,
     bodyParser: false,

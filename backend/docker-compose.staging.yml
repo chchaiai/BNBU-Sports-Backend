@@ -1,0 +1,42 @@
+name: bnbu-sports-staging
+
+services:
+  migrator:
+    profiles: [migration]
+    image: ${BACKEND_MIGRATOR_IMAGE:?Set an immutable Backend migrator image reference}
+    env_file:
+      - ${STAGING_ENV_FILE:-./config/staging.env}
+    secrets:
+      - source: bnbu_migrator
+        target: bnbu_migrator.json
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: 'no'
+
+  backend:
+    image: ${BACKEND_RUNTIME_IMAGE:?Set an immutable Backend runtime image reference}
+    env_file:
+      - ${STAGING_ENV_FILE:-./config/staging.env}
+    secrets:
+      - source: bnbu_runtime
+        target: bnbu_runtime.json
+    ports:
+      - 127.0.0.1:${BACKEND_BIND_PORT:-3000}:3000
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    stop_grace_period: 30s
+
+secrets:
+  bnbu_runtime:
+    file: ${BNBU_RUNTIME_SECRET_FILE:?Set the host runtime JSON secret file}
+  bnbu_migrator:
+    file: ${BNBU_MIGRATOR_SECRET_FILE:?Set the host migrator JSON secret file}
