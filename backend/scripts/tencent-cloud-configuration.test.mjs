@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, it } from 'node:test';
+
+import YAML from 'yaml';
 
 import { loadFileJsonSecret } from './file-json-secret.mjs';
 
@@ -133,6 +134,19 @@ describe('Tencent Cloud configuration tooling', () => {
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
+  });
+
+  it('grants both non-root containers only the dedicated secret reader group', () => {
+    const compose = YAML.parse(readFileSync(resolve('docker-compose.staging.yml'), 'utf8'));
+
+    assert.deepEqual(compose.services.backend.group_add, ['10001']);
+    assert.deepEqual(compose.services.migrator.group_add, ['10001']);
+    assert.deepEqual(compose.services.backend.secrets, [
+      { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
+    ]);
+    assert.deepEqual(compose.services.migrator.secrets, [
+      { source: 'bnbu_migrator', target: 'bnbu_migrator.json' },
+    ]);
   });
 
   it('pins COS permissions to the staging bucket and two application prefixes', () => {

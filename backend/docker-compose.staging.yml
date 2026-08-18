@@ -4,6 +4,8 @@ services:
   migrator:
     profiles: [migration]
     image: ${BACKEND_MIGRATOR_IMAGE:?Set an immutable Backend migrator image reference}
+    group_add:
+      - '10001'
     env_file:
       - ${STAGING_ENV_FILE:-./config/staging.env}
     secrets:
@@ -19,6 +21,8 @@ services:
 
   backend:
     image: ${BACKEND_RUNTIME_IMAGE:?Set an immutable Backend runtime image reference}
+    group_add:
+      - '10001'
     env_file:
       - ${STAGING_ENV_FILE:-./config/staging.env}
     secrets:

@@ -25,6 +25,8 @@ Provision two UTF-8 JSON files outside Git and mount them with Docker Compose se
 - Runtime file target: `/run/secrets/bnbu_runtime.json`; it may contain only the names listed in `runtimeSecret` in `config/staging-configuration-requirements.json`.
 - Migrator file target: `/run/secrets/bnbu_migrator.json`; it may contain only `MIGRATION_DATABASE_URL`.
 
+On the Compose host, both source files must be owned by `root:10001` with mode `0640`. GID `10001` is the dedicated secret-reader group: the Backend image already uses it as the `bnbu` runtime group, and Compose adds it as a supplemental group to both Backend and migrator containers. Local Docker Compose mounts file-backed secrets without remapping host ownership, so `root:root 0600` is intentionally rejected as unreadable by the non-root services. Do not add interactive host users to GID `10001`.
+
 The Backend service mounts only the runtime file. The migration profile mounts only the migrator file. Both loaders reject unknown keys, missing keys, duplicate environment values, invalid UTF-8, relative paths, and files larger than 64 KiB. Staging and production fail closed when `RUNTIME_SECRET_PROVIDER` is not `FILE_JSON`.
 
 COS and SES use the CVM instance role. COS credentials are obtained from instance metadata as automatically refreshed STS credentials including the security token. Static COS SecretId and SecretKey values are rejected in staging and production. Apply `config/tencent-cloud-staging-cam-policy.json` and `config/tencent-cloud-staging-ses-cam-policy.json` to the role, verify both capabilities, and then remove `QcloudCOSDataFullControl` and `QcloudSESFullAccess`. The custom COS policy is limited to the staging bucket's `roster-sources/*` and `media/*` prefixes and contains no bucket-delete or wildcard actions. The custom SES policy allows only the operation-level `SendEmail` API; Tencent Cloud requires `resource: "*"` for that operation-level action.
@@ -47,7 +49,7 @@ npm run staging:config:check:files
 
 Both commands print statuses and configuration names only. They never print secret values. `--files` validates that both JSON files are available and contain exactly the allowed key names. Normal runtime and migration containers remain isolated and do not mount both files together.
 
-The staging Compose definition is `docker-compose.staging.yml`. It binds the Backend only to `127.0.0.1:3000`, requires immutable runtime and migrator image references, mounts each service's secret separately, drops Linux capabilities, enables a read-only root filesystem, and keeps migration behind the explicit `migration` profile.
+The staging Compose definition is `docker-compose.staging.yml`. It binds the Backend only to `127.0.0.1:3000`, requires immutable runtime and migrator image references, mounts each service's secret separately, grants only supplemental GID `10001` for secret reads, drops Linux capabilities, enables a read-only root filesystem, and keeps migration behind the explicit `migration` profile.
 
 ## Console inputs still required
 

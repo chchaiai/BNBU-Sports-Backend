@@ -157,13 +157,9 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Adds fail-fast \`FILE_JSON\` runtime and migrator secret loading for Docker Compose secrets, including duplicate environment-variable rejection and strict key allowlists.
-- Adds a secret-safe staging preflight that reports only configured, missing, or unknown status and never prints managed values.
-- Adds Tencent CVM instance-role credential discovery for COS so staging does not store long-lived COS keys.
-- Adds the Tencent Cloud SES \`SendEmail\` adapter for the approved email template and verification-code variable.
-- Publishes the staging Compose, credential-free environment template, least-privilege COS and SES CAM policy baselines, and Docker runtime smoke test.
+- Grants both non-root staging containers supplemental GID \`10001\` so Docker Compose file-backed secrets are readable from host files owned by \`root:10001\` with mode \`0640\`.
+- Preserves strict separation between the runtime and migrator secret files; neither container gains access to the other service's secret.
 - Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
-- Pins the Tencent SDK dependency path to a zero-vulnerability audited set without changing the public API contract.
 - Adds no database migration and no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
@@ -178,7 +174,7 @@ This release adds no Prisma migration. Staging still requires a dedicated busine
 
 ## Staging secrets
 
-Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. Do not duplicate those keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
+Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. On the Compose host, both source files must be owned by \`root:10001\` with mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
 
 ## Tencent Cloud access
 
@@ -217,7 +213,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release changes staging secret delivery and Tencent Cloud adapters only; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release fixes the non-root Docker Compose FILE_JSON read contract with dedicated supplemental GID \`10001\`; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
