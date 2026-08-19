@@ -62,6 +62,7 @@ export interface RuntimeConfig {
   port: number;
   logLevel: LogLevel;
   databaseUrl: string;
+  tencentDbCaFile: string | null;
   tokenIssuer: string;
   tokenAudience: string;
   tokenSigningKey: string;
@@ -128,6 +129,23 @@ function postgresUrl(raw: Record<string, unknown>): string {
   }
   if (parsed.protocol !== 'postgresql:' && parsed.protocol !== 'postgres:') {
     throw new Error('DATABASE_URL must use the postgresql protocol');
+  }
+  return value;
+}
+
+function tencentDbCaFile(
+  raw: Record<string, unknown>,
+  appEnvironment: AppEnvironment,
+): string | null {
+  const value = optionalText(raw.TENCENTDB_CA_FILE);
+  if (value === null) {
+    if (appEnvironment === 'staging' || appEnvironment === 'production') {
+      throw new Error('TENCENTDB_CA_FILE is required in staging and production');
+    }
+    return null;
+  }
+  if (!/^(?:[A-Za-z]:[\\/]|\/)/u.test(value) || value.includes('CHANGE_ME')) {
+    throw new Error('TENCENTDB_CA_FILE must be an explicitly configured absolute path');
   }
   return value;
 }
@@ -597,6 +615,7 @@ export function validateEnvironment(raw: Record<string, unknown>): Record<string
     media: mediaConfiguration(raw, appEnvironment as AppEnvironment),
     push: pushConfiguration(raw),
     emailDelivery: emailDeliveryConfiguration(raw, appEnvironment as AppEnvironment),
+    tencentDbCaFile: tencentDbCaFile(raw, appEnvironment as AppEnvironment),
   };
 
   return { ...raw, RUNTIME_CONFIG: runtimeConfig };

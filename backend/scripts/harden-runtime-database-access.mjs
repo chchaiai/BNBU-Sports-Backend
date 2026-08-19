@@ -2,6 +2,8 @@ import process from 'node:process';
 
 import pg from 'pg';
 
+import { createStrictPgClientConfig } from './postgres-tls.mjs';
+
 const { Client } = pg;
 const ROLE_NAME = /^[a-z_][a-z0-9_]{0,62}$/;
 
@@ -22,9 +24,20 @@ function quotedRole(value) {
 
 async function main() {
   const migrationDatabaseUrl = requiredEnvironment('MIGRATION_DATABASE_URL');
+  const caFile = optionalText(process.env.TENCENTDB_CA_FILE);
+  if (
+    caFile === null &&
+    (process.env.APP_ENV === 'staging' || process.env.APP_ENV === 'production')
+  ) {
+    throw new Error('TENCENTDB_CA_FILE is required for database privilege hardening');
+  }
   const appRoleName = requiredEnvironment('POSTGRES_APP_USER');
   const appRole = quotedRole(appRoleName);
-  const client = new Client({ connectionString: migrationDatabaseUrl });
+  const client = new Client(
+    caFile === null
+      ? { connectionString: migrationDatabaseUrl }
+      : createStrictPgClientConfig(migrationDatabaseUrl, caFile),
+  );
   await client.connect();
 
   try {
@@ -71,6 +84,10 @@ async function main() {
   } finally {
     await client.end();
   }
+}
+
+function optionalText(value) {
+  return typeof value === 'string' && value.trim().length > 0 ? value.trim() : null;
 }
 
 main().catch((error) => {

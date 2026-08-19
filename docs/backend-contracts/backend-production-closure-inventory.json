@@ -7,20 +7,20 @@
     "publishedContractCommit": "4b4f88b69fb2c3e07e7401650e0107360dd28b12",
     "publishedContractVersion": "1.3.0-contract",
     "publishedContractSha256": "914084874afda2481813a041da4cc01249aa9ea557d9a8bf29baeed4f10e0dc9",
-    "currentContractSha256": "fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47",
+    "currentContractSha256": "86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8",
     "contractByteIdentityVerified": true
   },
   "scope": {
-    "fileCount": 696,
+    "fileCount": 711,
     "categoryCounts": {
       "backend-ci": 1,
       "backend-config-doc": 28,
-      "backend-contract-doc": 158,
+      "backend-contract-doc": 169,
       "backend-generated": 88,
-      "backend-script": 15,
-      "backend-source": 219,
-      "backend-test": 75,
-      "client-handoff": 43,
+      "backend-script": 16,
+      "backend-source": 220,
+      "backend-test": 76,
+      "client-handoff": 44,
       "contract-tool": 14,
       "database": 41,
       "docker": 2,
@@ -370,6 +370,10 @@
         "category": "backend-script"
       },
       {
+        "path": "backend/scripts/postgres-tls.mjs",
+        "category": "backend-script"
+      },
+      {
         "path": "backend/scripts/run-migration-with-secrets.mjs",
         "category": "backend-script"
       },
@@ -415,6 +419,10 @@
       },
       {
         "path": "backend/src/common/database/migration-compatibility.service.ts",
+        "category": "backend-source"
+      },
+      {
+        "path": "backend/src/common/database/postgres-tls.ts",
         "category": "backend-source"
       },
       {
@@ -1870,6 +1878,10 @@
         "category": "backend-test"
       },
       {
+        "path": "backend/test/unit/postgres-tls.test.ts",
+        "category": "backend-test"
+      },
+      {
         "path": "backend/test/unit/roster-alignment-service.test.ts",
         "category": "backend-test"
       },
@@ -2262,6 +2274,14 @@
         "category": "backend-contract-doc"
       },
       {
+        "path": "docs/backend-contracts/contract-history/2.0.5-contract-86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8/openapi.snapshot.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/contract-history/2.0.5-contract-86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
         "path": "docs/backend-contracts/current-contract.json",
         "category": "backend-contract-doc"
       },
@@ -2335,6 +2355,14 @@
       },
       {
         "path": "docs/backend-contracts/openapi-2.0.3-to-2.0.4-compatibility.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-2.0.4-to-2.0.5-compatibility.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/openapi-2.0.4-to-2.0.5-compatibility.md",
         "category": "backend-contract-doc"
       },
       {
@@ -2550,6 +2578,34 @@
         "category": "backend-contract-doc"
       },
       {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/CHANGELOG.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/contract-diff.json",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/contract-diff.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/MIGRATION-NOTES.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/openapi.candidate.yaml",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/RELEASE-CHECKLIST.md",
+        "category": "backend-contract-doc"
+      },
+      {
+        "path": "docs/backend-contracts/releases/2.0.5-contract/release-manifest.json",
+        "category": "backend-contract-doc"
+      },
+      {
         "path": "docs/backend-contracts/runtime-conformance-report.json",
         "category": "backend-contract-doc"
       },
@@ -2695,6 +2751,10 @@
       },
       {
         "path": "docs/client-handoff/CONTRACT-2.0.4-HANDOFF.md",
+        "category": "client-handoff"
+      },
+      {
+        "path": "docs/client-handoff/CONTRACT-2.0.5-HANDOFF.md",
         "category": "client-handoff"
       },
       {
@@ -2845,28 +2905,28 @@
       "files": 4
     },
     "placeholder": {
-      "matches": 110,
-      "files": 29
+      "matches": 121,
+      "files": 32
     },
     "mock": {
-      "matches": 251,
-      "files": 67
+      "matches": 253,
+      "files": 69
     },
     "stub": {
       "matches": 3,
       "files": 3
     },
     "not implemented": {
-      "matches": 25,
-      "files": 19
+      "matches": 26,
+      "files": 20
     },
     "NotImplementedException": {
       "matches": 1,
       "files": 1
     },
     "throw new Error": {
-      "matches": 258,
-      "files": 49
+      "matches": 289,
+      "files": 51
     },
     "console.log": {
       "matches": 19,
@@ -2893,8 +2953,8 @@
       "files": 86
     },
     "any": {
-      "matches": 357,
-      "files": 118
+      "matches": 366,
+      "files": 121
     },
     "unknown as": {
       "matches": 57,
@@ -2917,24 +2977,24 @@
       "files": 17
     },
     "hard-coded URL": {
-      "matches": 3468,
-      "files": 128
+      "matches": 3469,
+      "files": 129
     },
     "default deny": {
-      "matches": 772,
-      "files": 87
+      "matches": 832,
+      "files": 89
     },
     "deprecated": {
-      "matches": 126,
-      "files": 30
+      "matches": 136,
+      "files": 32
     },
     "legacy": {
-      "matches": 205,
-      "files": 45
+      "matches": 223,
+      "files": 47
     },
     "compatibility": {
-      "matches": 426,
-      "files": 101
+      "matches": 462,
+      "files": 109
     }
   },
   "keywordDispositions": {

@@ -144,7 +144,7 @@ npm run runtime-coverage:check
 `.env.example` 只有字段、占位符和本地说明，不包含可用 Secret。所有必填项缺失、仍含 `CHANGE_ME`、格式错误或 TTL 关系不合法时，应用都会启动失败。主要分组：
 
 - 应用：`APP_ENV`、`APP_VERSION`、`PORT`、`LOG_LEVEL`；
-- 数据库：`DATABASE_URL`，migration CLI 另用 `MIGRATION_DATABASE_URL`；
+- 数据库：`DATABASE_URL`，migration CLI 另用 `MIGRATION_DATABASE_URL`；staging/production 还必须把完整 TencentDB CA 链挂载到 `TENCENTDB_CA_FILE`；
 - Token：issuer、audience、Ed25519 私钥/公钥、Access/Refresh TTL；
 - 安全：幂等 retention/lease/AES key、HMAC key、登录限流；
 - QR Join：邀请/能力 TTL、专用 HMAC/AES key、公开接口限流与精确重放窗口；

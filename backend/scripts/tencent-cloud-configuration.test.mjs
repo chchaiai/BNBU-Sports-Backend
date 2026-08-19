@@ -4,10 +4,14 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { describe, it } from 'node:test';
+import { rootCertificates } from 'node:tls';
 
 import YAML from 'yaml';
 
 import { loadFileJsonSecret } from './file-json-secret.mjs';
+import { createStrictPgClientConfig, prepareStrictMigrationEnvironment } from './postgres-tls.mjs';
+
+const completeCaChain = `${rootCertificates[0]}\n${rootCertificates[1]}\n`;
 
 describe('Tencent Cloud configuration tooling', () => {
   it('loads an exact key set from a mounted file without returning unrelated values', async () => {
@@ -101,6 +105,7 @@ describe('Tencent Cloud configuration tooling', () => {
     const directory = mkdtempSync(join(tmpdir(), 'bnbu-staging-config-test-'));
     const runtimePath = join(directory, 'runtime.json');
     const migratorPath = join(directory, 'migrator.json');
+    const caPath = join(directory, 'tencentdb-ca-chain.pem');
     const runtimeSecret = Object.fromEntries(
       manifest.runtimeSecret.map((name) => [name, `synthetic-${name}`]),
     );
@@ -109,6 +114,7 @@ describe('Tencent Cloud configuration tooling', () => {
     );
     writeFileSync(runtimePath, JSON.stringify(runtimeSecret), 'utf8');
     writeFileSync(migratorPath, JSON.stringify(migratorSecret), 'utf8');
+    writeFileSync(caPath, completeCaChain, 'utf8');
 
     try {
       const environment = { ...process.env };
@@ -117,6 +123,7 @@ describe('Tencent Cloud configuration tooling', () => {
       }
       environment.BNBU_RUNTIME_SECRET_FILE = runtimePath;
       environment.BNBU_MIGRATOR_SECRET_FILE = migratorPath;
+      environment.BNBU_TENCENTDB_CA_FILE = caPath;
       const result = spawnSync(
         process.execPath,
         [resolve('scripts/check-staging-configuration.mjs'), '--files'],
@@ -130,6 +137,7 @@ describe('Tencent Cloud configuration tooling', () => {
       assert.equal(result.status, 0, result.stderr || result.stdout);
       assert.match(result.stdout, /CONFIGURED\tDATABASE_URL\tDOCKER_COMPOSE_SECRET/);
       assert.match(result.stdout, /CONFIGURED\tMIGRATION_DATABASE_URL\tDOCKER_COMPOSE_SECRET/);
+      assert.match(result.stdout, /CONFIGURED\tTENCENTDB_CA_CHAIN\tDOCKER_COMPOSE_SECRET/);
       assert.doesNotMatch(result.stdout, /synthetic-DATABASE_URL/);
     } finally {
       rmSync(directory, { recursive: true, force: true });
@@ -143,10 +151,43 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.deepEqual(compose.services.migrator.group_add, ['10001']);
     assert.deepEqual(compose.services.backend.secrets, [
       { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
+      { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
     ]);
     assert.deepEqual(compose.services.migrator.secrets, [
       { source: 'bnbu_migrator', target: 'bnbu_migrator.json' },
+      { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
     ]);
+    assert.equal(
+      compose.secrets.tencentdb_ca.file,
+      '${BNBU_TENCENTDB_CA_FILE:?Set the host TencentDB CA chain file}',
+    );
+  });
+
+  it('prepares strict Prisma migration and pg client settings without retaining URL TLS downgrades', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'bnbu-tencentdb-ca-test-'));
+    const caPath = join(directory, 'tencentdb-ca-chain.pem');
+    writeFileSync(caPath, completeCaChain, 'utf8');
+    try {
+      const environment = {
+        TENCENTDB_CA_FILE: caPath,
+        MIGRATION_DATABASE_URL:
+          'postgresql://migrator:synthetic@10.0.0.10:5432/sports?schema=public&sslmode=require',
+      };
+      prepareStrictMigrationEnvironment(environment);
+      const strictUrl = new URL(environment.MIGRATION_DATABASE_URL);
+      assert.equal(strictUrl.searchParams.get('sslmode'), 'verify-full');
+      assert.equal(strictUrl.searchParams.get('sslaccept'), 'strict');
+      assert.equal(environment.SSL_CERT_FILE, caPath);
+
+      const client = createStrictPgClientConfig(environment.MIGRATION_DATABASE_URL, caPath);
+      assert.equal(client.host, '10.0.0.10');
+      assert.equal(client.ssl.rejectUnauthorized, true);
+      assert.equal(client.ssl.ca, completeCaChain);
+      assert.equal(client.connectionString, undefined);
+      assert.equal('servername' in client.ssl, false);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   });
 
   it('pins COS permissions to the staging bucket and two application prefixes', () => {

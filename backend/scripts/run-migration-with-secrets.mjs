@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 
 import { loadFileJsonSecret } from './file-json-secret.mjs';
+import { prepareStrictMigrationEnvironment } from './postgres-tls.mjs';
 
 const MIGRATION_SECRET_KEYS = ['MIGRATION_DATABASE_URL'];
 
@@ -24,6 +25,9 @@ async function main() {
   }
 
   required(environment.MIGRATION_DATABASE_URL, 'MIGRATION_DATABASE_URL');
+  if (environment.APP_ENV === 'staging' || environment.APP_ENV === 'production') {
+    prepareStrictMigrationEnvironment(environment);
+  }
   await run(
     process.execPath,
     [resolve('node_modules/prisma/build/index.js'), 'migrate', 'deploy'],

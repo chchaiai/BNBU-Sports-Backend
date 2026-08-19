@@ -26,6 +26,7 @@ COPY backend/package.json backend/package-lock.json backend/prisma.config.ts ./
 COPY backend/prisma ./prisma
 COPY backend/scripts/file-json-secret.mjs ./scripts/file-json-secret.mjs
 COPY backend/scripts/harden-runtime-database-access.mjs ./scripts/harden-runtime-database-access.mjs
+COPY backend/scripts/postgres-tls.mjs ./scripts/postgres-tls.mjs
 COPY backend/scripts/run-migration-with-secrets.mjs ./scripts/run-migration-with-secrets.mjs
 COPY --from=build /workspace/backend/src/generated/prisma ./src/generated/prisma
 USER node

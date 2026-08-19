@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 
 import { loadFileJsonSecret } from './file-json-secret.mjs';
+import { loadTencentDbCa } from './postgres-tls.mjs';
 
 const manifest = JSON.parse(
   await readFile(resolve('config/staging-configuration-requirements.json'), 'utf8'),
@@ -46,6 +47,7 @@ if (checkFiles) {
     process.env.BNBU_MIGRATOR_SECRET_FILE,
     manifest.migratorSecret,
   );
+  inspectCaFile(process.env.BNBU_TENCENTDB_CA_FILE);
 } else {
   for (const name of manifest.runtimeSecret) {
     rows.push({
@@ -61,6 +63,25 @@ if (checkFiles) {
       status: 'UNKNOWN_FILE_NOT_READ',
       owner: 'DOCKER_COMPOSE_SECRET',
       source: 'migrator JSON secret',
+    });
+  }
+}
+
+function inspectCaFile(filePath) {
+  try {
+    loadTencentDbCa(filePath);
+    rows.push({
+      name: 'TENCENTDB_CA_CHAIN',
+      status: 'CONFIGURED',
+      owner: 'DOCKER_COMPOSE_SECRET',
+      source: 'TENCENTDB_CA_FILE',
+    });
+  } catch (error) {
+    rows.push({
+      name: 'TENCENTDB_CA_CHAIN',
+      status: 'INVALID_OR_UNAVAILABLE',
+      owner: 'DEPLOYMENT',
+      source: error instanceof Error ? error.message : 'unknown CA validation failure',
     });
   }
 }

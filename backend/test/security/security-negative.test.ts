@@ -465,6 +465,7 @@ describe('security negative gates', () => {
 });
 
 function useCvmRoleStorage(raw: NodeJS.ProcessEnv): void {
+  raw.TENCENTDB_CA_FILE = '/run/secrets/tencentdb-ca-chain.pem';
   raw.STORAGE_CREDENTIAL_PROVIDER = 'TENCENT_CVM_ROLE';
   delete raw.OBJECT_STORAGE_ACCESS_KEY;
   delete raw.OBJECT_STORAGE_SECRET_KEY;

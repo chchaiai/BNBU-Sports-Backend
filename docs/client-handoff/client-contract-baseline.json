@@ -6,10 +6,10 @@
   "contract": {
     "sourceRepository": "monorepo",
     "sourceBranch": "monorepo/main",
-    "sourceCommit": "a3f6cf4587028153a84f531aa2e5cbfd3eb415ce",
+    "sourceCommit": "aa208c53762cef8946f703c08693f532daeef946",
     "canonicalPath": "docs/backend-contracts/openapi.yaml",
-    "version": "2.0.4-contract",
-    "sha256": "fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47",
+    "version": "2.0.5-contract",
+    "sha256": "86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8",
     "prefix": "/api/v1",
     "operationCount": 126,
     "schemaCount": 288,

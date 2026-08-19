@@ -11,6 +11,8 @@ services:
     secrets:
       - source: bnbu_migrator
         target: bnbu_migrator.json
+      - source: tencentdb_ca
+        target: tencentdb-ca-chain.pem
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,nodev,size=32m
@@ -28,6 +30,8 @@ services:
     secrets:
       - source: bnbu_runtime
         target: bnbu_runtime.json
+      - source: tencentdb_ca
+        target: tencentdb-ca-chain.pem
     ports:
       - 127.0.0.1:${BACKEND_BIND_PORT:-3000}:3000
     read_only: true
@@ -44,3 +48,5 @@ secrets:
     file: ${BNBU_RUNTIME_SECRET_FILE:?Set the host runtime JSON secret file}
   bnbu_migrator:
     file: ${BNBU_MIGRATOR_SECRET_FILE:?Set the host migrator JSON secret file}
+  tencentdb_ca:
+    file: ${BNBU_TENCENTDB_CA_FILE:?Set the host TencentDB CA chain file}

@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { rootCertificates } from 'node:tls';
 
 const image = process.argv[2];
 if (image === undefined || !/^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/.test(image)) {
@@ -28,6 +29,7 @@ const configuration = {
   LOG_LEVEL: 'silent',
   RUNTIME_SECRET_PROVIDER: 'FILE_JSON',
   RUNTIME_SECRET_FILE: '/run/secrets/bnbu_runtime.json',
+  TENCENTDB_CA_FILE: '/run/secrets/tencentdb-ca-chain.pem',
   TOKEN_ISSUER: 'bnbu-runtime-smoke',
   TOKEN_AUDIENCE: 'bnbu-runtime-smoke-clients',
   ACCESS_TOKEN_TTL: '60',
@@ -77,7 +79,12 @@ const configuration = {
 let started = false;
 const secretDirectory = mkdtempSync(join(tmpdir(), 'bnbu-runtime-smoke-'));
 const secretPath = join(secretDirectory, 'bnbu_runtime.json');
+const caPath = join(secretDirectory, 'tencentdb-ca-chain.pem');
 writeFileSync(secretPath, JSON.stringify(runtimeSecret), { encoding: 'utf8', mode: 0o444 });
+writeFileSync(caPath, `${rootCertificates[0]}\n${rootCertificates[1]}\n`, {
+  encoding: 'utf8',
+  mode: 0o444,
+});
 try {
   const runArguments = [
     'run',
@@ -89,6 +96,8 @@ try {
     '127.0.0.1::3000',
     '--mount',
     `type=bind,source=${secretPath},target=/run/secrets/bnbu_runtime.json,readonly`,
+    '--mount',
+    `type=bind,source=${caPath},target=/run/secrets/tencentdb-ca-chain.pem,readonly`,
   ];
   for (const [name, value] of Object.entries(configuration)) {
     runArguments.push('--env', `${name}=${value}`);

@@ -1,12 +1,12 @@
 {
-  "currentVersion": "2.0.4-contract",
+  "currentVersion": "2.0.5-contract",
   "releaseState": "published",
-  "sha256": "fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47",
+  "sha256": "86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8",
   "canonicalPath": "docs/backend-contracts/openapi.yaml",
-  "releaseManifest": "docs/backend-contracts/releases/2.0.4-contract/release-manifest.json",
-  "immutableHistory": "docs/backend-contracts/contract-history/2.0.4-contract-fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47",
+  "releaseManifest": "docs/backend-contracts/releases/2.0.5-contract/release-manifest.json",
+  "immutableHistory": "docs/backend-contracts/contract-history/2.0.5-contract-86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8",
   "previousPublishedBaseline": {
-    "version": "2.0.3-contract",
-    "sha256": "382bc0bdffe872b8695d3d503ca0957cc95ff5ea8b786958cf62bd277edda7a2"
+    "version": "2.0.4-contract",
+    "sha256": "fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47"
   }
 }

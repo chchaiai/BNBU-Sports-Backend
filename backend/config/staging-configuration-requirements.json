@@ -39,6 +39,12 @@
       "source": "migrator Docker Compose secret target",
       "expected": "/run/secrets/bnbu_migrator.json"
     },
+    {
+      "name": "TENCENTDB_CA_FILE",
+      "owner": "DEPLOYMENT",
+      "source": "TencentDB CA chain Docker Compose secret target",
+      "expected": "/run/secrets/tencentdb-ca-chain.pem"
+    },
     { "name": "TOKEN_ISSUER", "owner": "DEPLOYMENT", "source": "staging identity boundary" },
     { "name": "TOKEN_AUDIENCE", "owner": "DEPLOYMENT", "source": "staging client boundary" },
     { "name": "ACCESS_TOKEN_TTL", "owner": "DEPLOYMENT", "source": "security policy" },
@@ -210,6 +216,10 @@
     {
       "name": "FILE_JSON_MIGRATOR_SECRET_PROVISIONED",
       "source": "migrator JSON file exists outside Git with MIGRATION_DATABASE_URL only"
+    },
+    {
+      "name": "TENCENTDB_CA_CHAIN_PROVISIONED",
+      "source": "complete TencentDB intermediate and root CA chain exists outside Git"
     },
     {
       "name": "CVM_INSTANCE_ROLE_BINDING",

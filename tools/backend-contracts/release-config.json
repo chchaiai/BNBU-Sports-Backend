@@ -1,15 +1,15 @@
 {
   "formatVersion": 1,
-  "candidateVersion": "2.0.4-contract",
+  "candidateVersion": "2.0.5-contract",
   "releaseState": "published",
   "releaseDate": "2026-08-19",
   "publishedBaseline": {
-    "version": "2.0.3-contract",
-    "sha256": "382bc0bdffe872b8695d3d503ca0957cc95ff5ea8b786958cf62bd277edda7a2",
-    "sourceCommit": "5996324dc523af57008c7f83accd08688f42c5c2"
+    "version": "2.0.4-contract",
+    "sha256": "fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47",
+    "sourceCommit": "a3f6cf4587028153a84f531aa2e5cbfd3eb415ce"
   },
   "compatibility": {
-    "jsonPath": "docs/backend-contracts/openapi-2.0.3-to-2.0.4-compatibility.json",
-    "markdownPath": "docs/backend-contracts/openapi-2.0.3-to-2.0.4-compatibility.md"
+    "jsonPath": "docs/backend-contracts/openapi-2.0.4-to-2.0.5-compatibility.json",
+    "markdownPath": "docs/backend-contracts/openapi-2.0.4-to-2.0.5-compatibility.md"
   }
 }

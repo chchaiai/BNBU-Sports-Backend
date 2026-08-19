@@ -157,8 +157,8 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Grants both non-root staging containers supplemental GID \`10001\` so Docker Compose file-backed secrets are readable from host files owned by \`root:10001\` with mode \`0640\`.
-- Preserves strict separation between the runtime and migrator secret files; neither container gains access to the other service's secret.
+- Mounts a persistent complete TencentDB CA chain into both non-root staging containers while preserving strict separation between the runtime and migrator JSON files.
+- Enforces CA and host identity validation for runtime \`PrismaPg\`, Prisma migration, and post-migration PostgreSQL hardening connections without placing certificate content in an image or JSON secret.
 - Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
 - Adds no database migration and no client-visible operation or schema change.
 `;
@@ -174,7 +174,7 @@ This release adds no Prisma migration. Staging still requires a dedicated busine
 
 ## Staging secrets
 
-Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. On the Compose host, both source files must be owned by \`root:10001\` with mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
+Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. Mount the complete TencentDB intermediate and root CA chain at \`/run/secrets/tencentdb-ca-chain.pem\` in both containers. On the Compose host, all three source files must be owned by \`root:10001\` with mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
 
 ## Tencent Cloud access
 
@@ -213,7 +213,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release fixes the non-root Docker Compose FILE_JSON read contract with dedicated supplemental GID \`10001\`; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release adds persistent strict TencentDB CA validation to runtime and migration containers; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
