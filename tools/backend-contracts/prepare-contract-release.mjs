@@ -157,8 +157,9 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Mounts a persistent complete TencentDB CA chain into both non-root staging containers while preserving strict separation between the runtime and migrator JSON files.
-- Enforces CA and host identity validation for runtime \`PrismaPg\`, Prisma migration, and post-migration PostgreSQL hardening connections without placing certificate content in an image or JSON secret.
+- Makes every artifact copied into the non-root migrator image explicitly owned by \`node:node\`, including package metadata, Prisma schema and migrations, TLS/secret bootstrap scripts, hardening logic, dependencies, and generated Prisma Client.
+- Keeps mode-protected server build contexts readable by the migrator without widening host permissions or running the container as root.
+- Retains the persistent complete TencentDB CA chain and CA/host identity verification added in ${baselineVersion}.
 - Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
 - Adds no database migration and no client-visible operation or schema change.
 `;
@@ -171,6 +172,10 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 ## Database
 
 This release adds no Prisma migration. Staging still requires a dedicated business database, a schema-admin migration account, and a separate least-privilege runtime account. Creating the database is infrastructure preparation; applying the existing migration chain remains a separately authorized deployment phase.
+
+## Migrator image ownership
+
+Every file copied into the migrator stage is explicitly owned by the non-root \`node\` identity. This preserves read access when the deployment source archive is intentionally extracted as \`root:root\` with mode \`0640\`; do not compensate by widening server source permissions or running the migrator as root.
 
 ## Staging secrets
 
@@ -213,7 +218,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release adds persistent strict TencentDB CA validation to runtime and migration containers; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release makes the non-root migrator image readable even when built from a mode-protected server source archive, while retaining strict TencentDB CA validation; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

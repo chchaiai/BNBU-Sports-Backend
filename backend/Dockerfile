@@ -21,14 +21,14 @@ RUN npm run db:generate \
 
 FROM node-base AS migrator
 WORKDIR /app
-COPY --from=dependencies /workspace/backend/node_modules ./node_modules
-COPY backend/package.json backend/package-lock.json backend/prisma.config.ts ./
-COPY backend/prisma ./prisma
-COPY backend/scripts/file-json-secret.mjs ./scripts/file-json-secret.mjs
-COPY backend/scripts/harden-runtime-database-access.mjs ./scripts/harden-runtime-database-access.mjs
-COPY backend/scripts/postgres-tls.mjs ./scripts/postgres-tls.mjs
-COPY backend/scripts/run-migration-with-secrets.mjs ./scripts/run-migration-with-secrets.mjs
-COPY --from=build /workspace/backend/src/generated/prisma ./src/generated/prisma
+COPY --from=dependencies --chown=node:node /workspace/backend/node_modules ./node_modules
+COPY --chown=node:node backend/package.json backend/package-lock.json backend/prisma.config.ts ./
+COPY --chown=node:node backend/prisma ./prisma
+COPY --chown=node:node backend/scripts/file-json-secret.mjs ./scripts/file-json-secret.mjs
+COPY --chown=node:node backend/scripts/harden-runtime-database-access.mjs ./scripts/harden-runtime-database-access.mjs
+COPY --chown=node:node backend/scripts/postgres-tls.mjs ./scripts/postgres-tls.mjs
+COPY --chown=node:node backend/scripts/run-migration-with-secrets.mjs ./scripts/run-migration-with-secrets.mjs
+COPY --from=build --chown=node:node /workspace/backend/src/generated/prisma ./src/generated/prisma
 USER node
 CMD ["npm", "run", "db:migrate:deploy:container"]
 

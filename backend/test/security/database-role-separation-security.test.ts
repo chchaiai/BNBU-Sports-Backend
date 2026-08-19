@@ -36,4 +36,27 @@ describe('Docker database role separation', () => {
     assert.match(hardening, /GRANT SELECT ON TABLE public\."_prisma_migrations"/);
     assert.match(hardening, /has_table_privilege/);
   });
+
+  it('makes every migrator artifact readable by the non-root node identity', async () => {
+    const dockerfile = await source('backend/Dockerfile');
+    const migratorStage = dockerfile
+      .split('FROM node-base AS migrator')[1]
+      ?.split('FROM node-base AS production-dependencies')[0];
+
+    assert.ok(migratorStage, 'migrator stage must exist');
+    const copyInstructions = migratorStage
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('COPY '));
+
+    assert.equal(copyInstructions.length, 8);
+    for (const instruction of copyInstructions) {
+      assert.match(
+        instruction,
+        /^COPY (?:--from=\S+ )?--chown=node:node /,
+        `migrator artifact ownership is not explicit: ${instruction}`,
+      );
+    }
+    assert.match(migratorStage, /USER node\s+CMD \["npm", "run", "db:migrate:deploy:container"\]/);
+  });
 });
