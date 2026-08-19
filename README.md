@@ -10,12 +10,12 @@
 
 ## 当前 Backend 发布基线
 
-- 版本：`2.0.6-contract`
-- OpenAPI SHA-256：`099e7abbac3d7e3ce4f3a928d6863cd2486f4e957ae6be7b950c88384e45ce79`
-- 来源 monorepo commit：`35841b961e0f32ade9870c47303cad157f76bfaa`
-- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.6-contract>
+- 版本：`2.0.7-contract`
+- OpenAPI SHA-256：`24967f0ec3f054ccde4aa7843c9b89e750fd2fd3bd237467b6665496301491cb`
+- 来源 monorepo commit：`9928074c62025bf6c899a688a678890947132928`
+- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.7-contract>
 
-该发布修复 Migrator Docker 镜像内全部运行工件的非 root 所有权，使 UID 1000 的 `node` 用户在服务器源文件采用受保护权限时仍可读取 Migration、脚本与生成的 Prisma Client；同时保留 2.0.5 的 TencentDB 持久化 CA 和严格主机身份验证。它不新增数据库 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 Staging 已启动 Backend 或已开放 Production Gate。
+该发布修复 Runtime 与 Migrator 在 PostgreSQL 连接地址为 IP 时的 TLS 主机身份校验：始终使用实际配置地址执行 `checkServerIdentity`，不再被 PostgreSQL 客户端传入的 `localhost` 覆盖；同时继续强制完整 CA 链与 `rejectUnauthorized=true`。它不新增数据库 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 Staging 已启动 Backend 或已开放 Production Gate。
 
 不得在客户端目录中重新执行 `git init`、单独创建分支、提交、push 或 Pull Request，也不得重新添加 submodule。所有 Git 操作从本目录执行；需要限定范围时使用路径暂存：
 
