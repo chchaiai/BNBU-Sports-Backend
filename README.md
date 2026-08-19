@@ -10,12 +10,12 @@
 
 ## 当前 Backend 发布基线
 
-- 版本：`2.0.4-contract`
-- OpenAPI SHA-256：`fb58079a167a1ac6208618bc1b2ac106f618a53be5418936992c1ddf36e85b47`
-- 来源 monorepo commit：`383bd82d41e5d65225ae4a06d03ff4b3d713c1e1`
-- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.4-contract>
+- 版本：`2.0.5-contract`
+- OpenAPI SHA-256：`86b2607e0922c70d4e7c7866f4578952babc103e57daa14f42c3b4619b34ccf8`
+- 来源 monorepo commit：`410da63f0a631bd1ffeca700282470912cfd8d4b`
+- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.5-contract>
 
-该发布修复 Staging Docker Compose 中 FILE_JSON 的专用补充组读取契约。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 Staging 已执行 Migration、已启动 Backend 或已开放 Production Gate。
+该发布为 Staging Docker Compose 持久挂载完整 TencentDB CA 链，并对 runtime、Migration 与权限 hardening 连接强制执行 CA 和主机身份验证；它不新增数据库 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 Staging 已启动 Backend 或已开放 Production Gate。
 
 不得在客户端目录中重新执行 `git init`、单独创建分支、提交、push 或 Pull Request，也不得重新添加 submodule。所有 Git 操作从本目录执行；需要限定范围时使用路径暂存：
 
