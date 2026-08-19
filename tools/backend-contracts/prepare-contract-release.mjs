@@ -157,9 +157,9 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Makes every artifact copied into the non-root migrator image explicitly owned by \`node:node\`, including package metadata, Prisma schema and migrations, TLS/secret bootstrap scripts, hardening logic, dependencies, and generated Prisma Client.
-- Keeps mode-protected server build contexts readable by the migrator without widening host permissions or running the container as root.
-- Retains the persistent complete TencentDB CA chain and CA/host identity verification added in ${baselineVersion}.
+- Pins PostgreSQL certificate identity verification to the actual host parsed from the runtime or migration URL, including TencentDB private IP addresses.
+- Prevents \`node-postgres\` from substituting \`localhost\` during IP-address certificate checks while retaining \`rejectUnauthorized: true\` and the complete TencentDB CA chain.
+- Applies the same strict host check to the Runtime Prisma pool and the Migrator runtime-permission hardening client.
 - Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
 - Adds no database migration and no client-visible operation or schema change.
 `;
@@ -173,9 +173,9 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 This release adds no Prisma migration. Staging still requires a dedicated business database, a schema-admin migration account, and a separate least-privilege runtime account. Creating the database is infrastructure preparation; applying the existing migration chain remains a separately authorized deployment phase.
 
-## Migrator image ownership
+## TencentDB TLS host identity
 
-Every file copied into the migrator stage is explicitly owned by the non-root \`node\` identity. This preserves read access when the deployment source archive is intentionally extracted as \`root:root\` with mode \`0640\`; do not compensate by widening server source permissions or running the migrator as root.
+Runtime and Migrator PostgreSQL clients verify the certificate against the host parsed from their configured URL. This prevents an IP-address connection from being checked as \`localhost\` by \`node-postgres\`. The complete CA chain and \`rejectUnauthorized: true\` remain mandatory; do not add a hostname bypass, set \`sslmode=no-verify\`, or weaken certificate validation.
 
 ## Staging secrets
 
@@ -218,7 +218,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release makes the non-root migrator image readable even when built from a mode-protected server source archive, while retaining strict TencentDB CA validation; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release verifies TencentDB certificates against the PostgreSQL URL host even when \`node-postgres\` supplies \`localhost\` for an IP connection; complete CA-chain validation remains strict and the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

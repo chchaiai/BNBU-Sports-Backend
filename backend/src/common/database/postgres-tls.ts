@@ -1,6 +1,7 @@
 import { X509Certificate } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { isAbsolute } from 'node:path';
+import { checkServerIdentity as nodeCheckServerIdentity, type PeerCertificate } from 'node:tls';
 import { TextDecoder } from 'node:util';
 
 import type { PoolConfig } from 'pg';
@@ -12,6 +13,7 @@ const POSTGRES_SCHEMA = /^[A-Za-z_][A-Za-z0-9_$]{0,62}$/u;
 
 interface PostgresTlsDependencies {
   readCaFile?: (path: string) => Uint8Array;
+  checkServerIdentity?: (hostname: string, certificate: PeerCertificate) => Error | undefined;
 }
 
 export interface PrismaPgConfiguration {
@@ -54,6 +56,7 @@ export function createPrismaPgConfiguration(
   }
 
   const applicationName = parsed.searchParams.get('application_name');
+  const checkServerIdentity = strictServerIdentityCheck(parsed.hostname, dependencies);
   return {
     pool: {
       host: parsed.hostname,
@@ -61,11 +64,19 @@ export function createPrismaPgConfiguration(
       user,
       password,
       database,
-      ssl: { ca, rejectUnauthorized: true },
+      ssl: { ca, rejectUnauthorized: true, checkServerIdentity },
       ...(applicationName === null ? {} : { application_name: applicationName }),
     },
     schema,
   };
+}
+
+function strictServerIdentityCheck(
+  expectedHostname: string,
+  dependencies: PostgresTlsDependencies,
+): (hostname: string, certificate: PeerCertificate) => Error | undefined {
+  const verifyServerIdentity = dependencies.checkServerIdentity ?? nodeCheckServerIdentity;
+  return (_connectionHostname, certificate) => verifyServerIdentity(expectedHostname, certificate);
 }
 
 export function loadTencentDbCa(

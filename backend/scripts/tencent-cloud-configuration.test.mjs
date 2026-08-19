@@ -179,12 +179,25 @@ describe('Tencent Cloud configuration tooling', () => {
       assert.equal(strictUrl.searchParams.get('sslaccept'), 'strict');
       assert.equal(environment.SSL_CERT_FILE, caPath);
 
-      const client = createStrictPgClientConfig(environment.MIGRATION_DATABASE_URL, caPath);
+      const certificate = {};
+      let checkedHostname = null;
+      let checkedCertificate = null;
+      const client = createStrictPgClientConfig(environment.MIGRATION_DATABASE_URL, caPath, {
+        checkServerIdentity: (hostname, peerCertificate) => {
+          checkedHostname = hostname;
+          checkedCertificate = peerCertificate;
+          return undefined;
+        },
+      });
       assert.equal(client.host, '10.0.0.10');
       assert.equal(client.ssl.rejectUnauthorized, true);
       assert.equal(client.ssl.ca, completeCaChain);
       assert.equal(client.connectionString, undefined);
       assert.equal('servername' in client.ssl, false);
+      assert.equal(typeof client.ssl.checkServerIdentity, 'function');
+      assert.equal(client.ssl.checkServerIdentity('localhost', certificate), undefined);
+      assert.equal(checkedHostname, '10.0.0.10');
+      assert.equal(checkedCertificate, certificate);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }

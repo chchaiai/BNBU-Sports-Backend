@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { rootCertificates } from 'node:tls';
+import { type PeerCertificate, rootCertificates } from 'node:tls';
 import { describe, it } from 'node:test';
 
 import {
@@ -14,10 +14,20 @@ const caDependencies = {
 
 describe('TencentDB PostgreSQL TLS configuration', () => {
   it('uses explicit pool fields so connection-string parsing cannot replace strict TLS', () => {
+    const certificate = {} as PeerCertificate;
+    let checkedHostname: string | null = null;
+    let checkedCertificate: PeerCertificate | null = null;
     const result = createPrismaPgConfiguration(
       'postgresql://runtime:synthetic@10.0.0.10:5432/sports?schema=public&sslmode=require',
       '/run/secrets/tencentdb-ca-chain.pem',
-      caDependencies,
+      {
+        ...caDependencies,
+        checkServerIdentity: (hostname, peerCertificate) => {
+          checkedHostname = hostname;
+          checkedCertificate = peerCertificate;
+          return undefined;
+        },
+      },
     );
 
     assert.equal(result.schema, 'public');
@@ -32,6 +42,10 @@ describe('TencentDB PostgreSQL TLS configuration', () => {
     assert.equal(ssl.rejectUnauthorized, true);
     assert.equal(ssl.ca, completeCaChain);
     assert.equal('servername' in ssl, false);
+    assert.equal(typeof ssl.checkServerIdentity, 'function');
+    assert.equal(ssl.checkServerIdentity?.('localhost', certificate), undefined);
+    assert.equal(checkedHostname, '10.0.0.10');
+    assert.equal(checkedCertificate, certificate);
   });
 
   it('preserves local connection-string behavior when no managed CA is configured', () => {

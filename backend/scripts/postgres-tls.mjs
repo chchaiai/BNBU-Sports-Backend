@@ -1,6 +1,7 @@
 import { X509Certificate } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { isAbsolute } from 'node:path';
+import { checkServerIdentity as nodeCheckServerIdentity } from 'node:tls';
 import { TextDecoder } from 'node:util';
 
 const MAX_CA_FILE_BYTES = 128 * 1024;
@@ -40,15 +41,21 @@ export function createStrictPgClientConfig(databaseUrl, caFile, dependencies = {
     throw new Error('PostgreSQL URL must include host, user, password, and database');
   }
   const applicationName = parsed.searchParams.get('application_name');
+  const checkServerIdentity = strictServerIdentityCheck(parsed.hostname, dependencies);
   return {
     host: parsed.hostname,
     port,
     user,
     password,
     database,
-    ssl: { ca, rejectUnauthorized: true },
+    ssl: { ca, rejectUnauthorized: true, checkServerIdentity },
     ...(applicationName === null ? {} : { application_name: applicationName }),
   };
+}
+
+function strictServerIdentityCheck(expectedHostname, dependencies) {
+  const verifyServerIdentity = dependencies.checkServerIdentity ?? nodeCheckServerIdentity;
+  return (_connectionHostname, certificate) => verifyServerIdentity(expectedHostname, certificate);
 }
 
 export function loadTencentDbCa(caFile, dependencies = {}) {
