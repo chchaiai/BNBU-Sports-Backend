@@ -4,6 +4,8 @@ import { describe, it } from 'node:test';
 
 import {
   loadStagingFixturePassword,
+  STAGING_FIXTURE_AUDIT_ACTION,
+  STAGING_FIXTURE_PERMISSION_ID,
   STAGING_OPERATOR_CONFIRMATION,
   STAGING_OPERATOR_INTERNAL_BASE_URL,
   validateStagingOperatorControls,
@@ -12,6 +14,11 @@ import {
 const SYNTHETIC_PASSWORD = 'Synthetic-Staging-Health-Only-2026';
 
 describe('staging health operator safety gates', () => {
+  it('uses database-valid closed-catalog audit identifiers', () => {
+    assert.equal(STAGING_FIXTURE_AUDIT_ACTION, 'STAGING_FIXTURE_BOOTSTRAP');
+    assert.match(STAGING_FIXTURE_PERMISSION_ID, /^[A-Z][A-Z0-9-]*$/u);
+  });
+
   it('requires staging, an exact confirmation, an absolute secret path and the Docker URL', () => {
     const environment: NodeJS.ProcessEnv = {
       APP_ENV: 'staging',

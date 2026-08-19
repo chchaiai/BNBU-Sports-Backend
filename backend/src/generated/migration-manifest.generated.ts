@@ -96,6 +96,11 @@ export const foundationMigrations = [
     sha256: '3fb294065f22698fb924672911455588745cb39a40d343c91261b3b774cd3be0',
     destructive: false,
   },
+  {
+    migrationId: '0020_staging_fixture_audit_action',
+    sha256: '16c52db05868a0c6c70324480808195e657c8e520def4f38b5be353d8afb95e7',
+    destructive: false,
+  },
 ] as const;
 
 export const foundationMigration = foundationMigrations[0];
@@ -117,3 +122,4 @@ export const optionalCourseExerciseDescriptionMigration = foundationMigrations[1
 export const exemptionApplicationDetailsMigration = foundationMigrations[16];
 export const defaultValidExerciseReviewsMigration = foundationMigrations[17];
 export const defaultValidInitialReviewConstraintMigration = foundationMigrations[18];
+export const stagingFixtureAuditActionMigration = foundationMigrations[19];

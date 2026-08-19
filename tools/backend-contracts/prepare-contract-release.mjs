@@ -157,11 +157,11 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Rejects every HTTP CORS origin in staging and production and reserves a non-routable \`.invalid\` sentinel until the exact deployed Web HTTPS origin is known.
-- Adds an operations-only, create-or-verify synthetic ADMIN bootstrap for authenticated staging health verification; conflicts fail closed without overwriting data.
-- Verifies authenticated admin health over the private Compose network, checks request ID and all dependency states, and logs out without printing tokens.
-- Keeps the fixture password in a dedicated Compose secret that is never mounted by the long-running Backend or Migrator.
-- Adds no database migration and no client-visible operation or schema change.
+- Corrects the staging health bootstrap audit permission identifier to the database-approved uppercase catalog format.
+- Adds forward-only Migration \`0020_staging_fixture_audit_action\`, expanding the closed AuditLog action catalog with \`STAGING_FIXTURE_BOOTSTRAP\`.
+- Builds and validates the expanded CHECK before replacing the canonical constraint name, without creating tables, rewriting business data, or weakening unknown-action rejection.
+- Executes the real create-or-verify bootstrap twice against PostgreSQL in integration tests, proving \`CREATED\` then \`VERIFIED\` with one append-only audit fact.
+- Adds no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
 
@@ -171,11 +171,11 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 ## Database
 
-This release adds no Prisma migration. Staging still requires a dedicated business database, a schema-admin migration account, and a separate least-privilege runtime account. Creating the database is infrastructure preparation; applying the existing migration chain remains a separately authorized deployment phase.
+This release adds forward-only Prisma Migration \`0020_staging_fixture_audit_action\`. It adds and validates an expanded \`audit_logs_action_type_check_v2\`, drops the narrower prior CHECK, and renames the validated replacement to the canonical \`audit_logs_action_type_check\`. It creates no table, deletes no row, and changes no client data shape. Apply it with the schema-admin Migrator before running the staging fixture bootstrap; the runtime account remains separate and least-privilege.
 
-## HTTPS-only CORS
+## Staging health audit catalog
 
-Staging and production accept exact HTTPS origins only. Before a real Web deployment origin is verified, keep \`CORS_ALLOWLIST=https://web-origin-not-configured.invalid\`; this reserved sentinel does not grant a reachable browser origin. Do not restore the retired public-IP HTTP origin. Configure the exact Web HTTPS origin in Backend and COS only during Phase 11.
+The bootstrap emits \`STAGING_FIXTURE_BOOTSTRAP\` with permission \`OPERATIONS-STAGING-FIXTURE-BOOTSTRAP\`. Both identifiers now satisfy the closed PostgreSQL constraints. Unknown actions remain rejected and AuditLog remains append-only. The bootstrap still creates or verifies only the isolated synthetic organization and ADMIN; conflicts fail closed without overwriting data.
 
 ## Staging secrets
 
@@ -218,7 +218,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release makes staging health verification authenticated and secret-isolated while enforcing HTTPS-only CORS outside local/test environments; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release fixes the closed AuditLog catalog used by the isolated staging health bootstrap and adds one forward-only database constraint expansion; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

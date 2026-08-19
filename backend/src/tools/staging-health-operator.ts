@@ -15,6 +15,8 @@ import { Prisma } from '../generated/prisma/client.js';
 export const STAGING_OPERATOR_CONFIRMATION = 'BNBU_SPORTS_STAGING_SYNTHETIC_V1';
 export const STAGING_OPERATOR_INTERNAL_BASE_URL = 'http://backend:3000/api/v1';
 export const STAGING_FIXTURE_EMAIL = 'admin.staging.synthetic@bnbu.invalid';
+export const STAGING_FIXTURE_AUDIT_ACTION = 'STAGING_FIXTURE_BOOTSTRAP';
+export const STAGING_FIXTURE_PERMISSION_ID = 'OPERATIONS-STAGING-FIXTURE-BOOTSTRAP';
 
 const FIXTURE_SECRET_KEY = 'STAGING_ADMIN_PASSWORD';
 const FIXTURE_ORGANIZATION_CODE = 'STAGING-SYNTHETIC';
@@ -121,7 +123,7 @@ export async function loadStagingFixturePassword(
   return password;
 }
 
-async function bootstrapFixture(config: RuntimeConfig, password: string): Promise<void> {
+export async function bootstrapFixture(config: RuntimeConfig, password: string): Promise<void> {
   const prisma = new PrismaService(config);
   try {
     await prisma.$connect();
@@ -262,8 +264,8 @@ async function bootstrapFixture(config: RuntimeConfig, password: string): Promis
               organizationId: organization.id,
               actorUserId: admin.id,
               actorRoleSnapshot: 'ADMIN',
-              permissionId: 'operations.staging.fixture.bootstrap',
-              actionType: 'STAGING_FIXTURE_BOOTSTRAP',
+              permissionId: STAGING_FIXTURE_PERMISSION_ID,
+              actionType: STAGING_FIXTURE_AUDIT_ACTION,
               targetType: 'USER',
               targetId: admin.id,
               requestId: `staging-bootstrap-${uuidv7()}`,

@@ -31,6 +31,7 @@ const expectedMigrationDirectories = [
   '0017_exemption_application_details',
   '0018_default_valid_exercise_reviews',
   '0019_default_valid_initial_review_constraint',
+  '0020_staging_fixture_audit_action',
 ];
 
 if (
@@ -74,6 +75,7 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
     '0010_export_audit_governance',
     '0011_client_capabilities',
     '0012_ios_auth_release_exemption',
+    '0020_staging_fixture_audit_action',
   ].includes(migrationId)
     ? sql.replace(
         'DROP CONSTRAINT "audit_logs_action_type_check"',
@@ -155,6 +157,16 @@ const migrations = expectedMigrationDirectories.map((migrationId) => {
     );
   }
   if (
+    migrationId === '0020_staging_fixture_audit_action' &&
+    (!sql.includes('DROP CONSTRAINT "audit_logs_action_type_check"') ||
+      !sql.includes("'STAGING_FIXTURE_BOOTSTRAP'") ||
+      !sql.includes('VALIDATE CONSTRAINT "audit_logs_action_type_check_v2"'))
+  ) {
+    throw new Error(
+      '0020_staging_fixture_audit_action: validated audit action CHECK expansion is required',
+    );
+  }
+  if (
     migrationId === '0002_teaching_structure' &&
     !sql.includes('DROP CONSTRAINT "audit_logs_action_type_check"')
   ) {
@@ -233,6 +245,7 @@ const productionRateLimits = migrations[12];
 const emailOnlyAuth = migrations[13];
 const emailVerificationFkAlignment = migrations[14];
 const optionalCourseExerciseDescription = migrations[15];
+const stagingFixtureAuditAction = migrations[19];
 const immutableFoundationChecksum =
   '0573e3d13018e0db103ef4b605eb35278723174507b37379425a489b10e1462d';
 if (foundation.checksum !== immutableFoundationChecksum) {
@@ -364,6 +377,7 @@ assertExactTables(exportAuditGovernance, []);
 assertExactTables(clientCapabilities, clientCapabilityTables);
 assertExactTables(iosAuthReleaseExemption, []);
 assertExactTables(productionRateLimits, ['rate_limit_windows']);
+assertExactTables(stagingFixtureAuditAction, []);
 
 const laterBusinessTables = ['export_jobs'];
 for (const table of laterBusinessTables) {
@@ -632,6 +646,17 @@ for (const invariant of [
     throw new Error(`0015_email_verification_fk_alignment: missing invariant ${invariant}`);
   }
 }
+
+for (const invariant of [
+  'audit_logs_action_type_check_v2',
+  'VALIDATE CONSTRAINT "audit_logs_action_type_check_v2"',
+  'RENAME CONSTRAINT "audit_logs_action_type_check_v2" TO "audit_logs_action_type_check"',
+  "'STAGING_FIXTURE_BOOTSTRAP'",
+]) {
+  if (!stagingFixtureAuditAction.sql.includes(invariant)) {
+    throw new Error(`0020_staging_fixture_audit_action: missing invariant ${invariant}`);
+  }
+}
 const exemptionApplicationDetails = migrations.find(
   ({ migrationId }) => migrationId === '0017_exemption_application_details',
 );
@@ -673,5 +698,5 @@ for (const migration of migrations) {
   );
 }
 process.stdout.write(
-  'Migration safety: PASS (forward-only Foundation through default-valid exercise reviews)\n',
+  'Migration safety: PASS (forward-only Foundation through staging fixture audit action)\n',
 );

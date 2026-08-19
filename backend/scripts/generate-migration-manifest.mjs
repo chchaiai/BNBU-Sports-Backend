@@ -24,6 +24,7 @@ const migrationIds = [
   '0017_exemption_application_details',
   '0018_default_valid_exercise_reviews',
   '0019_default_valid_initial_review_constraint',
+  '0020_staging_fixture_audit_action',
 ];
 const outputPath = path.join(
   backendDirectory,
@@ -70,17 +71,18 @@ const generatedWithOptionalCourseExerciseDescription = `${generatedWithEmailVeri
 const generatedWithExemptionApplicationDetails = `${generatedWithOptionalCourseExerciseDescription}export const exemptionApplicationDetailsMigration = foundationMigrations[16];\n`;
 const generatedWithDefaultValidExerciseReviews = `${generatedWithExemptionApplicationDetails}export const defaultValidExerciseReviewsMigration = foundationMigrations[17];\n`;
 const generatedWithDefaultValidInitialReviewConstraint = `${generatedWithDefaultValidExerciseReviews}export const defaultValidInitialReviewConstraintMigration = foundationMigrations[18];\n`;
+const generatedWithStagingFixtureAuditAction = `${generatedWithDefaultValidInitialReviewConstraint}export const stagingFixtureAuditActionMigration = foundationMigrations[19];\n`;
 
 if (checkOnly) {
   if (
     !fs.existsSync(outputPath) ||
-    fs.readFileSync(outputPath, 'utf8') !== generatedWithDefaultValidInitialReviewConstraint
+    fs.readFileSync(outputPath, 'utf8') !== generatedWithStagingFixtureAuditAction
   ) {
     throw new Error('Generated migration manifest is stale; run npm run db:manifest:generate');
   }
   process.stdout.write('Generated migration manifest: PASS\n');
 } else {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, generatedWithDefaultValidInitialReviewConstraint, 'utf8');
+  fs.writeFileSync(outputPath, generatedWithStagingFixtureAuditAction, 'utf8');
   process.stdout.write('Generated migration manifest updated.\n');
 }
