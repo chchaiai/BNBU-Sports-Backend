@@ -60,7 +60,7 @@ describe('Tencent Cloud configuration tooling', () => {
     );
     const environment = { ...process.env };
     for (const item of manifest.nonSecret) {
-      environment[item.name] = item.expected ?? 'synthetic-configured';
+      environment[item.name] = syntheticNonSecretValue(item);
     }
     environment.DATABASE_URL = 'sentinel-must-not-print';
     const result = spawnSync(
@@ -96,6 +96,35 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.equal(mismatch.status, 1, mismatch.stderr);
     assert.match(mismatch.stdout, /MISMATCH\tTENCENT_SES_TEMPLATE_ID\tUSER_TENCENT_CONSOLE/);
     assert.doesNotMatch(mismatch.stdout, /sentinel-wrong-template-id/);
+
+    environment.TENCENT_SES_TEMPLATE_ID = '56852';
+    environment.CORS_ALLOWLIST = 'http://129.204.146.192';
+    const insecureCors = spawnSync(
+      process.execPath,
+      [resolve('scripts/check-staging-configuration.mjs')],
+      {
+        cwd: process.cwd(),
+        env: environment,
+        encoding: 'utf8',
+        windowsHide: true,
+      },
+    );
+    assert.equal(insecureCors.status, 1, insecureCors.stderr);
+    assert.match(insecureCors.stdout, /MISMATCH\tCORS_ALLOWLIST\tDEPLOYMENT/);
+
+    environment.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
+    const deferredCors = spawnSync(
+      process.execPath,
+      [resolve('scripts/check-staging-configuration.mjs')],
+      {
+        cwd: process.cwd(),
+        env: environment,
+        encoding: 'utf8',
+        windowsHide: true,
+      },
+    );
+    assert.equal(deferredCors.status, 0, deferredCors.stderr);
+    assert.match(deferredCors.stdout, /DEFERRED\tCORS_ALLOWLIST\tDEPLOYMENT/);
   });
 
   it('checks host Compose secret sources without replacing container target paths', () => {
@@ -105,6 +134,7 @@ describe('Tencent Cloud configuration tooling', () => {
     const directory = mkdtempSync(join(tmpdir(), 'bnbu-staging-config-test-'));
     const runtimePath = join(directory, 'runtime.json');
     const migratorPath = join(directory, 'migrator.json');
+    const fixturePath = join(directory, 'staging-fixture.json');
     const caPath = join(directory, 'tencentdb-ca-chain.pem');
     const runtimeSecret = Object.fromEntries(
       manifest.runtimeSecret.map((name) => [name, `synthetic-${name}`]),
@@ -112,17 +142,22 @@ describe('Tencent Cloud configuration tooling', () => {
     const migratorSecret = Object.fromEntries(
       manifest.migratorSecret.map((name) => [name, `synthetic-${name}`]),
     );
+    const fixtureSecret = Object.fromEntries(
+      manifest.fixtureSecret.map((name) => [name, `synthetic-${name}`]),
+    );
     writeFileSync(runtimePath, JSON.stringify(runtimeSecret), 'utf8');
     writeFileSync(migratorPath, JSON.stringify(migratorSecret), 'utf8');
+    writeFileSync(fixturePath, JSON.stringify(fixtureSecret), 'utf8');
     writeFileSync(caPath, completeCaChain, 'utf8');
 
     try {
       const environment = { ...process.env };
       for (const item of manifest.nonSecret) {
-        environment[item.name] = item.expected ?? 'synthetic-configured';
+        environment[item.name] = syntheticNonSecretValue(item);
       }
       environment.BNBU_RUNTIME_SECRET_FILE = runtimePath;
       environment.BNBU_MIGRATOR_SECRET_FILE = migratorPath;
+      environment.BNBU_STAGING_FIXTURE_SECRET_FILE = fixturePath;
       environment.BNBU_TENCENTDB_CA_FILE = caPath;
       const result = spawnSync(
         process.execPath,
@@ -137,6 +172,7 @@ describe('Tencent Cloud configuration tooling', () => {
       assert.equal(result.status, 0, result.stderr || result.stdout);
       assert.match(result.stdout, /CONFIGURED\tDATABASE_URL\tDOCKER_COMPOSE_SECRET/);
       assert.match(result.stdout, /CONFIGURED\tMIGRATION_DATABASE_URL\tDOCKER_COMPOSE_SECRET/);
+      assert.match(result.stdout, /CONFIGURED\tSTAGING_ADMIN_PASSWORD\tDOCKER_COMPOSE_SECRET/);
       assert.match(result.stdout, /CONFIGURED\tTENCENTDB_CA_CHAIN\tDOCKER_COMPOSE_SECRET/);
       assert.doesNotMatch(result.stdout, /synthetic-DATABASE_URL/);
     } finally {
@@ -144,11 +180,12 @@ describe('Tencent Cloud configuration tooling', () => {
     }
   });
 
-  it('grants both non-root containers only the dedicated secret reader group', () => {
+  it('grants all non-root containers only the dedicated secret reader group', () => {
     const compose = YAML.parse(readFileSync(resolve('docker-compose.staging.yml'), 'utf8'));
 
     assert.deepEqual(compose.services.backend.group_add, ['10001']);
     assert.deepEqual(compose.services.migrator.group_add, ['10001']);
+    assert.deepEqual(compose.services['health-operator'].group_add, ['10001']);
     assert.deepEqual(compose.services.backend.secrets, [
       { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
@@ -157,9 +194,26 @@ describe('Tencent Cloud configuration tooling', () => {
       { source: 'bnbu_migrator', target: 'bnbu_migrator.json' },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
     ]);
+    assert.deepEqual(compose.services['health-operator'].secrets, [
+      { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
+      { source: 'bnbu_staging_fixture', target: 'bnbu_staging_fixture.json' },
+      { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
+    ]);
+    assert.equal(
+      compose.services.backend.secrets.some((item) => item.source.includes('fixture')),
+      false,
+    );
     assert.equal(
       compose.secrets.tencentdb_ca.file,
       '${BNBU_TENCENTDB_CA_FILE:?Set the host TencentDB CA chain file}',
+    );
+    assert.equal(
+      compose.services['health-operator'].environment.STAGING_BOOTSTRAP_CONFIRMATION,
+      '${STAGING_BOOTSTRAP_CONFIRMATION:-NOT_CONFIRMED}',
+    );
+    assert.equal(
+      compose.secrets.bnbu_staging_fixture.file,
+      '${BNBU_STAGING_FIXTURE_SECRET_FILE:-/nonexistent/bnbu-staging-fixture-not-configured.json}',
     );
   });
 
@@ -256,3 +310,9 @@ describe('Tencent Cloud configuration tooling', () => {
     });
   });
 });
+
+function syntheticNonSecretValue(item) {
+  if (item.expected !== undefined) return String(item.expected);
+  if (item.validation === 'HTTPS_ORIGIN_LIST') return 'https://staging-web.example.test';
+  return 'synthetic-configured';
+}

@@ -61,8 +61,9 @@
     {
       "name": "CORS_ALLOWLIST",
       "owner": "DEPLOYMENT",
-      "source": "deployed Web origin",
-      "expected": "http://129.204.146.192"
+      "source": "exact deployed HTTPS Web origin; reserved .invalid sentinel until Phase 11",
+      "validation": "HTTPS_ORIGIN_LIST",
+      "deferredValues": ["https://web-origin-not-configured.invalid"]
     },
     {
       "name": "TRUST_PROXY",
@@ -218,6 +219,10 @@
       "source": "migrator JSON file exists outside Git with MIGRATION_DATABASE_URL only"
     },
     {
+      "name": "FILE_JSON_STAGING_FIXTURE_SECRET_PROVISIONED",
+      "source": "operations-only fixture JSON exists outside Git with STAGING_ADMIN_PASSWORD only"
+    },
+    {
       "name": "TENCENTDB_CA_CHAIN_PROVISIONED",
       "source": "complete TencentDB intermediate and root CA chain exists outside Git"
     },
@@ -255,9 +260,10 @@
     },
     {
       "name": "COS_WEB_CORS",
-      "source": "exact Web IP origin when browser direct upload or read is enabled"
+      "source": "exact HTTPS Web origin when browser direct upload or read is enabled"
     }
   ],
+  "fixtureSecret": ["STAGING_ADMIN_PASSWORD"],
   "runtimeSecret": [
     "DATABASE_URL",
     "TOKEN_SIGNING_KEY",

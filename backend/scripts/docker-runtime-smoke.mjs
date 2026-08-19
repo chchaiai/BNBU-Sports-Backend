@@ -39,7 +39,7 @@ const configuration = {
   IDEMPOTENCY_LEASE: '30',
   AUTH_RATE_LIMIT_WINDOW_SECONDS: '60',
   AUTH_RATE_LIMIT_MAX_ATTEMPTS: '100',
-  CORS_ALLOWLIST: 'http://runtime-smoke.test',
+  CORS_ALLOWLIST: 'https://runtime-smoke.test',
   TRUST_PROXY: 'false',
   SYSTEM_MODE_SOURCE: 'database',
   REQUEST_BODY_LIMIT_BYTES: '2048',

@@ -157,10 +157,10 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Pins PostgreSQL certificate identity verification to the actual host parsed from the runtime or migration URL, including TencentDB private IP addresses.
-- Prevents \`node-postgres\` from substituting \`localhost\` during IP-address certificate checks while retaining \`rejectUnauthorized: true\` and the complete TencentDB CA chain.
-- Applies the same strict host check to the Runtime Prisma pool and the Migrator runtime-permission hardening client.
-- Keeps the Backend application port bound to loopback in the staging Compose and retains Nginx as the future public entry point.
+- Rejects every HTTP CORS origin in staging and production and reserves a non-routable \`.invalid\` sentinel until the exact deployed Web HTTPS origin is known.
+- Adds an operations-only, create-or-verify synthetic ADMIN bootstrap for authenticated staging health verification; conflicts fail closed without overwriting data.
+- Verifies authenticated admin health over the private Compose network, checks request ID and all dependency states, and logs out without printing tokens.
+- Keeps the fixture password in a dedicated Compose secret that is never mounted by the long-running Backend or Migrator.
 - Adds no database migration and no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
@@ -173,13 +173,13 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 This release adds no Prisma migration. Staging still requires a dedicated business database, a schema-admin migration account, and a separate least-privilege runtime account. Creating the database is infrastructure preparation; applying the existing migration chain remains a separately authorized deployment phase.
 
-## TencentDB TLS host identity
+## HTTPS-only CORS
 
-Runtime and Migrator PostgreSQL clients verify the certificate against the host parsed from their configured URL. This prevents an IP-address connection from being checked as \`localhost\` by \`node-postgres\`. The complete CA chain and \`rejectUnauthorized: true\` remain mandatory; do not add a hostname bypass, set \`sslmode=no-verify\`, or weaken certificate validation.
+Staging and production accept exact HTTPS origins only. Before a real Web deployment origin is verified, keep \`CORS_ALLOWLIST=https://web-origin-not-configured.invalid\`; this reserved sentinel does not grant a reachable browser origin. Do not restore the retired public-IP HTTP origin. Configure the exact Web HTTPS origin in Backend and COS only during Phase 11.
 
 ## Staging secrets
 
-Mount \`bnbu_runtime.json\` and \`bnbu_migrator.json\` as separate Docker Compose secrets. The runtime file contains only runtime-managed keys; the migrator file contains only \`MIGRATION_DATABASE_URL\`. Mount the complete TencentDB intermediate and root CA chain at \`/run/secrets/tencentdb-ca-chain.pem\` in both containers. On the Compose host, all three source files must be owned by \`root:10001\` with mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
+Mount \`bnbu_runtime.json\`, \`bnbu_migrator.json\`, and \`bnbu_staging_fixture.json\` as separate Docker Compose secrets. The fixture file contains only \`STAGING_ADMIN_PASSWORD\` and is mounted only by the one-shot operations profile; Backend and Migrator never receive it. Mount the complete TencentDB intermediate and root CA chain at \`/run/secrets/tencentdb-ca-chain.pem\`. All four host source files use \`root:10001\` mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
 
 ## Tencent Cloud access
 
@@ -218,7 +218,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release verifies TencentDB certificates against the PostgreSQL URL host even when \`node-postgres\` supplies \`localhost\` for an IP connection; complete CA-chain validation remains strict and the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release makes staging health verification authenticated and secret-isolated while enforcing HTTPS-only CORS outside local/test environments; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 

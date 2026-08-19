@@ -170,7 +170,10 @@ function base64Key(raw: Record<string, unknown>, name: string): Buffer {
   return decoded;
 }
 
-function allowlist(raw: Record<string, unknown>): ReadonlySet<string> {
+function allowlist(
+  raw: Record<string, unknown>,
+  appEnvironment: AppEnvironment,
+): ReadonlySet<string> {
   const values = required(raw, 'CORS_ALLOWLIST')
     .split(',')
     .map((value) => value.trim())
@@ -186,6 +189,12 @@ function allowlist(raw: Record<string, unknown>): ReadonlySet<string> {
     }
     if ((url.protocol !== 'http:' && url.protocol !== 'https:') || url.origin !== value) {
       throw new Error(`CORS_ALLOWLIST entries must be exact HTTP(S) origins: ${value}`);
+    }
+    if (
+      (appEnvironment === 'staging' || appEnvironment === 'production') &&
+      url.protocol !== 'https:'
+    ) {
+      throw new Error('CORS_ALLOWLIST entries must use HTTPS in staging and production');
     }
   }
 
@@ -595,7 +604,7 @@ export function validateEnvironment(raw: Record<string, unknown>): Record<string
       minimum: 1,
     }),
     authRateLimitMaxAttempts: integer(raw, 'AUTH_RATE_LIMIT_MAX_ATTEMPTS', { minimum: 1 }),
-    corsAllowlist: allowlist(raw),
+    corsAllowlist: allowlist(raw, appEnvironment as AppEnvironment),
     trustProxy: trustProxy === 'true',
     systemModeSource,
     requestBodyLimitBytes: integer(raw, 'REQUEST_BODY_LIMIT_BYTES', { minimum: 1 }),

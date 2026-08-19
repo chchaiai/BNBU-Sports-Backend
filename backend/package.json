@@ -29,6 +29,7 @@
     "test:docker-runtime-smoke": "node ./scripts/docker-runtime-smoke.mjs",
     "staging:config:check": "node ./scripts/check-staging-configuration.mjs",
     "staging:config:check:files": "node ./scripts/check-staging-configuration.mjs --files",
+    "staging:health-operator": "node --enable-source-maps ./dist/tools/staging-health-operator.js",
     "openapi:generate": "node ./scripts/generate-openapi.mjs",
     "openapi:check": "node ./scripts/generate-openapi.mjs --check",
     "db:manifest:generate": "node ./scripts/generate-migration-manifest.mjs",

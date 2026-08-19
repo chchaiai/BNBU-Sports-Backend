@@ -55,6 +55,7 @@ describe('security negative gates', () => {
       3000,
     );
     raw.APP_ENV = 'staging';
+    raw.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
     useCvmRoleStorage(raw);
     delete raw.SMTP_HOST;
     delete raw.SMTP_PORT;
@@ -105,6 +106,7 @@ describe('security negative gates', () => {
       3000,
     );
     raw.APP_ENV = 'staging';
+    raw.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
     useCvmRoleStorage(raw);
     raw.EMAIL_DELIVERY_PROVIDER = 'TENCENT_SES';
     raw.TENCENT_SES_REGION = 'ap-guangzhou';
@@ -134,6 +136,7 @@ describe('security negative gates', () => {
       3000,
     );
     raw.APP_ENV = 'staging';
+    raw.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
     raw.EMAIL_DELIVERY_PROVIDER = 'TENCENT_SES';
     raw.TENCENT_SES_REGION = 'ap-guangzhou';
     raw.TENCENT_SES_FROM_EMAIL = 'no-reply@verityai.cn';
@@ -147,6 +150,30 @@ describe('security negative gates', () => {
       () => validateEnvironment(raw),
       /Static object storage credentials must be omitted/,
     );
+  });
+
+  it('requires exact HTTPS CORS origins in staging while retaining HTTP support for tests', () => {
+    const raw = foundationEnvironment(
+      'postgresql://synthetic:synthetic@127.0.0.1:1/bnbu_security_test',
+      3000,
+    );
+    assert.doesNotThrow(() => validateEnvironment(raw));
+
+    raw.APP_ENV = 'staging';
+    raw.CORS_ALLOWLIST = 'http://129.204.146.192';
+    useCvmRoleStorage(raw);
+    raw.EMAIL_DELIVERY_PROVIDER = 'TENCENT_SES';
+    raw.TENCENT_SES_REGION = 'ap-guangzhou';
+    raw.TENCENT_SES_FROM_EMAIL = 'no-reply@verityai.cn';
+    raw.TENCENT_SES_TEMPLATE_ID = '56852';
+    raw.TENCENT_SES_TEMPLATE_CODE_VARIABLE = 'code';
+    assert.throws(
+      () => validateEnvironment(raw),
+      /CORS_ALLOWLIST entries must use HTTPS in staging and production/,
+    );
+
+    raw.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
+    assert.doesNotThrow(() => validateEnvironment(raw));
   });
 
   it('rejects a forged role or organization even when token verification succeeds', async () => {

@@ -47,6 +47,11 @@ if (checkFiles) {
     process.env.BNBU_MIGRATOR_SECRET_FILE,
     manifest.migratorSecret,
   );
+  await inspectSecretFile(
+    'STAGING_FIXTURE_JSON_SECRET',
+    process.env.BNBU_STAGING_FIXTURE_SECRET_FILE,
+    manifest.fixtureSecret,
+  );
   inspectCaFile(process.env.BNBU_TENCENTDB_CA_FILE);
 } else {
   for (const name of manifest.runtimeSecret) {
@@ -63,6 +68,14 @@ if (checkFiles) {
       status: 'UNKNOWN_FILE_NOT_READ',
       owner: 'DOCKER_COMPOSE_SECRET',
       source: 'migrator JSON secret',
+    });
+  }
+  for (const name of manifest.fixtureSecret) {
+    rows.push({
+      name,
+      status: 'UNKNOWN_FILE_NOT_READ',
+      owner: 'DOCKER_COMPOSE_SECRET',
+      source: 'staging fixture JSON secret',
     });
   }
 }
@@ -93,8 +106,9 @@ for (const row of rows) {
 const missing = rows.filter((row) => row.status === 'MISSING');
 const mismatched = rows.filter((row) => row.status === 'MISMATCH');
 const cloudFailures = rows.filter((row) => row.status === 'INVALID_OR_UNAVAILABLE');
+const deferred = rows.filter((row) => row.status === 'DEFERRED');
 process.stdout.write(
-  `Staging configuration summary: configured=${rows.filter((row) => row.status === 'CONFIGURED').length} missing=${missing.length} mismatched=${mismatched.length} fileFailures=${cloudFailures.length} filesChecked=${checkFiles}\n`,
+  `Staging configuration summary: configured=${rows.filter((row) => row.status === 'CONFIGURED').length} deferred=${deferred.length} missing=${missing.length} mismatched=${mismatched.length} fileFailures=${cloudFailures.length} filesChecked=${checkFiles}\n`,
 );
 if (missing.length > 0 || mismatched.length > 0 || cloudFailures.length > 0) process.exitCode = 1;
 
@@ -125,6 +139,22 @@ function configured(value) {
 
 function configurationStatus(item, value) {
   if (!configured(value)) return 'MISSING';
-  if (item.expected !== undefined && value.trim() !== String(item.expected)) return 'MISMATCH';
+  const normalized = value.trim();
+  if (item.expected !== undefined && normalized !== String(item.expected)) return 'MISMATCH';
+  if (item.validation === 'HTTPS_ORIGIN_LIST' && !isHttpsOriginList(normalized)) return 'MISMATCH';
+  if (item.deferredValues?.includes(normalized)) return 'DEFERRED';
   return 'CONFIGURED';
+}
+
+function isHttpsOriginList(value) {
+  const origins = value.split(',').map((origin) => origin.trim());
+  if (origins.length === 0 || origins.some((origin) => origin.length === 0)) return false;
+  return origins.every((origin) => {
+    try {
+      const url = new URL(origin);
+      return url.protocol === 'https:' && url.origin === origin;
+    } catch {
+      return false;
+    }
+  });
 }
