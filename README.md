@@ -10,12 +10,12 @@
 
 ## 当前 Backend 发布基线
 
-- 版本：`2.0.9-contract`
-- OpenAPI SHA-256：`2fbad60b72bf4fee6009bb5dad56351b256c2ba80aa7263bec6fe61cfd6298ca`
-- 来源 monorepo commit：`657e40d3eb8001215426c3e1376b4354328c47be`
-- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.9-contract>
+- 版本：`2.0.10-contract`
+- OpenAPI SHA-256：`56f7f13cdd8122dae630fec93bf198f7ed6d92a5fc4f67ae4f866a3b41c38ad7`
+- 来源 monorepo commit：`96d28f700fafb5de124c152f6ef0f6fdb9848f29`
+- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.10-contract>
 
-该发布修正 operations-only 合成 ADMIN bootstrap 的 AuditLog 标识，并新增 forward-only Migration `0020_staging_fixture_audit_action`，以先验证后替换的方式扩展闭合审计 action CHECK；未知 action 仍被拒绝，AuditLog 仍为 append-only。它不新增公开 API 或 Schema。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 Staging 已完成 Phase 7 或已开放 Production Gate。
+该发布新增仅限 Staging 的合成业务闭环操作员，并为 Backend Compose 固化 Docker 日志轮转及 CPU、内存和 PID 限制；它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.10 已部署到 Staging，更不表示 Production Gate 已开放。
 
 不得在客户端目录中重新执行 `git init`、单独创建分支、提交、push 或 Pull Request，也不得重新添加 submodule。所有 Git 操作从本目录执行；需要限定范围时使用路径暂存：
 
