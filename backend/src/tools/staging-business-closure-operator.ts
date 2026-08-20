@@ -109,6 +109,12 @@ interface QrInviteRecoveryRow {
   replacedByInviteId: string | null;
 }
 
+interface QrJoinCapabilityEvidenceRow {
+  classSectionId: string;
+  status: string;
+  createdRequestId: string;
+}
+
 export function nextQrInviteRecoveryAttempt(
   rows: QrInviteRecoveryRow[],
   state: Pick<BusinessFixtureState, 'organizationId' | 'classSectionId' | 'teacherUserId'>,
@@ -133,6 +139,21 @@ export function nextQrInviteRecoveryAttempt(
     throw new StagingBusinessOperatorFailure('QR_RECOVERY_ATTEMPTS_EXHAUSTED');
   }
   return ordered.length + 1;
+}
+
+export function validateQrJoinCapabilityDatabaseEvidence(
+  rows: readonly QrJoinCapabilityEvidenceRow[],
+  expectedClassSectionId: string,
+  expectedRequestId: string,
+): void {
+  if (
+    rows.length !== 1 ||
+    rows[0]?.classSectionId !== expectedClassSectionId ||
+    rows[0]?.status !== 'ACTIVE' ||
+    rows[0]?.createdRequestId !== expectedRequestId
+  ) {
+    throw new StagingBusinessOperatorFailure('QR_CAPABILITY_DATABASE_EVIDENCE_INVALID');
+  }
 }
 
 export function validateStagingBusinessOperatorControls(
@@ -698,14 +719,7 @@ async function ensureQrEnrollment(
       courseInviteId: activeInvite.id,
     },
   });
-  if (
-    capabilities.length !== 1 ||
-    capabilities[0]?.classSectionId !== state.classSectionId ||
-    capabilities[0]?.status !== 'ISSUED' ||
-    capabilities[0]?.createdRequestId !== capabilityRequestId
-  ) {
-    throw new StagingBusinessOperatorFailure('QR_CAPABILITY_DATABASE_EVIDENCE_INVALID');
-  }
+  validateQrJoinCapabilityDatabaseEvidence(capabilities, state.classSectionId, capabilityRequestId);
 
   const joinKey = `staging-business-v2-qr-join-${inviteAttempt}-${uuidv7()}`;
   const joinRequestId = requestId('qj');

@@ -17,6 +17,7 @@ import {
   readHiddenOtp,
   nextQrInviteRecoveryAttempt,
   safeOperatorCommandLabel,
+  validateQrJoinCapabilityDatabaseEvidence,
   validateCosUploadUrl,
   validateStagingDatabaseTarget,
   validateStagingBusinessOperatorControls,
@@ -201,6 +202,25 @@ describe('staging business closure operator safety gates', () => {
       () =>
         nextQrInviteRecoveryAttempt([{ ...second, versionNumber: 1, createdBy: 'foreign' }], state),
       isFailure('QR_RECOVERY_HISTORY_CONFLICT'),
+    );
+  });
+
+  it('accepts only the domain ACTIVE state as fresh join-capability database evidence', () => {
+    const classSectionId = '00000000-0000-0000-0000-000000000011';
+    const createdRequestId = 'staging-business-qc-synthetic';
+    const row = { classSectionId, status: 'ACTIVE', createdRequestId };
+
+    assert.doesNotThrow(() =>
+      validateQrJoinCapabilityDatabaseEvidence([row], classSectionId, createdRequestId),
+    );
+    assert.throws(
+      () =>
+        validateQrJoinCapabilityDatabaseEvidence(
+          [{ ...row, status: 'ISSUED' }],
+          classSectionId,
+          createdRequestId,
+        ),
+      isFailure('QR_CAPABILITY_DATABASE_EVIDENCE_INVALID'),
     );
   });
 

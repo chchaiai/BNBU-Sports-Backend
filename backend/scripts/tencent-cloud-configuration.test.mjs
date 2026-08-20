@@ -14,6 +14,39 @@ import { createStrictPgClientConfig, prepareStrictMigrationEnvironment } from '.
 const completeCaChain = `${rootCertificates[0]}\n${rootCertificates[1]}\n`;
 
 describe('Tencent Cloud configuration tooling', () => {
+  it('preserves only Backend-valid request IDs through the Nginx proxy and access log', () => {
+    const logFormat = readFileSync(
+      resolve('../docs/deployment/nginx/bnbu-sports-log-format.conf'),
+      'utf8',
+    );
+    const apiLocations = readFileSync(
+      resolve('../docs/deployment/nginx/bnbu-sports-api-locations.conf'),
+      'utf8',
+    );
+    const webHttps = readFileSync(
+      resolve('../docs/deployment/nginx/bnbu-sports-web-https.conf'),
+      'utf8',
+    );
+    const requestIdSource = readFileSync(resolve('src/common/http/request-id.ts'), 'utf8');
+
+    assert.match(requestIdSource, /\^\[A-Za-z0-9\._:-\]\{1,64\}\$/u);
+    assert.match(logFormat, /map \$http_x_request_id \$bnbu_request_id \{/u);
+    assert.match(logFormat, /"~\^\[A-Za-z0-9\._:-\]\{1,64\}\$" \$http_x_request_id;/u);
+    assert.match(logFormat, /default \$request_id;/u);
+    assert.match(logFormat, /request_id=\$bnbu_request_id upstream=\$upstream_addr/u);
+    assert.doesNotMatch(logFormat, /request_id=\$request_id upstream=\$upstream_addr/u);
+    assert.equal(
+      [...apiLocations.matchAll(/proxy_set_header X-Request-Id \$bnbu_request_id;/gu)].length,
+      2,
+    );
+    assert.equal(
+      [...webHttps.matchAll(/proxy_set_header X-Request-Id \$bnbu_request_id;/gu)].length,
+      1,
+    );
+    assert.doesNotMatch(apiLocations, /proxy_set_header X-Request-Id \$request_id;/u);
+    assert.doesNotMatch(webHttps, /proxy_set_header X-Request-Id \$request_id;/u);
+  });
+
   it('loads an exact key set from a mounted file without returning unrelated values', async () => {
     const environment = {};
     const result = await loadFileJsonSecret({

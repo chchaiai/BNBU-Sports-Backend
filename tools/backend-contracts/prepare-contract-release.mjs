@@ -156,12 +156,11 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
-- Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Adds a secret-isolated, staging-only Phase 12 business closure operator covering real SES OTP, QR enrollment, session controls, COS media upload and worker processing, record review, score, audit, and idempotency evidence.
-- Fails closed unless the public API, TencentDB identity, TLS CA, COS bucket and path, SES template, CORS origins, media scanner mode, confirmation guards, and root-owned business fixture Secret exactly match the frozen staging boundary.
-- Adds bounded interruption recovery and rerun verification without deleting synthetic database history or private COS objects.
-- Applies explicit CPU, memory, PID, and Docker JSON log rotation limits to every staging Backend Compose service.
-- Hardens ephemeral test database reset behind an exact loopback database target and explicit confirmation sentinel.
+- Preserves the published ${baselineVersion} snapshot and advances the immutable contract release under the unique \`${candidateVersion}\` version without changing the API surface.
+- Corrects the staging-only business closure operator to require the persisted QR join capability state \`ACTIVE\`, matching the accepted domain rule, Migration, and E2E evidence.
+- Rejects the stale, non-domain \`ISSUED\` expectation through focused fail-closed unit coverage.
+- Preserves only Backend-valid inbound request IDs through Nginx and uses the same canonical ID for the API proxy, same-origin Web proxy, response, and access log.
+- Replaces malformed or overlong inbound request IDs with an Nginx-generated fallback while retaining invite-token URI redaction.
 - Adds no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
@@ -172,11 +171,15 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 ## Database
 
-This release adds no Prisma Migration. The Phase 12 operator creates or verifies only deterministic, isolated synthetic staging rows through the existing least-privilege runtime identity. It never resets the database, rewrites a conflicting fixture, deletes history, or performs cleanup. The existing 20-Migration chain remains authoritative and must still report no pending or drift before deployment.
+This release adds no Prisma Migration. The existing 20-Migration chain remains authoritative and must still report no pending or drift before deployment. The operator-only correction changes the expected evidence state, not the domain state machine, runtime route behavior, or persisted schema.
 
 ## Staging business closure
 
-The one-shot operator uses the exact public staging API and validates Authentication, refresh rotation/reuse rejection, QR enrollment, session replay/stale-version rejection, real private COS upload and \`TEST_SIGNATURE\` processing, record submission, VALID/INVALID review history, student-safe projections, score derivation, audit facts, and idempotency evidence. It sends one real SES code to a controlled test mailbox and requires hidden TTY input. This is staging evidence only and does not replace Android/iOS real-device acceptance or a production media scanner.
+The one-shot operator now requires the persisted JoinCapability evidence to be \`ACTIVE\`, which is the state created by the accepted Migration and used by the domain and E2E flow. The 2.0.10 operator stopped fail closed before joining because it expected obsolete \`ISSUED\` evidence; retry is permitted only after the published 2.0.11 image is deployed. The operator continues to use isolated synthetic staging data, sends one real SES code to a controlled test mailbox, and leaves append-only database and private COS evidence. This is staging evidence only and does not replace Android/iOS real-device acceptance or a production media scanner.
+
+## Nginx request IDs
+
+The API and same-origin Web proxy preserve an inbound \`X-Request-ID\` only when it matches the Backend contract \`^[A-Za-z0-9._:-]{1,64}$\`. All other values use an Nginx-generated fallback. The same canonical value is forwarded to the Backend and recorded in the API access log, while invite-token path redaction remains in force.
 
 ## Staging secrets
 
@@ -219,7 +222,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release adds a staging-only business closure operator and container hardening without changing the client-visible API surface or database Migration chain. The monorepo Android/Web snapshots are pinned to the release state shown above for byte-identical integration gates; downstream developers must verify the GitHub Release assets and SHA-256 before distributing client artifacts. No request or response model changes are required.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This PATCH corrects staging-only operator evidence and the Nginx request-ID runtime policy without changing the client-visible API surface or database Migration chain. ${releaseConfig.releaseState === "published" ? "The monorepo Android/Web snapshots are pinned to this published release for byte-identical integration gates; downstream developers must still verify the GitHub Release assets and SHA-256 before distributing client artifacts." : "The monorepo Android/Web snapshots are pinned only to this candidate gate and must not be treated as published or distributed until the Git tag, GitHub Release assets, and SHA-256 are verified."} No request or response model changes are required.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
@@ -291,9 +294,9 @@ const readmeFirst = `# BNBU Sports 客户端后端接入入口
 | Machine baseline | \`client-contract-baseline.json\` |
 | Current handoff | \`CONTRACT-${candidateSemver}-HANDOFF.md\` |
 
-开发前依次核验 \`CONTRACT-${candidateSemver}-HANDOFF.md\`、\`client-contract-baseline.json\`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；它们绑定到上表所示 release state，公开分发前仍须验证 GitHub Release 资产。当前没有已确认的权威 iOS 工程，导入真实工程后必须从正式 Release 资产导入相同字节，并在 iOS CI 固定相同 version/hash。
+开发前依次核验 \`CONTRACT-${candidateSemver}-HANDOFF.md\`、\`client-contract-baseline.json\`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；${releaseConfig.releaseState === "published" ? "它们已绑定到正式 Release，但公开分发前仍须验证 GitHub Release 资产。" : "它们当前仅用于 monorepo candidate Gate，不构成公开 Release，不得用于分发或发布构建。"}当前没有已确认的权威 iOS 工程；导入真实工程后必须从正式 Release 资产导入相同字节，并在 iOS CI 固定相同 version/hash。
 
-\`client-contract-baseline.json\` 中的 \`stagingRuntimeReadiness\`、\`clientIntegrationStarted\` 与 \`threeClientDefinitionOfDone\` 是该合同版本生成时的冻结发布元数据，不是对当前公网 Staging 的实时探测结果。实时部署状态必须以 \`docs/deployment/STAGING-DEPLOYMENT-PLAN.md\` 和当次验收证据为准。
+\`client-contract-baseline.json\` 中的 \`stagingRuntimeReadiness\`、\`clientIntegrationStarted\` 与 \`threeClientDefinitionOfDone\` 是该合同${releaseConfig.releaseState === "published" ? "正式 Release" : " candidate Gate"}生成时的冻结元数据，不是对当前公网 Staging 的实时探测结果。实时部署状态必须以 \`docs/deployment/STAGING-DEPLOYMENT-PLAN.md\` 和当次验收证据为准。
 
 本地合同、客户端绑定或 Backend Release 均不表示 Staging 已部署、外部邮箱/COS 已验收、FCM/APNs 已启用或 Production Gate 已打开。
 `;
