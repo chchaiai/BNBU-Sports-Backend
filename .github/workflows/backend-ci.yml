@@ -58,6 +58,7 @@ jobs:
       LOG_LEVEL: silent
       DATABASE_URL: postgresql://bnbu_test:synthetic-ci-password@127.0.0.1:5432/bnbu_sports_test?schema=public
       TEST_DATABASE_URL: postgresql://bnbu_test:synthetic-ci-password@127.0.0.1:5432/bnbu_sports_test?schema=public
+      TEST_DATABASE_RESET_CONFIRMATION: BNBU_SPORTS_EPHEMERAL_TEST_DATABASE_V1
       MIGRATION_DATABASE_URL: postgresql://bnbu_test:synthetic-ci-password@127.0.0.1:5432/bnbu_sports_test?schema=public
       TOKEN_ISSUER: bnbu-sports-test
       TOKEN_AUDIENCE: bnbu-sports-test-clients

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "environment": "staging",
   "nonSecret": [
     {
@@ -61,7 +61,8 @@
     {
       "name": "CORS_ALLOWLIST",
       "owner": "DEPLOYMENT",
-      "source": "exact deployed HTTPS Web origin; reserved .invalid sentinel until Phase 11",
+      "source": "exact deployed admin and www HTTPS origins; reserved .invalid sentinel is pre-deployment only",
+      "expected": "https://admin.verityai.cn,https://www.verityai.cn",
       "validation": "HTTPS_ORIGIN_LIST",
       "deferredValues": ["https://web-origin-not-configured.invalid"]
     },
@@ -223,6 +224,10 @@
       "source": "operations-only fixture JSON exists outside Git with STAGING_ADMIN_PASSWORD only"
     },
     {
+      "name": "FILE_JSON_STAGING_BUSINESS_FIXTURE_SECRET_PROVISIONED",
+      "source": "operations-only business fixture JSON exists outside Git with the exact businessFixtureSecret allowlist"
+    },
+    {
       "name": "TENCENTDB_CA_CHAIN_PROVISIONED",
       "source": "complete TencentDB intermediate and root CA chain exists outside Git"
     },
@@ -260,10 +265,19 @@
     },
     {
       "name": "COS_WEB_CORS",
-      "source": "exact HTTPS Web origin when browser direct upload or read is enabled"
+      "source": "exact https://www.verityai.cn origin; PUT GET HEAD; Content-Type Content-Length; expose ETag Content-Length; max-age 600; Vary enabled; negative origins denied"
+    },
+    {
+      "name": "NGINX_QR_TOKEN_PATH_LOG_REDACTION",
+      "source": "three /api/v1/course-invites/{inviteToken} routes log only the literal route template; synthetic token absence verified before Phase 12 run"
     }
   ],
   "fixtureSecret": ["STAGING_ADMIN_PASSWORD"],
+  "businessFixtureSecret": [
+    "STAGING_BUSINESS_ADMIN_PASSWORD",
+    "STAGING_BUSINESS_TEACHER_PASSWORD",
+    "STAGING_BUSINESS_STUDENT_EMAIL"
+  ],
   "runtimeSecret": [
     "DATABASE_URL",
     "TOKEN_SIGNING_KEY",

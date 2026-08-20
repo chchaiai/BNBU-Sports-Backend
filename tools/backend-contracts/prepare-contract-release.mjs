@@ -157,10 +157,11 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the API surface under the unique \`${candidateVersion}\` version.
-- Corrects the staging health bootstrap audit permission identifier to the database-approved uppercase catalog format.
-- Adds forward-only Migration \`0020_staging_fixture_audit_action\`, expanding the closed AuditLog action catalog with \`STAGING_FIXTURE_BOOTSTRAP\`.
-- Builds and validates the expanded CHECK before replacing the canonical constraint name, without creating tables, rewriting business data, or weakening unknown-action rejection.
-- Executes the real create-or-verify bootstrap twice against PostgreSQL in integration tests, proving \`CREATED\` then \`VERIFIED\` with one append-only audit fact.
+- Adds a secret-isolated, staging-only Phase 12 business closure operator covering real SES OTP, QR enrollment, session controls, COS media upload and worker processing, record review, score, audit, and idempotency evidence.
+- Fails closed unless the public API, TencentDB identity, TLS CA, COS bucket and path, SES template, CORS origins, media scanner mode, confirmation guards, and root-owned business fixture Secret exactly match the frozen staging boundary.
+- Adds bounded interruption recovery and rerun verification without deleting synthetic database history or private COS objects.
+- Applies explicit CPU, memory, PID, and Docker JSON log rotation limits to every staging Backend Compose service.
+- Hardens ephemeral test database reset behind an exact loopback database target and explicit confirmation sentinel.
 - Adds no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
@@ -171,23 +172,23 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 ## Database
 
-This release adds forward-only Prisma Migration \`0020_staging_fixture_audit_action\`. It adds and validates an expanded \`audit_logs_action_type_check_v2\`, drops the narrower prior CHECK, and renames the validated replacement to the canonical \`audit_logs_action_type_check\`. It creates no table, deletes no row, and changes no client data shape. Apply it with the schema-admin Migrator before running the staging fixture bootstrap; the runtime account remains separate and least-privilege.
+This release adds no Prisma Migration. The Phase 12 operator creates or verifies only deterministic, isolated synthetic staging rows through the existing least-privilege runtime identity. It never resets the database, rewrites a conflicting fixture, deletes history, or performs cleanup. The existing 20-Migration chain remains authoritative and must still report no pending or drift before deployment.
 
-## Staging health audit catalog
+## Staging business closure
 
-The bootstrap emits \`STAGING_FIXTURE_BOOTSTRAP\` with permission \`OPERATIONS-STAGING-FIXTURE-BOOTSTRAP\`. Both identifiers now satisfy the closed PostgreSQL constraints. Unknown actions remain rejected and AuditLog remains append-only. The bootstrap still creates or verifies only the isolated synthetic organization and ADMIN; conflicts fail closed without overwriting data.
+The one-shot operator uses the exact public staging API and validates Authentication, refresh rotation/reuse rejection, QR enrollment, session replay/stale-version rejection, real private COS upload and \`TEST_SIGNATURE\` processing, record submission, VALID/INVALID review history, student-safe projections, score derivation, audit facts, and idempotency evidence. It sends one real SES code to a controlled test mailbox and requires hidden TTY input. This is staging evidence only and does not replace Android/iOS real-device acceptance or a production media scanner.
 
 ## Staging secrets
 
-Mount \`bnbu_runtime.json\`, \`bnbu_migrator.json\`, and \`bnbu_staging_fixture.json\` as separate Docker Compose secrets. The fixture file contains only \`STAGING_ADMIN_PASSWORD\` and is mounted only by the one-shot operations profile; Backend and Migrator never receive it. Mount the complete TencentDB intermediate and root CA chain at \`/run/secrets/tencentdb-ca-chain.pem\`. All four host source files use \`root:10001\` mode \`0640\`; do not add interactive host users to that group. Do not duplicate managed keys in the container environment. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
+Keep \`bnbu_runtime.json\`, \`bnbu_migrator.json\`, \`bnbu_staging_fixture.json\`, and \`bnbu_staging_business_fixture.json\` isolated as separate Docker Compose secrets. The business fixture file contains exactly \`STAGING_BUSINESS_ADMIN_PASSWORD\`, \`STAGING_BUSINESS_TEACHER_PASSWORD\`, and \`STAGING_BUSINESS_STUDENT_EMAIL\`, and is mounted only by the one-shot business operator. The long-running Backend, Migrator, and health operator never receive it. Mount the complete TencentDB CA chain separately. All host source files use \`root:10001\` mode \`0640\`; never place their values in Git, environment files, shell history, logs, reports, or chat. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
 
 ## Tencent Cloud access
 
-COS credentials are obtained from the bound CVM role and must be scoped by the published single-bucket policy. SES uses the bound role and the \`SendEmail\`-only policy. Cloud policy association, bucket access, template acceptance, and actual delivery remain deployment verification steps.
+COS credentials are obtained from the bound CVM role and remain scoped to the published single-bucket policy. SES uses the same bound role with the \`SendEmail\`-only policy. Backend CORS is frozen to the exact admin/www HTTPS origins, while COS browser CORS remains restricted to \`https://www.verityai.cn\`. The operator's real delivery and object upload are deployment verification steps and intentionally leave append-only synthetic evidence.
 
 ## Deployment boundary
 
-Publishing this release does not deploy it, start a container, run a TencentDB migration, modify Nginx, or prove external COS or SES connectivity.
+Publishing this release does not deploy it, start a container, modify TencentDB/COS/SES/Nginx, send an OTP, upload an object, or prove external connectivity. Those remain separately evidenced staging operations.
 `;
 const checklist = `# Contract ${candidateSemver} Post-Merge Release Checklist
 
@@ -218,7 +219,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release fixes the closed AuditLog catalog used by the isolated staging health bootstrap and adds one forward-only database constraint expansion; the client-visible API surface is unchanged. Clients should update their pinned contract version and SHA-256 after the published Release assets are verified, without changing request or response models.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This release adds a staging-only business closure operator and container hardening without changing the client-visible API surface or database Migration chain. The monorepo Android/Web snapshots are pinned to the release state shown above for byte-identical integration gates; downstream developers must verify the GitHub Release assets and SHA-256 before distributing client artifacts. No request or response model changes are required.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
@@ -290,9 +291,11 @@ const readmeFirst = `# BNBU Sports 客户端后端接入入口
 | Machine baseline | \`client-contract-baseline.json\` |
 | Current handoff | \`CONTRACT-${candidateSemver}-HANDOFF.md\` |
 
-开发前依次核验 \`CONTRACT-${candidateSemver}-HANDOFF.md\`、\`client-contract-baseline.json\`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；iOS 仓库位于 monorepo 之外，必须从正式 Release 资产导入并在自身仓库记录相同版本和 hash。
+开发前依次核验 \`CONTRACT-${candidateSemver}-HANDOFF.md\`、\`client-contract-baseline.json\`、权威 OpenAPI 字节和 SHA-256。Android 与 Web 快照必须与权威 OpenAPI byte-identical；它们绑定到上表所示 release state，公开分发前仍须验证 GitHub Release 资产。当前没有已确认的权威 iOS 工程，导入真实工程后必须从正式 Release 资产导入相同字节，并在 iOS CI 固定相同 version/hash。
 
-本地合同、客户端绑定或 Backend Release 均不表示 Staging 已部署、外部邮箱/COS 已验收、APNs 已启用或 Production Gate 已打开。
+\`client-contract-baseline.json\` 中的 \`stagingRuntimeReadiness\`、\`clientIntegrationStarted\` 与 \`threeClientDefinitionOfDone\` 是该合同版本生成时的冻结发布元数据，不是对当前公网 Staging 的实时探测结果。实时部署状态必须以 \`docs/deployment/STAGING-DEPLOYMENT-PLAN.md\` 和当次验收证据为准。
+
+本地合同、客户端绑定或 Backend Release 均不表示 Staging 已部署、外部邮箱/COS 已验收、FCM/APNs 已启用或 Production Gate 已打开。
 `;
 
 const artifacts = new Map([

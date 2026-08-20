@@ -112,6 +112,20 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.equal(insecureCors.status, 1, insecureCors.stderr);
     assert.match(insecureCors.stdout, /MISMATCH\tCORS_ALLOWLIST\tDEPLOYMENT/);
 
+    environment.CORS_ALLOWLIST = 'https://unexpected.verityai.cn';
+    const unexpectedCors = spawnSync(
+      process.execPath,
+      [resolve('scripts/check-staging-configuration.mjs')],
+      {
+        cwd: process.cwd(),
+        env: environment,
+        encoding: 'utf8',
+        windowsHide: true,
+      },
+    );
+    assert.equal(unexpectedCors.status, 1, unexpectedCors.stderr);
+    assert.match(unexpectedCors.stdout, /MISMATCH\tCORS_ALLOWLIST\tDEPLOYMENT/);
+
     environment.CORS_ALLOWLIST = 'https://web-origin-not-configured.invalid';
     const deferredCors = spawnSync(
       process.execPath,
@@ -135,6 +149,7 @@ describe('Tencent Cloud configuration tooling', () => {
     const runtimePath = join(directory, 'runtime.json');
     const migratorPath = join(directory, 'migrator.json');
     const fixturePath = join(directory, 'staging-fixture.json');
+    const businessFixturePath = join(directory, 'staging-business-fixture.json');
     const caPath = join(directory, 'tencentdb-ca-chain.pem');
     const runtimeSecret = Object.fromEntries(
       manifest.runtimeSecret.map((name) => [name, `synthetic-${name}`]),
@@ -145,9 +160,13 @@ describe('Tencent Cloud configuration tooling', () => {
     const fixtureSecret = Object.fromEntries(
       manifest.fixtureSecret.map((name) => [name, `synthetic-${name}`]),
     );
+    const businessFixtureSecret = Object.fromEntries(
+      manifest.businessFixtureSecret.map((name) => [name, `synthetic-${name}`]),
+    );
     writeFileSync(runtimePath, JSON.stringify(runtimeSecret), 'utf8');
     writeFileSync(migratorPath, JSON.stringify(migratorSecret), 'utf8');
     writeFileSync(fixturePath, JSON.stringify(fixtureSecret), 'utf8');
+    writeFileSync(businessFixturePath, JSON.stringify(businessFixtureSecret), 'utf8');
     writeFileSync(caPath, completeCaChain, 'utf8');
 
     try {
@@ -158,6 +177,7 @@ describe('Tencent Cloud configuration tooling', () => {
       environment.BNBU_RUNTIME_SECRET_FILE = runtimePath;
       environment.BNBU_MIGRATOR_SECRET_FILE = migratorPath;
       environment.BNBU_STAGING_FIXTURE_SECRET_FILE = fixturePath;
+      environment.BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE = businessFixturePath;
       environment.BNBU_TENCENTDB_CA_FILE = caPath;
       const result = spawnSync(
         process.execPath,
@@ -173,6 +193,10 @@ describe('Tencent Cloud configuration tooling', () => {
       assert.match(result.stdout, /CONFIGURED\tDATABASE_URL\tDOCKER_COMPOSE_SECRET/);
       assert.match(result.stdout, /CONFIGURED\tMIGRATION_DATABASE_URL\tDOCKER_COMPOSE_SECRET/);
       assert.match(result.stdout, /CONFIGURED\tSTAGING_ADMIN_PASSWORD\tDOCKER_COMPOSE_SECRET/);
+      assert.match(
+        result.stdout,
+        /CONFIGURED\tSTAGING_BUSINESS_STUDENT_EMAIL\tDOCKER_COMPOSE_SECRET/,
+      );
       assert.match(result.stdout, /CONFIGURED\tTENCENTDB_CA_CHAIN\tDOCKER_COMPOSE_SECRET/);
       assert.doesNotMatch(result.stdout, /synthetic-DATABASE_URL/);
     } finally {
@@ -186,6 +210,7 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.deepEqual(compose.services.backend.group_add, ['10001']);
     assert.deepEqual(compose.services.migrator.group_add, ['10001']);
     assert.deepEqual(compose.services['health-operator'].group_add, ['10001']);
+    assert.deepEqual(compose.services['business-operator'].group_add, ['10001']);
     assert.deepEqual(compose.services.backend.secrets, [
       { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
@@ -199,8 +224,22 @@ describe('Tencent Cloud configuration tooling', () => {
       { source: 'bnbu_staging_fixture', target: 'bnbu_staging_fixture.json' },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
     ]);
+    assert.deepEqual(compose.services['business-operator'].secrets, [
+      { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
+      {
+        source: 'bnbu_staging_business_fixture',
+        target: 'bnbu_staging_business_fixture.json',
+      },
+      { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
+    ]);
     assert.equal(
       compose.services.backend.secrets.some((item) => item.source.includes('fixture')),
+      false,
+    );
+    assert.equal(
+      compose.services['business-operator'].secrets.some(
+        (item) => item.source === 'bnbu_staging_fixture' || item.source === 'bnbu_migrator',
+      ),
       false,
     );
     assert.equal(
@@ -215,6 +254,62 @@ describe('Tencent Cloud configuration tooling', () => {
       compose.secrets.bnbu_staging_fixture.file,
       '${BNBU_STAGING_FIXTURE_SECRET_FILE:-/nonexistent/bnbu-staging-fixture-not-configured.json}',
     );
+    assert.equal(
+      compose.services['business-operator'].environment.STAGING_BUSINESS_CONFIRMATION,
+      '${STAGING_BUSINESS_CONFIRMATION:-NOT_CONFIRMED}',
+    );
+    assert.equal(
+      compose.services['business-operator'].environment.STAGING_QR_PATH_LOG_REDACTION_CONFIRMED,
+      '${STAGING_QR_PATH_LOG_REDACTION_CONFIRMED:-NOT_CONFIRMED}',
+    );
+    assert.equal(
+      compose.secrets.bnbu_staging_business_fixture.file,
+      '${BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE:-/nonexistent/bnbu-staging-business-fixture-not-configured.json}',
+    );
+  });
+
+  it('bounds every staging Compose service log with explicit json-file rotation', () => {
+    const compose = YAML.parse(readFileSync(resolve('docker-compose.staging.yml'), 'utf8'));
+    const expectedLogging = {
+      driver: 'json-file',
+      options: {
+        'max-size': '10m',
+        'max-file': '5',
+      },
+    };
+
+    assert.deepEqual(Object.keys(compose.services).sort(), [
+      'backend',
+      'business-operator',
+      'health-operator',
+      'migrator',
+    ]);
+    for (const [serviceName, service] of Object.entries(compose.services)) {
+      assert.deepEqual(service.logging, expectedLogging, `${serviceName} logging must be bounded`);
+    }
+  });
+
+  it('bounds CPU, memory and process counts for every staging Compose service', () => {
+    const compose = YAML.parse(readFileSync(resolve('docker-compose.staging.yml'), 'utf8'));
+    const expected = {
+      backend: { cpus: 1.5, mem_limit: '1536m', pids_limit: 256 },
+      migrator: { cpus: 1, mem_limit: '768m', pids_limit: 256 },
+      'health-operator': { cpus: 1, mem_limit: '768m', pids_limit: 256 },
+      'business-operator': { cpus: 1, mem_limit: '768m', pids_limit: 256 },
+    };
+
+    for (const [serviceName, resources] of Object.entries(expected)) {
+      const service = compose.services[serviceName];
+      assert.deepEqual(
+        {
+          cpus: service.cpus,
+          mem_limit: service.mem_limit,
+          pids_limit: service.pids_limit,
+        },
+        resources,
+        `${serviceName} resource limits must match the staging capacity baseline`,
+      );
+    }
   });
 
   it('prepares strict Prisma migration and pg client settings without retaining URL TLS downgrades', () => {

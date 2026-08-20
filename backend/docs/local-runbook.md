@@ -100,22 +100,26 @@ npm run test:contract
 npm run test:security
 ```
 
-真实数据库层要求一个名称明确包含 `test` 的独立空 PostgreSQL 18 数据库。测试会清空 Foundation、Teaching Structure、Stage 12 Enrollment/QR Join 与 Stage 13 Roster 表；绝不能复用 local/staging/production：
+真实数据库层只接受 loopback 上专用的 PostgreSQL 18 数据库 `bnbu_sports_test`、用户 `bnbu_test`、端口 `5432` 或 `55432`，并要求显式的一次性清库确认值。测试会清空全部业务测试表；绝不能复用 local/staging/production：
 
 ```powershell
-$env:TEST_DATABASE_URL = 'postgresql://test_user:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+$env:TEST_DATABASE_URL = 'postgresql://bnbu_test:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+$env:TEST_DATABASE_RESET_CONFIRMATION = 'BNBU_SPORTS_EPHEMERAL_TEST_DATABASE_V1'
 npm run test:integration
 npm run test:e2e
 Remove-Item Env:TEST_DATABASE_URL
+Remove-Item Env:TEST_DATABASE_RESET_CONFIRMATION
 ```
 
 macOS/Linux：
 
 ```bash
-export TEST_DATABASE_URL='postgresql://test_user:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+export TEST_DATABASE_URL='postgresql://bnbu_test:test_password@127.0.0.1:55432/bnbu_sports_test?schema=public'
+export TEST_DATABASE_RESET_CONFIRMATION='BNBU_SPORTS_EPHEMERAL_TEST_DATABASE_V1'
 npm run test:integration
 npm run test:e2e
 unset TEST_DATABASE_URL
+unset TEST_DATABASE_RESET_CONFIRMATION
 ```
 
 完整静态门禁：
@@ -154,16 +158,16 @@ Dockerfile 提供 `migrator` 和非 root `runtime` stage；runtime 不复制源�
 
 ## 7. 常见错误
 
-| 症状                       | 原因与处理                                                                |
-| -------------------------- | ------------------------------------------------------------------------- |
-| 启动报 `CHANGE_ME`         | `.env` 仍有占位符；全部替换，不添加代码 fallback                          |
-| PEM 格式错误               | 私钥不是 PKCS#8、公钥不是 SPKI，或 `.env` 未用 `\n` 编码换行              |
-| Token TTL 校验失败         | 调整显式秒数，满足 access < idle <= absolute                              |
-| 幂等/QR TTL 校验失败       | 重新运行检查并满足本手册列出的 retention、lease、replay 与 join 约束      |
-| Prisma 找不到 URL          | migration CLI 读取 `MIGRATION_DATABASE_URL`；应用读取 `DATABASE_URL`      |
-| readiness 失败             | 先检查 PostgreSQL、migration checksum、CURRENT Semester 与 SystemPolicy   |
-| integration 拒绝数据库 URL | `TEST_DATABASE_URL` 未设置或数据库名称不含 `test`；新建隔离测试库         |
-| CORS 被拒绝                | `CORS_ALLOWLIST` 必须是逗号分隔的精确 HTTP(S) origin，不含 path           |
-| 登录持续受限               | local 单进程限流生效；不要在代码中关闭，等待窗口或重启仅限合成 local 环境 |
-| Mailpit 无法访问           | 确认 Compose 中 `mailpit` 为 healthy，SMTP/UI 端口未被其他进程占用        |
-| Docker 不可用              | 安装/启动受支持的 Docker 环境后再验收；不得用未执行的 CI 配置冒充通过     |
+| 症状                       | 原因与处理                                                                 |
+| -------------------------- | -------------------------------------------------------------------------- |
+| 启动报 `CHANGE_ME`         | `.env` 仍有占位符；全部替换，不添加代码 fallback                           |
+| PEM 格式错误               | 私钥不是 PKCS#8、公钥不是 SPKI，或 `.env` 未用 `\n` 编码换行               |
+| Token TTL 校验失败         | 调整显式秒数，满足 access < idle <= absolute                               |
+| 幂等/QR TTL 校验失败       | 重新运行检查并满足本手册列出的 retention、lease、replay 与 join 约束       |
+| Prisma 找不到 URL          | migration CLI 读取 `MIGRATION_DATABASE_URL`；应用读取 `DATABASE_URL`       |
+| readiness 失败             | 先检查 PostgreSQL、migration checksum、CURRENT Semester 与 SystemPolicy    |
+| integration 拒绝数据库 URL | URL 不是专用 loopback `bnbu_test@.../bnbu_sports_test`，或缺少显式清库确认 |
+| CORS 被拒绝                | `CORS_ALLOWLIST` 必须是逗号分隔的精确 HTTP(S) origin，不含 path            |
+| 登录持续受限               | local 单进程限流生效；不要在代码中关闭，等待窗口或重启仅限合成 local 环境  |
+| Mailpit 无法访问           | 确认 Compose 中 `mailpit` 为 healthy，SMTP/UI 端口未被其他进程占用         |
+| Docker 不可用              | 安装/启动受支持的 Docker 环境后再验收；不得用未执行的 CI 配置冒充通过      |

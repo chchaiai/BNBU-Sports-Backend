@@ -97,7 +97,8 @@ npm run db:migration:check
 npm run db:schema:drift:check
 npm run generate:check
 npm run test
-$env:TEST_DATABASE_URL = 'postgresql://.../explicit_test_database?schema=public'
+$env:TEST_DATABASE_URL = 'postgresql://bnbu_test:...@127.0.0.1:55432/bnbu_sports_test?schema=public'
+$env:TEST_DATABASE_RESET_CONFIRMATION = 'BNBU_SPORTS_EPHEMERAL_TEST_DATABASE_V1'
 npm run test:integration
 npm run test:e2e
 npm run test:contract
@@ -106,7 +107,7 @@ npm run build
 npm audit --audit-level=high
 ```
 
-Integration/E2E 必须使用名称明确包含 `test` 的隔离 PostgreSQL 数据库；测试会清理 Foundation、Teaching Structure 与 Stage 12 Enrollment/QR Join 表，绝不能指向 local、staging 或 production。2026-08-03 阶段 12 最终结果为 Unit 28/28、Integration 19/19、E2E 20/20、Contract 6/6、Security 12/12，总计 85/85、0 skip、0 todo；Foundation 与 Teaching Structure 回归持续通过。Docker Desktop 上的空 PostgreSQL 18.4、重复 deploy、零 drift、private MinIO、29 个已实现 operation smoke、非 root、restart/persistence 与 teardown 均通过。详情见 [`../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md`](../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md)。
+Integration/E2E 只接受 loopback 上的专用 `bnbu_test@.../bnbu_sports_test` PostgreSQL 数据库、`5432`/`55432` 端口、`schema=public` 和显式清库确认值；测试会清理全部业务测试表，绝不能指向 local、staging 或 production。2026-08-03 阶段 12 最终结果为 Unit 28/28、Integration 19/19、E2E 20/20、Contract 6/6、Security 12/12，总计 85/85、0 skip、0 todo；Foundation 与 Teaching Structure 回归持续通过。Docker Desktop 上的空 PostgreSQL 18.4、重复 deploy、零 drift、private MinIO、29 个已实现 operation smoke、非 root、restart/persistence 与 teardown 均通过。详情见 [`../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md`](../docs/backend-contracts/12-identity-enrollment-qr-join-implementation-report.md)。
 
 ## Migration
 

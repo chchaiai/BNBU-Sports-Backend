@@ -1,22 +1,37 @@
 import { generateKeyPairSync } from 'node:crypto';
 
 export const TEST_PASSWORD = 'Synthetic-Test-Password-Only-2026';
+export const TEST_DATABASE_RESET_CONFIRMATION = 'BNBU_SPORTS_EPHEMERAL_TEST_DATABASE_V1';
 
 const { privateKey, publicKey } = generateKeyPairSync('ed25519');
 export const TEST_PRIVATE_KEY = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
 export const TEST_PUBLIC_KEY = publicKey.export({ type: 'spki', format: 'pem' }).toString();
 
-export function requireTestDatabaseUrl(): string {
-  const value = process.env.TEST_DATABASE_URL?.trim();
+export function requireTestDatabaseUrl(environment: NodeJS.ProcessEnv = process.env): string {
+  if (environment.TEST_DATABASE_RESET_CONFIRMATION !== TEST_DATABASE_RESET_CONFIRMATION) {
+    throw new Error(
+      'TEST_DATABASE_RESET_CONFIRMATION must explicitly confirm the ephemeral test database',
+    );
+  }
+  const value = environment.TEST_DATABASE_URL?.trim();
   if (value === undefined || value.length === 0) {
     throw new Error('TEST_DATABASE_URL is required for real PostgreSQL tests');
   }
   const url = new URL(value);
+  const queryKeys = [...url.searchParams.keys()];
   if (
     (url.protocol !== 'postgresql:' && url.protocol !== 'postgres:') ||
-    !url.pathname.toLowerCase().includes('test')
+    !['127.0.0.1', 'localhost'].includes(url.hostname) ||
+    !['5432', '55432'].includes(url.port === '' ? '5432' : url.port) ||
+    decodeURIComponent(url.username) !== 'bnbu_test' ||
+    decodeURIComponent(url.password).length === 0 ||
+    url.pathname !== '/bnbu_sports_test' ||
+    url.searchParams.get('schema') !== 'public' ||
+    queryKeys.some((name) => name !== 'schema')
   ) {
-    throw new Error('TEST_DATABASE_URL must identify an explicitly named test PostgreSQL database');
+    throw new Error(
+      'TEST_DATABASE_URL must identify the dedicated loopback bnbu_sports_test database',
+    );
   }
   return value;
 }

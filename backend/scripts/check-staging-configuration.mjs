@@ -52,6 +52,11 @@ if (checkFiles) {
     process.env.BNBU_STAGING_FIXTURE_SECRET_FILE,
     manifest.fixtureSecret,
   );
+  await inspectSecretFile(
+    'STAGING_BUSINESS_FIXTURE_JSON_SECRET',
+    process.env.BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE,
+    manifest.businessFixtureSecret,
+  );
   inspectCaFile(process.env.BNBU_TENCENTDB_CA_FILE);
 } else {
   for (const name of manifest.runtimeSecret) {
@@ -76,6 +81,14 @@ if (checkFiles) {
       status: 'UNKNOWN_FILE_NOT_READ',
       owner: 'DOCKER_COMPOSE_SECRET',
       source: 'staging fixture JSON secret',
+    });
+  }
+  for (const name of manifest.businessFixtureSecret) {
+    rows.push({
+      name,
+      status: 'UNKNOWN_FILE_NOT_READ',
+      owner: 'DOCKER_COMPOSE_SECRET',
+      source: 'staging business fixture JSON secret',
     });
   }
 }
@@ -140,9 +153,9 @@ function configured(value) {
 function configurationStatus(item, value) {
   if (!configured(value)) return 'MISSING';
   const normalized = value.trim();
-  if (item.expected !== undefined && normalized !== String(item.expected)) return 'MISMATCH';
   if (item.validation === 'HTTPS_ORIGIN_LIST' && !isHttpsOriginList(normalized)) return 'MISMATCH';
   if (item.deferredValues?.includes(normalized)) return 'DEFERRED';
+  if (item.expected !== undefined && normalized !== String(item.expected)) return 'MISMATCH';
   return 'CONFIGURED';
 }
 
