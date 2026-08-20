@@ -10,12 +10,12 @@
 
 ## 当前 Backend 发布基线
 
-- 版本：`2.0.10-contract`
-- OpenAPI SHA-256：`56f7f13cdd8122dae630fec93bf198f7ed6d92a5fc4f67ae4f866a3b41c38ad7`
-- 来源 monorepo commit：`96d28f700fafb5de124c152f6ef0f6fdb9848f29`
-- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.10-contract>
+- 版本：`2.0.11-contract`
+- OpenAPI SHA-256：`c3bdba5999404ea5c58b48407f582ed7b6f19fe955b793f5dfba78303ae9edb1`
+- 来源 monorepo commit：`f7682a4b5fedd9fea8ba7eb7c281104473661ce1`
+- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.11-contract>
 
-该发布新增仅限 Staging 的合成业务闭环操作员，并为 Backend Compose 固化 Docker 日志轮转及 CPU、内存和 PID 限制；它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.10 已部署到 Staging，更不表示 Production Gate 已开放。
+该补丁发布修正仅限 Staging 的合成业务闭环操作员对 Join Capability 持久状态的校验，并固化 Nginx 对合法客户端 request ID 的透传、日志脱敏与回归门禁；它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.11 已部署到 Staging，更不表示 Production Gate 已开放。
 
 不得在客户端目录中重新执行 `git init`、单独创建分支、提交、push 或 Pull Request，也不得重新添加 submodule。所有 Git 操作从本目录执行；需要限定范围时使用路径暂存：
 
