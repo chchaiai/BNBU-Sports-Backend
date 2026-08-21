@@ -230,6 +230,15 @@ describe('Tencent Cloud configuration tooling', () => {
 
     try {
       const environment = { ...process.env };
+      for (const secretName of new Set([
+        ...manifest.runtimeSecret,
+        ...manifest.migratorSecret,
+        ...manifest.fixtureSecret,
+        ...manifest.businessFixtureSecret,
+        ...manifest.r01FixtureForbiddenEnvironment,
+      ])) {
+        delete environment[secretName];
+      }
       for (const item of manifest.nonSecret) {
         environment[item.name] = syntheticNonSecretValue(item);
       }
