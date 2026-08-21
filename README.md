@@ -10,12 +10,12 @@
 
 ## 当前 Backend 发布基线
 
-- 版本：`2.0.11-contract`
-- OpenAPI SHA-256：`c3bdba5999404ea5c58b48407f582ed7b6f19fe955b793f5dfba78303ae9edb1`
-- 来源 monorepo commit：`f7682a4b5fedd9fea8ba7eb7c281104473661ce1`
-- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.11-contract>
+- 版本：`2.0.12-contract`
+- OpenAPI SHA-256：`916461bed7c2fd14f28f0d750b7f414fd12f31db1ade09dc52777208fc3790d6`
+- 来源 monorepo commit：`eeb519ab385182f762dfc27307cd423889e5fd56`
+- Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.12-contract>
 
-该补丁发布修正仅限 Staging 的合成业务闭环操作员对 Join Capability 持久状态的校验，并固化 Nginx 对合法客户端 request ID 的透传、日志脱敏与回归门禁；它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.11 已部署到 Staging，更不表示 Production Gate 已开放。
+该 PATCH 发布新增仅限 Staging 的 R01 provisioner：只创建或验证 `ADMIN-01`、`TEACHER-01` 和不可登录的内部审批身份，并要求三个预留 Student 学号在人工扫码前不存在；Student 必须通过真实 QR join 自动创建身份、Enrollment 与 AuthSession，再绑定受控邮箱并完成 OTP。它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.12 已部署到 Staging、R01 人工测试已通过，更不表示 Production Gate 已开放。
 
 不得在客户端目录中重新执行 `git init`、单独创建分支、提交、push 或 Pull Request，也不得重新添加 submodule。所有 Git 操作从本目录执行；需要限定范围时使用路径暂存：
 
