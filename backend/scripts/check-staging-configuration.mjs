@@ -8,6 +8,35 @@ import { loadTencentDbCa } from './postgres-tls.mjs';
 const manifest = JSON.parse(
   await readFile(resolve('config/staging-configuration-requirements.json'), 'utf8'),
 );
+const expectedR01FixtureSecret = [
+  'STAGING_R01_ADMIN_ACCOUNT',
+  'STAGING_R01_ADMIN_PASSWORD',
+  'STAGING_R01_TEACHER_ACCOUNT',
+  'STAGING_R01_TEACHER_PASSWORD',
+];
+const expectedR01FixtureForbiddenEnvironment = [
+  ...expectedR01FixtureSecret,
+  'STAGING_R01_STUDENT_ANDROID_EMAIL',
+  'STAGING_R01_STUDENT_IOS_EMAIL',
+  'STAGING_R01_STUDENT_WEB_EMAIL',
+];
+if (
+  !Array.isArray(manifest.r01FixtureSecret) ||
+  manifest.r01FixtureSecret.length !== expectedR01FixtureSecret.length ||
+  manifest.r01FixtureSecret.some((name, index) => name !== expectedR01FixtureSecret[index])
+) {
+  throw new Error('R01 fixture secret allowlist mismatch');
+}
+if (
+  !Array.isArray(manifest.r01FixtureForbiddenEnvironment) ||
+  manifest.r01FixtureForbiddenEnvironment.length !==
+    expectedR01FixtureForbiddenEnvironment.length ||
+  manifest.r01FixtureForbiddenEnvironment.some(
+    (name, index) => name !== expectedR01FixtureForbiddenEnvironment[index],
+  )
+) {
+  throw new Error('R01 fixture forbidden environment list mismatch');
+}
 const checkFiles = process.argv.includes('--files');
 const rows = [];
 
@@ -57,6 +86,12 @@ if (checkFiles) {
     process.env.BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE,
     manifest.businessFixtureSecret,
   );
+  await inspectSecretFile(
+    'STAGING_R01_FIXTURE_JSON_SECRET',
+    process.env.BNBU_STAGING_R01_FIXTURE_SECRET_FILE,
+    manifest.r01FixtureSecret,
+    manifest.r01FixtureForbiddenEnvironment,
+  );
   inspectCaFile(process.env.BNBU_TENCENTDB_CA_FILE);
 } else {
   for (const name of manifest.runtimeSecret) {
@@ -89,6 +124,14 @@ if (checkFiles) {
       status: 'UNKNOWN_FILE_NOT_READ',
       owner: 'DOCKER_COMPOSE_SECRET',
       source: 'staging business fixture JSON secret',
+    });
+  }
+  for (const name of manifest.r01FixtureSecret) {
+    rows.push({
+      name,
+      status: 'UNKNOWN_FILE_NOT_READ',
+      owner: 'DOCKER_COMPOSE_SECRET',
+      source: 'staging R01 fixture JSON secret',
     });
   }
 }
@@ -125,9 +168,17 @@ process.stdout.write(
 );
 if (missing.length > 0 || mismatched.length > 0 || cloudFailures.length > 0) process.exitCode = 1;
 
-async function inspectSecretFile(label, filePath, expectedKeys) {
-  const environment = {};
+async function inspectSecretFile(
+  label,
+  filePath,
+  expectedKeys,
+  forbiddenEnvironmentKeys = expectedKeys,
+) {
+  const environment = { ...process.env };
   try {
+    if (forbiddenEnvironmentKeys.some((name) => Object.hasOwn(environment, name))) {
+      throw new Error('Secret values must not be present in the process environment');
+    }
     await loadFileJsonSecret({
       filePath,
       expectedKeys,

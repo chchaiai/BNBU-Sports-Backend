@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "environment": "staging",
   "nonSecret": [
     {
@@ -228,6 +228,10 @@
       "source": "operations-only business fixture JSON exists outside Git with the exact businessFixtureSecret allowlist"
     },
     {
+      "name": "FILE_JSON_STAGING_R01_FIXTURE_SECRET_PROVISIONED",
+      "source": "operations-only R01 fixture JSON exists outside Git with the exact r01FixtureSecret allowlist"
+    },
+    {
       "name": "TENCENTDB_CA_CHAIN_PROVISIONED",
       "source": "complete TencentDB intermediate and root CA chain exists outside Git"
     },
@@ -277,6 +281,21 @@
     "STAGING_BUSINESS_ADMIN_PASSWORD",
     "STAGING_BUSINESS_TEACHER_PASSWORD",
     "STAGING_BUSINESS_STUDENT_EMAIL"
+  ],
+  "r01FixtureSecret": [
+    "STAGING_R01_ADMIN_ACCOUNT",
+    "STAGING_R01_ADMIN_PASSWORD",
+    "STAGING_R01_TEACHER_ACCOUNT",
+    "STAGING_R01_TEACHER_PASSWORD"
+  ],
+  "r01FixtureForbiddenEnvironment": [
+    "STAGING_R01_ADMIN_ACCOUNT",
+    "STAGING_R01_ADMIN_PASSWORD",
+    "STAGING_R01_TEACHER_ACCOUNT",
+    "STAGING_R01_TEACHER_PASSWORD",
+    "STAGING_R01_STUDENT_ANDROID_EMAIL",
+    "STAGING_R01_STUDENT_IOS_EMAIL",
+    "STAGING_R01_STUDENT_WEB_EMAIL"
   ],
   "runtimeSecret": [
     "DATABASE_URL",

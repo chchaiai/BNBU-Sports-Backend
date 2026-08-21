@@ -45,6 +45,15 @@ describe('Tencent Cloud configuration tooling', () => {
     );
     assert.doesNotMatch(apiLocations, /proxy_set_header X-Request-Id \$request_id;/u);
     assert.doesNotMatch(webHttps, /proxy_set_header X-Request-Id \$request_id;/u);
+    assert.ok(
+      logFormat.includes('~^/join/[^/]+$ /join/:inviteToken;'),
+      'Student Web invite tokens must be templated before access logging',
+    );
+    assert.match(webHttps, /server_name www\.verityai\.cn;/u);
+    assert.match(webHttps, /root \/opt\/bnbu-sports\/web\/current\/student;/u);
+    assert.match(webHttps, /try_files \$uri \$uri\/ \/index\.html;/u);
+    assert.match(webHttps, /add_header Cache-Control "no-store" always;/u);
+    assert.match(webHttps, /add_header Referrer-Policy "no-referrer" always;/u);
   });
 
   it('loads an exact key set from a mounted file without returning unrelated values', async () => {
@@ -183,6 +192,7 @@ describe('Tencent Cloud configuration tooling', () => {
     const migratorPath = join(directory, 'migrator.json');
     const fixturePath = join(directory, 'staging-fixture.json');
     const businessFixturePath = join(directory, 'staging-business-fixture.json');
+    const r01FixturePath = join(directory, 'staging-r01-fixture.json');
     const caPath = join(directory, 'tencentdb-ca-chain.pem');
     const runtimeSecret = Object.fromEntries(
       manifest.runtimeSecret.map((name) => [name, `synthetic-${name}`]),
@@ -196,10 +206,26 @@ describe('Tencent Cloud configuration tooling', () => {
     const businessFixtureSecret = Object.fromEntries(
       manifest.businessFixtureSecret.map((name) => [name, `synthetic-${name}`]),
     );
+    const r01FixtureSecret = Object.fromEntries(
+      manifest.r01FixtureSecret.map((name) => [name, `synthetic-${name}`]),
+    );
+    assert.deepEqual(manifest.r01FixtureSecret, [
+      'STAGING_R01_ADMIN_ACCOUNT',
+      'STAGING_R01_ADMIN_PASSWORD',
+      'STAGING_R01_TEACHER_ACCOUNT',
+      'STAGING_R01_TEACHER_PASSWORD',
+    ]);
+    assert.deepEqual(manifest.r01FixtureForbiddenEnvironment, [
+      ...manifest.r01FixtureSecret,
+      'STAGING_R01_STUDENT_ANDROID_EMAIL',
+      'STAGING_R01_STUDENT_IOS_EMAIL',
+      'STAGING_R01_STUDENT_WEB_EMAIL',
+    ]);
     writeFileSync(runtimePath, JSON.stringify(runtimeSecret), 'utf8');
     writeFileSync(migratorPath, JSON.stringify(migratorSecret), 'utf8');
     writeFileSync(fixturePath, JSON.stringify(fixtureSecret), 'utf8');
     writeFileSync(businessFixturePath, JSON.stringify(businessFixtureSecret), 'utf8');
+    writeFileSync(r01FixturePath, JSON.stringify(r01FixtureSecret), 'utf8');
     writeFileSync(caPath, completeCaChain, 'utf8');
 
     try {
@@ -211,6 +237,7 @@ describe('Tencent Cloud configuration tooling', () => {
       environment.BNBU_MIGRATOR_SECRET_FILE = migratorPath;
       environment.BNBU_STAGING_FIXTURE_SECRET_FILE = fixturePath;
       environment.BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE = businessFixturePath;
+      environment.BNBU_STAGING_R01_FIXTURE_SECRET_FILE = r01FixturePath;
       environment.BNBU_TENCENTDB_CA_FILE = caPath;
       const result = spawnSync(
         process.execPath,
@@ -230,8 +257,34 @@ describe('Tencent Cloud configuration tooling', () => {
         result.stdout,
         /CONFIGURED\tSTAGING_BUSINESS_STUDENT_EMAIL\tDOCKER_COMPOSE_SECRET/,
       );
+      assert.match(
+        result.stdout,
+        /CONFIGURED\tSTAGING_R01_TEACHER_PASSWORD\tDOCKER_COMPOSE_SECRET/,
+      );
+      assert.doesNotMatch(result.stdout, /STAGING_R01_STUDENT_/u);
       assert.match(result.stdout, /CONFIGURED\tTENCENTDB_CA_CHAIN\tDOCKER_COMPOSE_SECRET/);
       assert.doesNotMatch(result.stdout, /synthetic-DATABASE_URL/);
+
+      for (const forbiddenName of manifest.r01FixtureForbiddenEnvironment) {
+        const environmentSentinel = `sentinel-r01-secret-must-not-print-${forbiddenName}`;
+        const contaminatedResult = spawnSync(
+          process.execPath,
+          [resolve('scripts/check-staging-configuration.mjs'), '--files'],
+          {
+            cwd: process.cwd(),
+            env: { ...environment, [forbiddenName]: environmentSentinel },
+            encoding: 'utf8',
+            windowsHide: true,
+          },
+        );
+        assert.equal(contaminatedResult.status, 1, contaminatedResult.stderr);
+        assert.match(
+          contaminatedResult.stdout,
+          /INVALID_OR_UNAVAILABLE\tSTAGING_R01_FIXTURE_JSON_SECRET\tUSER_TENCENT_CONSOLE/,
+        );
+        assert.doesNotMatch(contaminatedResult.stdout, new RegExp(environmentSentinel, 'u'));
+        assert.doesNotMatch(contaminatedResult.stderr, new RegExp(environmentSentinel, 'u'));
+      }
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }
@@ -244,6 +297,7 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.deepEqual(compose.services.migrator.group_add, ['10001']);
     assert.deepEqual(compose.services['health-operator'].group_add, ['10001']);
     assert.deepEqual(compose.services['business-operator'].group_add, ['10001']);
+    assert.deepEqual(compose.services['r01-provisioner'].group_add, ['10001']);
     assert.deepEqual(compose.services.backend.secrets, [
       { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
@@ -265,6 +319,14 @@ describe('Tencent Cloud configuration tooling', () => {
       },
       { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
     ]);
+    assert.deepEqual(compose.services['r01-provisioner'].secrets, [
+      { source: 'bnbu_runtime', target: 'bnbu_runtime.json' },
+      {
+        source: 'bnbu_staging_r01_fixture',
+        target: 'bnbu_staging_r01_fixture.json',
+      },
+      { source: 'tencentdb_ca', target: 'tencentdb-ca-chain.pem' },
+    ]);
     assert.equal(
       compose.services.backend.secrets.some((item) => item.source.includes('fixture')),
       false,
@@ -272,6 +334,15 @@ describe('Tencent Cloud configuration tooling', () => {
     assert.equal(
       compose.services['business-operator'].secrets.some(
         (item) => item.source === 'bnbu_staging_fixture' || item.source === 'bnbu_migrator',
+      ),
+      false,
+    );
+    assert.equal(
+      compose.services['r01-provisioner'].secrets.some(
+        (item) =>
+          item.source === 'bnbu_staging_fixture' ||
+          item.source === 'bnbu_staging_business_fixture' ||
+          item.source === 'bnbu_migrator',
       ),
       false,
     );
@@ -299,6 +370,36 @@ describe('Tencent Cloud configuration tooling', () => {
       compose.secrets.bnbu_staging_business_fixture.file,
       '${BNBU_STAGING_BUSINESS_FIXTURE_SECRET_FILE:-/nonexistent/bnbu-staging-business-fixture-not-configured.json}',
     );
+    assert.equal(
+      compose.services['r01-provisioner'].environment.STAGING_R01_CONFIRMATION,
+      '${STAGING_R01_CONFIRMATION:-NOT_CONFIRMED}',
+    );
+    assert.deepEqual(Object.keys(compose.services['r01-provisioner'].environment).sort(), [
+      'STAGING_R01_CONFIRMATION',
+      'STAGING_R01_FIXTURE_SECRET_FILE',
+    ]);
+    assert.equal(compose.services['r01-provisioner'].pull_policy, 'never');
+    assert.equal(
+      compose.secrets.bnbu_staging_r01_fixture.file,
+      '${BNBU_STAGING_R01_FIXTURE_SECRET_FILE:-/nonexistent/bnbu-staging-r01-fixture-not-configured.json}',
+    );
+  });
+
+  it('pins the R01 one-shot runbook to the already-frozen local image', () => {
+    const runbook = readFileSync(
+      resolve('../docs/deployment/STAGING-R01-PROVISIONING-RUNBOOK.md'),
+      'utf8',
+    );
+    const lines = runbook.split(/\r?\n/u).map((line) => line.trim());
+    const runIndex = lines.indexOf('--profile operations run \\');
+    assert.notEqual(runIndex, -1);
+    assert.deepEqual(lines.slice(runIndex, runIndex + 4), [
+      '--profile operations run \\',
+      '--pull never \\',
+      '--name <fixed-r01-one-shot-name> \\',
+      '--no-deps r01-provisioner bootstrap',
+    ]);
+    assert.equal(lines.filter((line) => line === '--pull never \\').length, 1);
   });
 
   it('bounds every staging Compose service log with explicit json-file rotation', () => {
@@ -316,6 +417,7 @@ describe('Tencent Cloud configuration tooling', () => {
       'business-operator',
       'health-operator',
       'migrator',
+      'r01-provisioner',
     ]);
     for (const [serviceName, service] of Object.entries(compose.services)) {
       assert.deepEqual(service.logging, expectedLogging, `${serviceName} logging must be bounded`);
@@ -329,6 +431,7 @@ describe('Tencent Cloud configuration tooling', () => {
       migrator: { cpus: 1, mem_limit: '768m', pids_limit: 256 },
       'health-operator': { cpus: 1, mem_limit: '768m', pids_limit: 256 },
       'business-operator': { cpus: 1, mem_limit: '768m', pids_limit: 256 },
+      'r01-provisioner': { cpus: 1, mem_limit: '768m', pids_limit: 256 },
     };
 
     for (const [serviceName, resources] of Object.entries(expected)) {

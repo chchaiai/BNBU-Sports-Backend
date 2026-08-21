@@ -109,8 +109,7 @@ const releaseDirectory = resolve(
   repositoryRoot,
   `docs/backend-contracts/releases/${candidateVersion}`,
 );
-const snapshotRelative =
-  `docs/backend-contracts/releases/${candidateVersion}/openapi.candidate.yaml`;
+const snapshotRelative = `docs/backend-contracts/releases/${candidateVersion}/openapi.candidate.yaml`;
 const metadata = {
   formatVersion: 1,
   contractVersion: document.info.version,
@@ -145,8 +144,7 @@ const metadata = {
   },
 };
 
-const historyRelative =
-  `docs/backend-contracts/contract-history/${candidateVersion}-${candidateHash}`;
+const historyRelative = `docs/backend-contracts/contract-history/${candidateVersion}-${candidateHash}`;
 if (releaseConfig.releaseState === "published") {
   metadata.immutableHistorySnapshot = `${historyRelative}/openapi.snapshot.yaml`;
   metadata.immutableHistoryManifest = `${historyRelative}/release-manifest.json`;
@@ -157,10 +155,10 @@ const changelog = `# Contract ${candidateSemver} ${releaseConfig.releaseState ==
 Baseline: immutable \`${baselineVersion}\` SHA-256 \`${publishedHash}\`.
 
 - Preserves the published ${baselineVersion} snapshot and advances the immutable contract release under the unique \`${candidateVersion}\` version without changing the API surface.
-- Corrects the staging-only business closure operator to require the persisted QR join capability state \`ACTIVE\`, matching the accepted domain rule, Migration, and E2E evidence.
-- Rejects the stale, non-domain \`ISSUED\` expectation through focused fail-closed unit coverage.
-- Preserves only Backend-valid inbound request IDs through Nginx and uses the same canonical ID for the API proxy, same-origin Web proxy, response, and access log.
-- Replaces malformed or overlong inbound request IDs with an Nginx-generated fallback while retaining invite-token URI redaction.
+- Adds a secret-isolated, staging-only R01 provisioner for the fixed \`BNBU\` organization boundary, \`R01-TEST-COURSE-A\`, \`R01-TEST-SECTION-A\`, the two approved Admin/Teacher aliases, and the non-login internal approver.
+- Uses one serializable create-or-verify transaction, refuses conflicting pre-existing identities or topology, and never overwrites passwords, changes existing rows, or deletes history.
+- Requires all three reserved Student numbers to remain absent so Android, iOS, and Student Web must exercise the real QR join, automatic identity creation, contact binding, and OTP activation flow during R01.
+- Adds a dedicated hardened Compose one-shot service with exact TencentDB runtime/TLS, confirmation, Secret schema, resource, and log-rotation guards; it does not replace the long-running Backend or run Migrator.
 - Adds no client-visible operation or schema change.
 `;
 const migrationNotes = `# Contract ${candidateSemver} Migration Notes
@@ -171,27 +169,23 @@ No Android, iOS, or Web API payload change is required. Clients remain bound to 
 
 ## Database
 
-This release adds no Prisma Migration. The existing 20-Migration chain remains authoritative and must still report no pending or drift before deployment. The operator-only correction changes the expected evidence state, not the domain state machine, runtime route behavior, or persisted schema.
+This release adds no Prisma Migration. The existing 20-Migration chain remains authoritative and must still report no pending or drift before deployment. The R01 provisioner uses only the existing schema and the least-privilege runtime identity. It creates or exactly verifies isolated synthetic rows in one serializable transaction, fails closed on any conflicting identity or topology, never updates a pre-existing password, and never deletes history.
 
-## Staging business closure
+## Staging R01 provisioning
 
-The one-shot operator now requires the persisted JoinCapability evidence to be \`ACTIVE\`, which is the state created by the accepted Migration and used by the domain and E2E flow. The 2.0.10 operator stopped fail closed before joining because it expected obsolete \`ISSUED\` evidence; retry is permitted only after the published 2.0.11 image is deployed. The operator continues to use isolated synthetic staging data, sends one real SES code to a controlled test mailbox, and leaves append-only database and private COS evidence. This is staging evidence only and does not replace Android/iOS real-device acceptance or a production media scanner.
-
-## Nginx request IDs
-
-The API and same-origin Web proxy preserve an inbound \`X-Request-ID\` only when it matches the Backend contract \`^[A-Za-z0-9._:-]{1,64}$\`. All other values use an Nginx-generated fallback. The same canonical value is forwarded to the Backend and recorded in the API access log, while invite-token path redaction remains in force.
+The one-shot operator creates or verifies only \`ADMIN-01\`, \`TEACHER-01\`, and one non-login internal approval identity under actual organization code \`BNBU\`; \`R01-TEST-ORG\` remains a documentation alias only. It requires the reserved \`STUDENT-ANDROID-01\`, \`STUDENT-IOS-01\`, and \`STUDENT-WEB-01\` numbers to be completely absent. During manual R01, each client consumes its own join capability so Backend atomically creates the Student User, Profile, active Enrollment, and AuthSession; the Tester then binds a distinct controlled mailbox and verifies the OTP before using normal Student capabilities. Run the create pass and immediate idempotency pass before any Student scans a code. This is isolated Staging preparation only and does not prove client login, SES delivery, QR scanning, media upload, review, or real-device acceptance.
 
 ## Staging secrets
 
-Keep \`bnbu_runtime.json\`, \`bnbu_migrator.json\`, \`bnbu_staging_fixture.json\`, and \`bnbu_staging_business_fixture.json\` isolated as separate Docker Compose secrets. The business fixture file contains exactly \`STAGING_BUSINESS_ADMIN_PASSWORD\`, \`STAGING_BUSINESS_TEACHER_PASSWORD\`, and \`STAGING_BUSINESS_STUDENT_EMAIL\`, and is mounted only by the one-shot business operator. The long-running Backend, Migrator, and health operator never receive it. Mount the complete TencentDB CA chain separately. All host source files use \`root:10001\` mode \`0640\`; never place their values in Git, environment files, shell history, logs, reports, or chat. Replace the staging environment template's \`APP_VERSION\` placeholder with this published release version before preflight.
+Keep \`bnbu_runtime.json\`, \`bnbu_migrator.json\`, \`bnbu_staging_fixture.json\`, \`bnbu_staging_business_fixture.json\`, and \`bnbu_staging_r01_fixture.json\` isolated as separate Docker Compose secrets. The R01 file contains exactly the two Admin/Teacher login identifiers and their distinct passwords; it contains no Student mailbox, OTP, token, or invite value and is mounted only by the R01 one-shot service. The long-running Backend, Migrator, health operator, and business operator never receive it. Mount the complete TencentDB CA chain separately. All host source files use \`root:10001\` mode \`0640\`; never place their values in Git, environment files, shell history, logs, reports, or chat. Replace the staging environment template's \`APP_VERSION\` placeholder with this ${releaseConfig.releaseState === "published" ? "published release" : "candidate"} version before preflight.
 
 ## Tencent Cloud access
 
-COS credentials are obtained from the bound CVM role and remain scoped to the published single-bucket policy. SES uses the same bound role with the \`SendEmail\`-only policy. Backend CORS is frozen to the exact admin/www HTTPS origins, while COS browser CORS remains restricted to \`https://www.verityai.cn\`. The operator's real delivery and object upload are deployment verification steps and intentionally leave append-only synthetic evidence.
+The R01 provisioner does not call COS or SES. Later manual R01 login and media tests continue to use the bound CVM role, the published single-bucket policy, the \`SendEmail\`-only SES policy, exact Backend HTTPS origins, and COS browser CORS restricted to \`https://www.verityai.cn\`.
 
 ## Deployment boundary
 
-Publishing this release does not deploy it, start a container, modify TencentDB/COS/SES/Nginx, send an OTP, upload an object, or prove external connectivity. Those remain separately evidenced staging operations.
+Preparing or publishing this release does not deploy it, start a container, provision an R01 row, modify TencentDB/COS/SES/Nginx, send an OTP, upload an object, or prove external connectivity. Those remain separately evidenced staging operations.
 `;
 const checklist = `# Contract ${candidateSemver} Post-Merge Release Checklist
 
@@ -222,7 +216,7 @@ const handoff = `# BNBU Sports Contract ${candidateSemver} ${releaseConfig.relea
 | Intentionally disabled | ${metadata.runtime.intentionallyDisabled} |
 | Not implemented | 0 |
 
-The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This PATCH corrects staging-only operator evidence and the Nginx request-ID runtime policy without changing the client-visible API surface or database Migration chain. ${releaseConfig.releaseState === "published" ? "The monorepo Android/Web snapshots are pinned to this published release for byte-identical integration gates; downstream developers must still verify the GitHub Release assets and SHA-256 before distributing client artifacts." : "The monorepo Android/Web snapshots are pinned only to this candidate gate and must not be treated as published or distributed until the Git tag, GitHub Release assets, and SHA-256 are verified."} No request or response model changes are required.
+The ${metadata.runtime.intentionallyDisabled} disabled operations remain real authenticated routes that fail closed. This PATCH adds only the secret-isolated Staging R01 provisioning operator and its hardened one-shot Compose boundary; it does not change the client-visible API surface or database Migration chain. The provisioner creates only the Admin/Teacher and non-login approval identities, while every Student must enter through the existing QR join and contact-binding flow. The actual Staging organization code is \`BNBU\`, while \`R01-TEST-ORG\` is only a documentation alias. ${releaseConfig.releaseState === "published" ? "The monorepo Android/Web snapshots are pinned to this published release for byte-identical integration gates; downstream developers must still verify the GitHub Release assets and SHA-256 before distributing client artifacts." : "The monorepo Android/Web snapshots are pinned only to this candidate gate and must not be treated as published or distributed until the Git tag, GitHub Release assets, and SHA-256 are verified."} No request or response model changes are required.
 `;
 const currentHandoff = `# BNBU Sports Backend Current Handoff
 
@@ -245,8 +239,7 @@ const pointer = `${JSON.stringify(
     releaseState: releaseConfig.releaseState,
     sha256: candidateHash,
     canonicalPath: "docs/backend-contracts/openapi.yaml",
-    releaseManifest:
-      `docs/backend-contracts/releases/${candidateVersion}/release-manifest.json`,
+    releaseManifest: `docs/backend-contracts/releases/${candidateVersion}/release-manifest.json`,
     immutableHistory:
       releaseConfig.releaseState === "published" ? historyRelative : null,
     previousPublishedBaseline: {
