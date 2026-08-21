@@ -12,7 +12,7 @@
 
 - 版本：`2.0.12-contract`
 - OpenAPI SHA-256：`916461bed7c2fd14f28f0d750b7f414fd12f31db1ade09dc52777208fc3790d6`
-- 来源 monorepo commit：`eeb519ab385182f762dfc27307cd423889e5fd56`
+- 来源 monorepo commit：`ea31a2ebc005ce13a0fc6a02071ba613eb0f53db`
 - Backend Release：<https://github.com/chchaiai/BNBU-Sports-Backend/releases/tag/2.0.12-contract>
 
 该 PATCH 发布新增仅限 Staging 的 R01 provisioner：只创建或验证 `ADMIN-01`、`TEACHER-01` 和不可登录的内部审批身份，并要求三个预留 Student 学号在人工扫码前不存在；Student 必须通过真实 QR join 自动创建身份、Enrollment 与 AuthSession，再绑定受控邮箱并完成 OTP。它不改变客户端可见 API surface，也不新增或修改现有 20 条 Migration。发布完成只表示代码、合同和 Release 资产已经冻结，不表示 2.0.12 已部署到 Staging、R01 人工测试已通过，更不表示 Production Gate 已开放。
